@@ -1,0 +1,110 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "Summary about the new REST service.",
+    "description" : "Summary about the new REST service."
+  },
+  "host" : "",
+  "basePath" : "/",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/jiraticketpublisher" : {
+      "post" : {
+        "description" : "",
+        "operationId" : "post-jiraticketpublisher",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "description" : "",
+          "schema" : {
+            "$ref" : "#/definitions/TicketRecordsData"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a TicketData to be returned",
+            "schema" : {
+              "$ref" : "#/definitions/TicketData"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "TicketData" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "TicketList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TicketList",
+            "uniqueItems" : false
+          }
+        }
+      }
+    },
+    "TicketList" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "JiraTicketID" : {
+          "type" : "string"
+        },
+        "Assignee" : {
+          "type" : "string"
+        },
+        "Status" : {
+          "type" : "string"
+        },
+        "Resolution" : {
+          "type" : "string"
+        },
+        "CreatedTime" : {
+          "type" : "string"
+        },
+        "UpdatedTime" : {
+          "type" : "string"
+        },
+        "IntegrationTime" : {
+          "type" : "string"
+        },
+        "SFCaseObjectID" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TicketRecordsData" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "TicketRecordList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TicketRecordList",
+            "uniqueItems" : false
+          }
+        }
+      }
+    },
+    "TicketRecordList" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "TicketID" : {
+          "type" : "string"
+        },
+        "IntegrationTime" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
