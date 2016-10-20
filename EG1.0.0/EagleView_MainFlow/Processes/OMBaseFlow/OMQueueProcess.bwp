@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpws:process exitOnStandardFault="no" name="OMBaseFlow.OMQueueProcess"
+    suppressJoinFailure="yes"
+    targetNamespace="http://xmlns.example.com/20160922150751"
+    xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:info="http://www.tibco.com/bw/process/info"
+    xmlns:ns="http://www.tibco.com/pe/EngineTypes"
+    xmlns:ns0="http://tns.tibco.com/bw/json/1474011107010"
+    xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
+    xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
+    xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
+    xmlns:tibprop="http://ns.tibco.com/bw/property" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <tibex:Types>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/EngineTypes"
+            xmlns:tns="http://www.tibco.com/pe/EngineTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="ErrorReport">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="StackTrace" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Msg" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="FullClass" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Class" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessStack" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="MsgCode" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="Data" type="tns:anydata"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="FaultDetail">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ActivityName" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="Data" type="tns:anydata"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Msg" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="MsgCode" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessStack" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="StackTrace" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="ProcessContext">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="JobId" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessInstanceId" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0"
+                        name="CustomJobId" type="xs:string"/>
+                    <!--xs:element name="RestartedFromCheckpoint" form="unqualified" block="extension restriction substitution" type="xs:boolean"/-->
+                    <!--xs:element minOccurs="0" maxOccurs="unbounded" name="TrackingInfo" form="unqualified" block="extension restriction substitution" type="xs:string"/-->
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="anydata">
+                <xs:sequence>
+                    <xs:any namespace="##any" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="ErrorReport" type="tns:ErrorReport"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="FaultDetail" type="tns:FaultDetail"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="ProcessContext" type="tns:ProcessContext"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="CorrelationValue" type="xs:string"/>
+        </xs:schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="unqualified"
+            targetNamespace="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions"
+            version="" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions">
+            <complexType name="ActivityExceptionType">
+                <sequence>
+                    <element name="msg" type="string"/>
+                    <element minOccurs="0" name="msgCode" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityException" type="tns:ActivityExceptionType"/>
+            <complexType name="ActivityTimedOutExceptionType">
+                <complexContent>
+                    <extension base="tns:ActivityExceptionType"/>
+                </complexContent>
+            </complexType>
+            <element name="ActivityTimedOutException" type="tns:ActivityTimedOutExceptionType"/>
+        </schema>
+        <wsdl:definitions
+            targetNamespace="http://xmlns.example.com/20160922150751"
+            xmlns:tns="http://xmlns.example.com/20160922150751"
+            xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+    </tibex:Types>
+    <tibex:ProcessInfo callable="true" createdBy="syam.garlapati"
+        createdOn="Thu Sep 22 15:07:51 IST 2016" description=""
+        modifiers="public" productVersion="1.0.0 V80 2016-04-28"
+        scalable="true" singleton="true" stateless="true" type="IT"/>
+    <tibex:ProcessInterface context=""
+        input="{http://tns.tibco.com/bw/json/1474011107010}OMQueueElementArray" output=""/>
+    <tibex:ProcessTemplateConfigurations/>
+    <notation:Diagram measurementUnit="Pixel" type="BWProcess"
+        xmlns:bwnotation="http://tns.tibco.com/bw/runtime/BWNotation"
+        xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <children type="2001">
+            <children type="5001">
+                <element href="//0/@process"/>
+            </children>
+            <children type="3002">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+                <element href="//0/@process"/>
+            </children>
+            <children type="3003">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+                <element href="//0/@process"/>
+            </children>
+            <children type="3004">
+                <children type="4018">
+                    <children type="3018">
+                        <children type="4020">
+                            <children type="3020">
+                                <children type="4005">
+                                    <children type="3007">
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint x="-34"
+                                    xsi:type="notation:Bounds" y="54"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint x="388"
+                                    xsi:type="notation:Bounds" y="67"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint x="239"
+                                    xsi:type="notation:Bounds" y="160"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.3"/>
+                                    <layoutConstraint x="124"
+                                    xsi:type="notation:Bounds" y="160"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.4"/>
+                                    <layoutConstraint x="104"
+                                    xsi:type="notation:Bounds" y="-7"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.5"/>
+                                    <layoutConstraint x="239"
+                                    xsi:type="notation:Bounds" y="-7"/>
+                                    </children>
+                                    <styles xsi:type="notation:DrawerStyle"/>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity"/>
+                                    <layoutConstraint height="384"
+                                    width="521" xsi:type="notation:Bounds"/>
+                                </children>
+                                <styles xsi:type="notation:SortingStyle"/>
+                                <styles xsi:type="notation:FilteringStyle"/>
+                                <element href="//0/@process/@activity"/>
+                            </children>
+                            <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
+                            <styles xsi:type="bwnotation:BackgroundStyle"/>
+                            <styles xsi:type="bwnotation:ResizingStyle"/>
+                            <element href="//0/@process/@activity"/>
+                            <layoutConstraint height="384" width="524" xsi:type="notation:Bounds"/>
+                        </children>
+                        <styles xsi:type="notation:SortingStyle"/>
+                        <styles xsi:type="notation:FilteringStyle"/>
+                        <element href="//0/@process/@activity"/>
+                    </children>
+                    <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
+                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                    <element href="//0/@process/@activity"/>
+                    <layoutConstraint height="408" width="524" x="1"
+                        xsi:type="notation:Bounds" y="1"/>
+                </children>
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+                <element href="//0/@process"/>
+            </children>
+            <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
+            <element href="//0/@process"/>
+            <layoutConstraint height="460" width="866" xsi:type="notation:Bounds"/>
+        </children>
+        <styles xsi:type="notation:DiagramStyle"/>
+        <element href="//0"/>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.0"/>
+            <bendpoints
+                points="[25, 0, -169, -119]$[74, 0, -120, -119]$[74, 119, -120, 0]$[170, 119, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[25, -15, -124, 78]$[125, -78, -24, 15]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[25, -4, -86, 14]$[87, -14, -24, 4]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[25, -18, -108, 79]$[109, -79, -24, 18]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.4"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.5"/>
+            <bendpoints points="[25, 12, -124, -62]$[125, 62, -24, -12]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+    </notation:Diagram>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1474011107010"/>
+    <bpws:variables>
+        <bpws:variable element="ns:ProcessContext"
+            name="_processContext" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:OMQueueElementArray" name="Start"
+            sca-bpel:internal="true" tibex:parameter="in"/>
+        <bpws:variable element="ns0:OMQueueElementArray"
+            name="OMContactCallProcess-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:OMQueueElementArray"
+            name="ProfileMapper-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:OMQueueElementArray"
+            name="ProfileMapper" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:OMQueueElementArray"
+            name="OrgNodeMapper-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:OMQueueElementArray"
+            name="OrgNodeMapper" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:OMQueueElementArray"
+            name="OMAccountCallProcess-input" sca-bpel:internal="true"/>
+    </bpws:variables>
+    <bpws:extensions>
+        <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
+        <bpws:extension mustUnderstand="no" namespace="http://www.tibco.com/bw/process/info"/>
+        <bpws:extension mustUnderstand="no" namespace="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"/>
+        <bpws:extension mustUnderstand="no" namespace="http://docs.oasis-open.org/ns/opencsa/sca/200912"/>
+        <bpws:extension mustUnderstand="no" namespace="http://ns.tibco.com/bw/property"/>
+        <bpws:extension mustUnderstand="no" namespace="http://www.tibco.com/bpel/2007/extensions"/>
+    </bpws:extensions>
+    <bpws:scope name="scope">
+        <bpws:flow name="flow">
+            <bpws:links>
+                <bpws:link name="StartToMapper1" tibex:linkType="SUCCESS"/>
+                <bpws:link name="CallProcessToEnd" tibex:linkType="SUCCESS"/>
+                <bpws:link name="MapperToOMContactCallProcess" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="StartToMapper" tibex:linkType="SUCCESS"/>
+                <bpws:link name="OrgNodeMapperToCallProcess" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="OMAccountCallProcessToEnd" tibex:linkType="SUCCESS"/>
+            </bpws:links>
+            <bpws:extensionActivity>
+                <tibex:receiveEvent createInstance="yes"
+                    eventTimeout="0" name="Start"
+                    tibex:xpdlId="84413454-88bf-4c52-bcf5-13f9eeede706"
+                    variable="Start" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:sources>
+                        <bpws:source linkName="StartToMapper1">
+                            <tibex:DesignExpression/>
+                        </bpws:source>
+                        <bpws:source linkName="StartToMapper"/>
+                    </bpws:sources>
+                    <tibex:eventSource>
+                        <tibex:StartEvent xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                    </tibex:eventSource>
+                </tibex:receiveEvent>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension name="End"
+                    tibex:xpdlId="11530a52-5a40-45b6-9d34-77518708fd2e" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="CallProcessToEnd"/>
+                        <bpws:target linkName="OMAccountCallProcessToEnd"/>
+                    </bpws:targets>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.internal.end"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:internalactivities="http://ns.tibco.com/bw/core/internalactivity" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/core/internalactivity#//End"/>
+                                    <value xsi:type="internalactivities:End"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:extActivity
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;ProfileMapper&quot;/>&#xa;    &lt;xsl:template name=&quot;OMContactCallProcess-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:OMQueueElementArray>&#xa;            &lt;xsl:for-each select=&quot;$ProfileMapper/tns:OMQueueElement&quot;>&#xa;                &lt;tns:OMQueueElement>&#xa;                    &lt;xsl:if test=&quot;tns:Id&quot;>&#xa;                        &lt;tns:Id>&#xa;                            &lt;xsl:value-of select=&quot;tns:Id&quot;/>&#xa;                        &lt;/tns:Id>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:ObjectName&quot;>&#xa;                        &lt;tns:ObjectName>&#xa;                            &lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&#xa;                        &lt;/tns:ObjectName>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:ObjectId&quot;>&#xa;                        &lt;tns:ObjectId>&#xa;                            &lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&#xa;                        &lt;/tns:ObjectId>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:CreatedDate&quot;>&#xa;                        &lt;tns:CreatedDate>&#xa;                            &lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&#xa;                            &lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&#xa;                        &lt;/tns:CreatedDate>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&#xa;                        &lt;tns:UpdatedDate>&#xa;                            &lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&#xa;                            &lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&#xa;                        &lt;/tns:UpdatedDate>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:Status&quot;>&#xa;                        &lt;tns:Status>&#xa;                            &lt;xsl:value-of select=&quot;tns:Status&quot;/>&#xa;                        &lt;/tns:Status>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:Message&quot;>&#xa;                        &lt;tns:Message>&#xa;                            &lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&#xa;                            &lt;xsl:value-of select=&quot;tns:Message&quot;/>&#xa;                        &lt;/tns:Message>&#xa;                    &lt;/xsl:if>&#xa;                &lt;/tns:OMQueueElement>&#xa;            &lt;/xsl:for-each>&#xa;        &lt;/tns:OMQueueElementArray>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="OMContactCallProcess-input"
+                    name="OMContactCallProcess"
+                    tibex:xpdlId="9a9f42ee-5de2-4dd2-b377-90e1665d4a91"
+                    type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="MapperToOMContactCallProcess"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="CallProcessToEnd"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;ProfileMapper&quot;/>&#xa;    &lt;xsl:template name=&quot;OMContactCallProcess-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:OMQueueElementArray>&#xa;            &lt;xsl:for-each select=&quot;$ProfileMapper/tns:OMQueueElement&quot;>&#xa;                &lt;tns:OMQueueElement>&#xa;                    &lt;xsl:if test=&quot;tns:Id&quot;>&#xa;                        &lt;tns:Id>&#xa;                            &lt;xsl:value-of select=&quot;tns:Id&quot;/>&#xa;                        &lt;/tns:Id>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:ObjectName&quot;>&#xa;                        &lt;tns:ObjectName>&#xa;                            &lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&#xa;                        &lt;/tns:ObjectName>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:ObjectId&quot;>&#xa;                        &lt;tns:ObjectId>&#xa;                            &lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&#xa;                        &lt;/tns:ObjectId>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:CreatedDate&quot;>&#xa;                        &lt;tns:CreatedDate>&#xa;                            &lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&#xa;                            &lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&#xa;                        &lt;/tns:CreatedDate>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&#xa;                        &lt;tns:UpdatedDate>&#xa;                            &lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&#xa;                            &lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&#xa;                        &lt;/tns:UpdatedDate>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:Status&quot;>&#xa;                        &lt;tns:Status>&#xa;                            &lt;xsl:value-of select=&quot;tns:Status&quot;/>&#xa;                        &lt;/tns:Status>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns:Message&quot;>&#xa;                        &lt;tns:Message>&#xa;                            &lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&#xa;                            &lt;xsl:value-of select=&quot;tns:Message&quot;/>&#xa;                        &lt;/tns:Message>&#xa;                    &lt;/xsl:if>&#xa;                &lt;/tns:OMQueueElement>&#xa;            &lt;/xsl:for-each>&#xa;        &lt;/tns:OMQueueElementArray>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:CallProcess spawn="true"
+                        subProcessName="OMBaseFlow.OMProfileContactProcess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                </tibex:extActivity>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Start&quot;/>&lt;xsl:template name=&quot;ProfileMapper-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;xsl:for-each select=&quot;$Start/tns:OMQueueElement&quot;>&lt;xsl:if test=&quot;tns:ObjectName=&amp;quot;Profile&amp;quot;&quot;>&lt;tns:OMQueueElement>&lt;xsl:if test=&quot;tns:Id&quot;>&lt;tns:Id>&lt;xsl:value-of select=&quot;tns:Id&quot;/>&lt;/tns:Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectName&quot;>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&lt;/tns:ObjectName>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectId&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:CreatedDate&quot;>&lt;tns:CreatedDate>&lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&lt;/tns:CreatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&lt;tns:UpdatedDate>&lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&lt;/tns:UpdatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Status&quot;>&lt;tns:Status>&lt;xsl:value-of select=&quot;tns:Status&quot;/>&lt;/tns:Status>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Message&quot;>&lt;tns:Message>&lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Message&quot;/>&lt;/tns:Message>&lt;/xsl:if>&lt;/tns:OMQueueElement>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="ProfileMapper-input"
+                    name="ProfileMapper" outputVariable="ProfileMapper"
+                    tibex:xpdlId="62a68cdc-69f3-44c5-aa0a-a48d29d59780" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="StartToMapper1"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="MapperToOMContactCallProcess">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="count($ProfileMapper/ns0:OMQueueElement)>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[count($ProfileMapper/ns0:OMQueueElement)>0]]></bpws:transitionCondition>
+                        </bpws:source>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Start&quot;/>&lt;xsl:template name=&quot;ProfileMapper-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;xsl:for-each select=&quot;$Start/tns:OMQueueElement&quot;>&lt;xsl:if test=&quot;tns:ObjectName=&amp;quot;Profile&amp;quot;&quot;>&lt;tns:OMQueueElement>&lt;xsl:if test=&quot;tns:Id&quot;>&lt;tns:Id>&lt;xsl:value-of select=&quot;tns:Id&quot;/>&lt;/tns:Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectName&quot;>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&lt;/tns:ObjectName>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectId&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:CreatedDate&quot;>&lt;tns:CreatedDate>&lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&lt;/tns:CreatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&lt;tns:UpdatedDate>&lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&lt;/tns:UpdatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Status&quot;>&lt;tns:Status>&lt;xsl:value-of select=&quot;tns:Status&quot;/>&lt;/tns:Status>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Message&quot;>&lt;tns:Message>&lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Message&quot;/>&lt;/tns:Message>&lt;/xsl:if>&lt;/tns:OMQueueElement>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.generalactivities.mapper"
+                            version="6.0.0.001"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities"
+                            xmlns:json_1474011107010="http://tns.tibco.com/bw/json/1474011107010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
+                                    <value
+                                    inputQName="json_1474011107010:OMQueueElementArray" xsi:type="generalactivities:Mapper"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Start&quot;/>&lt;xsl:template name=&quot;OrgNodeMapper-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;xsl:for-each select=&quot;$Start/tns:OMQueueElement&quot;>&lt;xsl:if test=&quot;tns:ObjectName=&amp;quot;OrgNode&amp;quot;&quot;>&lt;tns:OMQueueElement>&lt;xsl:if test=&quot;tns:Id&quot;>&lt;tns:Id>&lt;xsl:value-of select=&quot;tns:Id&quot;/>&lt;/tns:Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectName&quot;>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&lt;/tns:ObjectName>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectId&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:CreatedDate&quot;>&lt;tns:CreatedDate>&lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&lt;/tns:CreatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&lt;tns:UpdatedDate>&lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&lt;/tns:UpdatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Status&quot;>&lt;tns:Status>&lt;xsl:value-of select=&quot;tns:Status&quot;/>&lt;/tns:Status>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Message&quot;>&lt;tns:Message>&lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Message&quot;/>&lt;/tns:Message>&lt;/xsl:if>&lt;/tns:OMQueueElement>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="OrgNodeMapper-input"
+                    name="OrgNodeMapper" outputVariable="OrgNodeMapper"
+                    tibex:xpdlId="11e831b6-462d-4206-95c4-47ec1a4edb5d" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="StartToMapper"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="OrgNodeMapperToCallProcess">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="count($OrgNodeMapper/ns0:OMQueueElement)>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[count($OrgNodeMapper/ns0:OMQueueElement)>0]]></bpws:transitionCondition>
+                        </bpws:source>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Start&quot;/>&lt;xsl:template name=&quot;OrgNodeMapper-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;xsl:for-each select=&quot;$Start/tns:OMQueueElement&quot;>&lt;xsl:if test=&quot;tns:ObjectName=&amp;quot;OrgNode&amp;quot;&quot;>&lt;tns:OMQueueElement>&lt;xsl:if test=&quot;tns:Id&quot;>&lt;tns:Id>&lt;xsl:value-of select=&quot;tns:Id&quot;/>&lt;/tns:Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectName&quot;>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&lt;/tns:ObjectName>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectId&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:CreatedDate&quot;>&lt;tns:CreatedDate>&lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&lt;/tns:CreatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&lt;tns:UpdatedDate>&lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&lt;/tns:UpdatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Status&quot;>&lt;tns:Status>&lt;xsl:value-of select=&quot;tns:Status&quot;/>&lt;/tns:Status>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Message&quot;>&lt;tns:Message>&lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Message&quot;/>&lt;/tns:Message>&lt;/xsl:if>&lt;/tns:OMQueueElement>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.generalactivities.mapper"
+                            version="6.0.0.001"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities"
+                            xmlns:json_1474011107010="http://tns.tibco.com/bw/json/1474011107010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
+                                    <value
+                                    inputQName="json_1474011107010:OMQueueElementArray" xsi:type="generalactivities:Mapper"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:extActivity
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;OrgNodeMapper&quot;/>&lt;xsl:template name=&quot;OMAccountCallProcess-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;xsl:for-each select=&quot;$OrgNodeMapper/tns:OMQueueElement&quot;>&lt;tns:OMQueueElement>&lt;xsl:if test=&quot;tns:Id&quot;>&lt;tns:Id>&lt;xsl:value-of select=&quot;tns:Id&quot;/>&lt;/tns:Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectName&quot;>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&lt;/tns:ObjectName>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectId&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:CreatedDate&quot;>&lt;tns:CreatedDate>&lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&lt;/tns:CreatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&lt;tns:UpdatedDate>&lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&lt;/tns:UpdatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Status&quot;>&lt;tns:Status>&lt;xsl:value-of select=&quot;tns:Status&quot;/>&lt;/tns:Status>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Message&quot;>&lt;tns:Message>&lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Message&quot;/>&lt;/tns:Message>&lt;/xsl:if>&lt;/tns:OMQueueElement>&lt;/xsl:for-each>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="OMAccountCallProcess-input"
+                    name="OMAccountCallProcess"
+                    tibex:xpdlId="a4372076-30c4-4020-b853-957bac2ede61"
+                    type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="OrgNodeMapperToCallProcess"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="OMAccountCallProcessToEnd"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1474011107010&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;OrgNodeMapper&quot;/>&lt;xsl:template name=&quot;OMAccountCallProcess-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;xsl:for-each select=&quot;$OrgNodeMapper/tns:OMQueueElement&quot;>&lt;tns:OMQueueElement>&lt;xsl:if test=&quot;tns:Id&quot;>&lt;tns:Id>&lt;xsl:value-of select=&quot;tns:Id&quot;/>&lt;/tns:Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectName&quot;>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;tns:ObjectName&quot;/>&lt;/tns:ObjectName>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:ObjectId&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;tns:ObjectId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:CreatedDate&quot;>&lt;tns:CreatedDate>&lt;xsl:copy-of select=&quot;tns:CreatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:CreatedDate&quot;/>&lt;/tns:CreatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:UpdatedDate&quot;>&lt;tns:UpdatedDate>&lt;xsl:copy-of select=&quot;tns:UpdatedDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:UpdatedDate&quot;/>&lt;/tns:UpdatedDate>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Status&quot;>&lt;tns:Status>&lt;xsl:value-of select=&quot;tns:Status&quot;/>&lt;/tns:Status>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Message&quot;>&lt;tns:Message>&lt;xsl:copy-of select=&quot;tns:Message/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Message&quot;/>&lt;/tns:Message>&lt;/xsl:if>&lt;/tns:OMQueueElement>&lt;/xsl:for-each>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:CallProcess spawn="true"
+                        subProcessName="OMBaseFlow.OMOrgNodeAccountProcess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                </tibex:extActivity>
+            </bpws:extensionActivity>
+        </bpws:flow>
+    </bpws:scope>
+</bpws:process>

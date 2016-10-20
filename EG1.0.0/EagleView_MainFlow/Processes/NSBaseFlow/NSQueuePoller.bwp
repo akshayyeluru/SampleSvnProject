@@ -1,0 +1,2377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpws:process exitOnStandardFault="no" name="NSBaseFlow.NSQueuePoller"
+    suppressJoinFailure="yes"
+    targetNamespace="http://xmlns.example.com/20160909105448"
+    xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:info="http://www.tibco.com/bw/process/info"
+    xmlns:ns="http://www.tibco.com/pe/EngineTypes"
+    xmlns:ns0="http://tns.tibco.com/bw/activity/timer/xsd/output"
+    xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+input"
+    xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+output"
+    xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+input"
+    xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+output"
+    xmlns:ns5="http://www.example.org/NsQueueDataMapper"
+    xmlns:ns6="http://www.example.org/SfQueueDataMapper"
+    xmlns:ns7="http://www.tibco.com/pe/WriteToLogActivitySchema"
+    xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
+    xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
+    xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
+    xmlns:tibprop="http://ns.tibco.com/bw/property" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <tibex:Types>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/EngineTypes"
+            xmlns:tns="http://www.tibco.com/pe/EngineTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="ErrorReport">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="StackTrace" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Msg" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="FullClass" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Class" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessStack" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="MsgCode" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="Data" type="tns:anydata"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="FaultDetail">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ActivityName" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="Data" type="tns:anydata"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Msg" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="MsgCode" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessStack" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="StackTrace" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="ProcessContext">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="JobId" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessInstanceId" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0"
+                        name="CustomJobId" type="xs:string"/>
+                    <!--xs:element name="RestartedFromCheckpoint" form="unqualified" block="extension restriction substitution" type="xs:boolean"/-->
+                    <!--xs:element minOccurs="0" maxOccurs="unbounded" name="TrackingInfo" form="unqualified" block="extension restriction substitution" type="xs:string"/-->
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="anydata">
+                <xs:sequence>
+                    <xs:any namespace="##any" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="ErrorReport" type="tns:ErrorReport"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="FaultDetail" type="tns:FaultDetail"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="ProcessContext" type="tns:ProcessContext"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="CorrelationValue" type="xs:string"/>
+        </xs:schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="unqualified"
+            targetNamespace="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions"
+            version="" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions">
+            <complexType name="ActivityExceptionType">
+                <sequence>
+                    <element name="msg" type="string"/>
+                    <element minOccurs="0" name="msgCode" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityException" type="tns:ActivityExceptionType"/>
+            <complexType name="ActivityTimedOutExceptionType">
+                <complexContent>
+                    <extension base="tns:ActivityExceptionType"/>
+                </complexContent>
+            </complexType>
+            <element name="ActivityTimedOutException" type="tns:ActivityTimedOutExceptionType"/>
+        </schema>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://tns.tibco.com/bw/activity/timer/xsd/output"
+            xmlns:tns="http://tns.tibco.com/bw/activity/timer/xsd/output" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType name="TimerOutputSchemaType">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="Now" type="xs:long"/>
+                    <xs:element form="unqualified" name="Hour" type="xs:int"/>
+                    <xs:element form="unqualified" name="Minute" type="xs:int"/>
+                    <xs:element form="unqualified" name="Second" type="xs:int"/>
+                    <xs:element form="unqualified" name="Week" type="xs:int"/>
+                    <xs:element form="unqualified" name="Month" type="xs:int"/>
+                    <xs:element form="unqualified" name="Year" type="xs:int"/>
+                    <xs:element form="unqualified" name="Date" type="xs:date"/>
+                    <xs:element form="unqualified" name="Time" type="xs:string"/>
+                    <xs:element form="unqualified" name="DayOfMonth" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="TimerOutputSchema" type="tns:TimerOutputSchemaType"/>
+        </xs:schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+input"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+input">
+            <complexType name="ActivityInputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchRecord" type="tns:searchRecordType"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityInput" type="tns:ActivityInputType"/>
+            <complexType name="searchRecordType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:basic"/>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="SearchRecord"/>
+            <complexType abstract="true" name="SearchRecordBasic">
+                <complexContent>
+                    <extension base="tns:SearchRecord"/>
+                </complexContent>
+            </complexType>
+            <complexType abstract="true" name="BaseRef">
+                <sequence/>
+            </complexType>
+            <simpleType name="RecordType">
+                <restriction base="string">
+                    <enumeration value="account"/>
+                    <enumeration value="accountingPeriod"/>
+                    <enumeration value="appDefinition"/>
+                    <enumeration value="appPackage"/>
+                    <enumeration value="assemblyBuild"/>
+                    <enumeration value="assemblyUnbuild"/>
+                    <enumeration value="assemblyItem"/>
+                    <enumeration value="billingSchedule"/>
+                    <enumeration value="bin"/>
+                    <enumeration value="binTransfer"/>
+                    <enumeration value="binWorksheet"/>
+                    <enumeration value="budget"/>
+                    <enumeration value="budgetCategory"/>
+                    <enumeration value="calendarEvent"/>
+                    <enumeration value="campaign"/>
+                    <enumeration value="campaignAudience"/>
+                    <enumeration value="campaignCategory"/>
+                    <enumeration value="campaignChannel"/>
+                    <enumeration value="campaignFamily"/>
+                    <enumeration value="campaignOffer"/>
+                    <enumeration value="campaignResponse"/>
+                    <enumeration value="campaignSearchEngine"/>
+                    <enumeration value="campaignSubscription"/>
+                    <enumeration value="campaignVertical"/>
+                    <enumeration value="cashRefund"/>
+                    <enumeration value="cashSale"/>
+                    <enumeration value="check"/>
+                    <enumeration value="charge"/>
+                    <enumeration value="classification"/>
+                    <enumeration value="contact"/>
+                    <enumeration value="contactCategory"/>
+                    <enumeration value="contactRole"/>
+                    <enumeration value="costCategory"/>
+                    <enumeration value="couponCode"/>
+                    <enumeration value="creditMemo"/>
+                    <enumeration value="crmCustomField"/>
+                    <enumeration value="currency"/>
+                    <enumeration value="currencyRate"/>
+                    <enumeration value="customList"/>
+                    <enumeration value="customRecord"/>
+                    <enumeration value="customRecordCustomField"/>
+                    <enumeration value="customRecordType"/>
+                    <enumeration value="customTransaction"/>
+                    <enumeration value="customTransactionType"/>
+                    <enumeration value="customer"/>
+                    <enumeration value="customerCategory"/>
+                    <enumeration value="customerDeposit"/>
+                    <enumeration value="customerMessage"/>
+                    <enumeration value="customerPayment"/>
+                    <enumeration value="customerRefund"/>
+                    <enumeration value="customerStatus"/>
+                    <enumeration value="deposit"/>
+                    <enumeration value="depositApplication"/>
+                    <enumeration value="department"/>
+                    <enumeration value="descriptionItem"/>
+                    <enumeration value="discountItem"/>
+                    <enumeration value="downloadItem"/>
+                    <enumeration value="employee"/>
+                    <enumeration value="entityCustomField"/>
+                    <enumeration value="entityGroup"/>
+                    <enumeration value="estimate"/>
+                    <enumeration value="expenseCategory"/>
+                    <enumeration value="expenseReport"/>
+                    <enumeration value="file"/>
+                    <enumeration value="folder"/>
+                    <enumeration value="giftCertificate"/>
+                    <enumeration value="giftCertificateItem"/>
+                    <enumeration value="globalAccountMapping"/>
+                    <enumeration value="interCompanyJournalEntry"/>
+                    <enumeration value="interCompanyTransferOrder"/>
+                    <enumeration value="inventoryAdjustment"/>
+                    <enumeration value="inventoryCostRevaluation"/>
+                    <enumeration value="inventoryItem"/>
+                    <enumeration value="inventoryNumber"/>
+                    <enumeration value="inventoryTransfer"/>
+                    <enumeration value="invoice"/>
+                    <enumeration value="itemAccountMapping"/>
+                    <enumeration value="itemCustomField"/>
+                    <enumeration value="itemDemandPlan"/>
+                    <enumeration value="itemFulfillment"/>
+                    <enumeration value="itemGroup"/>
+                    <enumeration value="itemNumberCustomField"/>
+                    <enumeration value="itemOptionCustomField"/>
+                    <enumeration value="itemSupplyPlan"/>
+                    <enumeration value="itemRevision"/>
+                    <enumeration value="issue"/>
+                    <enumeration value="job"/>
+                    <enumeration value="jobStatus"/>
+                    <enumeration value="jobType"/>
+                    <enumeration value="itemReceipt"/>
+                    <enumeration value="journalEntry"/>
+                    <enumeration value="kitItem"/>
+                    <enumeration value="leadSource"/>
+                    <enumeration value="location"/>
+                    <enumeration value="lotNumberedInventoryItem"/>
+                    <enumeration value="lotNumberedAssemblyItem"/>
+                    <enumeration value="markupItem"/>
+                    <enumeration value="message"/>
+                    <enumeration value="manufacturingCostTemplate"/>
+                    <enumeration value="manufacturingOperationTask"/>
+                    <enumeration value="manufacturingRouting"/>
+                    <enumeration value="nexus"/>
+                    <enumeration value="nonInventoryPurchaseItem"/>
+                    <enumeration value="nonInventoryResaleItem"/>
+                    <enumeration value="nonInventorySaleItem"/>
+                    <enumeration value="note"/>
+                    <enumeration value="noteType"/>
+                    <enumeration value="opportunity"/>
+                    <enumeration value="otherChargePurchaseItem"/>
+                    <enumeration value="otherChargeResaleItem"/>
+                    <enumeration value="otherChargeSaleItem"/>
+                    <enumeration value="otherCustomField"/>
+                    <enumeration value="otherNameCategory"/>
+                    <enumeration value="partner"/>
+                    <enumeration value="partnerCategory"/>
+                    <enumeration value="paycheckJournal"/>
+                    <enumeration value="paymentItem"/>
+                    <enumeration value="paymentMethod"/>
+                    <enumeration value="payrollItem"/>
+                    <enumeration value="phoneCall"/>
+                    <enumeration value="priceLevel"/>
+                    <enumeration value="pricingGroup"/>
+                    <enumeration value="projectTask"/>
+                    <enumeration value="promotionCode"/>
+                    <enumeration value="purchaseOrder"/>
+                    <enumeration value="purchaseRequisition"/>
+                    <enumeration value="resourceAllocation"/>
+                    <enumeration value="returnAuthorization"/>
+                    <enumeration value="revRecSchedule"/>
+                    <enumeration value="revRecTemplate"/>
+                    <enumeration value="salesOrder"/>
+                    <enumeration value="salesRole"/>
+                    <enumeration value="salesTaxItem"/>
+                    <enumeration value="serializedInventoryItem"/>
+                    <enumeration value="serializedAssemblyItem"/>
+                    <enumeration value="servicePurchaseItem"/>
+                    <enumeration value="serviceResaleItem"/>
+                    <enumeration value="serviceSaleItem"/>
+                    <enumeration value="solution"/>
+                    <enumeration value="siteCategory"/>
+                    <enumeration value="state"/>
+                    <enumeration value="statisticalJournalEntry"/>
+                    <enumeration value="subsidiary"/>
+                    <enumeration value="subtotalItem"/>
+                    <enumeration value="supportCase"/>
+                    <enumeration value="supportCaseIssue"/>
+                    <enumeration value="supportCaseOrigin"/>
+                    <enumeration value="supportCasePriority"/>
+                    <enumeration value="supportCaseStatus"/>
+                    <enumeration value="supportCaseType"/>
+                    <enumeration value="task"/>
+                    <enumeration value="taxAcct"/>
+                    <enumeration value="taxGroup"/>
+                    <enumeration value="taxType"/>
+                    <enumeration value="term"/>
+                    <enumeration value="timeBill"/>
+                    <enumeration value="timeSheet"/>
+                    <enumeration value="topic"/>
+                    <enumeration value="transferOrder"/>
+                    <enumeration value="transactionBodyCustomField"/>
+                    <enumeration value="transactionColumnCustomField"/>
+                    <enumeration value="unitsType"/>
+                    <enumeration value="vendor"/>
+                    <enumeration value="vendorCategory"/>
+                    <enumeration value="vendorBill"/>
+                    <enumeration value="vendorCredit"/>
+                    <enumeration value="vendorPayment"/>
+                    <enumeration value="vendorReturnAuthorization"/>
+                    <enumeration value="winLossReason"/>
+                    <enumeration value="workOrder"/>
+                    <enumeration value="workOrderIssue"/>
+                    <enumeration value="workOrderCompletion"/>
+                    <enumeration value="workOrderClose"/>
+                </restriction>
+            </simpleType>
+            <complexType name="RecordRef">
+                <complexContent>
+                    <extension base="tns:BaseRef">
+                        <attribute name="internalId" type="string"/>
+                        <attribute name="externalId" type="string"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="SearchBooleanField">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchValue" type="boolean"/>
+                </sequence>
+            </complexType>
+            <simpleType name="SearchDateFieldOperator">
+                <restriction base="string">
+                    <enumeration value="after"/>
+                    <enumeration value="before"/>
+                    <enumeration value="empty"/>
+                    <enumeration value="notAfter"/>
+                    <enumeration value="notBefore"/>
+                    <enumeration value="notEmpty"/>
+                    <enumeration value="notOn"/>
+                    <enumeration value="notOnOrAfter"/>
+                    <enumeration value="notOnOrBefore"/>
+                    <enumeration value="notWithin"/>
+                    <enumeration value="on"/>
+                    <enumeration value="onOrAfter"/>
+                    <enumeration value="onOrBefore"/>
+                    <enumeration value="within"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="SearchDate">
+                <restriction base="string">
+                    <enumeration value="fiscalHalfBeforeLast"/>
+                    <enumeration value="fiscalHalfBeforeLastToDate"/>
+                    <enumeration value="fiscalQuarterBeforeLast"/>
+                    <enumeration value="fiscalQuarterBeforeLastToDate"/>
+                    <enumeration value="fiscalYearBeforeLast"/>
+                    <enumeration value="fiscalYearBeforeLastToDate"/>
+                    <enumeration value="fiveDaysAgo"/>
+                    <enumeration value="fiveDaysFromNow"/>
+                    <enumeration value="fourDaysAgo"/>
+                    <enumeration value="fourDaysFromNow"/>
+                    <enumeration value="fourWeeksStartingThisWeek"/>
+                    <enumeration value="lastBusinessWeek"/>
+                    <enumeration value="lastFiscalHalf"/>
+                    <enumeration value="lastFiscalHalfOneFiscalYearAgo"/>
+                    <enumeration value="lastFiscalHalfToDate"/>
+                    <enumeration value="lastFiscalQuarter"/>
+                    <enumeration value="lastFiscalQuarterOneFiscalYearAgo"/>
+                    <enumeration value="lastFiscalQuarterToDate"/>
+                    <enumeration value="lastFiscalQuarterTwoFiscalYearsAgo"/>
+                    <enumeration value="lastFiscalYear"/>
+                    <enumeration value="lastFiscalYearToDate"/>
+                    <enumeration value="lastMonth"/>
+                    <enumeration value="lastMonthOneFiscalQuarterAgo"/>
+                    <enumeration value="lastMonthOneFiscalYearAgo"/>
+                    <enumeration value="lastMonthToDate"/>
+                    <enumeration value="lastMonthTwoFiscalQuartersAgo"/>
+                    <enumeration value="lastMonthTwoFiscalYearsAgo"/>
+                    <enumeration value="lastRollingHalf"/>
+                    <enumeration value="lastRollingQuarter"/>
+                    <enumeration value="lastRollingYear"/>
+                    <enumeration value="lastWeek"/>
+                    <enumeration value="lastWeekToDate"/>
+                    <enumeration value="monthAfterNext"/>
+                    <enumeration value="monthAfterNextToDate"/>
+                    <enumeration value="monthBeforeLast"/>
+                    <enumeration value="monthBeforeLastToDate"/>
+                    <enumeration value="nextBusinessWeek"/>
+                    <enumeration value="nextFiscalHalf"/>
+                    <enumeration value="nextFiscalQuarter"/>
+                    <enumeration value="nextFiscalYear"/>
+                    <enumeration value="nextFourWeeks"/>
+                    <enumeration value="nextMonth"/>
+                    <enumeration value="nextOneHalf"/>
+                    <enumeration value="nextOneMonth"/>
+                    <enumeration value="nextOneQuarter"/>
+                    <enumeration value="nextOneWeek"/>
+                    <enumeration value="nextOneYear"/>
+                    <enumeration value="nextWeek"/>
+                    <enumeration value="ninetyDaysAgo"/>
+                    <enumeration value="ninetyDaysFromNow"/>
+                    <enumeration value="oneYearBeforeLast"/>
+                    <enumeration value="previousFiscalQuartersLastFiscalYear"/>
+                    <enumeration value="previousFiscalQuartersThisFiscalYear"/>
+                    <enumeration value="previousMonthsLastFiscalHalf"/>
+                    <enumeration value="previousMonthsLastFiscalQuarter"/>
+                    <enumeration value="previousMonthsLastFiscalYear"/>
+                    <enumeration value="previousMonthsSameFiscalHalfLastFiscalYear"/>
+                    <enumeration value="previousMonthsSameFiscalQuarterLastFiscalYear"/>
+                    <enumeration value="previousMonthsThisFiscalHalf"/>
+                    <enumeration value="previousMonthsThisFiscalQuarter"/>
+                    <enumeration value="previousMonthsThisFiscalYear"/>
+                    <enumeration value="previousOneDay"/>
+                    <enumeration value="previousOneHalf"/>
+                    <enumeration value="previousOneMonth"/>
+                    <enumeration value="previousOneQuarter"/>
+                    <enumeration value="previousOneWeek"/>
+                    <enumeration value="previousOneYear"/>
+                    <enumeration value="previousRollingHalf"/>
+                    <enumeration value="previousRollingQuarter"/>
+                    <enumeration value="previousRollingYear"/>
+                    <enumeration value="sameDayFiscalQuarterBeforeLast"/>
+                    <enumeration value="sameDayFiscalYearBeforeLast"/>
+                    <enumeration value="sameDayLastFiscalQuarter"/>
+                    <enumeration value="sameDayLastFiscalYear"/>
+                    <enumeration value="sameDayLastMonth"/>
+                    <enumeration value="sameDayLastWeek"/>
+                    <enumeration value="sameDayMonthBeforeLast"/>
+                    <enumeration value="sameDayWeekBeforeLast"/>
+                    <enumeration value="sameFiscalHalfLastFiscalYear"/>
+                    <enumeration value="sameFiscalHalfLastFiscalYearToDate"/>
+                    <enumeration value="sameFiscalQuarterFiscalYearBeforeLast"/>
+                    <enumeration value="sameFiscalQuarterLastFiscalYear"/>
+                    <enumeration value="sameFiscalQuarterLastFiscalYearToDate"/>
+                    <enumeration value="sameMonthFiscalQuarterBeforeLast"/>
+                    <enumeration value="sameMonthFiscalYearBeforeLast"/>
+                    <enumeration value="sameMonthLastFiscalQuarter"/>
+                    <enumeration value="sameMonthLastFiscalQuarterToDate"/>
+                    <enumeration value="sameMonthLastFiscalYear"/>
+                    <enumeration value="sameMonthLastFiscalYearToDate"/>
+                    <enumeration value="sameWeekFiscalYearBeforeLast"/>
+                    <enumeration value="sameWeekLastFiscalYear"/>
+                    <enumeration value="sixtyDaysAgo"/>
+                    <enumeration value="sixtyDaysFromNow"/>
+                    <enumeration value="startOfFiscalHalfBeforeLast"/>
+                    <enumeration value="startOfFiscalQuarterBeforeLast"/>
+                    <enumeration value="startOfFiscalYearBeforeLast"/>
+                    <enumeration value="startOfLastBusinessWeek"/>
+                    <enumeration value="startOfLastFiscalHalf"/>
+                    <enumeration value="startOfLastFiscalHalfOneFiscalYearAgo"/>
+                    <enumeration value="startOfLastFiscalQuarter"/>
+                    <enumeration value="startOfLastFiscalQuarterOneFiscalYearAgo"/>
+                    <enumeration value="startOfLastFiscalYear"/>
+                    <enumeration value="startOfLastMonth"/>
+                    <enumeration value="startOfLastMonthOneFiscalQuarterAgo"/>
+                    <enumeration value="startOfLastMonthOneFiscalYearAgo"/>
+                    <enumeration value="startOfLastRollingHalf"/>
+                    <enumeration value="startOfLastRollingQuarter"/>
+                    <enumeration value="startOfLastRollingYear"/>
+                    <enumeration value="startOfLastWeek"/>
+                    <enumeration value="startOfMonthBeforeLast"/>
+                    <enumeration value="startOfNextBusinessWeek"/>
+                    <enumeration value="startOfNextFiscalHalf"/>
+                    <enumeration value="startOfNextFiscalQuarter"/>
+                    <enumeration value="startOfNextFiscalYear"/>
+                    <enumeration value="startOfNextMonth"/>
+                    <enumeration value="startOfNextWeek"/>
+                    <enumeration value="startOfPreviousRollingHalf"/>
+                    <enumeration value="startOfPreviousRollingQuarter"/>
+                    <enumeration value="startOfPreviousRollingYear"/>
+                    <enumeration value="startOfSameFiscalHalfLastFiscalYear"/>
+                    <enumeration value="startOfSameFiscalQuarterLastFiscalYear"/>
+                    <enumeration value="startOfSameMonthLastFiscalQuarter"/>
+                    <enumeration value="startOfSameMonthLastFiscalYear"/>
+                    <enumeration value="startOfThisBusinessWeek"/>
+                    <enumeration value="startOfThisFiscalHalf"/>
+                    <enumeration value="startOfThisFiscalQuarter"/>
+                    <enumeration value="startOfThisFiscalYear"/>
+                    <enumeration value="startOfThisMonth"/>
+                    <enumeration value="startOfThisWeek"/>
+                    <enumeration value="startOfThisYear"/>
+                    <enumeration value="startOfWeekBeforeLast"/>
+                    <enumeration value="tenDaysAgo"/>
+                    <enumeration value="tenDaysFromNow"/>
+                    <enumeration value="thirtyDaysAgo"/>
+                    <enumeration value="thirtyDaysFromNow"/>
+                    <enumeration value="thisBusinessWeek"/>
+                    <enumeration value="thisFiscalHalf"/>
+                    <enumeration value="thisFiscalHalfToDate"/>
+                    <enumeration value="thisFiscalQuarter"/>
+                    <enumeration value="thisFiscalQuarterToDate"/>
+                    <enumeration value="thisFiscalYear"/>
+                    <enumeration value="thisFiscalYearToDate"/>
+                    <enumeration value="thisMonth"/>
+                    <enumeration value="thisMonthToDate"/>
+                    <enumeration value="thisRollingHalf"/>
+                    <enumeration value="thisRollingQuarter"/>
+                    <enumeration value="thisRollingYear"/>
+                    <enumeration value="thisWeek"/>
+                    <enumeration value="thisWeekToDate"/>
+                    <enumeration value="thisYear"/>
+                    <enumeration value="threeDaysAgo"/>
+                    <enumeration value="threeDaysFromNow"/>
+                    <enumeration value="threeFiscalQuartersAgo"/>
+                    <enumeration value="threeFiscalQuartersAgoToDate"/>
+                    <enumeration value="threeFiscalYearsAgo"/>
+                    <enumeration value="threeFiscalYearsAgoToDate"/>
+                    <enumeration value="threeMonthsAgo"/>
+                    <enumeration value="threeMonthsAgoToDate"/>
+                    <enumeration value="today"/>
+                    <enumeration value="tomorrow"/>
+                    <enumeration value="twoDaysAgo"/>
+                    <enumeration value="twoDaysFromNow"/>
+                    <enumeration value="weekAfterNext"/>
+                    <enumeration value="weekAfterNextToDate"/>
+                    <enumeration value="weekBeforeLast"/>
+                    <enumeration value="weekBeforeLastToDate"/>
+                    <enumeration value="yesterday"/>
+                </restriction>
+            </simpleType>
+            <complexType name="SearchDateField">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchValue" type="dateTime"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchValue2" type="dateTime"/>
+                </sequence>
+                <attribute name="operator" type="tns:SearchDateFieldOperator"/>
+            </complexType>
+            <simpleType name="SearchMultiSelectFieldOperator">
+                <restriction base="string">
+                    <enumeration value="anyOf"/>
+                    <enumeration value="noneOf"/>
+                </restriction>
+            </simpleType>
+            <complexType name="SearchMultiSelectField">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchValue" type="tns:RecordRef"/>
+                </sequence>
+                <attribute name="operator" type="tns:SearchMultiSelectFieldOperator"/>
+            </complexType>
+            <simpleType name="SearchStringFieldOperator">
+                <restriction base="string">
+                    <enumeration value="contains"/>
+                    <enumeration value="doesNotContain"/>
+                    <enumeration value="doesNotStartWith"/>
+                    <enumeration value="empty"/>
+                    <enumeration value="hasKeywords"/>
+                    <enumeration value="is"/>
+                    <enumeration value="isNot"/>
+                    <enumeration value="notEmpty"/>
+                    <enumeration value="startsWith"/>
+                </restriction>
+            </simpleType>
+            <complexType name="SearchStringField">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchValue" type="string"/>
+                </sequence>
+                <attribute name="operator" type="tns:SearchStringFieldOperator"/>
+            </complexType>
+            <simpleType name="SearchLongFieldOperator">
+                <restriction base="string">
+                    <enumeration value="between"/>
+                    <enumeration value="empty"/>
+                    <enumeration value="equalTo"/>
+                    <enumeration value="greaterThan"/>
+                    <enumeration value="greaterThanOrEqualTo"/>
+                    <enumeration value="lessThan"/>
+                    <enumeration value="lessThanOrEqualTo"/>
+                    <enumeration value="notBetween"/>
+                    <enumeration value="notEmpty"/>
+                    <enumeration value="notEqualTo"/>
+                    <enumeration value="notGreaterThan"/>
+                    <enumeration value="notGreaterThanOrEqualTo"/>
+                    <enumeration value="notLessThan"/>
+                    <enumeration value="notLessThanOrEqualTo"/>
+                </restriction>
+            </simpleType>
+            <complexType name="SearchLongField">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchValue" type="long"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="searchValue2" type="long"/>
+                </sequence>
+                <attribute name="operator" type="tns:SearchLongFieldOperator"/>
+            </complexType>
+            <complexType abstract="true" name="SearchCustomField">
+                <attribute name="internalId" type="string"/>
+                <attribute name="scriptId" type="string"/>
+            </complexType>
+            <complexType name="SearchCustomFieldList">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchBooleanCustomField" type="tns:SearchBooleanCustomField"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchStringCustomField" type="tns:SearchStringCustomField"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchLongCustomField" type="tns:SearchLongCustomField"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchDoubleCustomField" type="tns:SearchDoubleCustomField"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchDateCustomField" type="tns:SearchDateCustomField"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchEnumMultiSelectCustomField" type="tns:SearchEnumMultiSelectCustomField"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="searchMultiSelectCustomField" type="tns:SearchMultiSelectCustomField"/>
+                </sequence>
+            </complexType>
+            <complexType name="CustomRecordSearchBasic">
+                <complexContent>
+                    <extension base="tns:SearchRecordBasic">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="recType" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="availableOffline" type="tns:SearchBooleanField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="created" type="tns:SearchDateField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="externalId" type="tns:SearchMultiSelectField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="externalIdString" type="tns:SearchStringField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="id" type="tns:SearchLongField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="internalId" type="tns:SearchMultiSelectField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="internalIdNumber" type="tns:SearchLongField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isInactive" type="tns:SearchBooleanField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="lastModified" type="tns:SearchDateField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="lastModifiedBy" type="tns:SearchMultiSelectField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="name" type="tns:SearchStringField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="owner" type="tns:SearchMultiSelectField"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customFieldList" type="tns:SearchCustomFieldList"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="SearchBooleanCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue" type="boolean"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="SearchStringCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue" type="string"/>
+                        </sequence>
+                        <attribute name="operator" type="tns:SearchStringFieldOperator"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="SearchLongCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue2" type="long"/>
+                        </sequence>
+                        <attribute name="operator" type="tns:SearchLongFieldOperator"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <simpleType name="SearchDoubleFieldOperator">
+                <restriction base="string">
+                    <enumeration value="between"/>
+                    <enumeration value="empty"/>
+                    <enumeration value="equalTo"/>
+                    <enumeration value="greaterThan"/>
+                    <enumeration value="greaterThanOrEqualTo"/>
+                    <enumeration value="lessThan"/>
+                    <enumeration value="lessThanOrEqualTo"/>
+                    <enumeration value="notBetween"/>
+                    <enumeration value="notEmpty"/>
+                    <enumeration value="notEqualTo"/>
+                    <enumeration value="notGreaterThan"/>
+                    <enumeration value="notGreaterThanOrEqualTo"/>
+                    <enumeration value="notLessThan"/>
+                    <enumeration value="notLessThanOrEqualTo"/>
+                </restriction>
+            </simpleType>
+            <complexType name="SearchDoubleCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue" type="double"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue2" type="double"/>
+                        </sequence>
+                        <attribute name="operator" type="tns:SearchDoubleFieldOperator"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="SearchDateCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="predefinedSearchValue" type="tns:SearchDate"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue" type="dateTime"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="searchValue2" type="dateTime"/>
+                        </sequence>
+                        <attribute name="operator" type="tns:SearchDateFieldOperator"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <simpleType name="SearchEnumMultiSelectFieldOperator">
+                <restriction base="string">
+                    <enumeration value="anyOf"/>
+                    <enumeration value="noneOf"/>
+                </restriction>
+            </simpleType>
+            <complexType name="SearchEnumMultiSelectCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="unbounded" minOccurs="0"
+                                name="searchValue" type="string"/>
+                        </sequence>
+                        <attribute name="operator" type="tns:SearchEnumMultiSelectFieldOperator"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="ListOrRecordRef">
+                <sequence/>
+                <attribute name="internalId" type="string"/>
+                <attribute name="externalId" type="string"/>
+            </complexType>
+            <complexType name="SearchMultiSelectCustomField">
+                <complexContent>
+                    <extension base="tns:SearchCustomField">
+                        <sequence>
+                            <element maxOccurs="unbounded" minOccurs="0"
+                                name="searchValue" type="tns:ListOrRecordRef"/>
+                        </sequence>
+                        <attribute name="operator" type="tns:SearchMultiSelectFieldOperator"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <element name="basic" type="tns:CustomRecordSearchBasic"/>
+        </schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+output"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+output">
+            <complexType name="NullField">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="name" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="Record">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="nullFieldList" type="tns:NullField"/>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="BaseRef">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="name" type="string"/>
+                </sequence>
+            </complexType>
+            <simpleType name="RecordType">
+                <restriction base="string">
+                    <enumeration value="account"/>
+                    <enumeration value="accountingPeriod"/>
+                    <enumeration value="appDefinition"/>
+                    <enumeration value="appPackage"/>
+                    <enumeration value="assemblyBuild"/>
+                    <enumeration value="assemblyUnbuild"/>
+                    <enumeration value="assemblyItem"/>
+                    <enumeration value="billingSchedule"/>
+                    <enumeration value="bin"/>
+                    <enumeration value="binTransfer"/>
+                    <enumeration value="binWorksheet"/>
+                    <enumeration value="budget"/>
+                    <enumeration value="budgetCategory"/>
+                    <enumeration value="calendarEvent"/>
+                    <enumeration value="campaign"/>
+                    <enumeration value="campaignAudience"/>
+                    <enumeration value="campaignCategory"/>
+                    <enumeration value="campaignChannel"/>
+                    <enumeration value="campaignFamily"/>
+                    <enumeration value="campaignOffer"/>
+                    <enumeration value="campaignResponse"/>
+                    <enumeration value="campaignSearchEngine"/>
+                    <enumeration value="campaignSubscription"/>
+                    <enumeration value="campaignVertical"/>
+                    <enumeration value="cashRefund"/>
+                    <enumeration value="cashSale"/>
+                    <enumeration value="check"/>
+                    <enumeration value="charge"/>
+                    <enumeration value="classification"/>
+                    <enumeration value="contact"/>
+                    <enumeration value="contactCategory"/>
+                    <enumeration value="contactRole"/>
+                    <enumeration value="costCategory"/>
+                    <enumeration value="couponCode"/>
+                    <enumeration value="creditMemo"/>
+                    <enumeration value="crmCustomField"/>
+                    <enumeration value="currency"/>
+                    <enumeration value="currencyRate"/>
+                    <enumeration value="customList"/>
+                    <enumeration value="customRecord"/>
+                    <enumeration value="customRecordCustomField"/>
+                    <enumeration value="customRecordType"/>
+                    <enumeration value="customTransaction"/>
+                    <enumeration value="customTransactionType"/>
+                    <enumeration value="customer"/>
+                    <enumeration value="customerCategory"/>
+                    <enumeration value="customerDeposit"/>
+                    <enumeration value="customerMessage"/>
+                    <enumeration value="customerPayment"/>
+                    <enumeration value="customerRefund"/>
+                    <enumeration value="customerStatus"/>
+                    <enumeration value="deposit"/>
+                    <enumeration value="depositApplication"/>
+                    <enumeration value="department"/>
+                    <enumeration value="descriptionItem"/>
+                    <enumeration value="discountItem"/>
+                    <enumeration value="downloadItem"/>
+                    <enumeration value="employee"/>
+                    <enumeration value="entityCustomField"/>
+                    <enumeration value="entityGroup"/>
+                    <enumeration value="estimate"/>
+                    <enumeration value="expenseCategory"/>
+                    <enumeration value="expenseReport"/>
+                    <enumeration value="file"/>
+                    <enumeration value="folder"/>
+                    <enumeration value="giftCertificate"/>
+                    <enumeration value="giftCertificateItem"/>
+                    <enumeration value="globalAccountMapping"/>
+                    <enumeration value="interCompanyJournalEntry"/>
+                    <enumeration value="interCompanyTransferOrder"/>
+                    <enumeration value="inventoryAdjustment"/>
+                    <enumeration value="inventoryCostRevaluation"/>
+                    <enumeration value="inventoryItem"/>
+                    <enumeration value="inventoryNumber"/>
+                    <enumeration value="inventoryTransfer"/>
+                    <enumeration value="invoice"/>
+                    <enumeration value="itemAccountMapping"/>
+                    <enumeration value="itemCustomField"/>
+                    <enumeration value="itemDemandPlan"/>
+                    <enumeration value="itemFulfillment"/>
+                    <enumeration value="itemGroup"/>
+                    <enumeration value="itemNumberCustomField"/>
+                    <enumeration value="itemOptionCustomField"/>
+                    <enumeration value="itemSupplyPlan"/>
+                    <enumeration value="itemRevision"/>
+                    <enumeration value="issue"/>
+                    <enumeration value="job"/>
+                    <enumeration value="jobStatus"/>
+                    <enumeration value="jobType"/>
+                    <enumeration value="itemReceipt"/>
+                    <enumeration value="journalEntry"/>
+                    <enumeration value="kitItem"/>
+                    <enumeration value="leadSource"/>
+                    <enumeration value="location"/>
+                    <enumeration value="lotNumberedInventoryItem"/>
+                    <enumeration value="lotNumberedAssemblyItem"/>
+                    <enumeration value="markupItem"/>
+                    <enumeration value="message"/>
+                    <enumeration value="manufacturingCostTemplate"/>
+                    <enumeration value="manufacturingOperationTask"/>
+                    <enumeration value="manufacturingRouting"/>
+                    <enumeration value="nexus"/>
+                    <enumeration value="nonInventoryPurchaseItem"/>
+                    <enumeration value="nonInventoryResaleItem"/>
+                    <enumeration value="nonInventorySaleItem"/>
+                    <enumeration value="note"/>
+                    <enumeration value="noteType"/>
+                    <enumeration value="opportunity"/>
+                    <enumeration value="otherChargePurchaseItem"/>
+                    <enumeration value="otherChargeResaleItem"/>
+                    <enumeration value="otherChargeSaleItem"/>
+                    <enumeration value="otherCustomField"/>
+                    <enumeration value="otherNameCategory"/>
+                    <enumeration value="partner"/>
+                    <enumeration value="partnerCategory"/>
+                    <enumeration value="paycheckJournal"/>
+                    <enumeration value="paymentItem"/>
+                    <enumeration value="paymentMethod"/>
+                    <enumeration value="payrollItem"/>
+                    <enumeration value="phoneCall"/>
+                    <enumeration value="priceLevel"/>
+                    <enumeration value="pricingGroup"/>
+                    <enumeration value="projectTask"/>
+                    <enumeration value="promotionCode"/>
+                    <enumeration value="purchaseOrder"/>
+                    <enumeration value="purchaseRequisition"/>
+                    <enumeration value="resourceAllocation"/>
+                    <enumeration value="returnAuthorization"/>
+                    <enumeration value="revRecSchedule"/>
+                    <enumeration value="revRecTemplate"/>
+                    <enumeration value="salesOrder"/>
+                    <enumeration value="salesRole"/>
+                    <enumeration value="salesTaxItem"/>
+                    <enumeration value="serializedInventoryItem"/>
+                    <enumeration value="serializedAssemblyItem"/>
+                    <enumeration value="servicePurchaseItem"/>
+                    <enumeration value="serviceResaleItem"/>
+                    <enumeration value="serviceSaleItem"/>
+                    <enumeration value="solution"/>
+                    <enumeration value="siteCategory"/>
+                    <enumeration value="state"/>
+                    <enumeration value="statisticalJournalEntry"/>
+                    <enumeration value="subsidiary"/>
+                    <enumeration value="subtotalItem"/>
+                    <enumeration value="supportCase"/>
+                    <enumeration value="supportCaseIssue"/>
+                    <enumeration value="supportCaseOrigin"/>
+                    <enumeration value="supportCasePriority"/>
+                    <enumeration value="supportCaseStatus"/>
+                    <enumeration value="supportCaseType"/>
+                    <enumeration value="task"/>
+                    <enumeration value="taxAcct"/>
+                    <enumeration value="taxGroup"/>
+                    <enumeration value="taxType"/>
+                    <enumeration value="term"/>
+                    <enumeration value="timeBill"/>
+                    <enumeration value="timeSheet"/>
+                    <enumeration value="topic"/>
+                    <enumeration value="transferOrder"/>
+                    <enumeration value="transactionBodyCustomField"/>
+                    <enumeration value="transactionColumnCustomField"/>
+                    <enumeration value="unitsType"/>
+                    <enumeration value="vendor"/>
+                    <enumeration value="vendorCategory"/>
+                    <enumeration value="vendorBill"/>
+                    <enumeration value="vendorCredit"/>
+                    <enumeration value="vendorPayment"/>
+                    <enumeration value="vendorReturnAuthorization"/>
+                    <enumeration value="winLossReason"/>
+                    <enumeration value="workOrder"/>
+                    <enumeration value="workOrderIssue"/>
+                    <enumeration value="workOrderCompletion"/>
+                    <enumeration value="workOrderClose"/>
+                </restriction>
+            </simpleType>
+            <complexType name="RecordRef">
+                <complexContent>
+                    <extension base="tns:BaseRef">
+                        <attribute name="internalId" type="string"/>
+                        <attribute name="externalId" type="string"/>
+                        <attribute name="type" type="tns:RecordType"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <simpleType name="Language">
+                <restriction base="string">
+                    <enumeration value="_arabic"/>
+                    <enumeration value="_australian"/>
+                    <enumeration value="_bengali"/>
+                    <enumeration value="_bulgarian"/>
+                    <enumeration value="_catalan"/>
+                    <enumeration value="_chineseSimplified"/>
+                    <enumeration value="_chineseTraditional"/>
+                    <enumeration value="_croatian"/>
+                    <enumeration value="_czech"/>
+                    <enumeration value="_danish"/>
+                    <enumeration value="_dutch"/>
+                    <enumeration value="_english"/>
+                    <enumeration value="_estonian"/>
+                    <enumeration value="_finnish"/>
+                    <enumeration value="_frenchCanada"/>
+                    <enumeration value="_frenchFrance"/>
+                    <enumeration value="_german"/>
+                    <enumeration value="_greek"/>
+                    <enumeration value="_haitian"/>
+                    <enumeration value="_hebrew"/>
+                    <enumeration value="_hungarian"/>
+                    <enumeration value="_icelandic"/>
+                    <enumeration value="_indonesian"/>
+                    <enumeration value="_italian"/>
+                    <enumeration value="_japanese"/>
+                    <enumeration value="_korean"/>
+                    <enumeration value="_latinAmericanSpanish"/>
+                    <enumeration value="_latvian"/>
+                    <enumeration value="_lithuanian"/>
+                    <enumeration value="_norwegian"/>
+                    <enumeration value="_polish"/>
+                    <enumeration value="_portugueseBrazil"/>
+                    <enumeration value="_portuguesePortugal"/>
+                    <enumeration value="_romanian"/>
+                    <enumeration value="_russian"/>
+                    <enumeration value="_slovak"/>
+                    <enumeration value="_slovenian"/>
+                    <enumeration value="_spanish"/>
+                    <enumeration value="_swedish"/>
+                    <enumeration value="_thai"/>
+                    <enumeration value="_turkish"/>
+                    <enumeration value="_usEnglish"/>
+                    <enumeration value="_vietnamese"/>
+                </restriction>
+            </simpleType>
+            <complexType name="CustomRecordTranslations">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="locale" type="tns:Language"/>
+                    <element maxOccurs="1" minOccurs="0" name="language" type="string"/>
+                    <element maxOccurs="1" minOccurs="0" name="label" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="CustomRecordTranslationsList">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="customRecordTranslations" type="tns:CustomRecordTranslations"/>
+                </sequence>
+                <attribute name="replaceAll" type="boolean"/>
+            </complexType>
+            <complexType abstract="true" name="CustomFieldRef">
+                <attribute name="internalId" type="string"/>
+                <attribute name="scriptId" type="string"/>
+            </complexType>
+            <complexType name="CustomFieldList">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="longCustomFieldRef" type="tns:LongCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="doubleCustomFieldRef" type="tns:DoubleCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="booleanCustomFieldRef" type="tns:BooleanCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="stringCustomFieldRef" type="tns:StringCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="dateCustomFieldRef" type="tns:DateCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="selectCustomFieldRef" type="tns:SelectCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="multiSelectCustomFieldRef" type="tns:MultiSelectCustomFieldRef"/>
+                </sequence>
+            </complexType>
+            <complexType name="CustomRecord">
+                <complexContent>
+                    <extension base="tns:Record">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customRecordId" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customForm" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isInactive" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="disclaimer" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="created" type="dateTime"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="lastModified" type="dateTime"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="name" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="autoName" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="altName" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="owner" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="recType" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="enableNumbering" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingPrefix" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingSuffix" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingMinDigits" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="description" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingInit" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingCurrentNumber" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowNumberingOverride" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isNumberingUpdateable" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="translationsList" type="tns:CustomRecordTranslationsList"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="includeName" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showId" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showCreationDate" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showCreationDateOnList" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showLastModified" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showLastModifiedOnList" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showOwner" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showOwnerOnList" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showOwnerAllowChange" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="usePermissions" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowAttachments" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showNotes" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="enablEmailMerge" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isOrdered" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowInlineEditing" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isAvailableOffline" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowQuickSearch" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="recordName" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="scriptId" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customFieldList" type="tns:CustomFieldList"/>
+                        </sequence>
+                        <attribute name="internalId" type="string"/>
+                        <attribute name="externalId" type="string"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="LongCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="long"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="DoubleCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="double"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="BooleanCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="boolean"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="StringCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="string"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="DateCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="dateTime"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="ListOrRecordRef">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="name" type="string"/>
+                </sequence>
+                <attribute name="internalId" type="string"/>
+                <attribute name="externalId" type="string"/>
+                <attribute name="typeId" type="string"/>
+            </complexType>
+            <complexType name="SelectCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="tns:ListOrRecordRef"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="MultiSelectCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="unbounded" minOccurs="1"
+                                name="value" type="tns:ListOrRecordRef"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="ActivityOutputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="Success" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="0" name="Message" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="SearchResult" type="tns:SearchResultType"/>
+                </sequence>
+            </complexType>
+            <complexType name="SearchResultType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="totalRecords" type="string"/>
+                    <element maxOccurs="1" minOccurs="1" name="pageSize" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="totalPages" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="pageIndex" type="string"/>
+                    <element maxOccurs="1" minOccurs="1" name="searchId" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="RecordList" type="tns:RecordListType"/>
+                </sequence>
+            </complexType>
+            <complexType name="RecordListType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="record" type="tns:CustomRecord"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutput" type="tns:ActivityOutputType"/>
+        </schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+input"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+input">
+            <complexType name="ActivityInputType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:Record"/>
+                </sequence>
+            </complexType>
+            <element name="Records" type="tns:ActivityInputType"/>
+            <complexType name="NullField">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="name" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="Record">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="nullFieldList" type="tns:NullField"/>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="BaseRef">
+                <sequence/>
+            </complexType>
+            <simpleType name="RecordType">
+                <restriction base="string">
+                    <enumeration value="account"/>
+                    <enumeration value="accountingPeriod"/>
+                    <enumeration value="appDefinition"/>
+                    <enumeration value="appPackage"/>
+                    <enumeration value="assemblyBuild"/>
+                    <enumeration value="assemblyUnbuild"/>
+                    <enumeration value="assemblyItem"/>
+                    <enumeration value="billingSchedule"/>
+                    <enumeration value="bin"/>
+                    <enumeration value="binTransfer"/>
+                    <enumeration value="binWorksheet"/>
+                    <enumeration value="budget"/>
+                    <enumeration value="budgetCategory"/>
+                    <enumeration value="calendarEvent"/>
+                    <enumeration value="campaign"/>
+                    <enumeration value="campaignAudience"/>
+                    <enumeration value="campaignCategory"/>
+                    <enumeration value="campaignChannel"/>
+                    <enumeration value="campaignFamily"/>
+                    <enumeration value="campaignOffer"/>
+                    <enumeration value="campaignResponse"/>
+                    <enumeration value="campaignSearchEngine"/>
+                    <enumeration value="campaignSubscription"/>
+                    <enumeration value="campaignVertical"/>
+                    <enumeration value="cashRefund"/>
+                    <enumeration value="cashSale"/>
+                    <enumeration value="check"/>
+                    <enumeration value="charge"/>
+                    <enumeration value="classification"/>
+                    <enumeration value="contact"/>
+                    <enumeration value="contactCategory"/>
+                    <enumeration value="contactRole"/>
+                    <enumeration value="costCategory"/>
+                    <enumeration value="couponCode"/>
+                    <enumeration value="creditMemo"/>
+                    <enumeration value="crmCustomField"/>
+                    <enumeration value="currency"/>
+                    <enumeration value="currencyRate"/>
+                    <enumeration value="customList"/>
+                    <enumeration value="customRecord"/>
+                    <enumeration value="customRecordCustomField"/>
+                    <enumeration value="customRecordType"/>
+                    <enumeration value="customTransaction"/>
+                    <enumeration value="customTransactionType"/>
+                    <enumeration value="customer"/>
+                    <enumeration value="customerCategory"/>
+                    <enumeration value="customerDeposit"/>
+                    <enumeration value="customerMessage"/>
+                    <enumeration value="customerPayment"/>
+                    <enumeration value="customerRefund"/>
+                    <enumeration value="customerStatus"/>
+                    <enumeration value="deposit"/>
+                    <enumeration value="depositApplication"/>
+                    <enumeration value="department"/>
+                    <enumeration value="descriptionItem"/>
+                    <enumeration value="discountItem"/>
+                    <enumeration value="downloadItem"/>
+                    <enumeration value="employee"/>
+                    <enumeration value="entityCustomField"/>
+                    <enumeration value="entityGroup"/>
+                    <enumeration value="estimate"/>
+                    <enumeration value="expenseCategory"/>
+                    <enumeration value="expenseReport"/>
+                    <enumeration value="file"/>
+                    <enumeration value="folder"/>
+                    <enumeration value="giftCertificate"/>
+                    <enumeration value="giftCertificateItem"/>
+                    <enumeration value="globalAccountMapping"/>
+                    <enumeration value="interCompanyJournalEntry"/>
+                    <enumeration value="interCompanyTransferOrder"/>
+                    <enumeration value="inventoryAdjustment"/>
+                    <enumeration value="inventoryCostRevaluation"/>
+                    <enumeration value="inventoryItem"/>
+                    <enumeration value="inventoryNumber"/>
+                    <enumeration value="inventoryTransfer"/>
+                    <enumeration value="invoice"/>
+                    <enumeration value="itemAccountMapping"/>
+                    <enumeration value="itemCustomField"/>
+                    <enumeration value="itemDemandPlan"/>
+                    <enumeration value="itemFulfillment"/>
+                    <enumeration value="itemGroup"/>
+                    <enumeration value="itemNumberCustomField"/>
+                    <enumeration value="itemOptionCustomField"/>
+                    <enumeration value="itemSupplyPlan"/>
+                    <enumeration value="itemRevision"/>
+                    <enumeration value="issue"/>
+                    <enumeration value="job"/>
+                    <enumeration value="jobStatus"/>
+                    <enumeration value="jobType"/>
+                    <enumeration value="itemReceipt"/>
+                    <enumeration value="journalEntry"/>
+                    <enumeration value="kitItem"/>
+                    <enumeration value="leadSource"/>
+                    <enumeration value="location"/>
+                    <enumeration value="lotNumberedInventoryItem"/>
+                    <enumeration value="lotNumberedAssemblyItem"/>
+                    <enumeration value="markupItem"/>
+                    <enumeration value="message"/>
+                    <enumeration value="manufacturingCostTemplate"/>
+                    <enumeration value="manufacturingOperationTask"/>
+                    <enumeration value="manufacturingRouting"/>
+                    <enumeration value="nexus"/>
+                    <enumeration value="nonInventoryPurchaseItem"/>
+                    <enumeration value="nonInventoryResaleItem"/>
+                    <enumeration value="nonInventorySaleItem"/>
+                    <enumeration value="note"/>
+                    <enumeration value="noteType"/>
+                    <enumeration value="opportunity"/>
+                    <enumeration value="otherChargePurchaseItem"/>
+                    <enumeration value="otherChargeResaleItem"/>
+                    <enumeration value="otherChargeSaleItem"/>
+                    <enumeration value="otherCustomField"/>
+                    <enumeration value="otherNameCategory"/>
+                    <enumeration value="partner"/>
+                    <enumeration value="partnerCategory"/>
+                    <enumeration value="paycheckJournal"/>
+                    <enumeration value="paymentItem"/>
+                    <enumeration value="paymentMethod"/>
+                    <enumeration value="payrollItem"/>
+                    <enumeration value="phoneCall"/>
+                    <enumeration value="priceLevel"/>
+                    <enumeration value="pricingGroup"/>
+                    <enumeration value="projectTask"/>
+                    <enumeration value="promotionCode"/>
+                    <enumeration value="purchaseOrder"/>
+                    <enumeration value="purchaseRequisition"/>
+                    <enumeration value="resourceAllocation"/>
+                    <enumeration value="returnAuthorization"/>
+                    <enumeration value="revRecSchedule"/>
+                    <enumeration value="revRecTemplate"/>
+                    <enumeration value="salesOrder"/>
+                    <enumeration value="salesRole"/>
+                    <enumeration value="salesTaxItem"/>
+                    <enumeration value="serializedInventoryItem"/>
+                    <enumeration value="serializedAssemblyItem"/>
+                    <enumeration value="servicePurchaseItem"/>
+                    <enumeration value="serviceResaleItem"/>
+                    <enumeration value="serviceSaleItem"/>
+                    <enumeration value="solution"/>
+                    <enumeration value="siteCategory"/>
+                    <enumeration value="state"/>
+                    <enumeration value="statisticalJournalEntry"/>
+                    <enumeration value="subsidiary"/>
+                    <enumeration value="subtotalItem"/>
+                    <enumeration value="supportCase"/>
+                    <enumeration value="supportCaseIssue"/>
+                    <enumeration value="supportCaseOrigin"/>
+                    <enumeration value="supportCasePriority"/>
+                    <enumeration value="supportCaseStatus"/>
+                    <enumeration value="supportCaseType"/>
+                    <enumeration value="task"/>
+                    <enumeration value="taxAcct"/>
+                    <enumeration value="taxGroup"/>
+                    <enumeration value="taxType"/>
+                    <enumeration value="term"/>
+                    <enumeration value="timeBill"/>
+                    <enumeration value="timeSheet"/>
+                    <enumeration value="topic"/>
+                    <enumeration value="transferOrder"/>
+                    <enumeration value="transactionBodyCustomField"/>
+                    <enumeration value="transactionColumnCustomField"/>
+                    <enumeration value="unitsType"/>
+                    <enumeration value="vendor"/>
+                    <enumeration value="vendorCategory"/>
+                    <enumeration value="vendorBill"/>
+                    <enumeration value="vendorCredit"/>
+                    <enumeration value="vendorPayment"/>
+                    <enumeration value="vendorReturnAuthorization"/>
+                    <enumeration value="winLossReason"/>
+                    <enumeration value="workOrder"/>
+                    <enumeration value="workOrderIssue"/>
+                    <enumeration value="workOrderCompletion"/>
+                    <enumeration value="workOrderClose"/>
+                </restriction>
+            </simpleType>
+            <complexType name="RecordRef">
+                <complexContent>
+                    <extension base="tns:BaseRef">
+                        <attribute name="internalId" type="string"/>
+                        <attribute name="externalId" type="string"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <simpleType name="Language">
+                <restriction base="string">
+                    <enumeration value="_arabic"/>
+                    <enumeration value="_australian"/>
+                    <enumeration value="_bengali"/>
+                    <enumeration value="_bulgarian"/>
+                    <enumeration value="_catalan"/>
+                    <enumeration value="_chineseSimplified"/>
+                    <enumeration value="_chineseTraditional"/>
+                    <enumeration value="_croatian"/>
+                    <enumeration value="_czech"/>
+                    <enumeration value="_danish"/>
+                    <enumeration value="_dutch"/>
+                    <enumeration value="_english"/>
+                    <enumeration value="_estonian"/>
+                    <enumeration value="_finnish"/>
+                    <enumeration value="_frenchCanada"/>
+                    <enumeration value="_frenchFrance"/>
+                    <enumeration value="_german"/>
+                    <enumeration value="_greek"/>
+                    <enumeration value="_haitian"/>
+                    <enumeration value="_hebrew"/>
+                    <enumeration value="_hungarian"/>
+                    <enumeration value="_icelandic"/>
+                    <enumeration value="_indonesian"/>
+                    <enumeration value="_italian"/>
+                    <enumeration value="_japanese"/>
+                    <enumeration value="_korean"/>
+                    <enumeration value="_latinAmericanSpanish"/>
+                    <enumeration value="_latvian"/>
+                    <enumeration value="_lithuanian"/>
+                    <enumeration value="_norwegian"/>
+                    <enumeration value="_polish"/>
+                    <enumeration value="_portugueseBrazil"/>
+                    <enumeration value="_portuguesePortugal"/>
+                    <enumeration value="_romanian"/>
+                    <enumeration value="_russian"/>
+                    <enumeration value="_slovak"/>
+                    <enumeration value="_slovenian"/>
+                    <enumeration value="_spanish"/>
+                    <enumeration value="_swedish"/>
+                    <enumeration value="_thai"/>
+                    <enumeration value="_turkish"/>
+                    <enumeration value="_usEnglish"/>
+                    <enumeration value="_vietnamese"/>
+                </restriction>
+            </simpleType>
+            <complexType name="CustomRecordTranslations">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="locale" type="tns:Language"/>
+                    <element maxOccurs="1" minOccurs="0" name="language" type="string"/>
+                    <element maxOccurs="1" minOccurs="0" name="label" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="CustomRecordTranslationsList">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="customRecordTranslations" type="tns:CustomRecordTranslations"/>
+                </sequence>
+                <attribute name="replaceAll" type="boolean"/>
+            </complexType>
+            <complexType abstract="true" name="CustomFieldRef">
+                <attribute name="internalId" type="string"/>
+                <attribute name="scriptId" type="string"/>
+            </complexType>
+            <complexType name="CustomFieldList">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="longCustomFieldRef" type="tns:LongCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="doubleCustomFieldRef" type="tns:DoubleCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="booleanCustomFieldRef" type="tns:BooleanCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="stringCustomFieldRef" type="tns:StringCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="dateCustomFieldRef" type="tns:DateCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="selectCustomFieldRef" type="tns:SelectCustomFieldRef"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="multiSelectCustomFieldRef" type="tns:MultiSelectCustomFieldRef"/>
+                </sequence>
+            </complexType>
+            <complexType name="CustomRecord">
+                <complexContent>
+                    <extension base="tns:Record">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customRecordId" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customForm" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isInactive" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="disclaimer" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="created" type="dateTime"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="lastModified" type="dateTime"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="name" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="autoName" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="altName" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="owner" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="recType" type="tns:RecordRef"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="enableNumbering" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingPrefix" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingSuffix" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingMinDigits" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="description" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingInit" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="numberingCurrentNumber" type="long"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowNumberingOverride" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isNumberingUpdateable" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="translationsList" type="tns:CustomRecordTranslationsList"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="includeName" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showId" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showCreationDate" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showCreationDateOnList" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showLastModified" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showLastModifiedOnList" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showOwner" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showOwnerOnList" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showOwnerAllowChange" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="usePermissions" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowAttachments" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="showNotes" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="enablEmailMerge" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isOrdered" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowInlineEditing" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="isAvailableOffline" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="allowQuickSearch" type="boolean"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="recordName" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="scriptId" type="string"/>
+                            <element maxOccurs="1" minOccurs="0"
+                                name="customFieldList" type="tns:CustomFieldList"/>
+                        </sequence>
+                        <attribute name="internalId" type="string" use="required"/>
+                        <attribute name="externalId" type="string"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="LongCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="long"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="DoubleCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="double"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="BooleanCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="boolean"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="StringCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="string"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="DateCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="dateTime"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="ListOrRecordRef">
+                <sequence/>
+                <attribute name="internalId" type="string"/>
+                <attribute name="externalId" type="string"/>
+            </complexType>
+            <complexType name="SelectCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="1" minOccurs="1"
+                                name="value" type="tns:ListOrRecordRef"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="MultiSelectCustomFieldRef">
+                <complexContent>
+                    <extension base="tns:CustomFieldRef">
+                        <sequence>
+                            <element maxOccurs="unbounded" minOccurs="1"
+                                name="value" type="tns:ListOrRecordRef"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <element name="Record" type="tns:CustomRecord"/>
+        </schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+output"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+output">
+            <complexType name="StatusDetail">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="code" type="string"/>
+                    <element maxOccurs="1" minOccurs="0" name="message" type="string"/>
+                </sequence>
+                <attribute name="type" type="string"/>
+            </complexType>
+            <complexType name="Status">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="statusDetail" type="tns:StatusDetail"/>
+                </sequence>
+                <attribute name="isSuccess" type="boolean"/>
+            </complexType>
+            <complexType abstract="true" name="BaseRef">
+                <sequence/>
+            </complexType>
+            <complexType name="WriteResponse">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="status" type="tns:Status"/>
+                    <element maxOccurs="1" minOccurs="0" name="baseRef" type="tns:CustomRecordRef"/>
+                </sequence>
+            </complexType>
+            <complexType name="CustomRecordRef">
+                <complexContent>
+                    <extension base="tns:BaseRef">
+                        <attribute name="internalId" type="string"/>
+                        <attribute name="externalId" type="string"/>
+                        <attribute name="typeId" type="string" use="required"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="Results">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="Result" type="tns:WriteResponse"/>
+                </sequence>
+            </complexType>
+            <complexType name="ActivityOutput">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="Success" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1" name="Results" type="tns:Results"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutput" type="tns:ActivityOutput"/>
+        </schema>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/WriteToLogActivitySchema"
+            xmlns:tns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType name="LogParametersType">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="msgCode" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="loggerName" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="logLevel" type="xs:string"/>
+                    <xs:element form="unqualified" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ActivityInput" type="tns:LogParametersType"/>
+        </xs:schema>
+    </tibex:Types>
+    <tibex:ProcessInfo callable="false" createdBy="yakhubpasha.patan"
+        createdOn="Fri Sep 09 10:54:48 IST 2016" description=""
+        modifiers="public" productVersion="1.0.0 V80 2016-04-28"
+        scalable="true" singleton="true" stateless="true" type="IT"/>
+    <tibex:ProcessInterface context="" input="" output=""/>
+    <tibex:ProcessTemplateConfigurations/>
+    <notation:Diagram measurementUnit="Pixel" type="BWProcess"
+        xmlns:bwnotation="http://tns.tibco.com/bw/runtime/BWNotation"
+        xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <children type="2001">
+            <children type="5001"/>
+            <children type="3001">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+                <element href="//0/@process"/>
+            </children>
+            <children type="3002">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+            </children>
+            <children type="3003">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+            </children>
+            <children type="3004">
+                <children type="4018">
+                    <children type="3018">
+                        <children type="4020">
+                            <children type="3020">
+                                <children type="4005">
+                                    <children type="3007">
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint x="-19"
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint x="123"
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint x="283"
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.3"/>
+                                    <layoutConstraint x="418"
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.4"/>
+                                    <layoutConstraint x="123"
+                                    xsi:type="notation:Bounds" y="210"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.5"/>
+                                    <layoutConstraint x="281"
+                                    xsi:type="notation:Bounds" y="210"/>
+                                    </children>
+                                    <styles xsi:type="notation:DrawerStyle"/>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity"/>
+                                    <layoutConstraint height="384"
+                                    width="553" xsi:type="notation:Bounds"/>
+                                </children>
+                                <styles xsi:type="notation:SortingStyle"/>
+                                <styles xsi:type="notation:FilteringStyle"/>
+                            </children>
+                            <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
+                            <styles xsi:type="bwnotation:BackgroundStyle"/>
+                            <styles xsi:type="bwnotation:ResizingStyle"/>
+                            <element href="//0/@process/@activity"/>
+                            <layoutConstraint height="384" width="556" xsi:type="notation:Bounds"/>
+                        </children>
+                        <styles xsi:type="notation:SortingStyle"/>
+                        <styles xsi:type="notation:FilteringStyle"/>
+                        <element href="//0/@process/@activity"/>
+                    </children>
+                    <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
+                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                    <element href="//0/@process/@activity"/>
+                    <layoutConstraint height="408" width="556" x="1"
+                        xsi:type="notation:Bounds" y="1"/>
+                </children>
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+                <element href="//0/@process"/>
+            </children>
+            <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
+            <element href="//0/@process"/>
+            <layoutConstraint height="460" width="898" xsi:type="notation:Bounds"/>
+        </children>
+        <styles xsi:type="notation:DiagramStyle"/>
+        <element href="//0"/>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint x="-6" xsi:type="notation:Location" y="-7"/>
+            </children>
+            <styles lineColor="65280" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint x="25" xsi:type="notation:Location" y="-1"/>
+            </children>
+            <styles lineColor="255" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.4"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+    </notation:Diagram>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/NsQueueDataMapper"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SfQueueDataMapper"/>
+    <bpws:variables>
+        <bpws:variable element="ns:ProcessContext"
+            name="_processContext" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:TimerOutputSchema" name="Timer" sca-bpel:internal="true"/>
+        <bpws:variable element="ns1:ActivityInput"
+            name="NetSuite-Query-Search-Record-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns2:ActivityOutput"
+            name="NetSuite-Query-Search-Record" sca-bpel:internal="true"/>
+        <bpws:variable name="Property" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://ns.tibco.com/bw/sharedresource/netsuite}NetSuiteConnection" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>eagleviewintegrations.NetSuiteConnectionResource</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable element="ns3:Records"
+            name="Netsuite-Queue-Update-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns4:ActivityOutput"
+            name="Netsuite-Queue-Update" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:SFQueueList"
+            name="Ns-Queue-Call-Process-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns7:ActivityInput" name="Log-input" sca-bpel:internal="true"/>
+        <bpws:variable name="NsTimer" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="NsTimer" type="xsd:int"/>
+    </bpws:variables>
+    <bpws:extensions>
+        <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
+        <bpws:extension mustUnderstand="no" namespace="http://www.tibco.com/bw/process/info"/>
+        <bpws:extension mustUnderstand="no" namespace="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"/>
+        <bpws:extension mustUnderstand="no" namespace="http://docs.oasis-open.org/ns/opencsa/sca/200912"/>
+        <bpws:extension mustUnderstand="no" namespace="http://ns.tibco.com/bw/property"/>
+        <bpws:extension mustUnderstand="no" namespace="http://www.tibco.com/bpel/2007/extensions"/>
+    </bpws:extensions>
+    <bpws:scope name="scope">
+        <bpws:flow name="flow">
+            <bpws:links>
+                <bpws:link name="TimerToNetSuiteSearchRecord" tibex:linkType="SUCCESS"/>
+                <bpws:link
+                    name="NetSuiteQuerySearchRecordToNetSuiteUpdateRecord_IfExists"
+                    tibex:label="If Exists" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="NetsuiteQueueUpdateToCallProcess" tibex:linkType="SUCCESS"/>
+                <bpws:link
+                    name="NetSuiteQuerySearchRecordToLog_NoRecords"
+                    tibex:label="No Records" tibex:linkType="SUCCESSWITHNOCONDITION"/>
+                <bpws:link name="LogToExit" tibex:linkType="SUCCESS"/>
+            </bpws:links>
+            <bpws:extensionActivity>
+                <tibex:receiveEvent createInstance="yes"
+                    eventTimeout="60" name="Timer"
+                    tibex:xpdlId="a53678c1-3498-4b88-bcc9-a9fb23596117"
+                    variable="Timer" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:sources>
+                        <bpws:source linkName="TimerToNetSuiteSearchRecord"/>
+                    </bpws:sources>
+                    <tibex:eventSource>
+                        <bwext:BWActivity
+                            activityTypeID="bw.generalactivities.timer"
+                            version="6.0.0.001"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="timeInterval" processProperty="NsTimer"/>
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Timer"/>
+                                    <value
+                                    endTime="2016-09-09T10:54:59.013+0530"
+                                    intervalUnit="Second"
+                                    startTime="2016-09-09T10:54:59.013+0530" xsi:type="generalactivities:Timer"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:eventSource>
+                </tibex:receiveEvent>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+input&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;NetSuite-Query-Search-Record-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;searchRecord>&lt;tns:basic>&lt;recType>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;2&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;/recType>&lt;customFieldList>&lt;searchStringCustomField>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_processed_flag&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;searchValue>&lt;xsl:value-of select=&quot;&amp;quot;N&amp;quot;&quot;/>&lt;/searchValue>&lt;/searchStringCustomField>&lt;searchStringCustomField>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_type&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;searchValue>&lt;xsl:value-of select=&quot;&amp;quot;Item&amp;quot;&quot;/>&lt;/searchValue>&lt;/searchStringCustomField>&lt;/customFieldList>&lt;/tns:basic>&lt;/searchRecord>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="NetSuite-Query-Search-Record-input"
+                    name="NetSuite Query Search Record"
+                    outputVariable="NetSuite-Query-Search-Record"
+                    tibex:xpdlId="e0c07df4-93e7-4e60-81dd-297c1a787516" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="TimerToNetSuiteSearchRecord"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="NetSuiteQuerySearchRecordToNetSuiteUpdateRecord_IfExists">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="$NetSuite-Query-Search-Record/SearchResult/totalRecords> '0'" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[$NetSuite-Query-Search-Record/SearchResult/totalRecords> '0']]></bpws:transitionCondition>
+                        </bpws:source>
+                        <bpws:source linkName="NetSuiteQuerySearchRecordToLog_NoRecords">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="##otherwise##" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                        </bpws:source>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/searchrecord+e0c07df4-93e7-4e60-81dd-297c1a787516+input&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;NetSuite-Query-Search-Record-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;searchRecord>&lt;tns:basic>&lt;recType>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;2&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;/recType>&lt;customFieldList>&lt;searchStringCustomField>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_processed_flag&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;searchValue>&lt;xsl:value-of select=&quot;&amp;quot;N&amp;quot;&quot;/>&lt;/searchValue>&lt;/searchStringCustomField>&lt;searchStringCustomField>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_type&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;searchValue>&lt;xsl:value-of select=&quot;&amp;quot;Item&amp;quot;&quot;/>&lt;/searchValue>&lt;/searchStringCustomField>&lt;/customFieldList>&lt;/tns:basic>&lt;/searchRecord>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.netsuite.SearchRecord"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:netsuite="http://ns.tibco.com/bw/palette/netsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/netsuite#//SearchRecord"/>
+                                    <value pagesize="100"
+                                    recordCategory="setup"
+                                    recordSubCategory="customization"
+                                    searchRecord="CustomRecordSearch"
+                                    sharedConnection="Property" xsi:type="netsuite:SearchRecord"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+input&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;NetSuite-Query-Search-Record&quot;/>&lt;xsl:template name=&quot;Netsuite-Queue-Update-input&quot; match=&quot;/&quot;>&lt;tns:Records>&lt;xsl:for-each select=&quot;$NetSuite-Query-Search-Record/SearchResult/RecordList/record&quot;>&lt;tns:Record>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;@internalId&quot;/>&lt;/xsl:attribute>&lt;recType>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;2&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;/recType>&lt;customFieldList>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_processed_flag&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;&amp;quot;I&amp;quot;&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_event_message&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;&amp;quot;In Process&amp;quot;&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/customFieldList>&lt;/tns:Record>&lt;/xsl:for-each>&lt;/tns:Records>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="Netsuite-Queue-Update-input"
+                    name="Netsuite Queue Update"
+                    outputVariable="Netsuite-Queue-Update"
+                    tibex:xpdlId="745ebbd8-919b-4789-971f-f5e83eaa12bc" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="NetSuiteQuerySearchRecordToNetSuiteUpdateRecord_IfExists"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="NetsuiteQueueUpdateToCallProcess"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/updaterecord+745ebbd8-919b-4789-971f-f5e83eaa12bc+input&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;NetSuite-Query-Search-Record&quot;/>&lt;xsl:template name=&quot;Netsuite-Queue-Update-input&quot; match=&quot;/&quot;>&lt;tns:Records>&lt;xsl:for-each select=&quot;$NetSuite-Query-Search-Record/SearchResult/RecordList/record&quot;>&lt;tns:Record>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;@internalId&quot;/>&lt;/xsl:attribute>&lt;recType>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;2&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;/recType>&lt;customFieldList>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_processed_flag&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;&amp;quot;I&amp;quot;&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custrecord_int_que_event_message&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;&amp;quot;In Process&amp;quot;&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/customFieldList>&lt;/tns:Record>&lt;/xsl:for-each>&lt;/tns:Records>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.netsuite.UpdateRecord"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:netsuite="http://ns.tibco.com/bw/palette/netsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/netsuite#//UpdateRecord"/>
+                                    <value record="CustomRecord"
+                                    recordCategory="setup"
+                                    recordSubCategory="customization"
+                                    sharedConnection="Property" xsi:type="netsuite:UpdateRecord"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:extActivity
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;NetSuite-Query-Search-Record&quot;/>&lt;xsl:template name=&quot;Ns-Queue-Call-Process-input&quot; match=&quot;/&quot;>&lt;tns1:SFQueueList>&lt;xsl:for-each select=&quot;$NetSuite-Query-Search-Record/SearchResult/RecordList/record&quot;>&lt;tns1:SFQueue>&lt;xsl:if test=&quot;@internalId&quot;>&lt;tns1:QueueID>&lt;xsl:value-of select=&quot;@internalId&quot;/>&lt;/tns1:QueueID>&lt;/xsl:if>&lt;xsl:for-each select=&quot;customFieldList/longCustomFieldRef/@scriptId&quot;>&lt;xsl:if test=&quot;.=&amp;quot;custrecord_int_que_record_id&amp;quot;&quot;>&lt;tns1:RecordID>&lt;xsl:value-of select=&quot;../value&quot;/>&lt;/tns1:RecordID>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/tns1:SFQueue>&lt;/xsl:for-each>&lt;/tns1:SFQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="Ns-Queue-Call-Process-input"
+                    name="Ns Queue Call Process"
+                    tibex:xpdlId="e5d80acb-cde9-4fea-be19-dfc837a5c1a5"
+                    type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="NetsuiteQueueUpdateToCallProcess"/>
+                    </bpws:targets>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;NetSuite-Query-Search-Record&quot;/>&lt;xsl:template name=&quot;Ns-Queue-Call-Process-input&quot; match=&quot;/&quot;>&lt;tns1:SFQueueList>&lt;xsl:for-each select=&quot;$NetSuite-Query-Search-Record/SearchResult/RecordList/record&quot;>&lt;tns1:SFQueue>&lt;xsl:if test=&quot;@internalId&quot;>&lt;tns1:QueueID>&lt;xsl:value-of select=&quot;@internalId&quot;/>&lt;/tns1:QueueID>&lt;/xsl:if>&lt;xsl:for-each select=&quot;customFieldList/longCustomFieldRef/@scriptId&quot;>&lt;xsl:if test=&quot;.=&amp;quot;custrecord_int_que_record_id&amp;quot;&quot;>&lt;tns1:RecordID>&lt;xsl:value-of select=&quot;../value&quot;/>&lt;/tns1:RecordID>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/tns1:SFQueue>&lt;/xsl:for-each>&lt;/tns1:SFQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:CallProcess
+                        subProcessName="NSBaseFlow.NSQueueProcess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                </tibex:extActivity>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Ns Queue Process&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;No Records&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="Log-input" name="Log"
+                    tibex:xpdlId="d0973d8c-d85b-4d0a-b724-e1e770512ff7" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="NetSuiteQuerySearchRecordToLog_NoRecords"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="LogToExit"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Ns Queue Process&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;No Records&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.generalactivities.log"
+                            version="6.0.0.001"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+                                    <value role="Error"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:exit name="Exit" tibex:xpdlId="f02c326f-8762-41af-a3c3-ba61ecbabf3a">
+                <bpws:targets>
+                    <bpws:target linkName="LogToExit"/>
+                </bpws:targets>
+            </bpws:exit>
+        </bpws:flow>
+    </bpws:scope>
+</bpws:process>
