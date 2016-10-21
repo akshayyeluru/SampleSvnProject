@@ -658,7 +658,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.2"/>
                                     <layoutConstraint
-                                    height="121"
+                                    height="147"
                                     width="396"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
@@ -762,7 +762,7 @@
                                     restoreY="100" xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.2"/>
                                     <layoutConstraint
-                                    height="165" width="436"
+                                    height="191" width="436"
                                     x="141"
                                     xsi:type="notation:Bounds" y="98"/>
                                     </children>
@@ -849,7 +849,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
                                     <layoutConstraint height="384"
-                                    width="827" xsi:type="notation:Bounds"/>
+                                    width="890" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
                                 <styles xsi:type="notation:FilteringStyle"/>
@@ -989,12 +989,13 @@
         <bpws:variable element="ns0:SFQueueList" name="Start"
             sca-bpel:internal="true" tibex:parameter="in"/>
         <bpws:variable element="ns1:RestActivityInput"
-            name="InvokeRESTAPI-input" sca-bpel:internal="true"/>
+            name="Invoke-SFCasePublisher-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns2:RestActivityOutput"
-            name="InvokeRESTAPI" sca-bpel:internal="true"/>
-        <bpws:variable element="ns0:SFQueueList" name="RenderJSON-input" sca-bpel:internal="true"/>
+            name="Invoke-SFCasePublisher" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:SFQueueList"
+            name="Render-PublisherRequest-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns3:ActivityOutputClass"
-            name="RenderJSON" sca-bpel:internal="true"/>
+            name="Render-PublisherRequest" sca-bpel:internal="true"/>
         <bpws:variable name="Property" sca-bpel:hotUpdate="false"
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
             sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
@@ -1112,12 +1113,12 @@
                                 </bpws:empty>
                                 <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c84d0515-567e-4ecd-8a66-4d7e5140809e+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c84d0515-567e-4ecd-8a66-4d7e5140809e+RestInvokeInput&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Render-PublisherRequest&quot;/>&#xa;    &lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:RestActivityInput>&#xa;            &lt;MessageBody>&#xa;                &lt;asciiContent>&#xa;                    &lt;xsl:value-of select=&quot;$Render-PublisherRequest/jsonString&quot;/>&#xa;                &lt;/asciiContent>&#xa;            &lt;/MessageBody>&#xa;        &lt;/tns:RestActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     governedObjectTypes="BWHttpReference"
-                                    inputVariable="InvokeRESTAPI-input"
-                                    name="InvokeRESTAPI"
-                                    outputVariable="InvokeRESTAPI"
+                                    inputVariable="Invoke-SFCasePublisher-input"
+                                    name="Invoke SFCasePublisher"
+                                    outputVariable="Invoke-SFCasePublisher"
                                     tibex:xpdlId="c84d0515-567e-4ecd-8a66-4d7e5140809e" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
                                     <bpws:target linkName="LogToInvokeRESTAPI"/>
@@ -1127,7 +1128,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c84d0515-567e-4ecd-8a66-4d7e5140809e+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c84d0515-567e-4ecd-8a66-4d7e5140809e+RestInvokeInput&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Render-PublisherRequest&quot;/>&#xa;    &lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:RestActivityInput>&#xa;            &lt;MessageBody>&#xa;                &lt;asciiContent>&#xa;                    &lt;xsl:value-of select=&quot;$Render-PublisherRequest/jsonString&quot;/>&#xa;                &lt;/asciiContent>&#xa;            &lt;/MessageBody>&#xa;        &lt;/tns:RestActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
@@ -1155,9 +1156,9 @@
                                     <tibex:activityExtension
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:SFQueueList>&lt;tns:SFQueue>&lt;xsl:if test=&quot;$currentElement/tns:QueueID&quot;>&lt;tns:QueueID>&lt;xsl:value-of select=&quot;$currentElement/tns:QueueID&quot;/>&lt;/tns:QueueID>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:RecordID&quot;>&lt;tns:RecordID>&lt;xsl:value-of select=&quot;$currentElement/tns:RecordID&quot;/>&lt;/tns:RecordID>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:RecordType&quot;>&lt;tns:RecordType>&lt;xsl:value-of select=&quot;$currentElement/tns:RecordType&quot;/>&lt;/tns:RecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:StatusFlag&quot;>&lt;tns:StatusFlag>&lt;xsl:value-of select=&quot;$currentElement/tns:StatusFlag&quot;/>&lt;/tns:StatusFlag>&lt;/xsl:if>&lt;/tns:SFQueue>&lt;/tns:SFQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="RenderJSON-input"
-                                    name="RenderJSON"
-                                    outputVariable="RenderJSON"
+                                    inputVariable="Render-PublisherRequest-input"
+                                    name="Render PublisherRequest"
+                                    outputVariable="Render-PublisherRequest"
                                     tibex:xpdlId="44fb5a12-99b3-4de0-91a4-a75d39981ae9" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
                                     <bpws:target linkName="__Link1"/>
