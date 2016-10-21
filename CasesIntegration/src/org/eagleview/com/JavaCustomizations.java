@@ -14,6 +14,7 @@ public static String replaceAvatarUrl(String TicketRequest){
 		String TicketResponse=a16.replace("32x32","a32x32" );
 		
 		return TicketResponse;
+	
 	}
 public static String decryptPassword(String Password) throws AXSecurityException{
 	String DecryptedPassword=new String(ObfuscationEngine.decrypt(Password));
