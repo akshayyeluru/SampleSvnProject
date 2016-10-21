@@ -33,6 +33,9 @@
     xmlns:ns31="www.tibco.com/plugin/java/JavaInvokeActivityOutput+1c74523f-9e78-45e3-afcd-5999ba7d76f2+JavaInvokeActivityOutput"
     xmlns:ns32="activity.jsonParser.input+25a81559-cc56-44e2-a097-5fe0e181d681+ActivityInputType"
     xmlns:ns33="http://tns.tibco.com/bw/json/1475869377023"
+    xmlns:ns34="urn:partner.soap.sforce.com_queryAllInput"
+    xmlns:ns35="urn:partner.soap.sforce.com_queryAllOutput"
+    xmlns:ns36="http://www.example.org/TimestampSchema"
     xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c56150c8-dd8f-4bf3-85fb-088008af1efd+RestInvokeInput"
     xmlns:ns5="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c56150c8-dd8f-4bf3-85fb-088008af1efd+RestInvokeOutput"
     xmlns:ns6="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+b55fbb46-5a37-46e6-9ac1-5bd755c04ffd+RestInvokeInput"
@@ -1685,6 +1688,140 @@
                     </sequence>
                 </complexType>
             </element>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_queryAllInput"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:partner.soap.sforce.com_queryAllInput">
+            <complexType name="queryAllInputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:connectionInfo"/>
+                    <element maxOccurs="1" minOccurs="1" name="query" type="tns:queryType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="query_Optional" type="tns:queryOptionalType"/>
+                </sequence>
+            </complexType>
+            <element name="queryAllInput" type="tns:queryAllInputType"/>
+            <element name="connectionInfo" nillable="false" type="tns:connectionInfoType"/>
+            <complexType name="connectionInfoType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="serverUrl" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="sessionId" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="externalSessionIdUsed" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="queryType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="batchSize" type="integer"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="queryMain" type="tns:queryMain"/>
+                </sequence>
+            </complexType>
+            <complexType name="queryMain">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:queryString"/>
+                </sequence>
+            </complexType>
+            <element name="queryString" nillable="false" type="string"/>
+            <complexType name="queryOptionalType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:_configData"/>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:headers"/>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:SubsetSetting"/>
+                </sequence>
+            </complexType>
+            <element name="_configData" nillable="false" type="tns:_configDataType"/>
+            <complexType name="_configDataType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="timeout" type="integer"/>
+                </sequence>
+            </complexType>
+            <element name="headers" nillable="false" type="tns:headersType"/>
+            <complexType name="headersType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="CallOptions" type="tns:CallOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="MruHeader" type="tns:MruHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="PackageVersionHeader" type="tns:PackageVersionHeaderType"/>
+                </sequence>
+            </complexType>
+            <complexType name="CallOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="client"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="defaultNamespace" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="MruHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateMru" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersionHeaderType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="PackageVersion" type="tns:PackageVersion"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersion">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:majorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:minorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:namespace"/>
+                </sequence>
+            </complexType>
+            <element name="majorNumber" nillable="false" type="integer"/>
+            <element name="minorNumber" nillable="false" type="integer"/>
+            <element name="namespace" nillable="false" type="string"/>
+            <element name="SubsetSetting" nillable="false" type="tns:SubsetSettingType"/>
+            <complexType name="SubsetSettingType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="ProcessInSubsets" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="subsetSize" type="integer"/>
+                </sequence>
+            </complexType>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_queryAllOutput"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:Q1="urn:sobject.partner.soap.sforce.com" xmlns:tns="urn:partner.soap.sforce.com_queryAllOutput">
+            <import namespace="urn:sobject.partner.soap.sforce.com"/>
+            <complexType name="queryAllOutputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="queryAllResponse" type="tns:queryAllResponseType"/>
+                </sequence>
+            </complexType>
+            <element name="queryAllOutput" type="tns:queryAllOutputType"/>
+            <complexType name="queryAllResponseType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:result"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="lastSubset" type="boolean"/>
+                </sequence>
+            </complexType>
+            <element name="result" nillable="false" type="tns:QueryResult"/>
+            <complexType name="QueryResult">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:done"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:queryLocator"/>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:records"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:size"/>
+                </sequence>
+            </complexType>
+            <element name="done" nillable="false" type="boolean"/>
+            <element name="queryLocator" nillable="true" type="string"/>
+            <element name="records" nillable="true" type="Q1:sObject"/>
+            <element name="size" nillable="false" type="integer"/>
         </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161004111016PLT"
@@ -4055,11 +4192,15 @@
 
                                     <styles xsi:type="bwnotation:BackgroundStyle"/>
 
-                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <styles
+                                    restoreHeight="178"
+                                    restoreWidth="447" xsi:type="bwnotation:ResizingStyle"/>
 
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.7/@faultHandlers/@catchAll"/>
 
-                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    <layoutConstraint
+                                    height="178"
+                                    width="447" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -4079,7 +4220,9 @@
 
                                     <layoutConstraint
                                     height="200"
-                                    width="379" xsi:type="notation:Bounds"/>
+                                    width="457"
+                                    x="21"
+                                    xsi:type="notation:Bounds" y="563"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -4159,7 +4302,7 @@
 
                                     <layoutConstraint
                                     height="82"
-                                    x="899"
+                                    x="767"
                                     xsi:type="notation:Bounds" y="812"/>
                                     </children>
 
@@ -4213,8 +4356,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.9"/>
 
                                     <layoutConstraint
-                                    x="1016"
-                                    xsi:type="notation:Bounds" y="815"/>
+                                    x="881"
+                                    xsi:type="notation:Bounds" y="812"/>
                                     </children>
 
                                     <children type="4002">
@@ -4541,6 +4684,114 @@
                                     xsi:type="notation:Bounds" y="815"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.16"/>
+
+                                    <layoutConstraint
+                                    x="996"
+                                    xsi:type="notation:Bounds" y="812"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.17"/>
+
+                                    <layoutConstraint
+                                    x="996"
+                                    xsi:type="notation:Bounds" y="916"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -4562,7 +4813,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity"/>
 
                                     <layoutConstraint
-                                    height="936"
+                                    height="1001"
                                     width="1315" xsi:type="notation:Bounds"/>
                                     </children>
 
@@ -4582,7 +4833,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="936"
+                                    height="1001"
                                     width="1318"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
@@ -5031,7 +5282,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="1001"
+                                    height="1066"
                                     width="1358"
                                     x="34"
                                     xsi:type="notation:Bounds" y="3"/>
@@ -5829,7 +6080,7 @@
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.4"/>
             <bendpoints
-                points="[-107, 377, -83, -65]$[-107, 441, -83, -1]$[-48, 441, -24, -1]" xsi:type="notation:RelativeBendpoints"/>
+                points="[-218, 377, -42, -65]$[-218, 438, -42, -4]$[-200, 438, -24, -4]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.6"
@@ -5978,17 +6229,6 @@
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.7"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.8" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.6"/>
-            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.8"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
             <children type="6002">
@@ -5996,9 +6236,9 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.7"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.6"/>
             <bendpoints
-                points="[25, 13, -99, 386]$[92, 13, -32, 386]$[92, -373, -32, 0]$[112, -373, -12, 0]" xsi:type="notation:RelativeBendpoints"/>
+                points="[25, 0, -99, 341]$[92, 0, -32, 341]$[92, -342, -32, -1]$[112, -342, -12, -1]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
@@ -6052,7 +6292,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.8"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.7"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -6063,7 +6303,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.9"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.8"/>
             <bendpoints
                 points="[25, 13, -349, 175]$[96, 13, -278, 175]$[96, -234, -278, -72]$[170, -234, -204, -72]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -6075,7 +6315,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.10"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.9"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -6086,7 +6326,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.11"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.10"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -6097,7 +6337,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.12"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.11"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -6108,7 +6348,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.13"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.12"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -6119,9 +6359,54 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.14"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.13"/>
             <bendpoints
                 points="[25, 0, -301, 441]$[51, 0, -275, 441]$[51, -535, -275, -94]$[85, -535, -241, -94]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.7"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.14" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.14"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.14"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.15" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.15"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.15"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.8" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.16"/>
+            <bendpoints points="[25, -17, -107, 75]$[108, -75, -24, 17]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.15"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.17"/>
+            <bendpoints
+                points="[25, 0, -231, 445]$[224, 0, -32, 445]$[224, -445, -32, 0]$[244, -445, -12, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/ResultSchema"/>
@@ -6136,6 +6421,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1475766281988"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/Jira/JiraAttachmentResponseSchemaResource.xsd" namespace="http://tns.tibco.com/bw/json/1475869377023"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/TimestampSchema"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="sfcasesubscriber"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="sfcasesubscriber"/>
@@ -6179,9 +6465,9 @@
         <bpws:variable element="ns13:createAllOutput"
             name="CreateComment" sca-bpel:internal="true"/>
         <bpws:variable element="ns14:JavaInvokeActivityInput"
-            name="JavaInvoke-input" sca-bpel:internal="true"/>
+            name="ReplaceAvatarUrl-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns15:JavaInvokeActivityOutput"
-            name="JavaInvoke" sca-bpel:internal="true"/>
+            name="ReplaceAvatarUrl" sca-bpel:internal="true"/>
         <bpws:variable element="ns16:RequestActivityInput"
             name="Retrieve-Attachment-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns17:RequestActivityOutput"
@@ -6248,14 +6534,22 @@
         <bpws:variable element="ns29:RestActivityOutput"
             name="SearchAttachment" sca-bpel:internal="true"/>
         <bpws:variable element="ns30:JavaInvokeActivityInput"
-            name="JavaInvoke1-input" sca-bpel:internal="true"/>
+            name="Replace-AvatarUrl-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns31:JavaInvokeActivityOutput"
-            name="JavaInvoke1" sca-bpel:internal="true"/>
+            name="Replace-AvatarUrl" sca-bpel:internal="true"/>
         <bpws:variable element="ns32:ActivityInputClass"
             name="Parse-Attachments-input" sca-bpel:internal="true"/>
         <bpws:variable
             element="ns33:JiraAttachmentResponseSchemaElement"
             name="Parse-Attachments" sca-bpel:internal="true"/>
+        <bpws:variable element="ns34:queryAllInput"
+            name="GetUpdated-IntegrationTime-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns35:queryAllOutput"
+            name="GetUpdated-IntegrationTime" sca-bpel:internal="true"/>
+        <bpws:variable element="ns36:Timestamps"
+            name="Updated-IntegrationTime--input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns36:Timestamps"
+            name="Updated-IntegrationTime" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -6677,8 +6971,6 @@
                                     <bpws:link
                                     name="RenderJSONToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="UpdateRecordStatusToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
-                                    <bpws:link
                                     name="UpdateSFIntegrationTimeToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="JavaInvokeToParseJSON" tibex:linkType="SUCCESS"/>
@@ -6694,6 +6986,14 @@
                                     name="JavaInvoke1ToParseJSON" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="ParseJSONToIterate2" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="UpdateRecordStatusToSalesforceQueryAll" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="SalesforceQueryAllToMapper" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Updated&amp;IntegrationTimeToUpdateSFIntegrationTime" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    <bpws:link
+                                    name="Updated&amp;IntegrationTimeToGroupEnd1" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -6709,6 +7009,8 @@
                                     <bpws:targets>
 
                                     <bpws:target linkName="UpdateSFIntegrationTimeToGroupEnd1"/>
+
+                                    <bpws:target linkName="Updated&amp;IntegrationTimeToGroupEnd1"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:extensionActivity>
@@ -7317,9 +7619,9 @@
                                     <tibex:activityExtension
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;www.tibco.com/plugin/java/JavaInvokeActivityInput+8d601a23-2c0b-4851-a0a4-be91c4591573+JavaInvokeActivityInput&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-Comments&quot;/>&#xa;    &lt;xsl:template name=&quot;JavaInvoke-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:JavaInvokeActivityInput>&#xa;            &lt;MethodParameters>&#xa;                &lt;TicketRequest>&#xa;                    &lt;xsl:value-of select=&quot;$Retrieve-Comments/MessageBody/asciiContent&quot;/>&#xa;                &lt;/TicketRequest>&#xa;            &lt;/MethodParameters>&#xa;        &lt;/tns:JavaInvokeActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="JavaInvoke-input"
-                                    name="JavaInvoke"
-                                    outputVariable="JavaInvoke"
+                                    inputVariable="ReplaceAvatarUrl-input"
+                                    name="ReplaceAvatarUrl"
+                                    outputVariable="ReplaceAvatarUrl"
                                     tibex:xpdlId="8d601a23-2c0b-4851-a0a4-be91c4591573" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
@@ -7942,7 +8244,7 @@
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="UpdateRecordStatusToSalesforceUpdateAll"/>
+                                    <bpws:source linkName="UpdateRecordStatusToSalesforceQueryAll"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -7986,7 +8288,7 @@
                                     tibex:xpdlId="d9f6a14c-7397-4c40-b229-8151d5d4855a" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="UpdateRecordStatusToSalesforceUpdateAll"/>
+                                    <bpws:target linkName="Updated&amp;IntegrationTimeToUpdateSFIntegrationTime"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
@@ -8023,7 +8325,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+44636e22-22fa-4e3a-b037-99c5c004c555+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;JavaInvoke&quot;/>&lt;xsl:template name=&quot;ParseJSON-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$JavaInvoke/MethodReturnValue&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+44636e22-22fa-4e3a-b037-99c5c004c555+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;ReplaceAvatarUrl&quot;/>&#xa;    &lt;xsl:template name=&quot;ParseJSON-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$ReplaceAvatarUrl/MethodReturnValue&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Parse-Comments-input"
                                     name="Parse Comments"
@@ -8040,7 +8342,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+44636e22-22fa-4e3a-b037-99c5c004c555+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;JavaInvoke&quot;/>&lt;xsl:template name=&quot;ParseJSON-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$JavaInvoke/MethodReturnValue&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+44636e22-22fa-4e3a-b037-99c5c004c555+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;ReplaceAvatarUrl&quot;/>&#xa;    &lt;xsl:template name=&quot;ParseJSON-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$ReplaceAvatarUrl/MethodReturnValue&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -8170,9 +8472,9 @@
                                     <tibex:activityExtension
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;www.tibco.com/plugin/java/JavaInvokeActivityInput+1c74523f-9e78-45e3-afcd-5999ba7d76f2+JavaInvokeActivityInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SearchAttachment&quot;/>&lt;xsl:template name=&quot;JavaInvoke1-input&quot; match=&quot;/&quot;>&lt;tns:JavaInvokeActivityInput>&lt;MethodParameters>&lt;TicketRequest>&lt;xsl:value-of select=&quot;$SearchAttachment/MessageBody/asciiContent&quot;/>&lt;/TicketRequest>&lt;/MethodParameters>&lt;/tns:JavaInvokeActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="JavaInvoke1-input"
-                                    name="JavaInvoke1"
-                                    outputVariable="JavaInvoke1"
+                                    inputVariable="Replace-AvatarUrl-input"
+                                    name="Replace AvatarUrl"
+                                    outputVariable="Replace-AvatarUrl"
                                     tibex:xpdlId="1c74523f-9e78-45e3-afcd-5999ba7d76f2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
@@ -8221,7 +8523,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+25a81559-cc56-44e2-a097-5fe0e181d681+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;JavaInvoke1&quot;/>&lt;xsl:template name=&quot;Parse-Attachments-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$JavaInvoke1/MethodReturnValue&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+25a81559-cc56-44e2-a097-5fe0e181d681+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Replace-AvatarUrl&quot;/>&#xa;    &lt;xsl:template name=&quot;Parse-Attachments-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$Replace-AvatarUrl/MethodReturnValue&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Parse-Attachments-input"
                                     name="Parse Attachments"
@@ -8238,7 +8540,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+25a81559-cc56-44e2-a097-5fe0e181d681+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;JavaInvoke1&quot;/>&lt;xsl:template name=&quot;Parse-Attachments-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$JavaInvoke1/MethodReturnValue&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+25a81559-cc56-44e2-a097-5fe0e181d681+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Replace-AvatarUrl&quot;/>&#xa;    &lt;xsl:template name=&quot;Parse-Attachments-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$Replace-AvatarUrl/MethodReturnValue&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -8260,6 +8562,113 @@
 
                                     <outputEditorElement href="platform:/resource/CasesIntegration/Schemas/Jira/JiraAttachmentResponseSchemaResource.xsd#//JiraAttachmentResponseSchemaElement;XSDElementDeclaration"/>
                                     </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/JiraTicketData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TicketRecord&quot;/>&lt;xsl:template name=&quot;GetUpdated-IntegrationTime-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select id,lastmodifieddate,Integration_Timestamp__c from case where id='&amp;quot;,$TicketRecord/tns1:SFCaseObjectID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="GetUpdated-IntegrationTime-input"
+                                    name="GetUpdated &amp; IntegrationTime"
+                                    outputVariable="GetUpdated-IntegrationTime"
+                                    tibex:xpdlId="a09a5dec-e2f8-405a-9409-d8ebb2e332af" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="UpdateRecordStatusToSalesforceQueryAll"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="SalesforceQueryAllToMapper"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/JiraTicketData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TicketRecord&quot;/>&lt;xsl:template name=&quot;GetUpdated-IntegrationTime-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select id,lastmodifieddate,Integration_Timestamp__c from case where id='&amp;quot;,$TicketRecord/tns1:SFCaseObjectID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.bwsalesforce.SalesforceQuery"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceQuery"/>
+
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceQuery"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $GetUpdated-IntegrationTime/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/TimestampSchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;GetUpdated-IntegrationTime&quot;/>&lt;xsl:template name=&quot;Updated-IntegrationTime--input&quot; match=&quot;/&quot;>&lt;tns:Timestamps>&lt;tns:UpdatedTime>&lt;xsl:value-of select=&quot;$GetUpdated-IntegrationTime/queryAllResponse/tns1:result/tns1:records[1]/ns:LastModifiedDate&quot;/>&lt;/tns:UpdatedTime>&lt;tns:IntegrationTime>&lt;xsl:value-of select=&quot;$GetUpdated-IntegrationTime/queryAllResponse/tns1:result/tns1:records[1]/ns:Integration_Timestamp__c&quot;/>&lt;/tns:IntegrationTime>&lt;/tns:Timestamps>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Updated-IntegrationTime--input"
+                                    name="Updated &amp; IntegrationTime "
+                                    outputVariable="Updated-IntegrationTime"
+                                    tibex:xpdlId="6f4776cb-6412-4136-8fdf-2a4652829bf1" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="SalesforceQueryAllToMapper"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="Updated&amp;IntegrationTimeToUpdateSFIntegrationTime">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="tib:compare-dateTime(xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:UpdatedTime, &quot;.&quot;)), xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:IntegrationTime, &quot;.&quot;)))!=1" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[tib:compare-dateTime(xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:UpdatedTime, ".")), xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:IntegrationTime, ".")))!=1]]></bpws:transitionCondition>
+                                    </bpws:source>
+
+                                    <bpws:source linkName="Updated&amp;IntegrationTimeToGroupEnd1">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="tib:compare-dateTime(xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:UpdatedTime, &quot;.&quot;)), xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:IntegrationTime, &quot;.&quot;)))=1" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[tib:compare-dateTime(xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:UpdatedTime, ".")), xsd:dateTime(tib:substring-before-last($Updated-IntegrationTime/ns36:IntegrationTime, ".")))=1]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $GetUpdated-IntegrationTime/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/TimestampSchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;GetUpdated-IntegrationTime&quot;/>&lt;xsl:template name=&quot;Updated-IntegrationTime--input&quot; match=&quot;/&quot;>&lt;tns:Timestamps>&lt;tns:UpdatedTime>&lt;xsl:value-of select=&quot;$GetUpdated-IntegrationTime/queryAllResponse/tns1:result/tns1:records[1]/ns:LastModifiedDate&quot;/>&lt;/tns:UpdatedTime>&lt;tns:IntegrationTime>&lt;xsl:value-of select=&quot;$GetUpdated-IntegrationTime/queryAllResponse/tns1:result/tns1:records[1]/ns:Integration_Timestamp__c&quot;/>&lt;/tns:IntegrationTime>&lt;/tns:Timestamps>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.mapper"
+                                    version="6.0.0.001"
+                                    xmlns:TimestampSchema="http://www.example.org/TimestampSchema"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
+
+                                    <value
+                                    inputQName="TimestampSchema:Timestamps" xsi:type="generalactivities:Mapper"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>

@@ -1539,9 +1539,9 @@
         <bpws:variable element="ns1:ActivityInput"
             name="JiraTicketLog-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns2:TicketRecordsData"
-            name="RenderJSON-input" sca-bpel:internal="true"/>
+            name="Render-PublisherRequest-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns3:ActivityOutputClass"
-            name="RenderJSON" sca-bpel:internal="true"/>
+            name="Render-PublisherRequest" sca-bpel:internal="true"/>
         <bpws:variable element="ns4:RestActivityInput"
             name="Invoke-JiraTicketPublisher-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns5:RestActivityOutput"
@@ -1797,9 +1797,9 @@
                                     <tibex:activityExtension
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475582883860&quot; xmlns:tns1=&quot;http://www.example.org/JiraRecordData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SearchRecord&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:TicketRecordsData>&lt;tns1:TicketRecordList>&lt;xsl:if test=&quot;$SearchRecord/tns:key&quot;>&lt;tns1:TicketID>&lt;xsl:value-of select=&quot;$SearchRecord/tns:key&quot;/>&lt;/tns1:TicketID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SearchRecord/tns:fields/tns:customfield_11846&quot;>&lt;tns1:IntegrationTime>&lt;xsl:value-of select=&quot;$SearchRecord/tns:fields/tns:customfield_11846&quot;/>&lt;/tns1:IntegrationTime>&lt;/xsl:if>&lt;/tns1:TicketRecordList>&lt;/tns1:TicketRecordsData>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="RenderJSON-input"
-                                    name="RenderJSON"
-                                    outputVariable="RenderJSON"
+                                    inputVariable="Render-PublisherRequest-input"
+                                    name="Render PublisherRequest"
+                                    outputVariable="Render-PublisherRequest"
                                     tibex:xpdlId="3cfe97d7-7f56-4921-9f63-22e5af94f1ca" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
                                     <bpws:target linkName="GroupStart1ToRenderJSON"/>
@@ -1835,7 +1835,7 @@
                                     </bpws:extensionActivity>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+784d87ea-9bf4-4db7-8c23-b638ca95ae24+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+784d87ea-9bf4-4db7-8c23-b638ca95ae24+RestInvokeInput&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Render-PublisherRequest&quot;/>&#xa;    &lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:RestActivityInput>&#xa;            &lt;MessageBody>&#xa;                &lt;asciiContent>&#xa;                    &lt;xsl:value-of select=&quot;$Render-PublisherRequest/jsonString&quot;/>&#xa;                &lt;/asciiContent>&#xa;            &lt;/MessageBody>&#xa;        &lt;/tns:RestActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     governedObjectTypes="BWHttpReference"
                                     inputVariable="Invoke-JiraTicketPublisher-input"
@@ -1850,7 +1850,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+784d87ea-9bf4-4db7-8c23-b638ca95ae24+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+784d87ea-9bf4-4db7-8c23-b638ca95ae24+RestInvokeInput&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Render-PublisherRequest&quot;/>&#xa;    &lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:RestActivityInput>&#xa;            &lt;MessageBody>&#xa;                &lt;asciiContent>&#xa;                    &lt;xsl:value-of select=&quot;$Render-PublisherRequest/jsonString&quot;/>&#xa;                &lt;/asciiContent>&#xa;            &lt;/MessageBody>&#xa;        &lt;/tns:RestActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
@@ -1920,7 +1920,7 @@
                                 </bpws:empty>
                                 <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475582883860&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SearchRecord&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;JiraTicket&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Integration TimeStamp : &amp;quot;,$SearchRecord/tns1:fields/tns1:customfield_11846)&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475582883860&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SearchRecord&quot;/>&lt;xsl:template name=&quot;IntegrationTimeStampLog-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;JiraTicket&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Time :  &amp;quot;,$SearchRecord/tns1:fields/tns1:updated,&amp;quot; Integration TimeStamp : &amp;quot;,$SearchRecord/tns1:fields/tns1:customfield_11846)&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="IntegrationTimeStampLog-input"
                                     name="IntegrationTimeStampLog"
@@ -1933,7 +1933,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475582883860&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SearchRecord&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;JiraTicket&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Integration TimeStamp : &amp;quot;,$SearchRecord/tns1:fields/tns1:customfield_11846)&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475582883860&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SearchRecord&quot;/>&lt;xsl:template name=&quot;IntegrationTimeStampLog-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;JiraTicket&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Time :  &amp;quot;,$SearchRecord/tns1:fields/tns1:updated,&amp;quot; Integration TimeStamp : &amp;quot;,$SearchRecord/tns1:fields/tns1:customfield_11846)&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
