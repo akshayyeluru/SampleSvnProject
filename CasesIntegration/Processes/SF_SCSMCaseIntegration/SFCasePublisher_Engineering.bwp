@@ -8,6 +8,8 @@
     xmlns:ns="http://xmlns.example.com/20161021111644PLT"
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
     xmlns:ns1="urn:partner.soap.sforce.com_queryAllInput"
+    xmlns:ns10="urn:partner.soap.sforce.com_updateAllInput"
+    xmlns:ns11="urn:partner.soap.sforce.com_updateAllOutput"
     xmlns:ns2="urn:partner.soap.sforce.com_queryAllOutput"
     xmlns:ns3="http://www.example.org/SCSM_INPUT"
     xmlns:ns4="activity.jsonRender.output+976e1ab6-bf10-466e-b366-2c7722fa83ac+ActivityOutputType"
@@ -15,6 +17,7 @@
     xmlns:ns6="http://www.tibco.com/pe/WriteToLogActivitySchema"
     xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf7533f6-8a4c-49b6-a448-52027501eb2e+RestInvokeInput"
     xmlns:ns8="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf7533f6-8a4c-49b6-a448-52027501eb2e+RestInvokeOutput"
+    xmlns:ns9="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
@@ -461,6 +464,251 @@
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
+        <schema
+            targetNamespace="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:tibex="http://www.tibco.com/bpel/2007/extensions" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions">
+            <element name="DefaultFault">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="message" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="msgCode" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllInput"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:Q1="urn:sobject.partner.soap.sforce.com" xmlns:tns="urn:partner.soap.sforce.com_updateAllInput">
+            <import namespace="urn:sobject.partner.soap.sforce.com"/>
+            <complexType name="updateAllInputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:connectionInfo"/>
+                    <element maxOccurs="1" minOccurs="1" name="update" type="tns:updateType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="update_Optional" type="tns:updateOptionalType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllInput" type="tns:updateAllInputType"/>
+            <element name="connectionInfo" nillable="false" type="tns:connectionInfoType"/>
+            <complexType name="connectionInfoType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="serverUrl" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="sessionId" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="externalSessionIdUsed" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="batchSize" type="integer"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateSObjects" type="tns:updateSObjects"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateSObjects">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:sObjects"/>
+                </sequence>
+            </complexType>
+            <element name="sObjects" nillable="false" type="Q1:sObject"/>
+            <complexType name="updateOptionalType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:_configData"/>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:headers"/>
+                </sequence>
+            </complexType>
+            <element name="_configData" nillable="false" type="tns:_configDataType"/>
+            <complexType name="_configDataType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="timeout" type="integer"/>
+                </sequence>
+            </complexType>
+            <element name="headers" nillable="false" type="tns:headersType"/>
+            <complexType name="headersType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="CallOptions" type="tns:CallOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AssignmentRuleHeader" type="tns:AssignmentRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="MruHeader" type="tns:MruHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllowFieldTruncationHeader" type="tns:AllowFieldTruncationHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DisableFeedTrackingHeader" type="tns:DisableFeedTrackingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="StreamingEnabledHeader" type="tns:StreamingEnabledHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllOrNoneHeader" type="tns:AllOrNoneHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DuplicateRuleHeader" type="tns:DuplicateRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="LocaleOptions" type="tns:LocaleOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DebuggingHeader" type="tns:DebuggingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="PackageVersionHeader" type="tns:PackageVersionHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="EmailHeader" type="tns:EmailHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="OwnerChangeOptions" type="tns:OwnerChangeOptionsType"/>
+                </sequence>
+            </complexType>
+            <complexType name="CallOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="client"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="defaultNamespace" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="AssignmentRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="assignmentRuleId" nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="useDefaultRule" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="MruHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateMru" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllowFieldTruncationHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowFieldTruncation" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DisableFeedTrackingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="disableFeedTracking" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="StreamingEnabledHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="streamingEnabled" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllOrNoneHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allOrNone" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DuplicateRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowSave" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="includeRecordDetails" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="runAsCurrentUser" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="LocaleOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="language"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="localizeErrors" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DebuggingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="debugLevel" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersionHeaderType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="PackageVersion" type="tns:PackageVersion"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersion">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:majorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:minorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:namespace"/>
+                </sequence>
+            </complexType>
+            <element name="majorNumber" nillable="false" type="integer"/>
+            <element name="minorNumber" nillable="false" type="integer"/>
+            <element name="namespace" nillable="false" type="string"/>
+            <complexType name="EmailHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerAutoResponseEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerOtherEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerUserEmail" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOptionsType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="OwnerChangeOption" type="tns:OwnerChangeOption"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOption">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:type"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:execute"/>
+                </sequence>
+            </complexType>
+            <element name="type" nillable="false" type="string"/>
+            <element name="execute" nillable="false" type="boolean"/>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllOutput"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:partner.soap.sforce.com_updateAllOutput">
+            <complexType name="updateAllOutputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="updateAllResponse" type="tns:updateAllResponseType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllOutput" type="tns:updateAllOutputType"/>
+            <complexType name="updateAllResponseType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:result"/>
+                </sequence>
+            </complexType>
+            <element name="result" nillable="false" type="tns:SaveResult"/>
+            <complexType name="SaveResult">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:errors"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:id"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:success"/>
+                </sequence>
+            </complexType>
+            <element name="errors" nillable="false" type="tns:Error"/>
+            <complexType name="Error">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:fields"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:message"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:statusCode"/>
+                </sequence>
+            </complexType>
+            <element name="fields" nillable="true" type="string"/>
+            <element name="message" nillable="false" type="string"/>
+            <element name="statusCode" nillable="false" type="string"/>
+            <element name="id" nillable="true" type="string"/>
+            <element name="success" nillable="false" type="boolean"/>
+        </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161021111644PLT"
             xmlns:extns="http://www.example.org/SfQueueDataMapper"
@@ -692,7 +940,7 @@
 
                                     <layoutConstraint
                                     x="611"
-                                    xsi:type="notation:Bounds" y="-10"/>
+                                    xsi:type="notation:Bounds" y="-52"/>
                                     </children>
 
                                     <children type="4018">
@@ -770,7 +1018,7 @@
 
                                     <layoutConstraint
                                     x="-14"
-                                    xsi:type="notation:Bounds" y="51"/>
+                                    xsi:type="notation:Bounds" y="58"/>
                                     </children>
 
                                     <children type="4002">
@@ -824,7 +1072,7 @@
 
                                     <layoutConstraint
                                     x="96"
-                                    xsi:type="notation:Bounds" y="51"/>
+                                    xsi:type="notation:Bounds" y="58"/>
                                     </children>
 
                                     <children type="4002">
@@ -877,8 +1125,170 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.4"/>
 
                                     <layoutConstraint
-                                    x="212"
-                                    xsi:type="notation:Bounds" y="39"/>
+                                    x="244"
+                                    xsi:type="notation:Bounds" y="51"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.5"/>
+
+                                    <layoutConstraint
+                                    x="68"
+                                    xsi:type="notation:Bounds" y="-22"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.6"/>
+
+                                    <layoutConstraint
+                                    x="184"
+                                    xsi:type="notation:Bounds" y="51"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.7"/>
+
+                                    <layoutConstraint
+                                    x="333"
+                                    xsi:type="notation:Bounds" y="51"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -902,8 +1312,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity"/>
 
                                     <layoutConstraint
-                                    height="176"
-                                    width="347" xsi:type="notation:Bounds"/>
+                                    height="199"
+                                    width="468" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -922,8 +1332,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="164"
-                                    width="350"
+                                    height="199"
+                                    width="471"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -1119,6 +1529,60 @@
                                     xsi:type="notation:Bounds" y="25"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
+
+                                    <layoutConstraint
+                                    x="113"
+                                    xsi:type="notation:Bounds" y="25"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1139,7 +1603,9 @@
 
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity"/>
 
-                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    <layoutConstraint
+                                    height="168"
+                                    width="390" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1197,7 +1663,7 @@
 
                                     <layoutConstraint
                                     height="420"
-                                    width="390"
+                                    width="511"
                                     x="16"
                                     xsi:type="notation:Bounds" y="54"/>
                                     </children>
@@ -1252,8 +1718,62 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    x="444"
+                                    x="507"
                                     xsi:type="notation:Bounds" y="106"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.4"/>
+
+                                    <layoutConstraint
+                                    x="507"
+                                    xsi:type="notation:Bounds" y="194"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -1278,7 +1798,7 @@
 
                                     <layoutConstraint
                                     height="484"
-                                    width="605" xsi:type="notation:Bounds"/>
+                                    width="681" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1298,7 +1818,7 @@
 
                                     <layoutConstraint
                                     height="484"
-                                    width="608"
+                                    width="684"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -1424,7 +1944,7 @@
 
                                     <layoutConstraint
                                     height="528"
-                                    width="648"
+                                    width="724"
                                     x="-3"
                                     xsi:type="notation:Bounds" y="28"/>
                                     </children>
@@ -1479,7 +1999,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.4"/>
 
                                     <layoutConstraint
-                                    x="638"
+                                    x="701"
                                     xsi:type="notation:Bounds" y="191"/>
                                     </children>
 
@@ -1533,7 +2053,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.5"/>
 
                                     <layoutConstraint
-                                    x="649"
+                                    x="712"
                                     xsi:type="notation:Bounds" y="112"/>
                                     </children>
 
@@ -1587,7 +2107,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.6"/>
 
                                     <layoutConstraint
-                                    x="661"
+                                    x="724"
                                     xsi:type="notation:Bounds" y="45"/>
                                     </children>
 
@@ -1615,7 +2135,7 @@
 
                                     <layoutConstraint
                                     height="566"
-                                    width="803" xsi:type="notation:Bounds"/>
+                                    width="910" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1635,7 +2155,7 @@
 
                                     <layoutConstraint
                                     height="566"
-                                    width="806"
+                                    width="913"
                                     x="15" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1651,7 +2171,7 @@
 
                                     <layoutConstraint
                                     height="590"
-                                    width="846" xsi:type="notation:Bounds"/>
+                                    width="953" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -1711,7 +2231,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0"/>
                                     <layoutConstraint
                                     height="609"
-                                    width="908"
+                                    width="1015"
                                     x="2" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1724,7 +2244,8 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="639" width="856" xsi:type="notation:Bounds"/>
+                                    height="639"
+                                    width="1034" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1739,7 +2260,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
                                     <layoutConstraint height="649"
-                                    width="937" xsi:type="notation:Bounds"/>
+                                    width="1044" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
                                 <styles xsi:type="notation:FilteringStyle"/>
@@ -1748,7 +2269,7 @@
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="649" width="940" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="649" width="1047" xsi:type="notation:Bounds"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -1758,7 +2279,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="673" width="940" x="1"
+                    <layoutConstraint height="673" width="1047" x="1"
                         xsi:type="notation:Bounds" y="1"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
@@ -1767,7 +2288,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="725" width="1282" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="725" width="1389" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -1803,39 +2324,6 @@
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.0"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.1"/>
-            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.2"/>
-            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
-            <bendpoints points="[25, 7, -45, -13]$[58, 16, -12, -4]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
@@ -1903,6 +2391,94 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@links/@children.4"/>
             <bendpoints points="[-22, -24, 28, 31]$[-28, -30, 22, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.2"/>
+            <bendpoints points="[25, 0, -85, 0]$[86, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.4"/>
+            <bendpoints points="[25, 0, -35, 0]$[36, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.5"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.6"/>
+            <bendpoints points="[25, 5, -45, 0]$[58, 0, -12, -5]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SfQueueDataMapper"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SCSM_INPUT"/>
@@ -1958,6 +2534,14 @@
             </bpws:from>
         </bpws:variable>
         <bpws:variable element="ns6:ActivityInput" name="Log1-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns9:DefaultFault" name="Throw-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:ActivityInput" name="Log3-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:ActivityInput" name="Log4-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns10:updateAllInput"
+            name="SalesforceUpdateAll-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:updateAllOutput"
+            name="SalesforceUpdateAll" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:ActivityInput" name="Log2-input" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -1998,10 +2582,10 @@
                                 portType="ns:sfcasepublisher_engineering"
                                 tibex:xpdlId="3fe39734-332d-4f28-be01-b1c26194b35a" variable="postOut-input">
                                 <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20161021111644PLT" xmlns:tns1="http://www.example.org/SCSM_INPUT" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"&gt;&lt;xsl:param name="Accumulate"/&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:for-each select="$Accumulate/tns1:SCSM_INPUT"&gt;&lt;tns1:SCSM_INPUT&gt;&lt;tns1:WorkItemType&gt;&lt;xsl:value-of select="tns1:WorkItemType"/&gt;&lt;/tns1:WorkItemType&gt;&lt;xsl:if test="tns1:TechnicalDescription"&gt;&lt;tns1:TechnicalDescription&gt;&lt;xsl:copy-of select="tns1:TechnicalDescription/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:TechnicalDescription"/&gt;&lt;/tns1:TechnicalDescription&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:TroubleshootingSteps"&gt;&lt;tns1:TroubleshootingSteps&gt;&lt;xsl:copy-of select="tns1:TroubleshootingSteps/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:TroubleshootingSteps"/&gt;&lt;/tns1:TroubleshootingSteps&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Title"&gt;&lt;tns1:Title&gt;&lt;xsl:copy-of select="tns1:Title/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:Title"/&gt;&lt;/tns1:Title&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringSummary"&gt;&lt;tns1:EngineeringSummary&gt;&lt;xsl:copy-of select="tns1:EngineeringSummary/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:EngineeringSummary"/&gt;&lt;/tns1:EngineeringSummary&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Prority"&gt;&lt;tns1:Prority&gt;&lt;xsl:value-of select="tns1:Prority"/&gt;&lt;/tns1:Prority&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringStatus"&gt;&lt;tns1:EngineeringStatus&gt;&lt;xsl:copy-of select="tns1:EngineeringStatus/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:EngineeringStatus"/&gt;&lt;/tns1:EngineeringStatus&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Issue"&gt;&lt;tns1:Issue&gt;&lt;xsl:value-of select="tns1:Issue"/&gt;&lt;/tns1:Issue&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringOwner"&gt;&lt;tns1:EngineeringOwner&gt;&lt;xsl:value-of select="tns1:EngineeringOwner"/&gt;&lt;/tns1:EngineeringOwner&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringCaseOwner"&gt;&lt;tns1:EngineeringCaseOwner&gt;&lt;xsl:value-of select="tns1:EngineeringCaseOwner"/&gt;&lt;/tns1:EngineeringCaseOwner&gt;&lt;/xsl:if&gt;&lt;xsl:copy-of select="tns1:Attachments"/&gt;&lt;xsl:copy-of select="tns1:Comments"/&gt;&lt;/tns1:SCSM_INPUT&gt;&lt;/xsl:for-each&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20161021111644PLT" xmlns:tns1="http://www.example.org/SCSM_INPUT" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"&gt;&lt;xsl:param name="Accumulate"/&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:for-each select="$Accumulate/tns1:SCSM_INPUT"&gt;&lt;tns1:SCSM_INPUT&gt;&lt;xsl:if test="tns1:SFID"&gt;&lt;tns1:SFID&gt;&lt;xsl:copy-of select="tns1:SFID/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:SFID"/&gt;&lt;/tns1:SFID&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Queue_ID"&gt;&lt;tns1:Queue_ID&gt;&lt;xsl:copy-of select="tns1:Queue_ID/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:Queue_ID"/&gt;&lt;/tns1:Queue_ID&gt;&lt;/xsl:if&gt;&lt;tns1:WorkItemType&gt;&lt;xsl:value-of select="tns1:WorkItemType"/&gt;&lt;/tns1:WorkItemType&gt;&lt;xsl:if test="tns1:TechnicalDescription"&gt;&lt;tns1:TechnicalDescription&gt;&lt;xsl:copy-of select="tns1:TechnicalDescription/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:TechnicalDescription"/&gt;&lt;/tns1:TechnicalDescription&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:TroubleshootingSteps"&gt;&lt;tns1:TroubleshootingSteps&gt;&lt;xsl:copy-of select="tns1:TroubleshootingSteps/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:TroubleshootingSteps"/&gt;&lt;/tns1:TroubleshootingSteps&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Title"&gt;&lt;tns1:Title&gt;&lt;xsl:copy-of select="tns1:Title/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:Title"/&gt;&lt;/tns1:Title&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringSummary"&gt;&lt;tns1:EngineeringSummary&gt;&lt;xsl:copy-of select="tns1:EngineeringSummary/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:EngineeringSummary"/&gt;&lt;/tns1:EngineeringSummary&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Priority"&gt;&lt;tns1:Priority&gt;&lt;xsl:value-of select="tns1:Priority"/&gt;&lt;/tns1:Priority&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringStatus"&gt;&lt;tns1:EngineeringStatus&gt;&lt;xsl:copy-of select="tns1:EngineeringStatus/@xsi:nil"/&gt;&lt;xsl:value-of select="tns1:EngineeringStatus"/&gt;&lt;/tns1:EngineeringStatus&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:Issue"&gt;&lt;tns1:Issue&gt;&lt;xsl:value-of select="tns1:Issue"/&gt;&lt;/tns1:Issue&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringOwner"&gt;&lt;tns1:EngineeringOwner&gt;&lt;xsl:value-of select="tns1:EngineeringOwner"/&gt;&lt;/tns1:EngineeringOwner&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:EngineeringCaseOwner"&gt;&lt;tns1:EngineeringCaseOwner&gt;&lt;xsl:value-of select="tns1:EngineeringCaseOwner"/&gt;&lt;/tns1:EngineeringCaseOwner&gt;&lt;/xsl:if&gt;&lt;xsl:copy-of select="tns1:Attachments"/&gt;&lt;xsl:copy-of select="tns1:Comments"/&gt;&lt;/tns1:SCSM_INPUT&gt;&lt;/xsl:for-each&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
                                 <tibex:inputBindings>
                                     <tibex:partBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20161021111644PLT&quot; xmlns:tns1=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Accumulate&quot;/>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;xsl:for-each select=&quot;$Accumulate/tns1:SCSM_INPUT&quot;>&#xa;            &lt;tns1:SCSM_INPUT>&#xa;                &lt;tns1:WorkItemType>&#xa;                    &lt;xsl:value-of select=&quot;tns1:WorkItemType&quot;/>&#xa;                &lt;/tns1:WorkItemType>&#xa;                &lt;xsl:if test=&quot;tns1:TechnicalDescription&quot;>&#xa;                    &lt;tns1:TechnicalDescription>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:TechnicalDescription/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:TechnicalDescription&quot;/>&#xa;                    &lt;/tns1:TechnicalDescription>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:TroubleshootingSteps&quot;>&#xa;                    &lt;tns1:TroubleshootingSteps>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:TroubleshootingSteps/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:TroubleshootingSteps&quot;/>&#xa;                    &lt;/tns1:TroubleshootingSteps>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Title&quot;>&#xa;                    &lt;tns1:Title>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:Title/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Title&quot;/>&#xa;                    &lt;/tns1:Title>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringSummary&quot;>&#xa;                    &lt;tns1:EngineeringSummary>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:EngineeringSummary/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringSummary&quot;/>&#xa;                    &lt;/tns1:EngineeringSummary>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Prority&quot;>&#xa;                    &lt;tns1:Prority>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Prority&quot;/>&#xa;                    &lt;/tns1:Prority>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringStatus&quot;>&#xa;                    &lt;tns1:EngineeringStatus>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:EngineeringStatus/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringStatus&quot;/>&#xa;                    &lt;/tns1:EngineeringStatus>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Issue&quot;>&#xa;                    &lt;tns1:Issue>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Issue&quot;/>&#xa;                    &lt;/tns1:Issue>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringOwner&quot;>&#xa;                    &lt;tns1:EngineeringOwner>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringOwner&quot;/>&#xa;                    &lt;/tns1:EngineeringOwner>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringCaseOwner&quot;>&#xa;                    &lt;tns1:EngineeringCaseOwner>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringCaseOwner&quot;/>&#xa;                    &lt;/tns1:EngineeringCaseOwner>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:copy-of select=&quot;tns1:Attachments&quot;/>&#xa;                &lt;xsl:copy-of select=&quot;tns1:Comments&quot;/>&#xa;            &lt;/tns1:SCSM_INPUT>&#xa;        &lt;/xsl:for-each>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20161021111644PLT&quot; xmlns:tns1=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Accumulate&quot;/>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;xsl:for-each select=&quot;$Accumulate/tns1:SCSM_INPUT&quot;>&#xa;            &lt;tns1:SCSM_INPUT>&#xa;                &lt;xsl:if test=&quot;tns1:SFID&quot;>&#xa;                    &lt;tns1:SFID>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:SFID/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:SFID&quot;/>&#xa;                    &lt;/tns1:SFID>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Queue_ID&quot;>&#xa;                    &lt;tns1:Queue_ID>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:Queue_ID/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Queue_ID&quot;/>&#xa;                    &lt;/tns1:Queue_ID>&#xa;                &lt;/xsl:if>&#xa;                &lt;tns1:WorkItemType>&#xa;                    &lt;xsl:value-of select=&quot;tns1:WorkItemType&quot;/>&#xa;                &lt;/tns1:WorkItemType>&#xa;                &lt;xsl:if test=&quot;tns1:TechnicalDescription&quot;>&#xa;                    &lt;tns1:TechnicalDescription>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:TechnicalDescription/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:TechnicalDescription&quot;/>&#xa;                    &lt;/tns1:TechnicalDescription>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:TroubleshootingSteps&quot;>&#xa;                    &lt;tns1:TroubleshootingSteps>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:TroubleshootingSteps/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:TroubleshootingSteps&quot;/>&#xa;                    &lt;/tns1:TroubleshootingSteps>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Title&quot;>&#xa;                    &lt;tns1:Title>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:Title/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Title&quot;/>&#xa;                    &lt;/tns1:Title>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringSummary&quot;>&#xa;                    &lt;tns1:EngineeringSummary>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:EngineeringSummary/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringSummary&quot;/>&#xa;                    &lt;/tns1:EngineeringSummary>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Priority&quot;>&#xa;                    &lt;tns1:Priority>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Priority&quot;/>&#xa;                    &lt;/tns1:Priority>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringStatus&quot;>&#xa;                    &lt;tns1:EngineeringStatus>&#xa;                        &lt;xsl:copy-of select=&quot;tns1:EngineeringStatus/@xsi:nil&quot;/>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringStatus&quot;/>&#xa;                    &lt;/tns1:EngineeringStatus>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:Issue&quot;>&#xa;                    &lt;tns1:Issue>&#xa;                        &lt;xsl:value-of select=&quot;tns1:Issue&quot;/>&#xa;                    &lt;/tns1:Issue>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringOwner&quot;>&#xa;                    &lt;tns1:EngineeringOwner>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringOwner&quot;/>&#xa;                    &lt;/tns1:EngineeringOwner>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;tns1:EngineeringCaseOwner&quot;>&#xa;                    &lt;tns1:EngineeringCaseOwner>&#xa;                        &lt;xsl:value-of select=&quot;tns1:EngineeringCaseOwner&quot;/>&#xa;                    &lt;/tns1:EngineeringCaseOwner>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:copy-of select=&quot;tns1:Attachments&quot;/>&#xa;                &lt;xsl:copy-of select=&quot;tns1:Comments&quot;/>&#xa;            &lt;/tns1:SCSM_INPUT>&#xa;        &lt;/xsl:for-each>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                 </tibex:inputBindings>
                                 <bpws:targets>
                                     <bpws:target linkName="InvokeRESTAPITopostOut"/>
@@ -2045,6 +2629,8 @@
                                     name="ScopeToMapper" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="MapperToGroupEnd" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="MapperToLog2" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:assign
                                     name="GroupStart"
@@ -2114,7 +2700,11 @@
                                     <bpws:scope name="scope2">
 
                                     <bpws:flow name="flow4">
-                                    <bpws:links/>
+                                    <bpws:links>
+
+                                    <bpws:link
+                                    name="Log1ToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    </bpws:links>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
@@ -2123,6 +2713,10 @@
                                     inputVariable="Log1-input"
                                     name="Log1"
                                     tibex:xpdlId="eb21ef74-31b3-488e-81b7-45c13f62a8a2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="Log1ToSalesforceUpdateAll"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
@@ -2152,6 +2746,47 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;substring($FaultDetails/StackTrace,0,100000)&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="SalesforceUpdateAll-input"
+                                    name="SalesforceUpdateAll"
+                                    outputVariable="SalesforceUpdateAll"
+                                    tibex:xpdlId="37591851-be30-4832-b4e3-50e566754549" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="Log1ToSalesforceUpdateAll"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;substring($FaultDetails/StackTrace,0,100000)&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
                                     </bpws:flow>
                                     </bpws:scope>
                                     </bpws:catchAll>
@@ -2161,11 +2796,17 @@
                                     <bpws:link
                                     name="GroupStart1ToSalesforceQueryAll" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="TOGetSFRecordToSalesforceQueryAll" tibex:linkType="SUCCESS"/>
+                                    name="TOGetSFRecordToThrow" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
-                                    name="ToGetCommentToSalesforceQueryAll" tibex:linkType="SUCCESS"/>
+                                    name="TOGetSFRecordToToGetComment" tibex:linkType="SUCCESSWITHNOCONDITION"/>
                                     <bpws:link
-                                    name="ToGetAttachmentToGroupEnd1" tibex:linkType="SUCCESS"/>
+                                    name="ToGetCommentToLog3" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Log3ToToGetAttachment" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="ToGetAttachmentToLog4" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Log4ToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -2180,13 +2821,13 @@
                                     tibex:group="groupEnd" tibex:xpdlId="8db04ea4-c355-4071-8859-4418aee57315">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="ToGetAttachmentToGroupEnd1"/>
+                                    <bpws:target linkName="Log4ToGroupEnd1"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;TOGetSFRecord-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select troubleshooting_steps__c, Technical_Description__c, Priority, Issue__c, Engineering_Summary__c, Engineering_Status__c, Engineering_Owner__c, OwnerId, RecordType_Name__c, Owner.Name from case where Id='&amp;quot;,$currentElement/tns1:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;TOGetSFRecord-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select Id,troubleshooting_steps__c, Technical_Description__c, Priority, Issue__c, Engineering_Summary__c, Engineering_Status__c, Engineering_Owner__c, OwnerId, RecordType_Name__c, Owner.Name,Engineering_Type__c  from case where Id='&amp;quot;,$currentElement/tns1:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="TOGetSFRecord-input"
                                     name="TOGetSFRecord"
@@ -2198,12 +2839,28 @@
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="TOGetSFRecordToSalesforceQueryAll"/>
+                                    <bpws:source linkName="TOGetSFRecordToThrow">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length(xsd:string($TOGetSFRecord/queryAllResponse/ns2:result/ns2:size))=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length(xsd:string($TOGetSFRecord/queryAllResponse/ns2:result/ns2:size))=0]]></bpws:transitionCondition>
+                                    </bpws:source>
+
+                                    <bpws:source linkName="TOGetSFRecordToToGetComment">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="##otherwise##" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;TOGetSFRecord-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select troubleshooting_steps__c, Technical_Description__c, Priority, Issue__c, Engineering_Summary__c, Engineering_Status__c, Engineering_Owner__c, OwnerId, RecordType_Name__c, Owner.Name from case where Id='&amp;quot;,$currentElement/tns1:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;TOGetSFRecord-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select Id,troubleshooting_steps__c, Technical_Description__c, Priority, Issue__c, Engineering_Summary__c, Engineering_Status__c, Engineering_Owner__c, OwnerId, RecordType_Name__c, Owner.Name,Engineering_Type__c  from case where Id='&amp;quot;,$currentElement/tns1:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2239,11 +2896,11 @@
                                     tibex:xpdlId="32d8de81-1384-4015-8395-73c2a6efbc49" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="TOGetSFRecordToSalesforceQueryAll"/>
+                                    <bpws:target linkName="TOGetSFRecordToToGetComment"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="ToGetCommentToSalesforceQueryAll"/>
+                                    <bpws:source linkName="ToGetCommentToLog3"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -2284,11 +2941,11 @@
                                     tibex:xpdlId="aa36eefb-9d64-4107-8a4b-e86777b1e86f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="ToGetCommentToSalesforceQueryAll"/>
+                                    <bpws:target linkName="Log3ToToGetAttachment"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="ToGetAttachmentToGroupEnd1"/>
+                                    <bpws:source linkName="ToGetAttachmentToLog4"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -2318,12 +2975,119 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:throw
+                                    faultName="ns9:DefaultFault"
+                                    faultVariable="Throw-input"
+                                    name="Throw" tibex:xpdlId="84211747-4e07-4fe2-aa89-ebbfa294031c">
+
+                                    <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions" xmlns:tns1="urn:partner.soap.sforce.com_queryAllOutput" version="2.0"&gt;&lt;xsl:param name="TOGetSFRecord"/&gt;&lt;xsl:template name="Throw-input" match="/"&gt;&lt;tns:DefaultFault&gt;&lt;message&gt;&lt;xsl:value-of select="&amp;quot;No Records in SFGetRecords&amp;quot;"/&gt;&lt;/message&gt;&lt;xsl:if test="$TOGetSFRecord/queryAllResponse/tns1:result/tns1:size"&gt;&lt;msgCode&gt;&lt;xsl:value-of select="$TOGetSFRecord/queryAllResponse/tns1:result/tns1:size"/&gt;&lt;/msgCode&gt;&lt;/xsl:if&gt;&lt;/tns:DefaultFault&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+                                    <tibex:inputBindings>
+
+                                    <tibex:partBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:template name=&quot;Throw-input&quot; match=&quot;/&quot;>&lt;tns:DefaultFault>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;No Records in SFGetRecords&amp;quot;&quot;/>&lt;/message>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:size&quot;>&lt;msgCode>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:size&quot;/>&lt;/msgCode>&lt;/xsl:if>&lt;/tns:DefaultFault>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="TOGetSFRecordToThrow"/>
+                                    </bpws:targets>
+                                    </bpws:throw>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetComment&quot;/>&lt;xsl:template name=&quot;Log3-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Size of Comment Query&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:size&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Log3-input"
+                                    name="Log3"
+                                    tibex:xpdlId="cc4df60c-3fe5-4d5b-8b5d-16478789ebc6" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="ToGetCommentToLog3"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="Log3ToToGetAttachment"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetComment&quot;/>&lt;xsl:template name=&quot;Log3-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Size of Comment Query&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:size&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.log"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+
+                                    <value
+                                    role="Info"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetAttachment&quot;/>&lt;xsl:template name=&quot;Log4-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Size of Attachment Query&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:size&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Log4-input"
+                                    name="Log4"
+                                    tibex:xpdlId="51c7e1b4-dde5-4e54-8005-6440e1ff2f2f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="ToGetAttachmentToLog4"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="Log4ToGroupEnd1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetAttachment&quot;/>&lt;xsl:template name=&quot;Log4-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Size of Attachment Query&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:size&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.log"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+
+                                    <value
+                                    role="Info"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
                                     </bpws:flow>
                                     </bpws:scope>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $TOGetSFRecord/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!-- $ToGetComment/queryAllResponse/tns1:result/tns1:records, type, ns:CaseComment -->&#xa;&lt;!-- $ToGetAttachment/queryAllResponse/tns1:result/tns1:records, type, ns:Attachment -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetAttachment&quot;/>&lt;xsl:param name=&quot;ToGetComment&quot;/>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_INPUT>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;0&quot;/>&lt;/tns:WorkItemType>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;tns:Title>&lt;xsl:value-of select=&quot;&amp;quot;Title1&amp;quot;&quot;/>&lt;/tns:Title>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Prority>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority&quot;/>&lt;/tns:Prority>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;concat(tib:substring-before-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '),'.',tib:substring-after-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '))&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;xsl:for-each select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records&quot;>&lt;tns:Attachments>&lt;xsl:if test=&quot;not((ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Name>&lt;xsl:value-of select=&quot;ns:Name&quot;/>&lt;/tns:Name>&lt;/xsl:if>&lt;tns:Description>&lt;xsl:value-of select=&quot;&amp;quot;Test&amp;quot;&quot;/>&lt;/tns:Description>&lt;tns:Extension>&lt;xsl:value-of select=&quot;&amp;quot;Test&amp;quot;&quot;/>&lt;/tns:Extension>&lt;xsl:if test=&quot;not((ns:BodyLength/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:BodyLength/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Size>&lt;xsl:value-of select=&quot;ns:BodyLength&quot;/>&lt;/tns:Size>&lt;/xsl:if>&lt;xsl:if test=&quot;not((ns:Body/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:Body/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Bytes>&lt;xsl:value-of select=&quot;ns:Body&quot;/>&lt;/tns:Bytes>&lt;/xsl:if>&lt;/tns:Attachments>&lt;/xsl:for-each>&lt;xsl:for-each select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records&quot;>&lt;tns:Comments>&lt;tns:ID>&lt;xsl:value-of select=&quot;&amp;quot;cac7583c-936d-4ef2-a833-1169927748c3&amp;quot;&quot;/>&lt;/tns:ID>&lt;xsl:if test=&quot;not((ns:CommentBody/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:CommentBody/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Comment>&lt;xsl:value-of select=&quot;ns:CommentBody&quot;/>&lt;/tns:Comment>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredBy>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name&quot;/>&lt;/tns:EnteredBy>&lt;/xsl:if>&lt;xsl:if test=&quot;not((ns:CreatedDate/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:CreatedDate/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredDate>&lt;xsl:value-of select=&quot;ns:CreatedDate&quot;/>&lt;/tns:EnteredDate>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:DisplayName>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:DisplayName>&lt;/xsl:if>&lt;xsl:if test=&quot;not((ns:IsPublished/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:IsPublished/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:IsPrivate>&lt;xsl:value-of select=&quot;ns:IsPublished&quot;/>&lt;/tns:IsPrivate>&lt;/xsl:if>&lt;tns:UserType>&lt;xsl:value-of select=&quot;2&quot;/>&lt;/tns:UserType>&lt;/tns:Comments>&lt;/xsl:for-each>&lt;/tns:SCSM_INPUT>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $TOGetSFRecord/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!-- $ToGetComment/queryAllResponse/tns1:result/tns1:records, type, ns:CaseComment -->&#xa;&lt;!-- $ToGetAttachment/queryAllResponse/tns1:result/tns1:records, type, ns:Attachment -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetAttachment&quot;/>&lt;xsl:param name=&quot;ToGetComment&quot;/>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_INPUT>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;>&lt;tns:SFID>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;tns:Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns2:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns2:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Type__c = &amp;quot;Eagleview Website &amp;amp; App issues&amp;quot;) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Type__c = &amp;quot;Eagleview Tool/System Issue&amp;quot;)&quot;>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;&amp;quot;0&amp;quot;&quot;/>&lt;/tns:WorkItemType>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:WorkItemType>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;tns:Title>&lt;xsl:value-of select=&quot;bw:getModuleProperty(&amp;quot;/SFSCSM/Title&amp;quot;)&quot;/>&lt;/tns:Title>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Priority>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority&quot;/>&lt;/tns:Priority>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;concat(tib:substring-before-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '),'.',tib:substring-after-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '))&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;xsl:choose>&lt;xsl:when test=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:size>0&quot;>&lt;xsl:for-each select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records&quot;>&lt;tns:Attachments>&lt;xsl:if test=&quot;not(($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Name>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Name&quot;/>&lt;/tns:Name>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:BodyLength/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:BodyLength/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Size>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:BodyLength&quot;/>&lt;/tns:Size>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Body/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Body/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Bytes>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Body&quot;/>&lt;/tns:Bytes>&lt;/xsl:if>&lt;/tns:Attachments>&lt;/xsl:for-each>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:Attachments/>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:size>0&quot;>&lt;tns:Comments>&lt;tns:ID>&lt;xsl:value-of select=&quot;bw:getModuleProperty(&amp;quot;/SFSCSM/CommentId&amp;quot;)&quot;/>&lt;/tns:ID>&lt;xsl:if test=&quot;not(($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CommentBody/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CommentBody/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Comment>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CommentBody&quot;/>&lt;/tns:Comment>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredBy>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name&quot;/>&lt;/tns:EnteredBy>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CreatedDate/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CreatedDate/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredDate>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CreatedDate&quot;/>&lt;/tns:EnteredDate>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:DisplayName>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:DisplayName>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:IsPublished/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:IsPublished/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:IsPrivate>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:IsPublished&quot;/>&lt;/tns:IsPrivate>&lt;/xsl:if>&lt;tns:UserType>&lt;xsl:value-of select=&quot;bw:getModuleProperty(&amp;quot;/SFSCSM/CommentUserType&amp;quot;)&quot;/>&lt;/tns:UserType>&lt;/tns:Comments>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:Comments/>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SCSM_INPUT>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Mapper-input"
                                     name="Mapper"
@@ -2334,11 +3098,12 @@
                                     </bpws:targets>
                                     <bpws:sources>
                                     <bpws:source linkName="MapperToGroupEnd"/>
+                                    <bpws:source linkName="MapperToLog2"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $TOGetSFRecord/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!-- $ToGetComment/queryAllResponse/tns1:result/tns1:records, type, ns:CaseComment -->&#xa;&lt;!-- $ToGetAttachment/queryAllResponse/tns1:result/tns1:records, type, ns:Attachment -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetAttachment&quot;/>&lt;xsl:param name=&quot;ToGetComment&quot;/>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_INPUT>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;0&quot;/>&lt;/tns:WorkItemType>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;tns:Title>&lt;xsl:value-of select=&quot;&amp;quot;Title1&amp;quot;&quot;/>&lt;/tns:Title>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Prority>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority&quot;/>&lt;/tns:Prority>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;concat(tib:substring-before-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '),'.',tib:substring-after-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '))&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;xsl:for-each select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records&quot;>&lt;tns:Attachments>&lt;xsl:if test=&quot;not((ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Name>&lt;xsl:value-of select=&quot;ns:Name&quot;/>&lt;/tns:Name>&lt;/xsl:if>&lt;tns:Description>&lt;xsl:value-of select=&quot;&amp;quot;Test&amp;quot;&quot;/>&lt;/tns:Description>&lt;tns:Extension>&lt;xsl:value-of select=&quot;&amp;quot;Test&amp;quot;&quot;/>&lt;/tns:Extension>&lt;xsl:if test=&quot;not((ns:BodyLength/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:BodyLength/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Size>&lt;xsl:value-of select=&quot;ns:BodyLength&quot;/>&lt;/tns:Size>&lt;/xsl:if>&lt;xsl:if test=&quot;not((ns:Body/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:Body/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Bytes>&lt;xsl:value-of select=&quot;ns:Body&quot;/>&lt;/tns:Bytes>&lt;/xsl:if>&lt;/tns:Attachments>&lt;/xsl:for-each>&lt;xsl:for-each select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records&quot;>&lt;tns:Comments>&lt;tns:ID>&lt;xsl:value-of select=&quot;&amp;quot;cac7583c-936d-4ef2-a833-1169927748c3&amp;quot;&quot;/>&lt;/tns:ID>&lt;xsl:if test=&quot;not((ns:CommentBody/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:CommentBody/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Comment>&lt;xsl:value-of select=&quot;ns:CommentBody&quot;/>&lt;/tns:Comment>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredBy>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name&quot;/>&lt;/tns:EnteredBy>&lt;/xsl:if>&lt;xsl:if test=&quot;not((ns:CreatedDate/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:CreatedDate/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredDate>&lt;xsl:value-of select=&quot;ns:CreatedDate&quot;/>&lt;/tns:EnteredDate>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:DisplayName>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:DisplayName>&lt;/xsl:if>&lt;xsl:if test=&quot;not((ns:IsPublished/@xsi:nil=(&amp;quot;true&amp;quot;)) or (ns:IsPublished/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:IsPrivate>&lt;xsl:value-of select=&quot;ns:IsPublished&quot;/>&lt;/tns:IsPrivate>&lt;/xsl:if>&lt;tns:UserType>&lt;xsl:value-of select=&quot;2&quot;/>&lt;/tns:UserType>&lt;/tns:Comments>&lt;/xsl:for-each>&lt;/tns:SCSM_INPUT>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $TOGetSFRecord/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!-- $ToGetComment/queryAllResponse/tns1:result/tns1:records, type, ns:CaseComment -->&#xa;&lt;!-- $ToGetAttachment/queryAllResponse/tns1:result/tns1:records, type, ns:Attachment -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ToGetAttachment&quot;/>&lt;xsl:param name=&quot;ToGetComment&quot;/>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_INPUT>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;>&lt;tns:SFID>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;tns:Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns2:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns2:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Type__c = &amp;quot;Eagleview Website &amp;amp; App issues&amp;quot;) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Type__c = &amp;quot;Eagleview Tool/System Issue&amp;quot;)&quot;>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;&amp;quot;0&amp;quot;&quot;/>&lt;/tns:WorkItemType>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:WorkItemType>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Technical_Description__c&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:troubleshooting_steps__c&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;tns:Title>&lt;xsl:value-of select=&quot;bw:getModuleProperty(&amp;quot;/SFSCSM/Title&amp;quot;)&quot;/>&lt;/tns:Title>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Summary__c&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Priority>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Priority&quot;/>&lt;/tns:Priority>&lt;/xsl:if>&lt;xsl:if test=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Status__c&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Issue__c&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;concat(tib:substring-before-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '),'.',tib:substring-after-last($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name, ' '))&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;xsl:choose>&lt;xsl:when test=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:size>0&quot;>&lt;xsl:for-each select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records&quot;>&lt;tns:Attachments>&lt;xsl:if test=&quot;not(($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Name>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Name&quot;/>&lt;/tns:Name>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:BodyLength/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:BodyLength/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Size>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:BodyLength&quot;/>&lt;/tns:Size>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Body/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Body/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Bytes>&lt;xsl:value-of select=&quot;$ToGetAttachment/queryAllResponse/tns1:result/tns1:records[1]/ns:Body&quot;/>&lt;/tns:Bytes>&lt;/xsl:if>&lt;/tns:Attachments>&lt;/xsl:for-each>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:Attachments/>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:size>0&quot;>&lt;tns:Comments>&lt;tns:ID>&lt;xsl:value-of select=&quot;bw:getModuleProperty(&amp;quot;/SFSCSM/CommentId&amp;quot;)&quot;/>&lt;/tns:ID>&lt;xsl:if test=&quot;not(($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CommentBody/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CommentBody/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:Comment>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CommentBody&quot;/>&lt;/tns:Comment>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredBy>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Owner/ns:Name&quot;/>&lt;/tns:EnteredBy>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CreatedDate/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CreatedDate/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:EnteredDate>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:CreatedDate&quot;/>&lt;/tns:EnteredDate>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:DisplayName>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Owner__c&quot;/>&lt;/tns:DisplayName>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:IsPublished/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:IsPublished/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:IsPrivate>&lt;xsl:value-of select=&quot;$ToGetComment/queryAllResponse/tns1:result/tns1:records[1]/ns:IsPublished&quot;/>&lt;/tns:IsPrivate>&lt;/xsl:if>&lt;tns:UserType>&lt;xsl:value-of select=&quot;bw:getModuleProperty(&amp;quot;/SFSCSM/CommentUserType&amp;quot;)&quot;/>&lt;/tns:UserType>&lt;/tns:Comments>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:Comments/>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SCSM_INPUT>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2364,6 +3129,46 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $TOGetSFRecord/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:template name=&quot;Log2-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;message>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Type__c&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Log2-input"
+                                    name="Log2"
+                                    tibex:xpdlId="f04e7869-b442-438a-8f3a-75c4a5d3512f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="MapperToLog2"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $TOGetSFRecord/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;TOGetSFRecord&quot;/>&lt;xsl:template name=&quot;Log2-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;message>&lt;xsl:value-of select=&quot;$TOGetSFRecord/queryAllResponse/tns1:result/tns1:records[1]/ns:Engineering_Type__c&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.log"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+
+                                    <value
+                                    role="Info"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
                                     </bpws:flow>
                                     </bpws:scope>
                                     </bpws:forEach>
@@ -2371,7 +3176,7 @@
                             </bpws:scope>
                             <bpws:extensionActivity>
                                 <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Accumulate&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;xsl:for-each select=&quot;$Accumulate/tns:SCSM_INPUT&quot;>&lt;tns:SCSM_INPUT>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;tns:WorkItemType&quot;/>&lt;/tns:WorkItemType>&lt;xsl:if test=&quot;tns:TechnicalDescription&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;tns:TechnicalDescription/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TechnicalDescription&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:TroubleshootingSteps&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;tns:TroubleshootingSteps/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TroubleshootingSteps&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Title&quot;>&lt;tns:Title>&lt;xsl:copy-of select=&quot;tns:Title/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Title&quot;/>&lt;/tns:Title>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringSummary&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;tns:EngineeringSummary/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringSummary&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Prority&quot;>&lt;tns:Prority>&lt;xsl:value-of select=&quot;tns:Prority&quot;/>&lt;/tns:Prority>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringStatus&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;tns:EngineeringStatus/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringStatus&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;tns:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringOwner&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;tns:EngineeringOwner&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringCaseOwner&quot;>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;tns:EngineeringCaseOwner&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;/xsl:if>&lt;xsl:copy-of select=&quot;tns:Attachments&quot;/>&lt;xsl:copy-of select=&quot;tns:Comments&quot;/>&lt;/tns:SCSM_INPUT>&lt;/xsl:for-each>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Accumulate&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;xsl:for-each select=&quot;$Accumulate/tns:SCSM_INPUT&quot;>&lt;tns:SCSM_INPUT>&lt;xsl:if test=&quot;tns:SFID&quot;>&lt;tns:SFID>&lt;xsl:copy-of select=&quot;tns:SFID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:SFID&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Queue_ID&quot;>&lt;tns:Queue_ID>&lt;xsl:copy-of select=&quot;tns:Queue_ID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Queue_ID&quot;/>&lt;/tns:Queue_ID>&lt;/xsl:if>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;tns:WorkItemType&quot;/>&lt;/tns:WorkItemType>&lt;xsl:if test=&quot;tns:TechnicalDescription&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;tns:TechnicalDescription/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TechnicalDescription&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:TroubleshootingSteps&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;tns:TroubleshootingSteps/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TroubleshootingSteps&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Title&quot;>&lt;tns:Title>&lt;xsl:copy-of select=&quot;tns:Title/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Title&quot;/>&lt;/tns:Title>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringSummary&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;tns:EngineeringSummary/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringSummary&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Priority&quot;>&lt;tns:Priority>&lt;xsl:value-of select=&quot;tns:Priority&quot;/>&lt;/tns:Priority>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringStatus&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;tns:EngineeringStatus/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringStatus&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;tns:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringOwner&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;tns:EngineeringOwner&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringCaseOwner&quot;>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;tns:EngineeringCaseOwner&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;/xsl:if>&lt;xsl:copy-of select=&quot;tns:Attachments&quot;/>&lt;xsl:copy-of select=&quot;tns:Comments&quot;/>&lt;/tns:SCSM_INPUT>&lt;/xsl:for-each>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="RenderJSON-input"
                                     name="RenderJSON"
@@ -2385,7 +3190,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Accumulate&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;xsl:for-each select=&quot;$Accumulate/tns:SCSM_INPUT&quot;>&lt;tns:SCSM_INPUT>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;tns:WorkItemType&quot;/>&lt;/tns:WorkItemType>&lt;xsl:if test=&quot;tns:TechnicalDescription&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;tns:TechnicalDescription/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TechnicalDescription&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:TroubleshootingSteps&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;tns:TroubleshootingSteps/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TroubleshootingSteps&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Title&quot;>&lt;tns:Title>&lt;xsl:copy-of select=&quot;tns:Title/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Title&quot;/>&lt;/tns:Title>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringSummary&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;tns:EngineeringSummary/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringSummary&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Prority&quot;>&lt;tns:Prority>&lt;xsl:value-of select=&quot;tns:Prority&quot;/>&lt;/tns:Prority>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringStatus&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;tns:EngineeringStatus/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringStatus&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;tns:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringOwner&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;tns:EngineeringOwner&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringCaseOwner&quot;>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;tns:EngineeringCaseOwner&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;/xsl:if>&lt;xsl:copy-of select=&quot;tns:Attachments&quot;/>&lt;xsl:copy-of select=&quot;tns:Comments&quot;/>&lt;/tns:SCSM_INPUT>&lt;/xsl:for-each>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Accumulate&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;xsl:for-each select=&quot;$Accumulate/tns:SCSM_INPUT&quot;>&lt;tns:SCSM_INPUT>&lt;xsl:if test=&quot;tns:SFID&quot;>&lt;tns:SFID>&lt;xsl:copy-of select=&quot;tns:SFID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:SFID&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Queue_ID&quot;>&lt;tns:Queue_ID>&lt;xsl:copy-of select=&quot;tns:Queue_ID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Queue_ID&quot;/>&lt;/tns:Queue_ID>&lt;/xsl:if>&lt;tns:WorkItemType>&lt;xsl:value-of select=&quot;tns:WorkItemType&quot;/>&lt;/tns:WorkItemType>&lt;xsl:if test=&quot;tns:TechnicalDescription&quot;>&lt;tns:TechnicalDescription>&lt;xsl:copy-of select=&quot;tns:TechnicalDescription/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TechnicalDescription&quot;/>&lt;/tns:TechnicalDescription>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:TroubleshootingSteps&quot;>&lt;tns:TroubleshootingSteps>&lt;xsl:copy-of select=&quot;tns:TroubleshootingSteps/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:TroubleshootingSteps&quot;/>&lt;/tns:TroubleshootingSteps>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Title&quot;>&lt;tns:Title>&lt;xsl:copy-of select=&quot;tns:Title/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:Title&quot;/>&lt;/tns:Title>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringSummary&quot;>&lt;tns:EngineeringSummary>&lt;xsl:copy-of select=&quot;tns:EngineeringSummary/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringSummary&quot;/>&lt;/tns:EngineeringSummary>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Priority&quot;>&lt;tns:Priority>&lt;xsl:value-of select=&quot;tns:Priority&quot;/>&lt;/tns:Priority>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringStatus&quot;>&lt;tns:EngineeringStatus>&lt;xsl:copy-of select=&quot;tns:EngineeringStatus/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;tns:EngineeringStatus&quot;/>&lt;/tns:EngineeringStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;tns:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringOwner&quot;>&lt;tns:EngineeringOwner>&lt;xsl:value-of select=&quot;tns:EngineeringOwner&quot;/>&lt;/tns:EngineeringOwner>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:EngineeringCaseOwner&quot;>&lt;tns:EngineeringCaseOwner>&lt;xsl:value-of select=&quot;tns:EngineeringCaseOwner&quot;/>&lt;/tns:EngineeringCaseOwner>&lt;/xsl:if>&lt;xsl:copy-of select=&quot;tns:Attachments&quot;/>&lt;xsl:copy-of select=&quot;tns:Comments&quot;/>&lt;/tns:SCSM_INPUT>&lt;/xsl:for-each>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
