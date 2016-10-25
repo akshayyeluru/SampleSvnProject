@@ -11,10 +11,10 @@
   "consumes" : [ "application/json" ],
   "produces" : [ "application/json" ],
   "paths" : {
-    "/scsmticketsubscriber" : {
+    "/scsmticketpublisher" : {
       "post" : {
         "description" : "",
-        "operationId" : "post-scsmticketsubscriber",
+        "operationId" : "post-scsmticketpublisher",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -22,15 +22,15 @@
           "in" : "body",
           "description" : "",
           "schema" : {
-            "$ref" : "#/definitions/SCSM_INPUT"
+            "$ref" : "#/definitions/SCSM_Queue"
           },
           "required" : true
         } ],
         "responses" : {
           "200" : {
-            "description" : "a string to be returned",
+            "description" : "a SCSM_INPUT to be returned",
             "schema" : {
-              "type" : "string"
+              "$ref" : "#/definitions/SCSM_INPUT"
             }
           }
         }
@@ -38,6 +38,15 @@
     }
   },
   "definitions" : {
+    "SCSM_QueueData" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "ISSUE_ID" : {
+          "type" : "string"
+        }
+      }
+    },
     "Comments" : {
       "type" : "object",
       "required" : [ ],
@@ -139,6 +148,19 @@
         },
         "Bytes" : {
           "type" : "string"
+        }
+      }
+    },
+    "SCSM_Queue" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "SCSM_QueueData" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SCSM_QueueData",
+            "uniqueItems" : false
+          }
         }
       }
     }
