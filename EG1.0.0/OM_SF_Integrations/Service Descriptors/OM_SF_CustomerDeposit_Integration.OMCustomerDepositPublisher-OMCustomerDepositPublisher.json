@@ -1,0 +1,133 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "Summary about the new REST service.",
+    "description" : "Summary about the new REST service."
+  },
+  "host" : "localhost:8020",
+  "basePath" : "/",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/omcustomerdepositpublisher" : {
+      "post" : {
+        "description" : "",
+        "operationId" : "post-omcustomerdepositpublisher",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "description" : "",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/OMQueueElement",
+              "uniqueItems" : false
+            }
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a CustomerDepositElement to be returned",
+            "schema" : {
+              "$ref" : "#/definitions/CustomerDepositElement"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CreditCardAuthorizationTransaction" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "RequestID" : {
+          "type" : "string"
+        },
+        "RequestToken" : {
+          "type" : "string"
+        }
+      }
+    },
+    "CustomerDepositElement" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "AccountDepositId" : {
+          "type" : "integer"
+        },
+        "BillPayerId" : {
+          "type" : "integer"
+        },
+        "Amount" : {
+          "type" : "number"
+        },
+        "DateCreated" : {
+          "type" : "string"
+        },
+        "TransactionStatus" : {
+          "type" : "string"
+        },
+        "DateUpdated" : {
+          "type" : "string"
+        },
+        "IsMonthlyPayment" : {
+          "type" : "boolean"
+        },
+        "PurchaseOrderNumber" : {
+          "type" : "string"
+        },
+        "OrgNodeId" : {
+          "type" : "string"
+        },
+        "OrgNodeAccountId" : {
+          "type" : "string"
+        },
+        "BillPayerAccountId" : {
+          "type" : "string"
+        },
+        "CreditCardAuthorizationTransaction" : {
+          "$ref" : "#/definitions/CreditCardAuthorizationTransaction"
+        },
+        "SalesForceId" : {
+          "type" : "string"
+        },
+        "NetSuiteId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OMQueueElement" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer"
+        },
+        "ObjectName" : {
+          "type" : "string"
+        },
+        "ObjectId" : {
+          "type" : "string"
+        },
+        "CreatedDate" : {
+          "type" : "string"
+        },
+        "UpdatedDate" : {
+          "type" : "string"
+        },
+        "Status" : {
+          "type" : "string"
+        },
+        "Message" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
