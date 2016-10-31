@@ -21,4 +21,12 @@ public static String decryptPassword(String Password) throws AXSecurityException
 	
 	return DecryptedPassword;
 }
+
+public static String replacenull(String JsonString){
+	
+	String js=JsonString.replace(":null", ":");
+	
+	return js;
+
+}
 }
