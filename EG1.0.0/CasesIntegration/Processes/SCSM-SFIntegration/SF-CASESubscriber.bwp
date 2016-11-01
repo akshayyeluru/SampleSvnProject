@@ -8,12 +8,15 @@
     xmlns:ns="http://xmlns.example.com/20161026100539PLT"
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
     xmlns:ns1="http://www.tibco.com/pe/WriteToLogActivitySchema"
+    xmlns:ns10="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeOutput"
     xmlns:ns2="urn:partner.soap.sforce.com_updateAllInput"
     xmlns:ns3="urn:partner.soap.sforce.com_updateAllOutput"
     xmlns:ns4="urn:partner.soap.sforce.com_queryAllInput"
     xmlns:ns5="urn:partner.soap.sforce.com_queryAllOutput"
     xmlns:ns6="http://www.example.org/SF_Output"
     xmlns:ns7="http://www.example.org/SCSM_Flag"
+    xmlns:ns8="activity.jsonRender.output+96ae2f98-5c7f-44ad-b3ee-3b5e649039ad+ActivityOutputType"
+    xmlns:ns9="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeInput"
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
@@ -568,6 +571,153 @@
                 </complexType>
             </element>
         </schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+96ae2f98-5c7f-44ad-b3ee-3b5e649039ad+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+96ae2f98-5c7f-44ad-b3ee-3b5e649039ad+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161026100539PLT"
             xmlns:custom="http://www.example.org/SCSMGet"
@@ -798,8 +948,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="1357"
-                                    xsi:type="notation:Bounds" y="127"/>
+                                    x="1483"
+                                    xsi:type="notation:Bounds" y="351"/>
                                     </children>
 
                                     <children type="4018">
@@ -1907,6 +2057,114 @@
                                     xsi:type="notation:Bounds" y="344"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.4"/>
+
+                                    <layoutConstraint
+                                    x="1188"
+                                    xsi:type="notation:Bounds" y="344"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.5"/>
+
+                                    <layoutConstraint
+                                    x="1274"
+                                    xsi:type="notation:Bounds" y="344"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1929,7 +2187,7 @@
 
                                     <layoutConstraint
                                     height="641"
-                                    width="1291" xsi:type="notation:Bounds"/>
+                                    width="1419" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1949,7 +2207,7 @@
 
                                     <layoutConstraint
                                     height="641"
-                                    width="1294"
+                                    width="1422"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -2075,7 +2333,7 @@
 
                                     <layoutConstraint
                                     height="685"
-                                    width="1334"
+                                    width="1462"
                                     x="43"
                                     xsi:type="notation:Bounds" y="50"/>
                                     </children>
@@ -2104,7 +2362,7 @@
 
                                     <layoutConstraint
                                     height="745"
-                                    width="1605" xsi:type="notation:Bounds"/>
+                                    width="1780" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2340,17 +2598,6 @@
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
-            <bendpoints points="[377, -29, -32, 2]$[397, -31, -12, 0]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
@@ -2472,7 +2719,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.2"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -2509,6 +2756,39 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.10"/>
             <bendpoints
                 points="[7, -93, -827, 38]$[7, -132, -827, -1]$[822, -132, -12, -1]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.4"/>
+            <bendpoints points="[25, -16, -57, 37]$[70, -46, -12, 7]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
@@ -2561,6 +2841,21 @@
         <bpws:variable element="ns7:SCSM_Flag" name="Mapper-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns7:SCSM_Flag" name="Mapper" sca-bpel:internal="true"/>
         <bpws:variable element="ns1:ActivityInput" name="Log4-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns7:SCSM_Flag" name="RenderJSON-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns8:ActivityOutputClass"
+            name="RenderJSON" sca-bpel:internal="true"/>
+        <bpws:variable element="ns9:RestActivityInput"
+            name="InvokeRESTAPI-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns10:RestActivityOutput"
+            name="InvokeRESTAPI" sca-bpel:internal="true"/>
+        <bpws:variable name="httpClientResource"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>SCSMResources.scsm-createticket</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2651,9 +2946,13 @@
                                     <bpws:link
                                     name="GroupStartToScope" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="ScopeToGroupEnd" tibex:linkType="SUCCESS"/>
-                                    <bpws:link
                                     name="ScopeToMapper" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="MapperToRenderJSON" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="RenderJSONToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="InvokeRESTAPIToGroupEnd" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:assign
                                     name="GroupStart"
@@ -2671,7 +2970,7 @@
                                     name="GroupEnd"
                                     tibex:group="groupEnd" tibex:xpdlId="5b6e1d79-4382-4ec1-b1d3-e51b990242ff">
                                     <bpws:targets>
-                                    <bpws:target linkName="ScopeToGroupEnd"/>
+                                    <bpws:target linkName="InvokeRESTAPIToGroupEnd"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:scope name="Scope"
@@ -2680,7 +2979,6 @@
                                     <bpws:target linkName="GroupStartToScope"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="ScopeToGroupEnd"/>
                                     <bpws:source linkName="ScopeToMapper"/>
                                     </bpws:sources>
                                     <bpws:flow name="flow3">
@@ -3371,7 +3669,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_Flag&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_updateAllOutput&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns2=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;CaseCommentUpdate&quot;/>&lt;xsl:param name=&quot;Attachment-Update&quot;/>&lt;xsl:param name=&quot;SFCase-Update&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_Flag>&lt;xsl:choose>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='1' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData>&lt;tns:State>&lt;xsl:value-of select=&quot;'1'&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='1' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:SCSM_FlagData/>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SCSM_Flag>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_Flag&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_updateAllOutput&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;CaseCommentUpdate&quot;/>&lt;xsl:param name=&quot;Attachment-Update&quot;/>&lt;xsl:param name=&quot;SFCase-Update&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_Flag>&lt;xsl:choose>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='true' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and count($currentElement/tns3:Attachments)=0 and count($currentElement/tns3:Comments)=0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='true' and count($currentElement/tns3:Attachments)=0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)=0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;3&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SCSM_Flag>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Mapper-input"
                                     name="Mapper"
@@ -3380,10 +3678,13 @@
                                     <bpws:targets>
                                     <bpws:target linkName="ScopeToMapper"/>
                                     </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="MapperToRenderJSON"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_Flag&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_updateAllOutput&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns2=&quot;http://www.example.org/SCSM_INPUT&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;CaseCommentUpdate&quot;/>&lt;xsl:param name=&quot;Attachment-Update&quot;/>&lt;xsl:param name=&quot;SFCase-Update&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_Flag>&lt;xsl:choose>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='1' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData>&lt;tns:State>&lt;xsl:value-of select=&quot;'1'&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='1' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='1' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:SCSM_FlagData/>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SCSM_Flag>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_Flag&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_updateAllOutput&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;CaseCommentUpdate&quot;/>&lt;xsl:param name=&quot;Attachment-Update&quot;/>&lt;xsl:param name=&quot;SFCase-Update&quot;/>&lt;xsl:template name=&quot;Mapper-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_Flag>&lt;xsl:choose>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='true' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and count($currentElement/tns3:Attachments)=0 and count($currentElement/tns3:Comments)=0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and string($CaseCommentUpdate/updateAllResponse/tns1:result[1]/tns1:success) ='true' and count($currentElement/tns3:Attachments)=0 and count($currentElement/tns3:Comments)>0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:when test=&quot;xsd:string($SFCase-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and string($Attachment-Update/updateAllResponse/tns1:result[1]/tns1:success)='true' and count($currentElement/tns3:Attachments)>0 and count($currentElement/tns3:Comments)=0&quot;>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;1&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$currentElement/tns3:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$currentElement/tns3:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;tns:State>&lt;xsl:value-of select=&quot;&amp;quot;3&amp;quot;&quot;/>&lt;/tns:State>&lt;/tns:SCSM_FlagData>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SCSM_Flag>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -3403,6 +3704,106 @@
 
                                     <value
                                     inputQName="SCSM_Flag:SCSM_Flag" xsi:type="generalactivities:Mapper"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_Flag&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_Flag>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:State&quot;>&lt;tns:State>&lt;xsl:value-of select=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:State&quot;/>&lt;/tns:State>&lt;/xsl:if>&lt;/tns:SCSM_FlagData>&lt;/tns:SCSM_Flag>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="RenderJSON-input"
+                                    name="RenderJSON"
+                                    outputVariable="RenderJSON"
+                                    tibex:xpdlId="96ae2f98-5c7f-44ad-b3ee-3b5e649039ad" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="MapperToRenderJSON"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="RenderJSONToInvokeRESTAPI"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SCSM_Flag&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:SCSM_Flag>&lt;tns:SCSM_FlagData>&lt;xsl:if test=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:Issue&quot;>&lt;tns:Issue>&lt;xsl:value-of select=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:Issue&quot;/>&lt;/tns:Issue>&lt;/xsl:if>&lt;xsl:if test=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:State&quot;>&lt;tns:State>&lt;xsl:value-of select=&quot;$Mapper/tns:SCSM_FlagData[1]/tns:State&quot;/>&lt;/tns:State>&lt;/xsl:if>&lt;/tns:SCSM_FlagData>&lt;/tns:SCSM_Flag>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+
+                                    <inputEditorElement href="platform:/resource/CasesIntegration/Schemas/SCSM/SCSM_Flag.xsd#//SCSM_Flag;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="InvokeRESTAPI-input"
+                                    name="InvokeRESTAPI"
+                                    outputVariable="InvokeRESTAPI"
+                                    tibex:xpdlId="48413c00-ee7c-472e-b07c-bcd209b56ea0" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="RenderJSONToInvokeRESTAPI"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="InvokeRESTAPIToGroupEnd">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$InvokeRESTAPI/MessageBody/asciiContent='true'" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$InvokeRESTAPI/MessageBody/asciiContent='true']]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+48413c00-ee7c-472e-b07c-bcd209b56ea0+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="httpClientResource"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    resourcePath="/api/Status"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
