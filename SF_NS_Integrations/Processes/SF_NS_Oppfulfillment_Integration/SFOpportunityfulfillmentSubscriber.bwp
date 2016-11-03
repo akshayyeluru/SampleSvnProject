@@ -12,11 +12,14 @@
     xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+de96e6e8-b6fc-456b-8e04-f226b264b74c+output"
     xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/netsuite/addrecord+a8574fd0-4677-4a19-a3b3-1428b0ace7b2+input"
     xmlns:ns5="http://www.tibco.com/namespaces/tnt/plugins/netsuite/addrecord+a8574fd0-4677-4a19-a3b3-1428b0ace7b2+output"
+    xmlns:ns6="urn:partner.soap.sforce.com_updateAllInput"
+    xmlns:ns7="urn:partner.soap.sforce.com_updateAllOutput"
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
     xmlns:tibprop="http://ns.tibco.com/bw/property"
-    xmlns:tns="http://www.example.org/OppFulfillmentSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    xmlns:tns="http://www.example.org/OppFulfillmentSchema"
+    xmlns:tns0="urn:sobject.partner.soap.sforce.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:Types>
         <xs:schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
@@ -657,6 +660,252 @@
             </complexType>
             <element name="ActivityOutput" type="tns:ActivityOutput"/>
         </schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="urn:sobject.partner.soap.sforce.com"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:sobject.partner.soap.sforce.com">
+            <complexType name="sObject">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="type"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="fieldsToNull" nillable="true" type="string"/>
+                    <element maxOccurs="1" minOccurs="0" name="Id"
+                        nillable="true" type="string"/>
+                    <any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </sequence>
+            </complexType>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllInput"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:Q1="urn:sobject.partner.soap.sforce.com" xmlns:tns="urn:partner.soap.sforce.com_updateAllInput">
+            <import namespace="urn:sobject.partner.soap.sforce.com"/>
+            <complexType name="updateAllInputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:connectionInfo"/>
+                    <element maxOccurs="1" minOccurs="1" name="update" type="tns:updateType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="update_Optional" type="tns:updateOptionalType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllInput" type="tns:updateAllInputType"/>
+            <element name="connectionInfo" nillable="false" type="tns:connectionInfoType"/>
+            <complexType name="connectionInfoType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="serverUrl" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="sessionId" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="externalSessionIdUsed" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="batchSize" type="integer"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateSObjects" type="tns:updateSObjects"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateSObjects">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:sObjects"/>
+                </sequence>
+            </complexType>
+            <element name="sObjects" nillable="false" type="Q1:sObject"/>
+            <complexType name="updateOptionalType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:_configData"/>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:headers"/>
+                </sequence>
+            </complexType>
+            <element name="_configData" nillable="false" type="tns:_configDataType"/>
+            <complexType name="_configDataType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="timeout" type="integer"/>
+                </sequence>
+            </complexType>
+            <element name="headers" nillable="false" type="tns:headersType"/>
+            <complexType name="headersType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="CallOptions" type="tns:CallOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AssignmentRuleHeader" type="tns:AssignmentRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="MruHeader" type="tns:MruHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllowFieldTruncationHeader" type="tns:AllowFieldTruncationHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DisableFeedTrackingHeader" type="tns:DisableFeedTrackingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="StreamingEnabledHeader" type="tns:StreamingEnabledHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllOrNoneHeader" type="tns:AllOrNoneHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DuplicateRuleHeader" type="tns:DuplicateRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="LocaleOptions" type="tns:LocaleOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DebuggingHeader" type="tns:DebuggingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="PackageVersionHeader" type="tns:PackageVersionHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="EmailHeader" type="tns:EmailHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="OwnerChangeOptions" type="tns:OwnerChangeOptionsType"/>
+                </sequence>
+            </complexType>
+            <complexType name="CallOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="client"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="defaultNamespace" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="AssignmentRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="assignmentRuleId" nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="useDefaultRule" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="MruHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateMru" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllowFieldTruncationHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowFieldTruncation" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DisableFeedTrackingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="disableFeedTracking" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="StreamingEnabledHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="streamingEnabled" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllOrNoneHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allOrNone" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DuplicateRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowSave" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="includeRecordDetails" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="runAsCurrentUser" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="LocaleOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="language"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="localizeErrors" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DebuggingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="debugLevel" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersionHeaderType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="PackageVersion" type="tns:PackageVersion"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersion">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:majorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:minorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:namespace"/>
+                </sequence>
+            </complexType>
+            <element name="majorNumber" nillable="false" type="integer"/>
+            <element name="minorNumber" nillable="false" type="integer"/>
+            <element name="namespace" nillable="false" type="string"/>
+            <complexType name="EmailHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerAutoResponseEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerOtherEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerUserEmail" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOptionsType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="OwnerChangeOption" type="tns:OwnerChangeOption"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOption">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:type"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:execute"/>
+                </sequence>
+            </complexType>
+            <element name="type" nillable="false" type="string"/>
+            <element name="execute" nillable="false" type="boolean"/>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllOutput"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:partner.soap.sforce.com_updateAllOutput">
+            <complexType name="updateAllOutputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="updateAllResponse" type="tns:updateAllResponseType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllOutput" type="tns:updateAllOutputType"/>
+            <complexType name="updateAllResponseType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:result"/>
+                </sequence>
+            </complexType>
+            <element name="result" nillable="false" type="tns:SaveResult"/>
+            <complexType name="SaveResult">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:errors"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:id"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:success"/>
+                </sequence>
+            </complexType>
+            <element name="errors" nillable="false" type="tns:Error"/>
+            <complexType name="Error">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:fields"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:message"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:statusCode"/>
+                </sequence>
+            </complexType>
+            <element name="fields" nillable="true" type="string"/>
+            <element name="message" nillable="false" type="string"/>
+            <element name="statusCode" nillable="false" type="string"/>
+            <element name="id" nillable="true" type="string"/>
+            <element name="success" nillable="false" type="boolean"/>
+        </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161101163122PLT"
             xmlns:extns="http://tns.tibco.com/bw/REST"
@@ -885,9 +1134,21 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="445"
-                                    xsi:type="notation:Bounds" y="86"/>
+                                    x="747"
+                                    xsi:type="notation:Bounds" y="220"/>
                                     </children>
+
+                                    <children type="4018">
+
+                                    <children type="3018">
+
+                                    <children type="4020">
+
+                                    <children type="3020">
+
+                                    <children type="4005">
+
+                                    <children type="3007">
 
                                     <children type="4018">
 
@@ -948,11 +1209,11 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
 
-                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="22"
-                                    xsi:type="notation:Bounds" y="61"/>
+                                    x="36"
+                                    xsi:type="notation:Bounds" y="21"/>
                                     </children>
 
                                     <children type="4002">
@@ -1002,11 +1263,442 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
 
-                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    x="142"
-                                    xsi:type="notation:Bounds" y="61"/>
+                                    x="169"
+                                    xsi:type="notation:Bounds" y="21"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.4"/>
+
+                                    <layoutConstraint
+                                    x="290"
+                                    xsi:type="notation:Bounds" y="21"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:DrawerStyle"/>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity"/>
+
+                                    <layoutConstraint
+                                    height="171"
+                                    width="459" xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    height="171"
+                                    width="462"
+                                    x="15"
+                                    xsi:type="notation:Bounds" y="20"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.0"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.1"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4022">
+
+                                    <children type="3022">
+
+                                    <children type="4029">
+
+                                    <children type="3031">
+
+                                    <children type="4033">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll"/>
+
+                                    <layoutConstraint
+                                    height="34"
+                                    width="34"
+                                    xsi:type="notation:Bounds" y="68"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <children type="3032">
+
+                                    <children type="4005">
+
+                                    <children type="3007">
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.0"/>
+
+                                    <layoutConstraint
+                                    x="-32"
+                                    xsi:type="notation:Bounds" y="33"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
+
+                                    <layoutConstraint
+                                    x="82"
+                                    xsi:type="notation:Bounds" y="33"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:DrawerStyle"/>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity"/>
+
+                                    <layoutConstraint
+                                    height="168"
+                                    width="229" xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers"/>
+
+                                    <layoutConstraint
+                                    height="200"
+                                    width="255" xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    height="392"
+                                    width="502"
+                                    x="46"
+                                    xsi:type="notation:Bounds" y="34"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -1030,8 +1722,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="180"
-                                    width="337" xsi:type="notation:Bounds"/>
+                                    height="436"
+                                    width="652" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1050,9 +1742,9 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    height="158"
-                                    width="395"
-                                    x="30"
+                                    height="436"
+                                    width="655"
+                                    x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
 
@@ -1176,8 +1868,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    height="224"
-                                    width="380"
+                                    height="480"
+                                    width="695"
                                     x="9"
                                     xsi:type="notation:Bounds" y="25"/>
                                     </children>
@@ -1205,8 +1897,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="317"
-                                    width="578" xsi:type="notation:Bounds"/>
+                                    height="515"
+                                    width="880" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1225,8 +1917,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="317"
-                                    width="581"
+                                    height="515"
+                                    width="883"
                                     x="15" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1241,8 +1933,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="341"
-                                    width="621" xsi:type="notation:Bounds"/>
+                                    height="539"
+                                    width="923" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -1301,8 +1993,8 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0"/>
                                     <layoutConstraint
-                                    height="360"
-                                    width="683"
+                                    height="558"
+                                    width="985"
                                     x="2" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1315,7 +2007,8 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="390" width="702" xsi:type="notation:Bounds"/>
+                                    height="588"
+                                    width="1004" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1329,8 +2022,8 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="400"
-                                    width="712" xsi:type="notation:Bounds"/>
+                                    <layoutConstraint height="598"
+                                    width="1014" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
                                 <styles xsi:type="notation:FilteringStyle"/>
@@ -1339,7 +2032,7 @@
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="400" width="715" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="598" width="1017" xsi:type="notation:Bounds"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -1349,7 +2042,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="424" width="715" x="1"
+                    <layoutConstraint height="622" width="1017" x="1"
                         xsi:type="notation:Bounds" y="1"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
@@ -1358,7 +2051,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="476" width="1057" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="674" width="1359" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -1385,30 +2078,76 @@
             <bendpoints points="[173, -11, -141, 9]$[290, -18, -24, 2]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.0"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.2"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
             <bendpoints points="[25, 0, -107, 0]$[120, 0, -12, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
+            <bendpoints points="[25, 5, -96, -20]$[109, 22, -12, -3]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/OppFulfillmentSchema"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema"
+        location="../../SalesforceResources/Salesforce_Metadata.xsd" namespace="urn:sobject.partner.soap.sforce.com"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use"
             name="sfopportunityfulfillmentsubscriber"
@@ -1433,6 +2172,24 @@
                 <bpws:literal>eagleviewintegrations.NetSuiteConnectionResource</bpws:literal>
             </bpws:from>
         </bpws:variable>
+        <bpws:variable element="ns1:ActivityInput"
+            name="OppfulfillSubscriber-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:updateAllInput"
+            name="ErrQueueUpdate-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns7:updateAllOutput"
+            name="ErrQueueUpdate" sca-bpel:internal="true"/>
+        <bpws:variable name="salesforceConnProperty"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://ns.tibco.com/bw/palette/salesforceconnection}SalesforceConnection" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>sf_ns_integrations.SalesforceConnection</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable element="ns6:updateAllInput"
+            name="SFQueueUpdate-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns7:updateAllOutput"
+            name="SFQueueUpdate" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -1497,18 +2254,16 @@
                                     <bpws:flow name="flow2">
                                     <bpws:links>
                                     <bpws:link
-                                    name="GroupStartToLog" tibex:linkType="SUCCESS"/>
+                                    name="GroupStartToScope" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="OppFulFIllSubscriberToNetSuiteAddRecord" tibex:linkType="SUCCESS"/>
-                                    <bpws:link
-                                    name="NetSuiteAddRecordToGroupEnd" tibex:linkType="SUCCESS"/>
+                                    name="ScopeToGroupEnd" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:assign
                                     name="GroupStart"
                                     tibex:group="groupStart"
                                     tibex:xpdlId="d0888b4a-1cb6-41d2-880b-27f49d3d90e5" validate="no">
                                     <bpws:sources>
-                                    <bpws:source linkName="GroupStartToLog"/>
+                                    <bpws:source linkName="GroupStartToScope"/>
                                     </bpws:sources>
                                     <bpws:copy>
                                     <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns:OppFulfillmentData)[number($index)]]]></bpws:from>
@@ -1519,7 +2274,149 @@
                                     name="GroupEnd"
                                     tibex:group="groupEnd" tibex:xpdlId="236648de-4908-4529-b0ff-7a8c854aa5b0">
                                     <bpws:targets>
-                                    <bpws:target linkName="NetSuiteAddRecordToGroupEnd"/>
+                                    <bpws:target linkName="ScopeToGroupEnd"/>
+                                    </bpws:targets>
+                                    </bpws:empty>
+                                    <bpws:scope name="Scope"
+                                    tibex:group="none" tibex:xpdlId="160bfeca-6292-4965-8be8-92f849f05c81">
+                                    <bpws:targets>
+                                    <bpws:target linkName="GroupStartToScope"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="ScopeToGroupEnd"/>
+                                    </bpws:sources>
+                                    <bpws:variables>
+                                    <bpws:variable
+                                    name="FaultName"
+                                    sca-bpel:internal="true" type="xsd:string"/>
+                                    <bpws:variable
+                                    element="ns0:FaultDetail"
+                                    name="FaultDetails" sca-bpel:internal="true"/>
+                                    </bpws:variables>
+                                    <bpws:faultHandlers>
+                                    <bpws:catchAll
+                                    tibex:faultDetailsVar="FaultDetails"
+                                    tibex:faultNameVar="FaultName" tibex:xpdlId="82e64eb6-04c1-4628-9a5e-43d9679fcf76">
+                                    <bpws:scope name="scope2">
+
+                                    <bpws:flow name="flow4">
+                                    <bpws:links>
+
+                                    <bpws:link
+                                    name="LogToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    </bpws:links>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;OppfulfillSubscriber&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/ProcessStack&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="OppfulfillSubscriber-input"
+                                    name="OppfulfillSubscriber"
+                                    tibex:xpdlId="0c4a02c3-522a-4bf5-a772-49600a66180d" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="LogToSalesforceUpdateAll"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;OppfulfillSubscriber&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/ProcessStack&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.log"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+
+                                    <value
+                                    loggerName="OppfulfillSubscriber"
+                                    role="Info"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/OppFulfillmentSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:param name=&quot;FulFillElement&quot;/>&lt;xsl:template name=&quot;ErrQueueUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FulFillElement/tns1:ID)&quot;>&lt;xsl:value-of select=&quot;$FulFillElement/tns1:ID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;substring($FaultDetails/StackTrace,0,200)&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="ErrQueueUpdate-input"
+                                    name="ErrQueueUpdate"
+                                    outputVariable="ErrQueueUpdate"
+                                    tibex:xpdlId="287bef49-a661-410f-a697-0f5da743e5f4" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="LogToSalesforceUpdateAll"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/OppFulfillmentSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:param name=&quot;FulFillElement&quot;/>&lt;xsl:template name=&quot;ErrQueueUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FulFillElement/tns1:ID)&quot;>&lt;xsl:value-of select=&quot;$FulFillElement/tns1:ID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;substring($FaultDetails/StackTrace,0,200)&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    </bpws:flow>
+                                    </bpws:scope>
+                                    </bpws:catchAll>
+                                    </bpws:faultHandlers>
+                                    <bpws:flow name="flow3">
+                                    <bpws:links>
+                                    <bpws:link
+                                    name="OppFulFIllSubscriberToNetSuiteAddRecord" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="GroupStart1ToOppFulFIllSubscriber" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="NetSuiteAddRecordToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="SalesforceUpdateAllToGroupEnd1" tibex:linkType="SUCCESS"/>
+                                    </bpws:links>
+                                    <bpws:empty
+                                    name="GroupStart1"
+                                    tibex:group="groupStart" tibex:xpdlId="5d4e398d-366e-4e6c-8332-81e23e29d293">
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="GroupStart1ToOppFulFIllSubscriber"/>
+                                    </bpws:sources>
+                                    </bpws:empty>
+                                    <bpws:empty
+                                    name="GroupEnd1"
+                                    tibex:group="groupEnd" tibex:xpdlId="17b29082-a992-45e8-95b7-49bf7c460dbe">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="SalesforceUpdateAllToGroupEnd1"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:extensionActivity>
@@ -1531,9 +2428,11 @@
                                     name="OppFulFIllSubscriber"
                                     tibex:xpdlId="b6552da8-3910-4ab0-a370-beb2b843a148" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
-                                    <bpws:target linkName="GroupStartToLog"/>
+
+                                    <bpws:target linkName="GroupStart1ToOppFulFIllSubscriber"/>
                                     </bpws:targets>
                                     <bpws:sources>
+
                                     <bpws:source linkName="OppFulFIllSubscriberToNetSuiteAddRecord"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
@@ -1576,10 +2475,12 @@
                                     outputVariable="NetSuiteAddRecord"
                                     tibex:xpdlId="a8574fd0-4677-4a19-a3b3-1428b0ace7b2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
+
                                     <bpws:target linkName="OppFulFIllSubscriberToNetSuiteAddRecord"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="NetSuiteAddRecordToGroupEnd"/>
+
+                                    <bpws:source linkName="NetSuiteAddRecordToSalesforceUpdateAll"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -1611,6 +2512,53 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/OppFulfillmentSchema&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FulFillElement&quot;/>&lt;xsl:param name=&quot;NetSuiteAddRecord&quot;/>&lt;xsl:template name=&quot;SFQueueUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FulFillElement/tns1:ID)&quot;>&lt;xsl:value-of select=&quot;$FulFillElement/tns1:ID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;$NetSuiteAddRecord/Results/Result[1]/status/@isSuccess=xsd:boolean('true')&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Event_Message__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($NetSuiteAddRecord/Results/Result[1]/status/statusDetail[1]/message)&quot;>&lt;xsl:value-of select=&quot;$NetSuiteAddRecord/Results/Result[1]/status/statusDetail[1]/message&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Event_Message__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$NetSuiteAddRecord/Results/Result[1]/status/@isSuccess = xsd:boolean(&amp;quot;true&amp;quot;)&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;S&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="SFQueueUpdate-input"
+                                    name="SFQueueUpdate"
+                                    outputVariable="SFQueueUpdate"
+                                    tibex:xpdlId="a860a47a-cf0a-4ae0-9e50-d0dcbbf80ea8" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="NetSuiteAddRecordToSalesforceUpdateAll"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="SalesforceUpdateAllToGroupEnd1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/OppFulfillmentSchema&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FulFillElement&quot;/>&lt;xsl:param name=&quot;NetSuiteAddRecord&quot;/>&lt;xsl:template name=&quot;SFQueueUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FulFillElement/tns1:ID)&quot;>&lt;xsl:value-of select=&quot;$FulFillElement/tns1:ID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;$NetSuiteAddRecord/Results/Result[1]/status/@isSuccess=xsd:boolean('true')&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Event_Message__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($NetSuiteAddRecord/Results/Result[1]/status/statusDetail[1]/message)&quot;>&lt;xsl:value-of select=&quot;$NetSuiteAddRecord/Results/Result[1]/status/statusDetail[1]/message&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Event_Message__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$NetSuiteAddRecord/Results/Result[1]/status/@isSuccess = xsd:boolean(&amp;quot;true&amp;quot;)&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;S&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    </bpws:flow>
+                                    </bpws:scope>
                                     </bpws:flow>
                                     </bpws:scope>
                                     </bpws:forEach>
