@@ -13,7 +13,8 @@
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
-    xmlns:tibprop="http://ns.tibco.com/bw/property" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    xmlns:tibprop="http://ns.tibco.com/bw/property"
+    xmlns:tns="http://tns.tibco.com/bw/json/1478156051568" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:Types>
         <xs:schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
@@ -117,15 +118,6 @@
                 </complexContent>
             </complexType>
             <element name="ActivityTimedOutException" type="tns:ActivityTimedOutExceptionType"/>
-        </schema>
-        <schema attributeFormDefault="unqualified"
-            elementFormDefault="qualified"
-            targetNamespace="http://www.example.org/SCSMQueue"
-            xmlns="http://www.w3.org/2001/XMLSchema"
-            xmlns:source="bw.group.iterate"
-            xmlns:tns="http://www.example.org/SCSMQueue"
-            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <element name="Iterate_Current_Element_ISSUE_ID" type="string"/>
         </schema>
         <xs:schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
@@ -291,13 +283,22 @@
             </complexType>
             <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
         </schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://tns.tibco.com/bw/json/1478156051568"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:source="bw.group.iterate"
+            xmlns:tns="http://tns.tibco.com/bw/json/1478156051568"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <element name="Iterate_Current_Element_Issue_ID" type="string"/>
+        </schema>
     </tibex:Types>
     <tibex:ProcessInfo callable="true" createdBy="ramaswamy.p"
         createdOn="Wed Nov 02 14:10:34 IST 2016" description=""
         modifiers="public" productVersion="1.0.0 V80 2016-04-28"
         scalable="true" singleton="true" stateless="true" type="IT"/>
     <tibex:ProcessInterface context=""
-        input="{http://www.example.org/SCSMQueue}SCSM_Queue" output=""/>
+        input="{http://tns.tibco.com/bw/json/1478156051568}SCSMUpdatedIDsElement" output=""/>
     <tibex:ProcessTemplateConfigurations/>
     <notation:Diagram measurementUnit="Pixel" type="BWProcess"
         xmlns:bwnotation="http://tns.tibco.com/bw/runtime/BWNotation"
@@ -796,11 +797,11 @@
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/SCSM/SCSMQueue.xsd" namespace="http://www.example.org/SCSMQueue"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema"
+        location="../../Schemas/SCSMUpdatedIDsResource.xsd" namespace="http://tns.tibco.com/bw/json/1478156051568"/>
     <bpws:variables>
         <bpws:variable element="ns:ProcessContext"
             name="_processContext" sca-bpel:internal="true"/>
-        <bpws:variable element="ns0:SCSM_Queue" name="Start"
-            sca-bpel:internal="true" tibex:parameter="in"/>
         <bpws:variable element="ns1:ActivityInput" name="Log-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns2:RestActivityInput"
             name="InvokeRESTAPI-input" sca-bpel:internal="true"/>
@@ -817,6 +818,8 @@
         <bpws:variable element="ns0:SCSM_Queue" name="RenderJSON-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns4:ActivityOutputClass"
             name="RenderJSON" sca-bpel:internal="true"/>
+        <bpws:variable element="tns:SCSMUpdatedIDsElement" name="Start"
+            sca-bpel:internal="true" tibex:parameter="in"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -880,14 +883,14 @@
                         parallel="no" tibex:group="iterate">
                         <tibex:DesignExpression name="variableList">
                             <tibex:expression
-                                expression="$Start/ns0:SCSM_QueueData[1]/ns0:ISSUE_ID" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                expression="$Start/tns:Issue_ID" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                         </tibex:DesignExpression>
                         <bpws:startCounterValue><![CDATA[1]]></bpws:startCounterValue>
-                        <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($Start/ns0:SCSM_QueueData[1]/ns0:ISSUE_ID)]]></bpws:finalCounterValue>
+                        <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($Start/tns:Issue_ID)]]></bpws:finalCounterValue>
                         <bpws:scope name="innerScope">
                             <bpws:variables>
                                 <bpws:variable
-                                    element="ns0:Iterate_Current_Element_ISSUE_ID"
+                                    element="tns:Iterate_Current_Element_Issue_ID"
                                     name="currentElement" sca-bpel:internal="true"/>
                             </bpws:variables>
                             <bpws:flow name="flow1">
@@ -906,7 +909,7 @@
                                     <bpws:source linkName="GroupStartToRenderJSON"/>
                                     </bpws:sources>
                                     <bpws:copy>
-                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($Start/ns0:SCSM_QueueData[1]/ns0:ISSUE_ID)[number($index)]]]></bpws:from>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($Start/tns:Issue_ID)[number($index)]]]></bpws:from>
                                     <bpws:to variable="currentElement"/>
                                     </bpws:copy>
                                 </bpws:assign>
