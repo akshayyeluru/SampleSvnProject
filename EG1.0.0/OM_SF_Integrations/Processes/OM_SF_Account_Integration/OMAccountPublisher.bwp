@@ -22,6 +22,8 @@
     xmlns:ns20="http://www.example.org/AccountOwner"
     xmlns:ns21="urn:partner.soap.sforce.com_queryAllInput"
     xmlns:ns22="urn:partner.soap.sforce.com_queryAllOutput"
+    xmlns:ns23="activity.jsonParser.input+43bf5363-fc71-4b7d-91dd-2299d3aca076+ActivityInputType"
+    xmlns:ns24="http://www.example.org/AccountResultMapper"
     xmlns:ns3="http://tns.tibco.com/bw/palette/internal/accumulateoutput+d6361428-aaf0-427a-a742-79b0e5721ef2"
     xmlns:ns4="activity.jsonParser.input+fcc4ac52-a6c7-425a-befe-8426575cba5e+ActivityInputType"
     xmlns:ns5="http://www.example.org/OMAccountSchema"
@@ -933,8 +935,20 @@
             <element name="records" nillable="true" type="Q1:sObject"/>
             <element name="size" nillable="false" type="integer"/>
         </schema>
+        <schema elementFormDefault="unqualified"
+            targetNamespace="activity.jsonParser.input+43bf5363-fc71-4b7d-91dd-2299d3aca076+ActivityInputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonParser.input+43bf5363-fc71-4b7d-91dd-2299d3aca076+ActivityInputType">
+            <complexType name="ActivityInputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityInputClass" type="tns:ActivityInputClassType"/>
+        </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20160923122837PLT"
+            xmlns:custom="http://www.example.org/AccountResultMapper"
             xmlns:extns="http://www.example.org/OMQueueDataMapper"
             xmlns:extns1="http://tns.tibco.com/bw/REST"
             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
@@ -947,13 +961,14 @@
             </plnk:partnerLinkType>
             <wsdl:import namespace="http://www.example.org/OMQueueDataMapper"/>
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
+            <wsdl:import namespace="http://www.example.org/AccountResultMapper"/>
             <wsdl:message name="postRequest">
                 <wsdl:part element="extns:OMQueueElementArray" name="item"/>
                 <wsdl:part element="extns1:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
             </wsdl:message>
             <wsdl:message name="postResponse">
-                <wsdl:part name="item" type="xsd:string"/>
+                <wsdl:part element="custom:AccountResultList" name="item"/>
             </wsdl:message>
             <wsdl:message name="post4XXFaultMessage">
                 <wsdl:part element="extns1:client4XXError" name="clientError"/>
@@ -1161,7 +1176,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="1360"
+                                    x="1460"
                                     xsi:type="notation:Bounds" y="-51"/>
                                     </children>
 
@@ -2654,7 +2669,7 @@
 
                                     <layoutConstraint
                                     x="1386"
-                                    xsi:type="notation:Bounds" y="33"/>
+                                    xsi:type="notation:Bounds" y="86"/>
                                     </children>
 
                                     <children type="4002">
@@ -2873,6 +2888,60 @@
                                     xsi:type="notation:Bounds" y="-51"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.9"/>
+
+                                    <layoutConstraint
+                                    x="1380"
+                                    xsi:type="notation:Bounds" y="-42"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2896,7 +2965,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="643"
+                                    height="656"
                                     width="1656" xsi:type="notation:Bounds"/>
                                     </children>
 
@@ -2916,7 +2985,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="643"
+                                    height="656"
                                     width="1659"
                                     x="15" xsi:type="notation:Bounds"/>
                                     </children>
@@ -2932,7 +3001,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="667"
+                                    height="680"
                                     width="1699" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2997,7 +3066,7 @@
                                     restoreX="2" xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0"/>
                                     <layoutConstraint
-                                    height="686"
+                                    height="699"
                                     width="1761"
                                     x="2" xsi:type="notation:Bounds"/>
                                     </children>
@@ -3011,7 +3080,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="716"
+                                    height="729"
                                     width="1780" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -3026,7 +3095,7 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="726"
+                                    <layoutConstraint height="739"
                                     width="1790" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
@@ -3036,7 +3105,7 @@
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="726" width="1793" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="739" width="1793" xsi:type="notation:Bounds"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -3046,7 +3115,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="750" width="1793" x="1"
+                    <layoutConstraint height="763" width="1793" x="1"
                         xsi:type="notation:Bounds" y="1"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
@@ -3055,7 +3124,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="802" width="2135" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="815" width="2135" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -3094,7 +3163,7 @@
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.7" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
@@ -3382,6 +3451,17 @@
             <bendpoints
                 points="[25, 0, -442, 74]$[234, 0, -233, 74]$[234, -57, -233, 17]$[443, -57, -24, 17]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.7"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@links/@children.6"/>
+            <bendpoints points="[25, -9, -55, 0]$[56, 0, -24, 9]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/OMQueueDataMapper"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
@@ -3392,6 +3472,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/AccountOwner"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../SalesforceResources/Salesforce_Metadata.xsd" namespace="urn:sobject.partner.soap.sforce.com"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/AccountResultMapper"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="omaccountpublisher"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="omaccountpublisher"/>
@@ -3494,6 +3575,10 @@
             name="SalesforceQueryAll-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns22:queryAllOutput"
             name="SalesforceQueryAll" sca-bpel:internal="true"/>
+        <bpws:variable element="ns23:ActivityInputClass"
+            name="ParseJSON2-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns24:AccountResultList"
+            name="ParseJSON2" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -3515,12 +3600,13 @@
                         <bpws:flow name="flow1">
                             <bpws:links>
                                 <bpws:link
-                                    name="InvokeRESTAPI1TopostOut" tibex:linkType="SUCCESS"/>
+                                    name="InvokeRESTAPI1ToParseJSON2" tibex:linkType="SUCCESS"/>
                                 <bpws:link name="IterateToLog9" tibex:linkType="SUCCESS"/>
                                 <bpws:link name="RenderJSONToLog4" tibex:linkType="SUCCESS"/>
                                 <bpws:link name="Log4ToInvokeRESTAPI1" tibex:linkType="SUCCESS"/>
                                 <bpws:link name="InvokeRESTAPI1ToLog5" tibex:linkType="SUCCESS"/>
                                 <bpws:link name="Log9ToRenderJSON" tibex:linkType="SUCCESS"/>
+                                <bpws:link name="ParseJSON2TopostOut" tibex:linkType="SUCCESS"/>
                             </bpws:links>
                             <bpws:empty name="OnMessageStart"
                                 tibex:constructor="onMessageStart" tibex:xpdlId="6e00680b-28ee-4b5f-9ebe-715b8c8b5b7f"/>
@@ -3531,13 +3617,13 @@
                                 portType="ns:omaccountpublisher"
                                 tibex:xpdlId="b2d7ca08-3980-497b-b475-f68bc86159b0" variable="postOut-input">
                                 <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20160923122837PLT" version="2.0"&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:value-of select="''"/&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20160923122837PLT" xmlns:tns1="http://www.example.org/AccountResultMapper" version="2.0"&gt;&lt;xsl:param name="ParseJSON2"/&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;tns1:AccountResultList&gt;&lt;xsl:for-each select="$ParseJSON2/tns1:AccountResult"&gt;&lt;tns1:AccountResult&gt;&lt;xsl:if test="tns1:OrgNodeID"&gt;&lt;tns1:OrgNodeID&gt;&lt;xsl:value-of select="tns1:OrgNodeID"/&gt;&lt;/tns1:OrgNodeID&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:SFID"&gt;&lt;tns1:SFID&gt;&lt;xsl:value-of select="tns1:SFID"/&gt;&lt;/tns1:SFID&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:StatusMessage"&gt;&lt;tns1:StatusMessage&gt;&lt;xsl:value-of select="tns1:StatusMessage"/&gt;&lt;/tns1:StatusMessage&gt;&lt;/xsl:if&gt;&lt;/tns1:AccountResult&gt;&lt;/xsl:for-each&gt;&lt;/tns1:AccountResultList&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
                                 <tibex:inputBindings>
                                     <tibex:partBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20160923122837PLT&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;item>&#xa;            &lt;xsl:value-of select=&quot;''&quot;/>&#xa;        &lt;/item>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20160923122837PLT&quot; xmlns:tns1=&quot;http://www.example.org/AccountResultMapper&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;ParseJSON2&quot;/>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns1:AccountResultList>&#xa;            &lt;xsl:for-each select=&quot;$ParseJSON2/tns1:AccountResult&quot;>&#xa;                &lt;tns1:AccountResult>&#xa;                    &lt;xsl:if test=&quot;tns1:OrgNodeID&quot;>&#xa;                        &lt;tns1:OrgNodeID>&#xa;                            &lt;xsl:value-of select=&quot;tns1:OrgNodeID&quot;/>&#xa;                        &lt;/tns1:OrgNodeID>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:SFID&quot;>&#xa;                        &lt;tns1:SFID>&#xa;                            &lt;xsl:value-of select=&quot;tns1:SFID&quot;/>&#xa;                        &lt;/tns1:SFID>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:StatusMessage&quot;>&#xa;                        &lt;tns1:StatusMessage>&#xa;                            &lt;xsl:value-of select=&quot;tns1:StatusMessage&quot;/>&#xa;                        &lt;/tns1:StatusMessage>&#xa;                    &lt;/xsl:if>&#xa;                &lt;/tns1:AccountResult>&#xa;            &lt;/xsl:for-each>&#xa;        &lt;/tns1:AccountResultList>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                 </tibex:inputBindings>
                                 <bpws:targets>
-                                    <bpws:target linkName="InvokeRESTAPI1TopostOut"/>
+                                    <bpws:target linkName="ParseJSON2TopostOut"/>
                                 </bpws:targets>
                             </bpws:reply>
                             <bpws:scope name="Iterate"
@@ -4580,7 +4666,7 @@
                                     <bpws:target linkName="Log4ToInvokeRESTAPI1"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="InvokeRESTAPI1TopostOut"/>
+                                    <bpws:source linkName="InvokeRESTAPI1ToParseJSON2"/>
                                     <bpws:source linkName="InvokeRESTAPI1ToLog5"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
@@ -4748,6 +4834,46 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
                                     <value role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                </tibex:activityExtension>
+                            </bpws:extensionActivity>
+                            <bpws:extensionActivity>
+                                <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+43bf5363-fc71-4b7d-91dd-2299d3aca076+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;InvokeRESTAPI1&quot;/>&lt;xsl:template name=&quot;ParseJSON2-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$InvokeRESTAPI1/MessageBody/asciiContent&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="ParseJSON2-input"
+                                    name="ParseJSON2"
+                                    outputVariable="ParseJSON2"
+                                    tibex:xpdlId="43bf5363-fc71-4b7d-91dd-2299d3aca076" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="InvokeRESTAPI1ToParseJSON2"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="ParseJSON2TopostOut"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+43bf5363-fc71-4b7d-91dd-2299d3aca076+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;InvokeRESTAPI1&quot;/>&lt;xsl:template name=&quot;ParseJSON2-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$InvokeRESTAPI1/MessageBody/asciiContent&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonParser"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonParser"/>
+                                    <value
+                                    jsonInputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonParser">
+
+                                    <outputEditorElement href="platform:/resource/OM_SF_Integrations/Schemas/AccountResultMapper.xsd#//AccountResultList;XSDElementDeclaration"/>
+                                    </value>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>

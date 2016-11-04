@@ -32,9 +32,9 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "a string to be returned",
+            "description" : "a AccountResultList to be returned",
             "schema" : {
-              "type" : "string"
+              "$ref" : "#/definitions/AccountResultList"
             }
           }
         }
@@ -42,6 +42,34 @@
     }
   },
   "definitions" : {
+    "AccountResult" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "OrgNodeID" : {
+          "type" : "string"
+        },
+        "SFID" : {
+          "type" : "string"
+        },
+        "StatusMessage" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AccountResultList" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "AccountResult" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AccountResult",
+            "uniqueItems" : false
+          }
+        }
+      }
+    },
     "OMQueueElement" : {
       "type" : "object",
       "required" : [ ],
