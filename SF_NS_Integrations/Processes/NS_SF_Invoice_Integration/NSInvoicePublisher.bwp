@@ -4319,6 +4319,9 @@
             <plnk:partnerLinkType name="partnerLinkType">
                 <plnk:role name="use" portType="tns:nsinvoicepublisher"/>
             </plnk:partnerLinkType>
+            <plnk:partnerLinkType name="partnerLinkType1">
+                <plnk:role name="use" portType="tns:nsinvoicepublisher1"/>
+            </plnk:partnerLinkType>
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
             <wsdl:import namespace="http://www.example.org/SfQueueDataMapper"/>
             <wsdl:message name="postRequest">
@@ -4335,6 +4338,20 @@
             <wsdl:message name="post5XXFaultMessage">
                 <wsdl:part element="extns:server5XXError" name="serverError"/>
             </wsdl:message>
+            <wsdl:message name="postRequest1">
+                <wsdl:part element="extns1:SFQueueList" name="item"/>
+                <wsdl:part element="extns:httpHeaders"
+                    name="httpHeaders" tibex:source="bw.rest"/>
+            </wsdl:message>
+            <wsdl:message name="postResponse1">
+                <wsdl:part name="item" type="xsd:string"/>
+            </wsdl:message>
+            <wsdl:message name="post4XXFaultMessage1">
+                <wsdl:part element="extns:client4XXError" name="clientError"/>
+            </wsdl:message>
+            <wsdl:message name="post5XXFaultMessage1">
+                <wsdl:part element="extns:server5XXError" name="serverError"/>
+            </wsdl:message>
             <wsdl:portType name="nsinvoicepublisher"
                 tibex:bw.rest.apipath="/nsinvoicepublisher"
                 tibex:bw.rest.basepath="NSInvoicePublisher"
@@ -4346,6 +4363,19 @@
                     <wsdl:output message="tns:postResponse" name="postOutput"/>
                     <wsdl:fault message="tns:post4XXFaultMessage" name="clientFault"/>
                     <wsdl:fault message="tns:post5XXFaultMessage" name="serverFault"/>
+                </wsdl:operation>
+            </wsdl:portType>
+            <wsdl:portType name="nsinvoicepublisher1"
+                tibex:bw.rest.apipath="/nsinvoicepublisher"
+                tibex:bw.rest.basepath="NSInvoicePublisher"
+                tibex:bw.rest.resource="Service Descriptors/NS_SF_Invoice_Integration.NSInvoicePublisher-NSInvoicePublisher.json"
+                tibex:bw.rest.resource.source="generated" tibex:source="bw.rest.service">
+                <wsdl:documentation>Summary about the new REST service.</wsdl:documentation>
+                <wsdl:operation name="post">
+                    <wsdl:input message="tns:postRequest1" name="postInput"/>
+                    <wsdl:output message="tns:postResponse1" name="postOutput"/>
+                    <wsdl:fault message="tns:post4XXFaultMessage1" name="clientFault"/>
+                    <wsdl:fault message="tns:post5XXFaultMessage1" name="serverFault"/>
                 </wsdl:operation>
             </wsdl:portType>
         </wsdl:definitions>
@@ -4362,37 +4392,6 @@
         <children type="2001">
             <children type="5001"/>
             <children type="3001">
-                <children type="4001">
-                    <children type="40011"/>
-                    <children type="3006">
-                        <styles xsi:type="notation:DrawerStyle"/>
-                        <styles xsi:type="notation:SortingStyle"/>
-                        <styles xsi:type="notation:FilteringStyle"/>
-                        <styles xsi:type="bwnotation:BackgroundStyle"/>
-                        <styles xsi:type="bwnotation:ResizingStyle"/>
-                    </children>
-                    <children type="4017">
-                        <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
-                        <layoutConstraint xsi:type="notation:Bounds"/>
-                    </children>
-                    <children type="4017">
-                        <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
-                        <layoutConstraint xsi:type="notation:Bounds"/>
-                    </children>
-                    <children type="4017">
-                        <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
-                        <layoutConstraint xsi:type="notation:Bounds"/>
-                    </children>
-                    <children type="4017">
-                        <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
-                        <layoutConstraint xsi:type="notation:Bounds"/>
-                    </children>
-                    <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
-                    <styles xsi:type="bwnotation:BackgroundStyle"/>
-                    <styles collapsed="true" xsi:type="bwnotation:ResizingStyle"/>
-                    <element href="//0/@process/@partnerLinks/@children.0"/>
-                    <layoutConstraint xsi:type="notation:Bounds"/>
-                </children>
                 <styles xsi:type="notation:SortingStyle"/>
                 <styles xsi:type="notation:FilteringStyle"/>
                 <element href="//0/@process"/>
@@ -5547,7 +5546,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="692" width="967" xsi:type="notation:Bounds"/>
+                                    height="691" width="967" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -5561,7 +5560,7 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="702"
+                                    <layoutConstraint height="876"
                                     width="977" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
@@ -5590,7 +5589,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="778" width="1322" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="952" width="1322" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -5720,15 +5719,18 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SfQueueDataMapper"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/ARInvoiceSchema"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="urn:sobject.partner.soap.sforce.com"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema"
+        location="../../Schemas/OtherSchemas/QueueDataMapper.xsd" namespace="http://www.example.org/SfQueueDataMapper"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="nsinvoicepublisher"
-            partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="nsinvoicepublisher"/>
+            partnerLinkType="ns:partnerLinkType1"
+            sca-bpel:ignore="false" sca-bpel:service="nsinvoicepublisher"/>
     </bpws:partnerLinks>
     <bpws:variables>
         <bpws:variable element="ns0:ProcessContext"
             name="_processContext" sca-bpel:internal="true"/>
         <bpws:variable messageType="ns:postRequest" name="post" sca-bpel:internal="true"/>
-        <bpws:variable messageType="ns:postResponse"
+        <bpws:variable messageType="ns:postResponse1"
             name="postOut-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns1:Records"
             name="GetNSInvoiceRecords-input" sca-bpel:internal="true"/>
@@ -5779,7 +5781,6 @@
             <bpws:links/>
             <bpws:pick createInstance="yes" name="pick" tibex:xpdlId="84f5eb8b-46da-46e0-a95d-5de5c4a05bf5">
                 <bpws:onMessage operation="post"
-                    partnerLink="nsinvoicepublisher"
                     portType="ns:nsinvoicepublisher"
                     tibex:xpdlId="2f539246-d1e4-477c-b659-d7d328eb9287" variable="post">
                     <bpws:scope name="scope1">
@@ -5799,10 +5800,10 @@
                                 tibex:constructor="onMessageEnd" tibex:xpdlId="57fa56a8-e155-4b18-abc8-d4235b97753d"/>
                             <bpws:reply name="postOut" operation="post"
                                 partnerLink="nsinvoicepublisher"
-                                portType="ns:nsinvoicepublisher"
+                                portType="ns:nsinvoicepublisher1"
                                 tibex:xpdlId="3ddafc94-c635-4940-84ac-08d1c1fba3b8" variable="postOut-input">
                                 <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20161104105438PLT" version="2.0"&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:value-of select="&amp;quot;Success&amp;quot;"/&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20161104105438PLT" version="2.0"&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse1&gt;&lt;item&gt;&lt;xsl:value-of select="&amp;quot;Success&amp;quot;"/&gt;&lt;/item&gt;&lt;/tns:postResponse1&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
                                 <tibex:inputBindings>
                                     <tibex:partBinding
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20161104105438PLT&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;item>&#xa;            &lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&#xa;        &lt;/item>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
