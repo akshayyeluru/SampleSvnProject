@@ -32,9 +32,9 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "a string to be returned",
+            "description" : "a BillPayerResultList to be returned",
             "schema" : {
-              "type" : "string"
+              "$ref" : "#/definitions/BillPayerResultList"
             }
           }
         }
@@ -42,6 +42,19 @@
     }
   },
   "definitions" : {
+    "BillPayerResultList" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "BillPayerResult" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BillPayerResult",
+            "uniqueItems" : false
+          }
+        }
+      }
+    },
     "OMQueueElement" : {
       "type" : "object",
       "required" : [ ],
@@ -65,6 +78,21 @@
           "type" : "string"
         },
         "Message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "BillPayerResult" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "BillPayerId" : {
+          "type" : "string"
+        },
+        "SFID" : {
+          "type" : "string"
+        },
+        "StatusMessage" : {
           "type" : "string"
         }
       }
