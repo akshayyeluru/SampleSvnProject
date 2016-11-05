@@ -3644,7 +3644,7 @@
                                     name="NetSuiteUpsertRecordToSalesforceUpdateAll_UpdatingNSIDIfSuccess"
                                     tibex:label="Updating NSID If Success" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
-                                    name="SalesforceUpdateAllToSalesforceUpdateAll1" tibex:linkType="SUCCESS"/>
+                                    name="SalesforceUpdateAllToSalesforceUpdateAll1" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
                                     name="SalesforceUpdateAll1ToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     <bpws:link
@@ -3749,7 +3749,14 @@
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="SalesforceUpdateAllToSalesforceUpdateAll1"/>
+                                    <bpws:source linkName="SalesforceUpdateAllToSalesforceUpdateAll1">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$Updating-NSID-in-SF/updateAllResponse/ns4:result[1]/ns4:success=true() and $currentElement/tns:RecordType=&quot;BillPayer&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$Updating-NSID-in-SF/updateAllResponse/ns4:result[1]/ns4:success=true() and $currentElement/tns:RecordType="BillPayer"]]></bpws:transitionCondition>
+                                    </bpws:source>
 
                                     <bpws:source linkName="UpdatingNSIDinSFToGroupEnd1"/>
                                     </bpws:sources>
