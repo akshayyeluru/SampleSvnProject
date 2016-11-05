@@ -4224,11 +4224,11 @@
                                     <bpws:link
                                     name="InvokeCustDepositToParseJSON" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="DepositParseToLog_IfAccountIDExists"
-                                    tibex:label="If AccountID Exists" tibex:linkType="SUCCESSWITHNOCONDITION"/>
+                                    name="DepositParseToLog_IfOrgNodeSFIDExists"
+                                    tibex:label="If OrgNodeSFID Exists" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
                                     name="DepositParseToMapper1"
-                                    tibex:label="If OrgNodeID Exists" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    tibex:label="If OrgNodeID Exists" tibex:linkType="SUCCESSWITHNOCONDITION"/>
                                     <bpws:link
                                     name="OMCustomerDepositPublisherlog1ToMapper" tibex:linkType="SUCCESS"/>
                                     <bpws:link
@@ -4375,21 +4375,21 @@
                                     <bpws:target linkName="InvokeCustDepositToParseJSON"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="DepositParseToLog_IfAccountIDExists">
+                                    <bpws:source linkName="DepositParseToLog_IfOrgNodeSFIDExists">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length(xsd:string(xsd:int($DepositParse/tns1:OrgNodeSalesForceId)))>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length(xsd:string(xsd:int($DepositParse/tns1:OrgNodeSalesForceId)))>0]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    <bpws:source linkName="DepositParseToMapper1">
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
                                     expression="##otherwise##" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
                                     <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
-                                    </bpws:source>
-                                    <bpws:source linkName="DepositParseToMapper1">
-                                    <tibex:DesignExpression>
-
-                                    <tibex:expression
-                                    expression="$DepositParse/tns1:AccountDepositId=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
-                                    </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$DepositParse/tns1:AccountDepositId=0]]></bpws:transitionCondition>
                                     </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
@@ -4426,7 +4426,7 @@
                                     name="OMCustomerDepositPublisherlog1"
                                     tibex:xpdlId="af3f2efd-4a83-4f64-a2ba-520982686e04" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
-                                    <bpws:target linkName="DepositParseToLog_IfAccountIDExists"/>
+                                    <bpws:target linkName="DepositParseToLog_IfOrgNodeSFIDExists"/>
                                     </bpws:targets>
                                     <bpws:sources>
                                     <bpws:source linkName="OMCustomerDepositPublisherlog1ToMapper"/>
@@ -4458,7 +4458,7 @@
                                     </bpws:extensionActivity>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1475835547990&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475325911063&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;DepositParse&quot;/>&lt;xsl:template name=&quot;AccountIDmapper-input&quot; match=&quot;/&quot;>&lt;tns:Accid>&lt;xsl:choose>&lt;xsl:when test=&quot;$DepositParse/tns2:AccountDepositId=0&quot;>&lt;ACCSFID>&lt;xsl:value-of select=&quot;&amp;quot;0015500000JwZQ3AAN&amp;quot;&quot;/>&lt;/ACCSFID>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ACCSFID>&lt;xsl:value-of select=&quot;&amp;quot;0015500000JwZQ3AAN&amp;quot;&quot;/>&lt;/ACCSFID>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:Accid>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1475835547990&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475325911063&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;DepositParse&quot;/>&lt;xsl:param name=&quot;OrgNodeJson&quot;/>&lt;xsl:template name=&quot;AccountIDmapper-input&quot; match=&quot;/&quot;>&lt;tns:Accid>&lt;xsl:choose>&lt;xsl:when test=&quot;string-length(xsd:string(xsd:int($DepositParse/tns2:OrgNodeSalesForceId)))>0&quot;>&lt;xsl:if test=&quot;not(($DepositParse/tns2:OrgNodeSalesForceId/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($DepositParse/tns2:OrgNodeSalesForceId/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;ACCSFID>&lt;xsl:value-of select=&quot;$DepositParse/tns2:OrgNodeSalesForceId&quot;/>&lt;/ACCSFID>&lt;/xsl:if>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:if test=&quot;not(($OrgNodeJson/tns1:SalesForceId/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($OrgNodeJson/tns1:SalesForceId/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;ACCSFID>&lt;xsl:value-of select=&quot;$OrgNodeJson/tns1:SalesForceId&quot;/>&lt;/ACCSFID>&lt;/xsl:if>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:Accid>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="AccountIDmapper-input"
                                     name="AccountIDmapper"
@@ -4488,7 +4488,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1475835547990&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475325911063&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;DepositParse&quot;/>&lt;xsl:template name=&quot;AccountIDmapper-input&quot; match=&quot;/&quot;>&lt;tns:Accid>&lt;xsl:choose>&lt;xsl:when test=&quot;$DepositParse/tns2:AccountDepositId=0&quot;>&lt;ACCSFID>&lt;xsl:value-of select=&quot;&amp;quot;0015500000JwZQ3AAN&amp;quot;&quot;/>&lt;/ACCSFID>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ACCSFID>&lt;xsl:value-of select=&quot;&amp;quot;0015500000JwZQ3AAN&amp;quot;&quot;/>&lt;/ACCSFID>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:Accid>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1475835547990&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1475325911063&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;DepositParse&quot;/>&lt;xsl:param name=&quot;OrgNodeJson&quot;/>&lt;xsl:template name=&quot;AccountIDmapper-input&quot; match=&quot;/&quot;>&lt;tns:Accid>&lt;xsl:choose>&lt;xsl:when test=&quot;string-length(xsd:string(xsd:int($DepositParse/tns2:OrgNodeSalesForceId)))>0&quot;>&lt;xsl:if test=&quot;not(($DepositParse/tns2:OrgNodeSalesForceId/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($DepositParse/tns2:OrgNodeSalesForceId/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;ACCSFID>&lt;xsl:value-of select=&quot;$DepositParse/tns2:OrgNodeSalesForceId&quot;/>&lt;/ACCSFID>&lt;/xsl:if>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:if test=&quot;not(($OrgNodeJson/tns1:SalesForceId/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($OrgNodeJson/tns1:SalesForceId/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;ACCSFID>&lt;xsl:value-of select=&quot;$OrgNodeJson/tns1:SalesForceId&quot;/>&lt;/ACCSFID>&lt;/xsl:if>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:Accid>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
@@ -4512,7 +4512,7 @@
                                     </bpws:extensionActivity>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMQueueDataMapper&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;OrgNodeIDQueue-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;tns:OMQueueElement>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;&amp;quot;CustomerDeposit&amp;quot;&quot;/>&lt;/tns:ObjectName>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;&amp;quot;$DepositParse/tns1:OrgNodeId&amp;quot;&quot;/>&lt;/tns:ObjectId>&lt;tns:CreatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:CreatedDate>&lt;tns:UpdatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:UpdatedDate>&lt;tns:Status>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Status>&lt;tns:Message>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Message>&lt;/tns:OMQueueElement>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMQueueDataMapper&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;DepositParse&quot;/>&lt;xsl:template name=&quot;OrgNodeIDQueue-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;tns:OMQueueElement>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;&amp;quot;CustomerDeposit&amp;quot;&quot;/>&lt;/tns:ObjectName>&lt;xsl:if test=&quot;not(($DepositParse/tns1:OrgNodeId/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($DepositParse/tns1:OrgNodeId/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;$DepositParse/tns1:OrgNodeId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;tns:CreatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:CreatedDate>&lt;tns:UpdatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:UpdatedDate>&lt;tns:Status>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Status>&lt;tns:Message>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Message>&lt;/tns:OMQueueElement>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="OrgNodeIDQueue-input"
                                     name="OrgNodeIDQueue"
@@ -4526,7 +4526,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMQueueDataMapper&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;OrgNodeIDQueue-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;tns:OMQueueElement>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;&amp;quot;CustomerDeposit&amp;quot;&quot;/>&lt;/tns:ObjectName>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;&amp;quot;$DepositParse/tns1:OrgNodeId&amp;quot;&quot;/>&lt;/tns:ObjectId>&lt;tns:CreatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:CreatedDate>&lt;tns:UpdatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:UpdatedDate>&lt;tns:Status>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Status>&lt;tns:Message>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Message>&lt;/tns:OMQueueElement>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMQueueDataMapper&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477390413492&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;DepositParse&quot;/>&lt;xsl:template name=&quot;OrgNodeIDQueue-input&quot; match=&quot;/&quot;>&lt;tns:OMQueueElementArray>&lt;tns:OMQueueElement>&lt;tns:ObjectName>&lt;xsl:value-of select=&quot;&amp;quot;CustomerDeposit&amp;quot;&quot;/>&lt;/tns:ObjectName>&lt;xsl:if test=&quot;not(($DepositParse/tns1:OrgNodeId/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($DepositParse/tns1:OrgNodeId/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:ObjectId>&lt;xsl:value-of select=&quot;$DepositParse/tns1:OrgNodeId&quot;/>&lt;/tns:ObjectId>&lt;/xsl:if>&lt;tns:CreatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:CreatedDate>&lt;tns:UpdatedDate>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:UpdatedDate>&lt;tns:Status>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Status>&lt;tns:Message>&lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&lt;/tns:Message>&lt;/tns:OMQueueElement>&lt;/tns:OMQueueElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
