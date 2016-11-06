@@ -1785,6 +1785,23 @@
             </complexType>
             <element name="ActivityOutput" type="tns:ActivityOutput"/>
         </schema>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/WriteToLogActivitySchema"
+            xmlns:tns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType name="LogParametersType">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="msgCode" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="loggerName" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="logLevel" type="xs:string"/>
+                    <xs:element form="unqualified" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ActivityInput" type="tns:LogParametersType"/>
+        </xs:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161101140839"
             xmlns:tns="http://xmlns.example.com/20161101140839"
@@ -1997,6 +2014,41 @@
                                     <layoutConstraint x="315"
                                     xsi:type="notation:Bounds" y="143"/>
                                     </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.5"/>
+                                    <layoutConstraint x="39"
+                                    xsi:type="notation:Bounds" y="156"/>
+                                    </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -2009,7 +2061,7 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="385"
+                                    <layoutConstraint height="394"
                                     width="518" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
@@ -2057,9 +2109,9 @@
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
             <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
+                <layoutConstraint x="-5" xsi:type="notation:Location" y="-11"/>
             </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles lineColor="65280" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@links/@children.1"/>
             <bendpoints points="[-5, 25, 21, -105]$[-21, 106, 5, -24]" xsi:type="notation:RelativeBendpoints"/>
@@ -2087,6 +2139,17 @@
             <element href="//0/@process/@activity/@activity/@links/@children.3"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5" type="4006">
+            <children type="6002">
+                <layoutConstraint x="4" xsi:type="notation:Location" y="27"/>
+            </children>
+            <styles lineColor="255" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.4"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SfQueueDataMapper"/>
     <bpws:variables>
@@ -2112,6 +2175,10 @@
         <bpws:variable element="ns5:SFQueueList" name="Mapper" sca-bpel:internal="true"/>
         <bpws:variable element="ns5:SFQueueList"
             name="NSARInvoice-call-process-input" sca-bpel:internal="true"/>
+        <bpws:variable name="Timer1" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="Timer" type="xsd:int"/>
+        <bpws:variable element="ns6:ActivityInput" name="ARPoller-input" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2125,9 +2192,12 @@
         <bpws:flow name="flow">
             <bpws:links>
                 <bpws:link name="TimerToNetSuiteSearchRecord" tibex:linkType="SUCCESS"/>
-                <bpws:link name="NetSuiteSearchRecordToMapper" tibex:linkType="SUCCESS"/>
+                <bpws:link name="NetSuiteSearchRecordToMapper_IfExists"
+                    tibex:label="If Exists" tibex:linkType="SUCCESSWITHCONDITION"/>
                 <bpws:link name="MapperToNetSuiteUpdateRecord" tibex:linkType="SUCCESS"/>
                 <bpws:link name="NetSuiteUpdateRecordToCallProcess" tibex:linkType="SUCCESS"/>
+                <bpws:link name="NetSuiteSearchRecordToLog_NoRecords"
+                    tibex:label="No Records" tibex:linkType="SUCCESSWITHNOCONDITION"/>
             </bpws:links>
             <bpws:extensionActivity>
                 <tibex:receiveEvent createInstance="yes"
@@ -2144,15 +2214,16 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="timeInterval" processProperty="Timer1"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Timer"/>
                                     <value
                                     endTime="2016-11-01T23:38:51.755+0530"
                                     intervalUnit="Second"
-                                    runOnce="true"
-                                    startTime="2016-11-01T23:38:51.755+0530"
-                                    timeInterval="1" xsi:type="generalactivities:Timer"/>
+                                    startTime="2016-11-01T23:38:51.755+0530" xsi:type="generalactivities:Timer"/>
                                 </properties>
                             </activityConfig>
                         </bwext:BWActivity>
@@ -2171,7 +2242,20 @@
                         <bpws:target linkName="TimerToNetSuiteSearchRecord"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="NetSuiteSearchRecordToMapper"/>
+                        <bpws:source linkName="NetSuiteSearchRecordToMapper_IfExists">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="$NetSuiteSearchRecord/SearchResult/totalRecords> '0'" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[$NetSuiteSearchRecord/SearchResult/totalRecords> '0']]></bpws:transitionCondition>
+                        </bpws:source>
+                        <bpws:source linkName="NetSuiteSearchRecordToLog_NoRecords">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="##otherwise##" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                        </bpws:source>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -2242,7 +2326,7 @@
                     outputVariable="Mapper"
                     tibex:xpdlId="8ead2271-3473-42bc-a4fc-b38ae63e54cb" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="NetSuiteSearchRecordToMapper"/>
+                        <bpws:target linkName="NetSuiteSearchRecordToMapper_IfExists"/>
                     </bpws:targets>
                     <bpws:sources>
                         <bpws:source linkName="MapperToNetSuiteUpdateRecord"/>
@@ -2288,6 +2372,38 @@
                     <tibex:CallProcess
                         subProcessName="NSBaseFlow.NSARInvoiceQueueProcess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                 </tibex:extActivity>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;ARPoller-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;ARInvoice Poller&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;No Records In AR Invoice Queue&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="ARPoller-input" name="ARPoller"
+                    tibex:xpdlId="9cfb964a-df69-4afb-bbb6-b9f22ad5d2b0" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="NetSuiteSearchRecordToLog_NoRecords"/>
+                    </bpws:targets>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;ARPoller-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;ARInvoice Poller&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;No Records In AR Invoice Queue&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.generalactivities.log"
+                            version="6.0.0.001"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+                                    <value loggerName="ARPoller"
+                                    role="Error"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
             </bpws:extensionActivity>
         </bpws:flow>
     </bpws:scope>
