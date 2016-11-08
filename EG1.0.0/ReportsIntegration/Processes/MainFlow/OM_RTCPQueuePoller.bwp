@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpws:process exitOnStandardFault="no" name="MainFlow.OMQueuePoller"
-    suppressJoinFailure="yes"
-    targetNamespace="http://xmlns.example.com/20161105115811"
+<bpws:process exitOnStandardFault="no"
+    name="MainFlow.OM_RTCPQueuePoller" suppressJoinFailure="yes"
+    targetNamespace="http://xmlns.example.com/20161108160324"
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:info="http://www.tibco.com/bw/process/info"
     xmlns:ns="http://www.tibco.com/pe/EngineTypes"
     xmlns:ns0="http://tns.tibco.com/bw/activity/timer/xsd/output"
-    xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeInput"
-    xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeOutput"
+    xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput"
+    xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeOutput"
     xmlns:ns3="http://www.tibco.com/pe/WriteToLogActivitySchema"
-    xmlns:ns4="activity.jsonParser.input+c8bc8c62-5ccc-4f89-864a-8498affcb835+ActivityInputType"
+    xmlns:ns4="activity.jsonParser.input+e15acf77-f0b3-42da-a7e4-7e1368981c01+ActivityInputType"
     xmlns:ns5="http://tns.tibco.com/bw/json/1477463740790"
     xmlns:ns6="http://tns.tibco.com/bw/json/1477641114308"
-    xmlns:ns7="activity.jsonRender.output+04cd3847-2fbb-4ea9-9c77-c3026dcd5e73+ActivityOutputType"
-    xmlns:ns8="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeInput"
-    xmlns:ns9="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeOutput"
+    xmlns:ns7="activity.jsonRender.output+266ea605-31ca-41ef-8621-b740a3593527+ActivityOutputType"
+    xmlns:ns8="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeInput"
+    xmlns:ns9="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeOutput"
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
@@ -144,15 +144,14 @@
             <xs:element name="TimerOutputSchema" type="tns:TimerOutputSchemaType"/>
         </xs:schema>
         <xsd:schema
-            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeInput"
-            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
                         name="MessageBody" type="tns:MessageBodyType"/>
                     <xsd:element maxOccurs="1" minOccurs="0"
                         name="HttpHeaders" type="tns:httpTransportHeaders"/>
-                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:QueryParameters"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
@@ -211,18 +210,10 @@
                         name="Header" type="tns:dynamicHeadersTypeDetails"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:element name="QueryParameters">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element maxOccurs="1" minOccurs="0"
-                            name="quantity" type="xsd:string"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
         </xsd:schema>
         <xsd:schema
-            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeOutput"
-            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
@@ -306,8 +297,8 @@
             <xs:element name="ActivityInput" type="tns:LogParametersType"/>
         </xs:schema>
         <schema elementFormDefault="unqualified"
-            targetNamespace="activity.jsonParser.input+c8bc8c62-5ccc-4f89-864a-8498affcb835+ActivityInputType"
-            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonParser.input+c8bc8c62-5ccc-4f89-864a-8498affcb835+ActivityInputType">
+            targetNamespace="activity.jsonParser.input+e15acf77-f0b3-42da-a7e4-7e1368981c01+ActivityInputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonParser.input+e15acf77-f0b3-42da-a7e4-7e1368981c01+ActivityInputType">
             <complexType name="ActivityInputClassType">
                 <sequence>
                     <element maxOccurs="1" minOccurs="1"
@@ -317,8 +308,8 @@
             <element name="ActivityInputClass" type="tns:ActivityInputClassType"/>
         </schema>
         <schema
-            targetNamespace="activity.jsonRender.output+04cd3847-2fbb-4ea9-9c77-c3026dcd5e73+ActivityOutputType"
-            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+04cd3847-2fbb-4ea9-9c77-c3026dcd5e73+ActivityOutputType">
+            targetNamespace="activity.jsonRender.output+266ea605-31ca-41ef-8621-b740a3593527+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+266ea605-31ca-41ef-8621-b740a3593527+ActivityOutputType">
             <complexType name="ActivityOutputClassType">
                 <sequence>
                     <element maxOccurs="1" minOccurs="1"
@@ -328,8 +319,8 @@
             <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
         </schema>
         <xsd:schema
-            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeInput"
-            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
@@ -396,8 +387,8 @@
             </xsd:complexType>
         </xsd:schema>
         <xsd:schema
-            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeOutput"
-            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
@@ -465,7 +456,7 @@
         </xsd:schema>
     </tibex:Types>
     <tibex:ProcessInfo callable="false" createdBy="chaitanya.gudivada"
-        createdOn="Sat Nov 05 11:58:11 IST 2016" description=""
+        createdOn="Tue Nov 08 16:03:24 IST 2016" description=""
         modifiers="public" productVersion="1.0.0 V80 2016-04-28"
         scalable="true" singleton="true" stateless="true" type="IT"/>
     <tibex:ProcessInterface context="" input="" output=""/>
@@ -474,9 +465,7 @@
         xmlns:bwnotation="http://tns.tibco.com/bw/runtime/BWNotation"
         xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <children type="2001">
-            <children type="5001">
-                <element href="//0/@process"/>
-            </children>
+            <children type="5001"/>
             <children type="3001">
                 <styles xsi:type="notation:SortingStyle"/>
                 <styles xsi:type="notation:FilteringStyle"/>
@@ -485,12 +474,10 @@
             <children type="3002">
                 <styles xsi:type="notation:SortingStyle"/>
                 <styles xsi:type="notation:FilteringStyle"/>
-                <element href="//0/@process"/>
             </children>
             <children type="3003">
                 <styles xsi:type="notation:SortingStyle"/>
                 <styles xsi:type="notation:FilteringStyle"/>
-                <element href="//0/@process"/>
             </children>
             <children type="3004">
                 <children type="4018">
@@ -531,8 +518,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
-                                    <layoutConstraint x="-11"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="-1"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -566,8 +553,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.1"/>
-                                    <layoutConstraint x="107"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="117"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -601,8 +588,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.2"/>
-                                    <layoutConstraint x="218"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="228"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -636,8 +623,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.3"/>
-                                    <layoutConstraint x="107"
-                                    xsi:type="notation:Bounds" y="200"/>
+                                    <layoutConstraint x="117"
+                                    xsi:type="notation:Bounds" y="210"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -671,8 +658,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.4"/>
-                                    <layoutConstraint x="241"
-                                    xsi:type="notation:Bounds" y="200"/>
+                                    <layoutConstraint x="251"
+                                    xsi:type="notation:Bounds" y="210"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -706,8 +693,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.5"/>
-                                    <layoutConstraint x="324"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="334"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -741,8 +728,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.6"/>
-                                    <layoutConstraint x="434"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="444"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -776,8 +763,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.7"/>
-                                    <layoutConstraint x="529"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="539"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -811,8 +798,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.8"/>
-                                    <layoutConstraint x="636"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="646"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -846,8 +833,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.9"/>
-                                    <layoutConstraint x="747"
-                                    xsi:type="notation:Bounds" y="99"/>
+                                    <layoutConstraint x="757"
+                                    xsi:type="notation:Bounds" y="109"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -861,18 +848,19 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="384"
-                                    width="896" xsi:type="notation:Bounds"/>
+                                    <layoutConstraint height="108"
+                                    width="400" x="2"
+                                    xsi:type="notation:Bounds" y="2"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
                                 <styles xsi:type="notation:FilteringStyle"/>
-                                <element href="//0/@process/@activity"/>
                             </children>
                             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="384" width="899" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="365" width="444"
+                                x="30" xsi:type="notation:Bounds" y="20"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -882,8 +870,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="408" width="899" x="1"
-                        xsi:type="notation:Bounds" y="1"/>
+                    <layoutConstraint height="409" width="519" xsi:type="notation:Bounds"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
                 <styles xsi:type="notation:FilteringStyle"/>
@@ -891,7 +878,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="460" width="1241" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="460" width="1284" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -1001,18 +988,13 @@
         <bpws:variable element="ns:ProcessContext"
             name="_processContext" sca-bpel:internal="true"/>
         <bpws:variable element="ns0:TimerOutputSchema" name="Timer" sca-bpel:internal="true"/>
+        <bpws:variable name="Timer11" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="Timer" type="xsd:int"/>
         <bpws:variable element="ns1:RestActivityInput"
-            name="Retrieve-QueueRecords-input" sca-bpel:internal="true"/>
+            name="Retrieve-RTCPQueueRecords-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns2:RestActivityOutput"
-            name="Retrieve-QueueRecords" sca-bpel:internal="true"/>
-        <bpws:variable name="httpClientResource"
-            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
-            sca-bpel:property="yes"
-            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
-            <bpws:from>
-                <bpws:literal>OMResources.OMClient</bpws:literal>
-            </bpws:from>
-        </bpws:variable>
+            name="Retrieve-RTCPQueueRecords" sca-bpel:internal="true"/>
         <bpws:variable element="ns3:ActivityInput"
             name="QueueRecords-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns3:ActivityInput"
@@ -1033,9 +1015,13 @@
             name="Update-OMQueue" sca-bpel:internal="true"/>
         <bpws:variable element="ns5:OMQueueRecordsElementArray"
             name="Invoke-OMReports-input" sca-bpel:internal="true"/>
-        <bpws:variable name="Timer1" sca-bpel:hotUpdate="false"
+        <bpws:variable name="Property" sca-bpel:hotUpdate="false"
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
-            tibex:propertySource="Timer" type="xsd:int"/>
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>OMResources.OMClient</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -1048,23 +1034,23 @@
     <bpws:scope name="scope">
         <bpws:flow name="flow">
             <bpws:links>
-                <bpws:link name="TimerToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
-                <bpws:link name="RetrieveQueueRecordsToLog" tibex:linkType="SUCCESSWITHCONDITION"/>
-                <bpws:link name="RetrieveQueueRecordsToLog1" tibex:linkType="SUCCESSWITHCONDITION"/>
-                <bpws:link name="NoRecordsLogToExit" tibex:linkType="SUCCESS"/>
-                <bpws:link name="QueueRecordsToParseJSON" tibex:linkType="SUCCESS"/>
-                <bpws:link name="ParseQueueRecordsToLog" tibex:linkType="SUCCESS"/>
-                <bpws:link name="RecordsLogToRenderJSON" tibex:linkType="SUCCESS"/>
-                <bpws:link name="RenderUpdateQueueToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
-                <bpws:link name="UpdateOMQueueToCallProcess" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link1" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="__Link2" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="__Link3" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link4" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link5" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link6" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link7" tibex:linkType="SUCCESS"/>
+                <bpws:link name="__Link8" tibex:linkType="SUCCESS"/>
             </bpws:links>
             <bpws:extensionActivity>
                 <tibex:receiveEvent createInstance="yes"
                     eventTimeout="60" name="Timer"
-                    tibex:xpdlId="8601416d-3031-478e-af57-f89bf1c6f576"
+                    tibex:xpdlId="e400fc12-f663-41d5-bd68-a7960a0c778c"
                     variable="Timer" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:sources>
-                        <bpws:source linkName="TimerToInvokeRESTAPI"/>
+                        <bpws:source linkName="__Link"/>
                     </bpws:sources>
                     <tibex:eventSource>
                         <bwext:BWActivity
@@ -1075,7 +1061,7 @@
                             xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                             <attributeBindings
                                 bindingType="moduleProperty"
-                                eAttributeName="timeInterval" processProperty="Timer1"/>
+                                eAttributeName="timeInterval" processProperty="Timer11"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Timer"/>
@@ -1091,35 +1077,35 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-QueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:QueryParameters>&lt;quantity>&lt;xsl:value-of select=&quot;bw:getModuleProperty('ReportsQuantity')&quot;/>&lt;/quantity>&lt;/tns:QueryParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-QueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput/>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     governedObjectTypes="BWHttpReference"
-                    inputVariable="Retrieve-QueueRecords-input"
-                    name="Retrieve QueueRecords"
-                    outputVariable="Retrieve-QueueRecords"
-                    tibex:xpdlId="e74fa094-d6ff-4d6f-915c-16cc14ce8992" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    inputVariable="Retrieve-RTCPQueueRecords-input"
+                    name="Retrieve RTCPQueueRecords"
+                    outputVariable="Retrieve-RTCPQueueRecords"
+                    tibex:xpdlId="2a1d4f0b-e1a8-42de-952b-2779d23f83e8" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="TimerToInvokeRESTAPI"/>
+                        <bpws:target linkName="__Link"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="RetrieveQueueRecordsToLog">
+                        <bpws:source linkName="__Link1">
                             <tibex:DesignExpression>
                                 <tibex:expression
-                                    expression="$Retrieve-QueueRecords/MessageBody/asciiContent != &quot;[]&quot; and $Retrieve-QueueRecords/statusCode = 200" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$Retrieve-RTCPQueueRecords/MessageBody/asciiContent!=&quot;[]&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                             </tibex:DesignExpression>
-                            <bpws:transitionCondition><![CDATA[$Retrieve-QueueRecords/MessageBody/asciiContent != "[]" and $Retrieve-QueueRecords/statusCode = 200]]></bpws:transitionCondition>
+                            <bpws:transitionCondition><![CDATA[$Retrieve-RTCPQueueRecords/MessageBody/asciiContent!="[]"]]></bpws:transitionCondition>
                         </bpws:source>
-                        <bpws:source linkName="RetrieveQueueRecordsToLog1">
+                        <bpws:source linkName="__Link2">
                             <tibex:DesignExpression>
                                 <tibex:expression
-                                    expression="$Retrieve-QueueRecords/MessageBody/asciiContent = &quot;[]&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$Retrieve-RTCPQueueRecords/MessageBody/asciiContent=&quot;[]&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                             </tibex:DesignExpression>
-                            <bpws:transitionCondition><![CDATA[$Retrieve-QueueRecords/MessageBody/asciiContent = "[]"]]></bpws:transitionCondition>
+                            <bpws:transitionCondition><![CDATA[$Retrieve-RTCPQueueRecords/MessageBody/asciiContent="[]"]]></bpws:transitionCondition>
                         </bpws:source>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e74fa094-d6ff-4d6f-915c-16cc14ce8992+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-QueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:QueryParameters>&lt;quantity>&lt;xsl:value-of select=&quot;bw:getModuleProperty('ReportsQuantity')&quot;/>&lt;/quantity>&lt;/tns:QueryParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-QueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput/>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -1130,10 +1116,9 @@
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
-                                    <value
-                                    httpClientSR="httpClientResource"
+                                    <value httpClientSR="Property"
                                     requestContentType="JSON"
-                                    resourcePath="/ChangeQueue/Report?quantity"
+                                    resourcePath="/ChangeQueue/ReportsToCapturePayment"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
@@ -1143,20 +1128,20 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-QueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;QueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInput>&#xa;            &lt;msgCode>&#xa;                &lt;xsl:value-of select=&quot;&amp;quot;OMQueuePoller&amp;quot;&quot;/>&#xa;            &lt;/msgCode>&#xa;            &lt;message>&#xa;                &lt;xsl:value-of select=&quot;concat(&amp;quot;Records from OM Queue : &amp;quot;, $Retrieve-QueueRecords/MessageBody/asciiContent)&quot;/>&#xa;            &lt;/message>&#xa;        &lt;/tns:ActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-RTCPQueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;QueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInput>&#xa;            &lt;msgCode>&#xa;                &lt;xsl:value-of select=&quot;&amp;quot;OMQueuePoller&amp;quot;&quot;/>&#xa;            &lt;/msgCode>&#xa;            &lt;message>&#xa;                &lt;xsl:value-of select=&quot;concat(&amp;quot;Records from OM Queue : &amp;quot;, $Retrieve-RTCPQueueRecords/MessageBody/asciiContent)&quot;/>&#xa;            &lt;/message>&#xa;        &lt;/tns:ActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="QueueRecords-input"
                     name="QueueRecords"
-                    tibex:xpdlId="51b7f759-77d5-4e6a-a4db-ae74add35b63" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    tibex:xpdlId="8f016497-e5fd-473d-990e-9bc64364b943" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="RetrieveQueueRecordsToLog"/>
+                        <bpws:target linkName="__Link1"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="QueueRecordsToParseJSON"/>
+                        <bpws:source linkName="__Link4"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-QueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;QueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInput>&#xa;            &lt;msgCode>&#xa;                &lt;xsl:value-of select=&quot;&amp;quot;OMQueuePoller&amp;quot;&quot;/>&#xa;            &lt;/msgCode>&#xa;            &lt;message>&#xa;                &lt;xsl:value-of select=&quot;concat(&amp;quot;Records from OM Queue : &amp;quot;, $Retrieve-QueueRecords/MessageBody/asciiContent)&quot;/>&#xa;            &lt;/message>&#xa;        &lt;/tns:ActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-RTCPQueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;QueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInput>&#xa;            &lt;msgCode>&#xa;                &lt;xsl:value-of select=&quot;&amp;quot;OMQueuePoller&amp;quot;&quot;/>&#xa;            &lt;/msgCode>&#xa;            &lt;message>&#xa;                &lt;xsl:value-of select=&quot;concat(&amp;quot;Records from OM Queue : &amp;quot;, $Retrieve-RTCPQueueRecords/MessageBody/asciiContent)&quot;/>&#xa;            &lt;/message>&#xa;        &lt;/tns:ActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -1182,12 +1167,12 @@
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="NoRecordsLog-input"
                     name="NoRecordsLog"
-                    tibex:xpdlId="858ab505-978f-403b-89b2-4fead7b2b9c5" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    tibex:xpdlId="bdcfaffa-52b9-4609-b3a2-70f10b44411b" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="RetrieveQueueRecordsToLog1"/>
+                        <bpws:target linkName="__Link2"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="NoRecordsLogToExit"/>
+                        <bpws:source linkName="__Link3"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -1211,28 +1196,28 @@
                     </tibex:config>
                 </tibex:activityExtension>
             </bpws:extensionActivity>
-            <bpws:exit name="Exit" tibex:xpdlId="39cbb06e-f7f0-49ec-9e0f-0f4b529ec1db">
+            <bpws:exit name="Exit" tibex:xpdlId="cb9df48a-2b70-4f2e-825c-ac979f5f6517">
                 <bpws:targets>
-                    <bpws:target linkName="NoRecordsLogToExit"/>
+                    <bpws:target linkName="__Link3"/>
                 </bpws:targets>
             </bpws:exit>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+c8bc8c62-5ccc-4f89-864a-8498affcb835+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-QueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;ParseQueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$Retrieve-QueueRecords/MessageBody/asciiContent&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+e15acf77-f0b3-42da-a7e4-7e1368981c01+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-RTCPQueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;ParseQueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$Retrieve-RTCPQueueRecords/MessageBody/asciiContent&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="ParseQueueRecords-input"
                     name="ParseQueueRecords"
                     outputVariable="ParseQueueRecords"
-                    tibex:xpdlId="c8bc8c62-5ccc-4f89-864a-8498affcb835" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    tibex:xpdlId="e15acf77-f0b3-42da-a7e4-7e1368981c01" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="QueueRecordsToParseJSON"/>
+                        <bpws:target linkName="__Link4"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="ParseQueueRecordsToLog"/>
+                        <bpws:source linkName="__Link5"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+c8bc8c62-5ccc-4f89-864a-8498affcb835+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-QueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;ParseQueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$Retrieve-QueueRecords/MessageBody/asciiContent&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+e15acf77-f0b3-42da-a7e4-7e1368981c01+ActivityInputType&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Retrieve-RTCPQueueRecords&quot;/>&#xa;    &lt;xsl:template name=&quot;ParseQueueRecords-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:ActivityInputClass>&#xa;            &lt;jsonString>&#xa;                &lt;xsl:value-of select=&quot;$Retrieve-RTCPQueueRecords/MessageBody/asciiContent&quot;/>&#xa;            &lt;/jsonString>&#xa;        &lt;/tns:ActivityInputClass>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -1259,12 +1244,12 @@
                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:ns4=&quot;http://tns.tibco.com/bw/json/1477463740790&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ParseQueueRecords&quot;/>&lt;xsl:template name=&quot;RecordsLog-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;OMQueuePoller&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;No of Records sent to Publisher : &amp;quot;,xsd:string(count($ParseQueueRecords/ns4:OMQueueRecordsElement)))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="RecordsLog-input" name="RecordsLog"
-                    tibex:xpdlId="45efc08f-898b-48ce-841b-68b3d266ca5b" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    tibex:xpdlId="69589d62-d2cf-4bf1-8636-49c038b593d2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="ParseQueueRecordsToLog"/>
+                        <bpws:target linkName="__Link5"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="RecordsLogToRenderJSON"/>
+                        <bpws:source linkName="__Link6"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -1295,12 +1280,12 @@
                     inputVariable="RenderUpdateQueue-input"
                     name="RenderUpdateQueue"
                     outputVariable="RenderUpdateQueue"
-                    tibex:xpdlId="04cd3847-2fbb-4ea9-9c77-c3026dcd5e73" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    tibex:xpdlId="266ea605-31ca-41ef-8621-b740a3593527" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="RecordsLogToRenderJSON"/>
+                        <bpws:target linkName="__Link6"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="RenderUpdateQueueToInvokeRESTAPI"/>
+                        <bpws:source linkName="__Link7"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -1328,22 +1313,22 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderUpdateQueue&quot;/>&lt;xsl:template name=&quot;Update-OMQueue-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderUpdateQueue/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderUpdateQueue&quot;/>&lt;xsl:template name=&quot;Update-OMQueue-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderUpdateQueue/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     governedObjectTypes="BWHttpReference"
                     inputVariable="Update-OMQueue-input"
                     name="Update OMQueue"
                     outputVariable="Update-OMQueue"
-                    tibex:xpdlId="4aadf555-f627-453f-8ce3-284e99dab5c6" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    tibex:xpdlId="360ffb56-c064-4dae-afd6-3c9cb19d2aeb" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="RenderUpdateQueueToInvokeRESTAPI"/>
+                        <bpws:target linkName="__Link7"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="UpdateOMQueueToCallProcess"/>
+                        <bpws:source linkName="__Link8"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4aadf555-f627-453f-8ce3-284e99dab5c6+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderUpdateQueue&quot;/>&lt;xsl:template name=&quot;Update-OMQueue-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderUpdateQueue/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+360ffb56-c064-4dae-afd6-3c9cb19d2aeb+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderUpdateQueue&quot;/>&lt;xsl:template name=&quot;Update-OMQueue-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderUpdateQueue/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -1354,8 +1339,7 @@
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
-                                    <value
-                                    httpClientSR="httpClientResource"
+                                    <value httpClientSR="Property"
                                     httpMethod="POST"
                                     requestContentType="JSON"
                                     resourcePath="/ChangeQueue"
@@ -1373,10 +1357,10 @@
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="Invoke-OMReports-input"
                     name="Invoke OMReports"
-                    tibex:xpdlId="f9f0c6bf-c951-4239-bfd5-b0a2377bcc70"
+                    tibex:xpdlId="645ac101-83c5-4a13-ae4c-d664d5fb7ef9"
                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="UpdateOMQueueToCallProcess"/>
+                        <bpws:target linkName="__Link8"/>
                     </bpws:targets>
                     <tibex:inputBindings>
                         <tibex:inputBinding
