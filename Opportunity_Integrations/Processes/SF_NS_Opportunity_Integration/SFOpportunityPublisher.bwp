@@ -5248,24 +5248,6 @@
             name="BeforeBillPayerInvoke-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns12:ActivityInput"
             name="AfterBillPayerInvoke-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns30:OppIndustryList"
-            name="GetIndustry-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns30:OppIndustryList" name="GetIndustry" sca-bpel:internal="true"/>
-        <bpws:variable element="ns28:CurrencyList"
-            name="GetCurrency-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns28:CurrencyList" name="GetCurrency" sca-bpel:internal="true"/>
-        <bpws:variable element="ns29:OppAdjReasonCodesList"
-            name="GetAdjustmentCodes-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns29:OppAdjReasonCodesList"
-            name="GetAdjustmentCodes" sca-bpel:internal="true"/>
-        <bpws:variable element="ns27:OppCommissonPartnerList"
-            name="GetCommPartner-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns27:OppCommissonPartnerList"
-            name="GetCommPartner" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="CallSO-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="CallInvoice-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns11:SFOpportunityList"
             name="ALLOppDataMapper-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns11:SFOpportunityList"
@@ -5301,8 +5283,6 @@
             name="OppLineMapper-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns11:SFOpportunityList"
             name="OppLineMapper" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="CallMemo-input" sca-bpel:internal="true"/>
         <bpws:variable name="salesforce.wsdl" sca-bpel:hotUpdate="false"
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
             tibex:propertySource="salesforce.wsdl" type="xsd:string"/>
@@ -5315,6 +5295,29 @@
             tibex:propertySource="BillPayerRestURI" type="xsd:string"/>
         <bpws:variable element="ns12:ActivityInput"
             name="ModulePropertiesLOG-input" sca-bpel:internal="true"/>
+        <bpws:variable name="Timer1" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="Timer" type="xsd:int"/>
+        <bpws:variable element="ns27:OppCommissonPartnerList"
+            name="GetCommPartner-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns27:OppCommissonPartnerList"
+            name="GetCommPartner" sca-bpel:internal="true"/>
+        <bpws:variable element="ns29:OppAdjReasonCodesList"
+            name="GetAdjustmentCodes-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns29:OppAdjReasonCodesList"
+            name="GetAdjustmentCodes" sca-bpel:internal="true"/>
+        <bpws:variable element="ns28:CurrencyList"
+            name="GetCurrency-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns28:CurrencyList" name="GetCurrency" sca-bpel:internal="true"/>
+        <bpws:variable element="ns30:OppIndustryList"
+            name="GetIndustry-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns30:OppIndustryList" name="GetIndustry" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:SFOpportunityList"
+            name="CallSO-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:SFOpportunityList"
+            name="CallInvoice-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:SFOpportunityList"
+            name="CallMemo-input" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -5360,15 +5363,16 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="timeInterval" processProperty="Timer1"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Timer"/>
                                     <value
                                     endTime="2016-10-18T18:49:56.968+0530"
                                     intervalUnit="Second"
-                                    runOnce="true"
-                                    startTime="2016-10-18T18:49:56.968+0530"
-                                    timeInterval="30" xsi:type="generalactivities:Timer"/>
+                                    startTime="2016-10-18T18:49:56.968+0530" xsi:type="generalactivities:Timer"/>
                                 </properties>
                             </activityConfig>
                         </bwext:BWActivity>
@@ -7118,7 +7122,7 @@
                                     </bpws:extensionActivity>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;SFQueryOppWH-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Opportunity__c, Paid__c, NetSuite_Invoice_ID__c,NetSuite_Credit_Memo_Id__c FROM Opportunity_Invoice__c where opportunity__c='&amp;quot;,$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:sfId,&amp;quot;'&amp;quot;,&amp;quot; and Paid__c=false and (Netsuite_invoice_id__c!=null or Netsuite_credit_memo_id__c!=null) &amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;SFQueryOppWH-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Opportunity__c, Paid__c, NetSuite_Invoice_ID__c,NetSuite_Credit_Memo_Id__c FROM Opportunity_Invoice__c where opportunity__c='&amp;quot;,$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:sfId,&amp;quot;'&amp;quot;,&amp;quot; and Paid__c=false and Netsuite_invoice_id__c!=null &amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="SFQueryOppWH-input"
                                     name="SFQueryOppWH"
@@ -7132,7 +7136,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;SFQueryOppWH-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Opportunity__c, Paid__c, NetSuite_Invoice_ID__c,NetSuite_Credit_Memo_Id__c FROM Opportunity_Invoice__c where opportunity__c='&amp;quot;,$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:sfId,&amp;quot;'&amp;quot;,&amp;quot; and Paid__c=false and (Netsuite_invoice_id__c!=null or Netsuite_credit_memo_id__c!=null) &amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;SFQueryOppWH-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Opportunity__c, Paid__c, NetSuite_Invoice_ID__c,NetSuite_Credit_Memo_Id__c FROM Opportunity_Invoice__c where opportunity__c='&amp;quot;,$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:sfId,&amp;quot;'&amp;quot;,&amp;quot; and Paid__c=false and Netsuite_invoice_id__c!=null &amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
@@ -7256,7 +7260,7 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;SFOppQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;&amp;quot;SELECT Id, Type__c, Record_ID__c, Processed_Flag__c FROM Integration_Queue__c where Processed_Flag__c = 'N' and type__c='Opportunity' and sub_type__c!='Deposit'&amp;quot;&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;SFOppQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Type__c, Record_ID__c, Processed_Flag__c FROM Integration_Queue__c where Processed_Flag__c = 'N' and type__c='Opportunity' and sub_type__c!='Deposit' limit&amp;quot;,bw:getModuleProperty(&amp;quot;BulkLimit&amp;quot;))&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="SFOppQueryAll-input"
                     name="SFOppQueryAll" outputVariable="SFOppQueryAll"
@@ -7282,7 +7286,7 @@
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;SFOppQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;&amp;quot;SELECT Id, Type__c, Record_ID__c, Processed_Flag__c FROM Integration_Queue__c where Processed_Flag__c = 'N' and type__c='Opportunity' and sub_type__c!='Deposit'&amp;quot;&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;SFOppQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Type__c, Record_ID__c, Processed_Flag__c FROM Integration_Queue__c where Processed_Flag__c = 'N' and type__c='Opportunity' and sub_type__c!='Deposit' limit&amp;quot;,bw:getModuleProperty(&amp;quot;BulkLimit&amp;quot;))&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -7684,7 +7688,7 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;ModulePropertiesLOG-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;SFBaseOpportunity&amp;quot;&amp;#xD;&amp;#xA;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(bw:getModuleProperty(&amp;quot;/Salesforce/SalesforcePWD&amp;quot;),bw:getModuleProperty(&amp;quot;/Salesforce/SalesforceUser&amp;quot;),bw:getModuleProperty(&amp;quot;AccountRestURI&amp;quot;),bw:getModuleProperty(&amp;quot;BillPayerRestURI&amp;quot;))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;ModulePropertiesLOG-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;SFBaseOpportunity&amp;quot;&amp;#xD;&amp;#xA;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;SalesforcePassword: &amp;quot;,bw:getModuleProperty(&amp;quot;/Salesforce/SalesforcePWD&amp;quot;),&amp;quot;SalesforceUser:&amp;quot;,bw:getModuleProperty(&amp;quot;/Salesforce/SalesforceUser&amp;quot;),&amp;quot;AccountrestURI:&amp;quot;,bw:getModuleProperty(&amp;quot;AccountRestURI&amp;quot;),&amp;quot;BillPayerRestURI:&amp;quot;,bw:getModuleProperty(&amp;quot;BillPayerRestURI&amp;quot;),&amp;quot;SalesforceURL:&amp;quot;, bw:getModuleProperty(&amp;quot;SalesforceURL&amp;quot;),&amp;quot;Timer:&amp;quot;,bw:getModuleProperty(&amp;quot;Timer&amp;quot;) ,&amp;quot;BulkLimit:&amp;quot;,bw:getModuleProperty(&amp;quot;BulkLimit&amp;quot;) )&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="ModulePropertiesLOG-input"
                     name="ModulePropertiesLOG"
@@ -7697,7 +7701,7 @@
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;ModulePropertiesLOG-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;SFBaseOpportunity&amp;quot;&amp;#xD;&amp;#xA;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(bw:getModuleProperty(&amp;quot;/Salesforce/SalesforcePWD&amp;quot;),bw:getModuleProperty(&amp;quot;/Salesforce/SalesforceUser&amp;quot;),bw:getModuleProperty(&amp;quot;AccountRestURI&amp;quot;),bw:getModuleProperty(&amp;quot;BillPayerRestURI&amp;quot;))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;ModulePropertiesLOG-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;SFBaseOpportunity&amp;quot;&amp;#xD;&amp;#xA;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;SalesforcePassword: &amp;quot;,bw:getModuleProperty(&amp;quot;/Salesforce/SalesforcePWD&amp;quot;),&amp;quot;SalesforceUser:&amp;quot;,bw:getModuleProperty(&amp;quot;/Salesforce/SalesforceUser&amp;quot;),&amp;quot;AccountrestURI:&amp;quot;,bw:getModuleProperty(&amp;quot;AccountRestURI&amp;quot;),&amp;quot;BillPayerRestURI:&amp;quot;,bw:getModuleProperty(&amp;quot;BillPayerRestURI&amp;quot;),&amp;quot;SalesforceURL:&amp;quot;, bw:getModuleProperty(&amp;quot;SalesforceURL&amp;quot;),&amp;quot;Timer:&amp;quot;,bw:getModuleProperty(&amp;quot;Timer&amp;quot;) ,&amp;quot;BulkLimit:&amp;quot;,bw:getModuleProperty(&amp;quot;BulkLimit&amp;quot;) )&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
