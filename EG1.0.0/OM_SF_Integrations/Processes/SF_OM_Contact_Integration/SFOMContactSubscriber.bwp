@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpws:process exitOnStandardFault="no"
-    name="SF_OM_Account_Integration.SFOMAccountSubscriber"
+    name="SF_OM_Contact_Integration.SFOMContactSubscriber"
     suppressJoinFailure="yes"
-    targetNamespace="http://xmlns.example.com/20161108161924"
+    targetNamespace="http://xmlns.example.com/20161109174142"
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:info="http://www.tibco.com/bw/process/info"
-    xmlns:ns="http://xmlns.example.com/20161108161924PLT"
+    xmlns:ns="http://xmlns.example.com/20161109174142PLT"
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
-    xmlns:ns1="activity.jsonRender.output+49b5c1b7-b780-4a74-896b-f7f93decc430+ActivityOutputType"
-    xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeInput"
-    xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeOutput"
-    xmlns:ns4="http://tns.tibco.com/bw/json/1478602717044"
-    xmlns:ns5="http://www.tibco.com/pe/WriteToLogActivitySchema"
-    xmlns:ns6="urn:partner.soap.sforce.com_updateAllInput"
-    xmlns:ns7="urn:partner.soap.sforce.com_updateAllOutput"
+    xmlns:ns1="http://tns.tibco.com/bw/json/1478693884972"
+    xmlns:ns2="activity.jsonRender.output+26a1c107-b3d2-4f9a-ad3f-021d697a1eed+ActivityOutputType"
+    xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeInput"
+    xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeOutput"
+    xmlns:ns5="urn:partner.soap.sforce.com_updateAllInput"
+    xmlns:ns6="urn:partner.soap.sforce.com_updateAllOutput"
+    xmlns:ns7="http://www.tibco.com/pe/WriteToLogActivitySchema"
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
     xmlns:tibprop="http://ns.tibco.com/bw/property"
-    xmlns:tns="http://www.example.org/SFOMAccountSchema"
+    xmlns:tns="http://www.example.org/SFOMContactSchema"
     xmlns:tns0="urn:sobject.partner.soap.sforce.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:Types>
         <xs:schema attributeFormDefault="unqualified"
@@ -125,8 +125,8 @@
             <element name="ActivityTimedOutException" type="tns:ActivityTimedOutExceptionType"/>
         </schema>
         <schema
-            targetNamespace="activity.jsonRender.output+49b5c1b7-b780-4a74-896b-f7f93decc430+ActivityOutputType"
-            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+49b5c1b7-b780-4a74-896b-f7f93decc430+ActivityOutputType">
+            targetNamespace="activity.jsonRender.output+26a1c107-b3d2-4f9a-ad3f-021d697a1eed+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+26a1c107-b3d2-4f9a-ad3f-021d697a1eed+ActivityOutputType">
             <complexType name="ActivityOutputClassType">
                 <sequence>
                     <element maxOccurs="1" minOccurs="1"
@@ -135,9 +135,19 @@
             </complexType>
             <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
         </schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.example.org/SFOMContactSchema"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:source="bw.group.iterate"
+            xmlns:tns="http://www.example.org/SFOMContactSchema"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <include schemaLocation="../../Schemas/SFOMContactSchema.xsd"/>
+            <element name="Iterate_Current_Element_SFOMContactData" type="tns:SFOMContactdata"/>
+        </schema>
         <xsd:schema
-            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeInput"
-            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
@@ -207,14 +217,14 @@
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element maxOccurs="1" minOccurs="1"
-                            name="orgNodeId" type="xsd:string"/>
+                            name="profileId" type="xsd:string"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
         </xsd:schema>
         <xsd:schema
-            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeOutput"
-            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
@@ -280,33 +290,6 @@
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
-        <schema attributeFormDefault="unqualified"
-            elementFormDefault="qualified"
-            targetNamespace="http://www.example.org/SFOMAccountSchema"
-            xmlns="http://www.w3.org/2001/XMLSchema"
-            xmlns:source="bw.group.iterate"
-            xmlns:tns="http://www.example.org/SFOMAccountSchema"
-            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <include schemaLocation="../../Schemas/SFOMAccountSchema.xsd"/>
-            <element name="Iterate_Current_Element_SFOMAccountData" type="tns:SFOMAccountdata"/>
-        </schema>
-        <xs:schema attributeFormDefault="unqualified"
-            elementFormDefault="qualified"
-            targetNamespace="http://www.tibco.com/pe/WriteToLogActivitySchema"
-            xmlns:tns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-            <xs:complexType name="LogParametersType">
-                <xs:sequence>
-                    <xs:element form="unqualified" minOccurs="0"
-                        name="msgCode" type="xs:string"/>
-                    <xs:element form="unqualified" minOccurs="0"
-                        name="loggerName" type="xs:string"/>
-                    <xs:element form="unqualified" minOccurs="0"
-                        name="logLevel" type="xs:string"/>
-                    <xs:element form="unqualified" name="message" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:element name="ActivityInput" type="tns:LogParametersType"/>
-        </xs:schema>
         <schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
             targetNamespace="urn:sobject.partner.soap.sforce.com"
@@ -553,29 +536,41 @@
             <element name="id" nillable="true" type="string"/>
             <element name="success" nillable="false" type="boolean"/>
         </schema>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/WriteToLogActivitySchema"
+            xmlns:tns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType name="LogParametersType">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="msgCode" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="loggerName" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="logLevel" type="xs:string"/>
+                    <xs:element form="unqualified" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ActivityInput" type="tns:LogParametersType"/>
+        </xs:schema>
         <wsdl:definitions
-            targetNamespace="http://xmlns.example.com/20161108161924PLT"
-            xmlns:extns="http://www.example.org/SFOMAccountSchema"
+            targetNamespace="http://xmlns.example.com/20161109174142PLT"
+            xmlns:extns="http://www.example.org/SFOMContactSchema"
             xmlns:extns1="http://tns.tibco.com/bw/REST"
-            xmlns:extns2="http://xmlns.example.com/SFOMAccountSubscriber/parameters"
             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
             xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
-            xmlns:tns="http://xmlns.example.com/20161108161924PLT"
+            xmlns:tns="http://xmlns.example.com/20161109174142PLT"
             xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <plnk:partnerLinkType name="partnerLinkType">
-                <plnk:role name="use" portType="tns:sfomaccountsubscriber"/>
+                <plnk:role name="use" portType="tns:sfomcontactsubscriber"/>
             </plnk:partnerLinkType>
-            <wsdl:import namespace="http://www.example.org/SFOMAccountSchema"/>
+            <wsdl:import namespace="http://www.example.org/SFOMContactSchema"/>
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
-            <wsdl:import namespace="http://xmlns.example.com/SFOMAccountSubscriber/parameters"/>
             <wsdl:message name="postRequest">
-                <wsdl:part element="extns:SFOMAccount" name="item"/>
+                <wsdl:part element="extns:SFOMContact" name="item"/>
                 <wsdl:part element="extns1:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
-                <wsdl:part
-                    element="extns2:sfomaccountsubscriberPostParameters"
-                    name="parameters" tibex:source="bw.rest"/>
             </wsdl:message>
             <wsdl:message name="postResponse">
                 <wsdl:part name="item" type="xsd:string"/>
@@ -586,10 +581,10 @@
             <wsdl:message name="post5XXFaultMessage">
                 <wsdl:part element="extns1:server5XXError" name="serverError"/>
             </wsdl:message>
-            <wsdl:portType name="sfomaccountsubscriber"
-                tibex:bw.rest.apipath="/sfomaccountsubscriber"
-                tibex:bw.rest.basepath="SFOMAccountSubscriber"
-                tibex:bw.rest.resource="Service Descriptors/SF_OM_Account_Integration.SFOMAccountSubscriber-SFOMAccountSubscriber.json"
+            <wsdl:portType name="sfomcontactsubscriber"
+                tibex:bw.rest.apipath="/sfomcontactsubscriber"
+                tibex:bw.rest.basepath="SFOMContactSubscriber"
+                tibex:bw.rest.resource="Service Descriptors/SF_OM_Contact_Integration.SFOMContactSubscriber-SFOMContactSubscriber.json"
                 tibex:bw.rest.resource.source="generated" tibex:source="bw.rest.service">
                 <wsdl:documentation>Summary about the new REST service.</wsdl:documentation>
                 <wsdl:operation name="post">
@@ -602,7 +597,7 @@
         </wsdl:definitions>
     </tibex:Types>
     <tibex:ProcessInfo callable="false" createdBy="syam.garlapati"
-        createdOn="Tue Nov 08 16:19:24 IST 2016" description=""
+        createdOn="Wed Nov 09 17:41:42 IST 2016" description=""
         modifiers="public" productVersion="1.0.0 V80 2016-04-28"
         scalable="true" singleton="true" stateless="true" type="IT"/>
     <tibex:ProcessInterface context="" input="" output=""/>
@@ -786,8 +781,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="551"
-                                    xsi:type="notation:Bounds" y="148"/>
+                                    x="550"
+                                    xsi:type="notation:Bounds" y="64"/>
                                     </children>
 
                                     <children type="4018">
@@ -865,7 +860,7 @@
 
                                     <layoutConstraint
                                     x="19"
-                                    xsi:type="notation:Bounds" y="42"/>
+                                    xsi:type="notation:Bounds" y="31"/>
                                     </children>
 
                                     <children type="4002">
@@ -918,8 +913,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    x="114"
-                                    xsi:type="notation:Bounds" y="31"/>
+                                    x="155"
+                                    xsi:type="notation:Bounds" y="55"/>
                                     </children>
 
                                     <children type="4002">
@@ -972,8 +967,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.4"/>
 
                                     <layoutConstraint
-                                    x="223"
-                                    xsi:type="notation:Bounds" y="42"/>
+                                    x="242"
+                                    xsi:type="notation:Bounds" y="55"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -997,8 +992,10 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity"/>
 
                                     <layoutConstraint
-                                    height="155"
-                                    width="403" xsi:type="notation:Bounds"/>
+                                    height="108"
+                                    width="400"
+                                    x="2"
+                                    xsi:type="notation:Bounds" y="2"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1017,8 +1014,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="155"
-                                    width="406"
+                                    height="133"
+                                    width="396"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -1210,8 +1207,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.0"/>
 
                                     <layoutConstraint
-                                    x="-11"
-                                    xsi:type="notation:Bounds" y="49"/>
+                                    x="-1"
+                                    xsi:type="notation:Bounds" y="18"/>
                                     </children>
 
                                     <children type="4002">
@@ -1264,8 +1261,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
 
                                     <layoutConstraint
-                                    x="75"
-                                    xsi:type="notation:Bounds" y="32"/>
+                                    x="95"
+                                    xsi:type="notation:Bounds" y="18"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -1290,7 +1287,7 @@
 
                                     <layoutConstraint
                                     height="168"
-                                    width="280" xsi:type="notation:Bounds"/>
+                                    width="315" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1328,7 +1325,7 @@
 
                                     <layoutConstraint
                                     height="200"
-                                    width="213" xsi:type="notation:Bounds"/>
+                                    width="341" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1347,8 +1344,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="376"
-                                    width="446"
+                                    height="389"
+                                    width="436"
                                     x="5"
                                     xsi:type="notation:Bounds" y="5"/>
                                     </children>
@@ -1374,8 +1371,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="391"
-                                    width="495" xsi:type="notation:Bounds"/>
+                                    height="404"
+                                    width="500" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1394,8 +1391,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    height="391"
-                                    width="498"
+                                    height="404"
+                                    width="503"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -1520,10 +1517,10 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    height="435"
-                                    width="538"
-                                    x="5"
-                                    xsi:type="notation:Bounds" y="5"/>
+                                    height="448"
+                                    width="543"
+                                    x="27"
+                                    xsi:type="notation:Bounds" y="38"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -1549,8 +1546,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="450"
-                                    width="684" xsi:type="notation:Bounds"/>
+                                    height="496"
+                                    width="786" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1569,8 +1566,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="450"
-                                    width="609"
+                                    height="496"
+                                    width="789"
                                     x="15" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1585,8 +1582,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="474"
-                                    width="649" xsi:type="notation:Bounds"/>
+                                    height="520"
+                                    width="829" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -1645,8 +1642,8 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0"/>
                                     <layoutConstraint
-                                    height="493"
-                                    width="711"
+                                    height="539"
+                                    width="891"
                                     x="2" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1659,7 +1656,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="523" width="847" xsi:type="notation:Bounds"/>
+                                    height="569" width="910" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1673,8 +1670,8 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="533"
-                                    width="857" xsi:type="notation:Bounds"/>
+                                    <layoutConstraint height="579"
+                                    width="920" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
                                 <styles xsi:type="notation:FilteringStyle"/>
@@ -1683,7 +1680,7 @@
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="533" width="860" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="579" width="923" xsi:type="notation:Bounds"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -1693,7 +1690,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="557" width="860" x="1"
+                    <layoutConstraint height="603" width="923" x="1"
                         xsi:type="notation:Bounds" y="1"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
@@ -1702,21 +1699,10 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="609" width="1202" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="655" width="1265" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.0"/>
-            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
@@ -1729,19 +1715,19 @@
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.0"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
@@ -1751,14 +1737,47 @@
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
             <children type="6002">
-                <layoutConstraint x="-19" xsi:type="notation:Location" y="-6"/>
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[202, -38, -57, 11]$[235, -44, -24, 5]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[25, 0, -65, 0]$[78, 0, -12, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -1772,40 +1791,15 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.0"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
-            <bendpoints points="[25, 6, -92, 0]$[105, 0, -12, -6]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@links/@children.0"/>
-            <bendpoints points="[252, -31, -93, 12]$[321, -40, -24, 3]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
     </notation:Diagram>
-    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SFOMAccountSchema"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SFOMContactSchema"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
-    <bpws:import importType="http://www.w3.org/2001/XMLSchema"
-        location="../../Schemas/SFOMAccountSchema.xsd" namespace="http://www.example.org/SFOMAccountSchema"/>
-    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1478602717044"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1478693884972"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../SalesforceResources/Salesforce_Metadata.xsd" namespace="urn:sobject.partner.soap.sforce.com"/>
-    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://xmlns.example.com/SFOMAccountSubscriber/parameters"/>
     <bpws:partnerLinks>
-        <bpws:partnerLink myRole="use" name="sfomaccountsubscriber"
-            partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="sfomaccountsubscriber"/>
+        <bpws:partnerLink myRole="use" name="sfomcontactsubscriber"
+            partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="sfomcontactsubscriber"/>
     </bpws:partnerLinks>
     <bpws:variables>
         <bpws:variable element="ns0:ProcessContext"
@@ -1813,13 +1807,13 @@
         <bpws:variable messageType="ns:postRequest" name="post" sca-bpel:internal="true"/>
         <bpws:variable messageType="ns:postResponse"
             name="postOut-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns4:OrgNodeUpdate"
+        <bpws:variable element="ns1:OMContactUpdate"
             name="RenderJSON-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns1:ActivityOutputClass"
+        <bpws:variable element="ns2:ActivityOutputClass"
             name="RenderJSON" sca-bpel:internal="true"/>
-        <bpws:variable element="ns2:RestActivityInput"
+        <bpws:variable element="ns3:RestActivityInput"
             name="InvokeRESTAPI-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns3:RestActivityOutput"
+        <bpws:variable element="ns4:RestActivityOutput"
             name="InvokeRESTAPI" sca-bpel:internal="true"/>
         <bpws:variable name="httpClientResource"
             sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
@@ -1829,22 +1823,18 @@
                 <bpws:literal>OMClient.OrderManagerClient_HttpClient</bpws:literal>
             </bpws:from>
         </bpws:variable>
-        <bpws:variable element="ns5:ActivityInput" name="Log-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns6:updateAllInput"
+        <bpws:variable element="ns5:updateAllInput"
             name="SalesforceUpdateAll-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns7:updateAllOutput"
+        <bpws:variable element="ns6:updateAllOutput"
             name="SalesforceUpdateAll" sca-bpel:internal="true"/>
         <bpws:variable name="salesforceConnProperty"
             sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
             sca-bpel:property="yes"
-            sca-bpel:sharedResourceType="{http://ns.tibco.com/bw/palette/salesforceconnection}SalesforceConnection" type="xsd:string">
-            <bpws:from>
-                <bpws:literal>om_sf_integrations.SalesforceConnection</bpws:literal>
-            </bpws:from>
-        </bpws:variable>
-        <bpws:variable element="ns6:updateAllInput"
+            sca-bpel:sharedResourceType="{http://ns.tibco.com/bw/palette/salesforceconnection}SalesforceConnection" type="xsd:string"/>
+        <bpws:variable element="ns7:ActivityInput" name="Log-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns5:updateAllInput"
             name="SalesforceUpdateAll1-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns7:updateAllOutput"
+        <bpws:variable element="ns6:updateAllOutput"
             name="SalesforceUpdateAll1" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
@@ -1858,36 +1848,36 @@
     <bpws:scope name="scope">
         <bpws:flow name="flow">
             <bpws:links/>
-            <bpws:pick createInstance="yes" name="pick" tibex:xpdlId="af907e24-0b7d-46c5-b3ab-52e4751d23b6">
+            <bpws:pick createInstance="yes" name="pick" tibex:xpdlId="0ada0969-ca51-4402-ac58-7c5fbe7ed60c">
                 <bpws:onMessage operation="post"
-                    partnerLink="sfomaccountsubscriber"
-                    portType="ns:sfomaccountsubscriber"
-                    tibex:xpdlId="935d394b-c127-4ce6-abf1-43f39cf3953a" variable="post">
+                    partnerLink="sfomcontactsubscriber"
+                    portType="ns:sfomcontactsubscriber"
+                    tibex:xpdlId="0a5202dd-590f-45d9-a9ff-ac2013db7233" variable="post">
                     <bpws:scope name="scope1">
                         <bpws:flow name="flow1">
                             <bpws:links>
                                 <bpws:link name="IterateTopostOut" tibex:linkType="SUCCESS"/>
                             </bpws:links>
                             <bpws:empty name="OnMessageStart"
-                                tibex:constructor="onMessageStart" tibex:xpdlId="084b4894-0e49-4667-838f-d7871c6019b4"/>
+                                tibex:constructor="onMessageStart" tibex:xpdlId="486e12b4-16d8-4a3b-a432-5fbc966b1435"/>
                             <bpws:empty name="OnMessageEnd"
-                                tibex:constructor="onMessageEnd" tibex:xpdlId="785e30bd-c3b0-4ee3-9589-ffe19ada557a"/>
+                                tibex:constructor="onMessageEnd" tibex:xpdlId="82d0e7fa-6319-4931-b946-fe6ebf458668"/>
                             <bpws:reply name="postOut" operation="post"
-                                partnerLink="sfomaccountsubscriber"
-                                portType="ns:sfomaccountsubscriber"
-                                tibex:xpdlId="b71b0456-65dc-4523-a1f6-4de7cd578308" variable="postOut-input">
+                                partnerLink="sfomcontactsubscriber"
+                                portType="ns:sfomcontactsubscriber"
+                                tibex:xpdlId="37b96305-7f71-4f6a-8ea1-915891d95573" variable="postOut-input">
                                 <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20161108161924PLT" version="2.0"&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:value-of select="&amp;quot;SF OM Account Subscriber Postout&amp;quot;"/&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20161109174142PLT" version="2.0"&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:value-of select="&amp;quot;&amp;quot;"/&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
                                 <tibex:inputBindings>
                                     <tibex:partBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20161108161924PLT&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;item>&#xa;            &lt;xsl:value-of select=&quot;&amp;quot;SF OM Account Subscriber Postout&amp;quot;&quot;/>&#xa;        &lt;/item>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20161109174142PLT&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;item>&#xa;            &lt;xsl:value-of select=&quot;&amp;quot;&amp;quot;&quot;/>&#xa;        &lt;/item>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                 </tibex:inputBindings>
                                 <bpws:targets>
                                     <bpws:target linkName="IterateTopostOut"/>
                                 </bpws:targets>
                             </bpws:reply>
                             <bpws:scope name="Iterate"
-                                tibex:group="iterate" tibex:xpdlId="18ab6879-0e76-4559-ab4e-f2ffa9183400">
+                                tibex:group="iterate" tibex:xpdlId="5aa29f18-76c1-46d7-ae11-809ff13c5602">
                                 <bpws:sources>
                                     <bpws:source linkName="IterateTopostOut"/>
                                 </bpws:sources>
@@ -1897,14 +1887,14 @@
                                     name="iterate" parallel="no" tibex:group="iterate">
                                     <tibex:DesignExpression name="variableList">
                                     <tibex:expression
-                                    expression="$post/item/tns:SFOMAccount/tns:SFOMAccountData" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$post/item/tns:SFOMContact/tns:SFOMContactData" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
                                     <bpws:startCounterValue><![CDATA[1]]></bpws:startCounterValue>
-                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns:SFOMAccountData)]]></bpws:finalCounterValue>
+                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns:SFOMContactData)]]></bpws:finalCounterValue>
                                     <bpws:scope name="innerScope">
                                     <bpws:variables>
                                     <bpws:variable
-                                    element="tns:Iterate_Current_Element_SFOMAccountData"
+                                    element="tns:Iterate_Current_Element_SFOMContactData"
                                     name="currentElement" sca-bpel:internal="true"/>
                                     </bpws:variables>
                                     <bpws:flow name="flow2">
@@ -1917,24 +1907,24 @@
                                     <bpws:assign
                                     name="GroupStart"
                                     tibex:group="groupStart"
-                                    tibex:xpdlId="a9bd3940-f1ef-4019-b21e-2446f1753bf6" validate="no">
+                                    tibex:xpdlId="059f5083-0a77-4d8e-90d2-ae1e44ae3f02" validate="no">
                                     <bpws:sources>
                                     <bpws:source linkName="GroupStartToScope"/>
                                     </bpws:sources>
                                     <bpws:copy>
-                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns:SFOMAccountData)[number($index)]]]></bpws:from>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns:SFOMContactData)[number($index)]]]></bpws:from>
                                     <bpws:to variable="currentElement"/>
                                     </bpws:copy>
                                     </bpws:assign>
                                     <bpws:empty
                                     name="GroupEnd"
-                                    tibex:group="groupEnd" tibex:xpdlId="a83d7f5b-0e4b-4183-b78f-deb5d28f96d1">
+                                    tibex:group="groupEnd" tibex:xpdlId="089a4ec6-a64f-4e70-8b58-b0b3523a3a63">
                                     <bpws:targets>
                                     <bpws:target linkName="ScopeToGroupEnd"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:scope name="Scope"
-                                    tibex:group="none" tibex:xpdlId="8355cc02-f80a-426f-90c7-36129808b271">
+                                    tibex:group="none" tibex:xpdlId="c80dfd42-55b2-4650-b300-6e27a29185dd">
                                     <bpws:targets>
                                     <bpws:target linkName="GroupStartToScope"/>
                                     </bpws:targets>
@@ -1952,31 +1942,31 @@
                                     <bpws:faultHandlers>
                                     <bpws:catchAll
                                     tibex:faultDetailsVar="FaultDetails"
-                                    tibex:faultNameVar="FaultName" tibex:xpdlId="02b02059-5231-4cd8-a55f-4816e979091e">
+                                    tibex:faultNameVar="FaultName" tibex:xpdlId="80718ca8-6c4a-4138-8204-a77628d08e8b">
                                     <bpws:scope name="scope2">
 
                                     <bpws:flow name="flow4">
                                     <bpws:links>
 
                                     <bpws:link
-                                    name="LogToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    name="LogToSalesforceUpdateAll1" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'SF OM Account Subscriber Error Log'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;SF OM Contact Subscriber Error Log1&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Log-input"
                                     name="Log"
-                                    tibex:xpdlId="3303ca41-5d24-45ad-86b5-d2efa617d3e2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    tibex:xpdlId="e8dae380-fd22-4f47-8a18-c84b8fdce7a2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:sources>
 
-                                    <bpws:source linkName="LogToSalesforceUpdateAll"/>
+                                    <bpws:source linkName="LogToSalesforceUpdateAll1"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'SF OM Account Subscriber Error Log'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;SF OM Contact Subscriber Error Log1&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2005,20 +1995,20 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll1-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueId)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="SalesforceUpdateAll-input"
-                                    name="SalesforceUpdateAll"
-                                    outputVariable="SalesforceUpdateAll"
-                                    tibex:xpdlId="a6b38161-ae03-495b-bf21-a8979618de05" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    inputVariable="SalesforceUpdateAll1-input"
+                                    name="SalesforceUpdateAll1"
+                                    outputVariable="SalesforceUpdateAll1"
+                                    tibex:xpdlId="da85699c-090f-46c9-ab21-cbf3cb8f05e7" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="LogToSalesforceUpdateAll"/>
+                                    <bpws:target linkName="LogToSalesforceUpdateAll1"/>
                                     </bpws:targets>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll1-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueId)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;$FaultDetails/StackTrace&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2052,16 +2042,15 @@
                                     <bpws:link
                                     name="RenderJSONToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
                                     <bpws:link
+                                    name="InvokeRESTAPIToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
                                     name="GroupStart1ToRenderJSON" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="InvokeRESTAPIToSalesforceUpdateAll1_IfSuccess"
-                                    tibex:label="If Success" tibex:linkType="SUCCESSWITHCONDITION"/>
-                                    <bpws:link
-                                    name="SalesforceUpdateAll1ToGroupEnd1" tibex:linkType="SUCCESS"/>
+                                    name="SalesforceUpdateAllToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
-                                    tibex:group="groupStart" tibex:xpdlId="078ae18c-2574-4b52-9649-430cc6a2fdeb">
+                                    tibex:group="groupStart" tibex:xpdlId="24f2874f-3a6c-4f44-8ee3-663a62273a8c">
                                     <bpws:sources>
 
                                     <bpws:source linkName="GroupStart1ToRenderJSON"/>
@@ -2069,21 +2058,21 @@
                                     </bpws:empty>
                                     <bpws:empty
                                     name="GroupEnd1"
-                                    tibex:group="groupEnd" tibex:xpdlId="8d59dc1e-2cf5-4c3a-91c8-164eaf5f2a71">
+                                    tibex:group="groupEnd" tibex:xpdlId="3ecb1838-2a26-4413-b331-58e392bfb4d2">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="SalesforceUpdateAll1ToGroupEnd1"/>
+                                    <bpws:target linkName="SalesforceUpdateAllToGroupEnd1"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOMAccountSchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1478602717044&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:OrgNodeUpdate>&lt;xsl:if test=&quot;$currentElement/tns:OrgNodeID&quot;>&lt;tns1:OrgNodeId>&lt;xsl:value-of select=&quot;$currentElement/tns:OrgNodeID&quot;/>&lt;/tns1:OrgNodeId>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Name&quot;>&lt;tns1:OrgNodeName>&lt;xsl:value-of select=&quot;$currentElement/tns:Name&quot;/>&lt;/tns1:OrgNodeName>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Region&quot;>&lt;tns1:SalesRegion>&lt;xsl:value-of select=&quot;$currentElement/tns:Region&quot;/>&lt;/tns1:SalesRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Industry&quot;>&lt;tns1:CustomerIndustry>&lt;xsl:value-of select=&quot;$currentElement/tns:Industry&quot;/>&lt;/tns1:CustomerIndustry>&lt;/xsl:if>&lt;tns1:IsActive>&lt;xsl:value-of select=&quot;boolean(&amp;quot;true&amp;quot;)&quot;/>&lt;/tns1:IsActive>&lt;xsl:if test=&quot;$currentElement/tns:OwnerId&quot;>&lt;tns1:AccountManagerId>&lt;xsl:value-of select=&quot;$currentElement/tns:OwnerId&quot;/>&lt;/tns1:AccountManagerId>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:BusinessSegment&quot;>&lt;tns1:BusinessSegment>&lt;xsl:value-of select=&quot;$currentElement/tns:BusinessSegment&quot;/>&lt;/tns1:BusinessSegment>&lt;/xsl:if>&lt;/tns1:OrgNodeUpdate>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1478693884972&quot; xmlns:tns=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:OMContactUpdate>&lt;xsl:if test=&quot;$currentElement/tns:ProfileId&quot;>&lt;tns1:ProfileId>&lt;xsl:value-of select=&quot;$currentElement/tns:ProfileId&quot;/>&lt;/tns1:ProfileId>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:FirstName&quot;>&lt;tns1:FirstName>&lt;xsl:value-of select=&quot;$currentElement/tns:FirstName&quot;/>&lt;/tns1:FirstName>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:LastName&quot;>&lt;tns1:LastName>&lt;xsl:value-of select=&quot;$currentElement/tns:LastName&quot;/>&lt;/tns1:LastName>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingStreet&quot;>&lt;tns1:Address>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingStreet&quot;/>&lt;/tns1:Address>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingCity&quot;>&lt;tns1:City>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingCity&quot;/>&lt;/tns1:City>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingStateCode&quot;>&lt;tns1:State>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingStateCode&quot;/>&lt;/tns1:State>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingPostalCode&quot;>&lt;tns1:Zip>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingPostalCode&quot;/>&lt;/tns1:Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingCountryCode&quot;>&lt;tns1:Country>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingCountryCode&quot;/>&lt;/tns1:Country>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Phone&quot;>&lt;tns1:Phone>&lt;xsl:value-of select=&quot;$currentElement/tns:Phone&quot;/>&lt;/tns1:Phone>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Fax&quot;>&lt;tns1:Fax>&lt;xsl:value-of select=&quot;$currentElement/tns:Fax&quot;/>&lt;/tns1:Fax>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Email&quot;>&lt;tns1:Email>&lt;xsl:value-of select=&quot;$currentElement/tns:Email&quot;/>&lt;/tns1:Email>&lt;/xsl:if>&lt;tns1:IsActive>&lt;xsl:value-of select=&quot;boolean($currentElement/tns:Active__c)&quot;/>&lt;/tns1:IsActive>&lt;tns1:OptOutCommunications>&lt;xsl:value-of select=&quot;boolean(&amp;quot;true&amp;quot;)&quot;/>&lt;/tns1:OptOutCommunications>&lt;xsl:if test=&quot;$currentElement/tns:Description&quot;>&lt;tns1:CustomerNotes>&lt;xsl:value-of select=&quot;$currentElement/tns:Description&quot;/>&lt;/tns1:CustomerNotes>&lt;/xsl:if>&lt;/tns1:OMContactUpdate>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="RenderJSON-input"
                                     name="RenderJSON"
                                     outputVariable="RenderJSON"
-                                    tibex:xpdlId="49b5c1b7-b780-4a74-896b-f7f93decc430" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    tibex:xpdlId="26a1c107-b3d2-4f9a-ad3f-021d697a1eed" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
                                     <bpws:target linkName="GroupStart1ToRenderJSON"/>
@@ -2095,7 +2084,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOMAccountSchema&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1478602717044&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:OrgNodeUpdate>&lt;xsl:if test=&quot;$currentElement/tns:OrgNodeID&quot;>&lt;tns1:OrgNodeId>&lt;xsl:value-of select=&quot;$currentElement/tns:OrgNodeID&quot;/>&lt;/tns1:OrgNodeId>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Name&quot;>&lt;tns1:OrgNodeName>&lt;xsl:value-of select=&quot;$currentElement/tns:Name&quot;/>&lt;/tns1:OrgNodeName>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Region&quot;>&lt;tns1:SalesRegion>&lt;xsl:value-of select=&quot;$currentElement/tns:Region&quot;/>&lt;/tns1:SalesRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Industry&quot;>&lt;tns1:CustomerIndustry>&lt;xsl:value-of select=&quot;$currentElement/tns:Industry&quot;/>&lt;/tns1:CustomerIndustry>&lt;/xsl:if>&lt;tns1:IsActive>&lt;xsl:value-of select=&quot;boolean(&amp;quot;true&amp;quot;)&quot;/>&lt;/tns1:IsActive>&lt;xsl:if test=&quot;$currentElement/tns:OwnerId&quot;>&lt;tns1:AccountManagerId>&lt;xsl:value-of select=&quot;$currentElement/tns:OwnerId&quot;/>&lt;/tns1:AccountManagerId>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:BusinessSegment&quot;>&lt;tns1:BusinessSegment>&lt;xsl:value-of select=&quot;$currentElement/tns:BusinessSegment&quot;/>&lt;/tns1:BusinessSegment>&lt;/xsl:if>&lt;/tns1:OrgNodeUpdate>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1478693884972&quot; xmlns:tns=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:OMContactUpdate>&lt;xsl:if test=&quot;$currentElement/tns:ProfileId&quot;>&lt;tns1:ProfileId>&lt;xsl:value-of select=&quot;$currentElement/tns:ProfileId&quot;/>&lt;/tns1:ProfileId>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:FirstName&quot;>&lt;tns1:FirstName>&lt;xsl:value-of select=&quot;$currentElement/tns:FirstName&quot;/>&lt;/tns1:FirstName>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:LastName&quot;>&lt;tns1:LastName>&lt;xsl:value-of select=&quot;$currentElement/tns:LastName&quot;/>&lt;/tns1:LastName>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingStreet&quot;>&lt;tns1:Address>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingStreet&quot;/>&lt;/tns1:Address>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingCity&quot;>&lt;tns1:City>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingCity&quot;/>&lt;/tns1:City>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingStateCode&quot;>&lt;tns1:State>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingStateCode&quot;/>&lt;/tns1:State>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingPostalCode&quot;>&lt;tns1:Zip>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingPostalCode&quot;/>&lt;/tns1:Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:MailingCountryCode&quot;>&lt;tns1:Country>&lt;xsl:value-of select=&quot;$currentElement/tns:MailingCountryCode&quot;/>&lt;/tns1:Country>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Phone&quot;>&lt;tns1:Phone>&lt;xsl:value-of select=&quot;$currentElement/tns:Phone&quot;/>&lt;/tns1:Phone>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Fax&quot;>&lt;tns1:Fax>&lt;xsl:value-of select=&quot;$currentElement/tns:Fax&quot;/>&lt;/tns1:Fax>&lt;/xsl:if>&lt;xsl:if test=&quot;$currentElement/tns:Email&quot;>&lt;tns1:Email>&lt;xsl:value-of select=&quot;$currentElement/tns:Email&quot;/>&lt;/tns1:Email>&lt;/xsl:if>&lt;tns1:IsActive>&lt;xsl:value-of select=&quot;boolean($currentElement/tns:Active__c)&quot;/>&lt;/tns1:IsActive>&lt;tns1:OptOutCommunications>&lt;xsl:value-of select=&quot;boolean(&amp;quot;true&amp;quot;)&quot;/>&lt;/tns1:OptOutCommunications>&lt;xsl:if test=&quot;$currentElement/tns:Description&quot;>&lt;tns1:CustomerNotes>&lt;xsl:value-of select=&quot;$currentElement/tns:Description&quot;/>&lt;/tns1:CustomerNotes>&lt;/xsl:if>&lt;/tns1:OMContactUpdate>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2115,7 +2104,7 @@
                                     jsonOutputStyle="None"
                                     schemaType="Xsd" xsi:type="restjson:JsonRender">
 
-                                    <inputEditorElement href="platform:/resource/OM_SF_Integrations/Schemas/OrgNodeUpdateResource.xsd#//OrgNodeUpdate;XSDElementDeclaration"/>
+                                    <inputEditorElement href="platform:/resource/OM_SF_Integrations/Schemas/OMContactUpdateResource.xsd#//OMContactUpdate;XSDElementDeclaration"/>
                                     </value>
                                     </properties>
                                     </activityConfig>
@@ -2126,32 +2115,25 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFOMAccountSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;orgNodeId>&lt;xsl:value-of select=&quot;$currentElement/tns1:OrgNodeID&quot;/>&lt;/orgNodeId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;profileId>&lt;xsl:value-of select=&quot;$currentElement/tns1:ProfileId&quot;/>&lt;/profileId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     governedObjectTypes="BWHttpReference"
                                     inputVariable="InvokeRESTAPI-input"
                                     name="InvokeRESTAPI"
                                     outputVariable="InvokeRESTAPI"
-                                    tibex:xpdlId="3b96cad2-3785-421b-9538-5a82e6a9e57e" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    tibex:xpdlId="98bc799e-a877-45ae-9d37-7ce0ca9a7c97" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
                                     <bpws:target linkName="RenderJSONToInvokeRESTAPI"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="InvokeRESTAPIToSalesforceUpdateAll1_IfSuccess">
-                                    <tibex:DesignExpression>
-
-                                    <tibex:expression
-                                    expression="$InvokeRESTAPI/statusCode=200" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
-                                    </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$InvokeRESTAPI/statusCode=200]]></bpws:transitionCondition>
-                                    </bpws:source>
+                                    <bpws:source linkName="InvokeRESTAPIToSalesforceUpdateAll"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+3b96cad2-3785-421b-9538-5a82e6a9e57e+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFOMAccountSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;orgNodeId>&lt;xsl:value-of select=&quot;$currentElement/tns1:OrgNodeID&quot;/>&lt;/orgNodeId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+98bc799e-a877-45ae-9d37-7ce0ca9a7c97+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;profileId>&lt;xsl:value-of select=&quot;$currentElement/tns1:ProfileId&quot;/>&lt;/profileId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2171,7 +2153,7 @@
                                     httpClientSR="httpClientResource"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/OrgNode/{orgNodeId}"
+                                    resourcePath="/Profile/{profileId}"
                                     responseAcceptType="JSON"
                                     transferEncoding="Buffered" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
@@ -2183,24 +2165,24 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll1-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;S&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueId)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;S&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="SalesforceUpdateAll1-input"
-                                    name="SalesforceUpdateAll1"
-                                    outputVariable="SalesforceUpdateAll1"
-                                    tibex:xpdlId="25554eb0-63cf-48e3-ac8f-e2fd4394c385" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    inputVariable="SalesforceUpdateAll-input"
+                                    name="SalesforceUpdateAll"
+                                    outputVariable="SalesforceUpdateAll"
+                                    tibex:xpdlId="ba118f15-b66d-4e3f-a6ce-39795af65b5a" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="InvokeRESTAPIToSalesforceUpdateAll1_IfSuccess"/>
+                                    <bpws:target linkName="InvokeRESTAPIToSalesforceUpdateAll"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="SalesforceUpdateAll1ToGroupEnd1"/>
+                                    <bpws:source linkName="SalesforceUpdateAllToGroupEnd1"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll1-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;S&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SFOMContactSchema&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueId)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;S&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
