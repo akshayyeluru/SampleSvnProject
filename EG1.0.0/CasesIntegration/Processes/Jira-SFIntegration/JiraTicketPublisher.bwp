@@ -24,6 +24,7 @@
     xmlns:ns22="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+0236ea25-55ac-4d29-8be3-f487917ca412+RestInvokeOutput"
     xmlns:ns23="www.tibco.com/plugin/java/JavaInvokeActivityInput+57ba2bf0-c6c4-40e0-8470-14f4c751ddf6+JavaInvokeActivityInput"
     xmlns:ns24="www.tibco.com/plugin/java/JavaInvokeActivityOutput+57ba2bf0-c6c4-40e0-8470-14f4c751ddf6+JavaInvokeActivityOutput"
+    xmlns:ns25="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
     xmlns:ns3="www.tibco.com/plugin/java/JavaInvokeActivityInput+03babeef-593e-4ccd-9f76-711cd13ae1a2+JavaInvokeActivityInput"
     xmlns:ns4="www.tibco.com/plugin/java/JavaInvokeActivityOutput+03babeef-593e-4ccd-9f76-711cd13ae1a2+JavaInvokeActivityOutput"
     xmlns:ns5="activity.jsonParser.input+3bf2bd6a-75bd-4511-8c56-10cad166b449+ActivityInputType"
@@ -687,7 +688,7 @@
             <wsdl:import namespace="http://www.example.org/JiraRecordData"/>
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
             <wsdl:message name="postRequest">
-                <wsdl:part element="extns1:TicketRecordsData" name="item"/>
+                <wsdl:part name="item" type="xsd:TicketRecordsData"/>
                 <wsdl:part element="extns2:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
             </wsdl:message>
@@ -3120,7 +3121,9 @@
                                     <bpws:target linkName="ScopeToMapper"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="MapperToGroupEnd"/>
+                                    <bpws:source linkName="MapperToGroupEnd">
+                                    <tibex:DesignExpression/>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -3405,7 +3408,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475581217859&quot; xmlns:tns1=&quot;http://www.example.org/JiraRecordData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TicketRecord&quot;/>&lt;xsl:template name=&quot;Render-TicketDataRequest-input&quot; match=&quot;/&quot;>&lt;tns:GetJiraTicketDataElement>&lt;tns:jql>&lt;xsl:value-of select=&quot;concat(&amp;quot;key='&amp;quot;,$TicketRecord/tns1:TicketID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:jql>&lt;tns:startAt>&lt;xsl:value-of select=&quot;0&quot;/>&lt;/tns:startAt>&lt;tns:maxResults>&lt;xsl:value-of select=&quot;1&quot;/>&lt;/tns:maxResults>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;assignee&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;status&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;resolution&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;created&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;updated&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11845&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11846&amp;quot;&quot;/>&lt;/tns:fields>&lt;/tns:GetJiraTicketDataElement>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475581217859&quot; xmlns:tns1=&quot;http://www.example.org/JiraRecordData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TicketRecord&quot;/>&lt;xsl:template name=&quot;Render-TicketDataRequest-input&quot; match=&quot;/&quot;>&lt;tns:GetJiraTicketDataElement>&lt;tns:jql>&lt;xsl:value-of select=&quot;concat(&amp;quot;id=&amp;quot;,$TicketRecord/tns1:TicketID,&amp;quot;&amp;quot;)&quot;/>&lt;/tns:jql>&lt;tns:startAt>&lt;xsl:value-of select=&quot;0&quot;/>&lt;/tns:startAt>&lt;tns:maxResults>&lt;xsl:value-of select=&quot;1&quot;/>&lt;/tns:maxResults>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;assignee&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;status&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;resolution&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;created&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;updated&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11845&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11846&amp;quot;&quot;/>&lt;/tns:fields>&lt;/tns:GetJiraTicketDataElement>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Render-TicketDataRequest-input"
                                     name="Render TicketDataRequest"
@@ -3422,7 +3425,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475581217859&quot; xmlns:tns1=&quot;http://www.example.org/JiraRecordData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TicketRecord&quot;/>&lt;xsl:template name=&quot;Render-TicketDataRequest-input&quot; match=&quot;/&quot;>&lt;tns:GetJiraTicketDataElement>&lt;tns:jql>&lt;xsl:value-of select=&quot;concat(&amp;quot;key='&amp;quot;,$TicketRecord/tns1:TicketID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:jql>&lt;tns:startAt>&lt;xsl:value-of select=&quot;0&quot;/>&lt;/tns:startAt>&lt;tns:maxResults>&lt;xsl:value-of select=&quot;1&quot;/>&lt;/tns:maxResults>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;assignee&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;status&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;resolution&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;created&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;updated&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11845&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11846&amp;quot;&quot;/>&lt;/tns:fields>&lt;/tns:GetJiraTicketDataElement>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475581217859&quot; xmlns:tns1=&quot;http://www.example.org/JiraRecordData&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;TicketRecord&quot;/>&lt;xsl:template name=&quot;Render-TicketDataRequest-input&quot; match=&quot;/&quot;>&lt;tns:GetJiraTicketDataElement>&lt;tns:jql>&lt;xsl:value-of select=&quot;concat(&amp;quot;id=&amp;quot;,$TicketRecord/tns1:TicketID,&amp;quot;&amp;quot;)&quot;/>&lt;/tns:jql>&lt;tns:startAt>&lt;xsl:value-of select=&quot;0&quot;/>&lt;/tns:startAt>&lt;tns:maxResults>&lt;xsl:value-of select=&quot;1&quot;/>&lt;/tns:maxResults>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;assignee&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;status&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;resolution&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;created&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;updated&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11845&amp;quot;&quot;/>&lt;/tns:fields>&lt;tns:fields>&lt;xsl:value-of select=&quot;&amp;quot;customfield_11846&amp;quot;&quot;/>&lt;/tns:fields>&lt;/tns:GetJiraTicketDataElement>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
