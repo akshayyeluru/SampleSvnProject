@@ -539,24 +539,6 @@
             xmlns:source="bw.group.iterate"
             xmlns:tns="http://www.example.org/SCSMGet"
             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <element name="Iterate2_Current_Element_Comments">
-                <complexType>
-                    <sequence maxOccurs="1" minOccurs="1">
-                        <element maxOccurs="1" minOccurs="0"
-                            name="Comment" nillable="false" type="string"/>
-                        <element maxOccurs="1" minOccurs="0"
-                            name="EnteredBy" nillable="false" type="string"/>
-                        <element maxOccurs="1" minOccurs="0"
-                            name="EnteredDate" nillable="false" type="string"/>
-                        <element maxOccurs="1" minOccurs="0"
-                            name="IsPrivate" nillable="false" type="boolean"/>
-                        <element maxOccurs="1" minOccurs="0"
-                            name="UserType" nillable="false" type="integer"/>
-                        <element maxOccurs="1" minOccurs="0"
-                            name="LastModified" nillable="false" type="string"/>
-                    </sequence>
-                </complexType>
-            </element>
             <element name="Iterate1_Current_Element_Attachments">
                 <complexType>
                     <sequence maxOccurs="1" minOccurs="1">
@@ -574,6 +556,30 @@
                             name="EnteredDate" nillable="false" type="string"/>
                         <element maxOccurs="1" minOccurs="0"
                             name="LastModified" nillable="false" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="Iterate2_Current_Element_Comments">
+                <complexType>
+                    <sequence maxOccurs="1" minOccurs="1">
+                        <element maxOccurs="1" minOccurs="0" name="Id"
+                            nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="Comment" nillable="false" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="EnteredBy" nillable="false" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="EnteredDate" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="IsPrivate" nillable="true" type="boolean"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="UserType" nillable="true" type="integer"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="LastModified" nillable="false" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="EnteredDateLocal" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="IsAddedThroughAPI" nillable="true" type="string"/>
                     </sequence>
                 </complexType>
             </element>
@@ -5116,11 +5122,11 @@
                                     <tibex:DesignExpression name="variableList">
 
                                     <tibex:expression
-                                    expression="$currentElement/tns1:Comments" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$post/item/tns1:SCSMElement/tns1:Comments" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
                                     <bpws:startCounterValue><![CDATA[1]]></bpws:startCounterValue>
 
-                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($currentElement/tns1:Comments)]]></bpws:finalCounterValue>
+                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns1:Comments)]]></bpws:finalCounterValue>
 
                                     <bpws:scope name="innerScope2">
                                     <bpws:variables>
@@ -5153,7 +5159,7 @@
                                     </bpws:sources>
                                     <bpws:copy>
 
-                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($currentElement/tns1:Comments)[number($index1)]]]></bpws:from>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns1:Comments)[number($index1)]]]></bpws:from>
 
                                     <bpws:to variable="currentElement1"/>
                                     </bpws:copy>
@@ -5307,7 +5313,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_createAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement1&quot;/>&lt;xsl:param name=&quot;To-Get-SF-ID&quot;/>&lt;xsl:template name=&quot;SalesforceCommentCreate-input&quot; match=&quot;/&quot;>&lt;tns:createAllInput>&lt;create>&lt;createSObjects>&lt;tns:sObjects xsi:type=&quot;ns:CaseComment&quot;>&lt;xsl:if test=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;>&lt;ns:ParentId>&lt;xsl:copy-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/ns:ParentId>&lt;/xsl:if>&lt;ns:CommentBody>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement1/tns3:Comment)&quot;>&lt;xsl:value-of select=&quot;$currentElement1/tns3:Comment&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:CommentBody>&lt;ns:CreatedBy/>&lt;/tns:sObjects>&lt;/createSObjects>&lt;/create>&lt;/tns:createAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_createAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement1&quot;/>&lt;xsl:param name=&quot;To-Get-SF-ID&quot;/>&lt;xsl:template name=&quot;SalesforceCommentCreate-input&quot; match=&quot;/&quot;>&lt;tns:createAllInput>&lt;create>&lt;createSObjects>&lt;tns:sObjects xsi:type=&quot;ns:CaseComment&quot;>&lt;xsl:if test=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;>&lt;ns:ParentId>&lt;xsl:copy-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/ns:ParentId>&lt;/xsl:if>&lt;xsl:choose>&lt;xsl:when test=&quot;$currentElement1/tns3:IsPrivate=true()&quot;>&lt;ns:IsPublished>&lt;xsl:value-of select=&quot;false()&quot;/>&lt;/ns:IsPublished>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:IsPublished>&lt;xsl:value-of select=&quot;true()&quot;/>&lt;/ns:IsPublished>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;ns:CommentBody>&lt;xsl:value-of select=&quot;concat($currentElement1/tns3:Comment,'&amp;#xA;',&amp;quot;Author:&amp;quot;,$currentElement1/tns3:EnteredBy,'&amp;#xA;',&amp;quot;Created Date:&amp;quot;,$currentElement1/tns3:EnteredDateLocal)&quot;/>&lt;/ns:CommentBody>&lt;ns:CreatedBy/>&lt;/tns:sObjects>&lt;/createSObjects>&lt;/create>&lt;/tns:createAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="SalesforceCommentCreate-input"
                                     name="SalesforceCommentCreate"
@@ -5326,7 +5332,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_createAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement1&quot;/>&lt;xsl:param name=&quot;To-Get-SF-ID&quot;/>&lt;xsl:template name=&quot;SalesforceCommentCreate-input&quot; match=&quot;/&quot;>&lt;tns:createAllInput>&lt;create>&lt;createSObjects>&lt;tns:sObjects xsi:type=&quot;ns:CaseComment&quot;>&lt;xsl:if test=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;>&lt;ns:ParentId>&lt;xsl:copy-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/ns:ParentId>&lt;/xsl:if>&lt;ns:CommentBody>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement1/tns3:Comment)&quot;>&lt;xsl:value-of select=&quot;$currentElement1/tns3:Comment&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:CommentBody>&lt;ns:CreatedBy/>&lt;/tns:sObjects>&lt;/createSObjects>&lt;/create>&lt;/tns:createAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_createAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns3=&quot;http://www.example.org/SCSMGet&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement1&quot;/>&lt;xsl:param name=&quot;To-Get-SF-ID&quot;/>&lt;xsl:template name=&quot;SalesforceCommentCreate-input&quot; match=&quot;/&quot;>&lt;tns:createAllInput>&lt;create>&lt;createSObjects>&lt;tns:sObjects xsi:type=&quot;ns:CaseComment&quot;>&lt;xsl:if test=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;>&lt;ns:ParentId>&lt;xsl:copy-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$To-Get-SF-ID/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/ns:ParentId>&lt;/xsl:if>&lt;xsl:choose>&lt;xsl:when test=&quot;$currentElement1/tns3:IsPrivate=true()&quot;>&lt;ns:IsPublished>&lt;xsl:value-of select=&quot;false()&quot;/>&lt;/ns:IsPublished>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:IsPublished>&lt;xsl:value-of select=&quot;true()&quot;/>&lt;/ns:IsPublished>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;ns:CommentBody>&lt;xsl:value-of select=&quot;concat($currentElement1/tns3:Comment,'&amp;#xA;',&amp;quot;Author:&amp;quot;,$currentElement1/tns3:EnteredBy,'&amp;#xA;',&amp;quot;Created Date:&amp;quot;,$currentElement1/tns3:EnteredDateLocal)&quot;/>&lt;/ns:CommentBody>&lt;ns:CreatedBy/>&lt;/tns:sObjects>&lt;/createSObjects>&lt;/create>&lt;/tns:createAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
