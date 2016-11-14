@@ -3884,8 +3884,9 @@
             name="SalesforceUpdateAll-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns14:updateAllOutput"
             name="SalesforceUpdateAll" sca-bpel:internal="true"/>
-        <bpws:variable element="ns24:SFParentId" name="Mapper1-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns24:SFParentId" name="Mapper1" sca-bpel:internal="true"/>
+        <bpws:variable element="ns24:SFParentIdinfo"
+            name="Mapper1-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns24:SFParentIdinfo" name="Mapper1" sca-bpel:internal="true"/>
         <bpws:variable element="ns22:DefaultFault" name="Throw-input" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
@@ -4119,17 +4120,17 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="string-length($Mapper1)!=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="string-length($Mapper1/ns24:ParentId)!=0 and string-length($Mapper1/ns24:Parent_Product)=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[string-length($Mapper1)!=0]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[string-length($Mapper1/ns24:ParentId)!=0 and string-length($Mapper1/ns24:Parent_Product)=0]]></bpws:transitionCondition>
                                     </bpws:source>
                                     <bpws:source linkName="MapperToCaseRecords">
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="string-length($Mapper1)=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="string-length($Mapper1/ns24:ParentId)=0 and string-length($Mapper1/ns24:Parent_Product)!=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[string-length($Mapper1)=0]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[string-length($Mapper1/ns24:ParentId)=0 and string-length($Mapper1/ns24:Parent_Product)!=0]]></bpws:transitionCondition>
                                     </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
@@ -4658,7 +4659,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:template name=&quot;Retrieve-ParentJiraID-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select id,Issue__c from case where id='&amp;quot;,$Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records[1]/ns:ParentId,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:template name=&quot;Retrieve-ParentJiraID-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select id,Issue__c,Product__c from case where id='&amp;quot;,$Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records[1]/ns:ParentId,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Retrieve-ParentJiraID-input"
                                     name="Retrieve ParentJiraID"
@@ -4675,7 +4676,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:template name=&quot;Retrieve-ParentJiraID-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select id,Issue__c from case where id='&amp;quot;,$Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records[1]/ns:ParentId,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:template name=&quot;Retrieve-ParentJiraID-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;select id,Issue__c,Product__c from case where id='&amp;quot;,$Retrieve-CaseData/queryAllResponse/tns1:result/tns1:records[1]/ns:ParentId,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -5064,7 +5065,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns:result/tns:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/SFParentID&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:template name=&quot;Mapper1-input&quot; match=&quot;/&quot;>&lt;tns1:SFParentId>&lt;xsl:value-of select=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId&quot;/>&lt;/tns1:SFParentId>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns:result/tns:records, type, ns:Case -->&#xa;&lt;!-- $Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/SFParentID&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:param name=&quot;Retrieve-ParentJiraID&quot;/>&lt;xsl:template name=&quot;Mapper1-input&quot; match=&quot;/&quot;>&lt;tns1:SFParentIdinfo>&lt;xsl:if test=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId&quot;>&lt;tns1:ParentId>&lt;xsl:copy-of select=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId&quot;/>&lt;/tns1:ParentId>&lt;/xsl:if>&lt;xsl:if test=&quot;$Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records[1]/ns:Product__c&quot;>&lt;tns1:Parent_Product>&lt;xsl:copy-of select=&quot;$Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records[1]/ns:Product__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records[1]/ns:Product__c&quot;/>&lt;/tns1:Parent_Product>&lt;/xsl:if>&lt;/tns1:SFParentIdinfo>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Mapper1-input"
                                     name="Mapper1"
@@ -5083,7 +5084,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns:result/tns:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/SFParentID&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:template name=&quot;Mapper1-input&quot; match=&quot;/&quot;>&lt;tns1:SFParentId>&lt;xsl:value-of select=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId&quot;/>&lt;/tns1:SFParentId>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $Retrieve-CaseData/queryAllResponse/tns:result/tns:records, type, ns:Case -->&#xa;&lt;!-- $Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records, type, ns:Case -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/SFParentID&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;Retrieve-CaseData&quot;/>&lt;xsl:param name=&quot;Retrieve-ParentJiraID&quot;/>&lt;xsl:template name=&quot;Mapper1-input&quot; match=&quot;/&quot;>&lt;tns1:SFParentIdinfo>&lt;xsl:if test=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId&quot;>&lt;tns1:ParentId>&lt;xsl:copy-of select=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$Retrieve-CaseData/queryAllResponse/tns:result/tns:records[1]/ns:ParentId&quot;/>&lt;/tns1:ParentId>&lt;/xsl:if>&lt;xsl:if test=&quot;$Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records[1]/ns:Product__c&quot;>&lt;tns1:Parent_Product>&lt;xsl:copy-of select=&quot;$Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records[1]/ns:Product__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$Retrieve-ParentJiraID/queryAllResponse/tns:result/tns:records[1]/ns:Product__c&quot;/>&lt;/tns1:Parent_Product>&lt;/xsl:if>&lt;/tns1:SFParentIdinfo>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -5102,7 +5103,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
 
                                     <value
-                                    inputQName="SFParentID:SFParentId" xsi:type="generalactivities:Mapper"/>
+                                    inputQName="SFParentID:SFParentIdinfo" xsi:type="generalactivities:Mapper"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
