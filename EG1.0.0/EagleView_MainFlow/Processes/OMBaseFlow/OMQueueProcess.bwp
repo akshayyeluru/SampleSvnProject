@@ -635,7 +635,7 @@
                 <bpws:link name="OrgNodeMapperToCallProcess" tibex:linkType="SUCCESSWITHCONDITION"/>
                 <bpws:link name="OMAccountCallProcessToEnd" tibex:linkType="SUCCESS"/>
                 <bpws:link name="StartToMapper2" tibex:linkType="SUCCESS"/>
-                <bpws:link name="BillPayerMapperToCallProcess" tibex:linkType="SUCCESS"/>
+                <bpws:link name="BillPayerMapperToCallProcess" tibex:linkType="SUCCESSWITHCONDITION"/>
                 <bpws:link name="OMBillPayerCallProcessToEnd" tibex:linkType="SUCCESS"/>
             </bpws:links>
             <bpws:extensionActivity>
@@ -819,7 +819,13 @@
                         <bpws:target linkName="StartToMapper2"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="BillPayerMapperToCallProcess"/>
+                        <bpws:source linkName="BillPayerMapperToCallProcess">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="count($BillPayerMapper/ns0:OMQueueElement)>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[count($BillPayerMapper/ns0:OMQueueElement)>0]]></bpws:transitionCondition>
+                        </bpws:source>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
