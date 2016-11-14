@@ -684,6 +684,7 @@
             targetNamespace="http://xmlns.example.com/20161109115941PLT"
             xmlns:extns="http://www.example.org/SfQueueDataMapper"
             xmlns:extns1="http://tns.tibco.com/bw/REST"
+            xmlns:extns2="http://xmlns.example.com/SFOMOrgNodePublisher/parameters"
             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
             xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
             xmlns:tns="http://xmlns.example.com/20161109115941PLT"
@@ -694,10 +695,14 @@
             </plnk:partnerLinkType>
             <wsdl:import namespace="http://www.example.org/SfQueueDataMapper"/>
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
+            <wsdl:import namespace="http://xmlns.example.com/SFOMOrgNodePublisher/parameters"/>
             <wsdl:message name="postRequest">
                 <wsdl:part element="extns:SFQueueList" name="item"/>
                 <wsdl:part element="extns1:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
+                <wsdl:part
+                    element="extns2:sfomorgnodepublisherPostParameters"
+                    name="parameters" tibex:source="bw.rest"/>
             </wsdl:message>
             <wsdl:message name="postResponse">
                 <wsdl:part name="item" type="xsd:string"/>
@@ -1989,6 +1994,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SFOMAccountSchema"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../SalesforceResources/Salesforce_Metadata.xsd" namespace="urn:sobject.partner.soap.sforce.com"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://xmlns.example.com/SFOMOrgNodePublisher/parameters"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="sfomorgnodepublisher"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="sfomorgnodepublisher"/>
