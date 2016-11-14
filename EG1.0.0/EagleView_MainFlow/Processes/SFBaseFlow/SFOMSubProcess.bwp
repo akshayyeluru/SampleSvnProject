@@ -8,6 +8,8 @@
     xmlns:ns0="http://www.example.org/SfQueueDataMapper"
     xmlns:ns1="activity.jsonRender.output+4d1c8245-52a2-4671-8df4-aca16f399987+ActivityOutputType"
     xmlns:ns10="http://www.tibco.com/pe/WriteToLogActivitySchema"
+    xmlns:ns11="urn:partner.soap.sforce.com_updateAllInput"
+    xmlns:ns12="urn:partner.soap.sforce.com_updateAllOutput"
     xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e8757bfd-45a8-4cf8-abcf-7b63cfed655a+RestInvokeInput"
     xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e8757bfd-45a8-4cf8-abcf-7b63cfed655a+RestInvokeOutput"
     xmlns:ns4="activity.jsonRender.output+92eec059-84fd-4506-a530-137990dec3f2+ActivityOutputType"
@@ -19,7 +21,8 @@
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
-    xmlns:tibprop="http://ns.tibco.com/bw/property" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    xmlns:tibprop="http://ns.tibco.com/bw/property"
+    xmlns:tns="urn:sobject.partner.soap.sforce.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:Types>
         <xs:schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
@@ -582,6 +585,252 @@
             </xs:complexType>
             <xs:element name="ActivityInput" type="tns:LogParametersType"/>
         </xs:schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="urn:sobject.partner.soap.sforce.com"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:sobject.partner.soap.sforce.com">
+            <complexType name="sObject">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="type"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="fieldsToNull" nillable="true" type="string"/>
+                    <element maxOccurs="1" minOccurs="0" name="Id"
+                        nillable="true" type="string"/>
+                    <any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+                </sequence>
+            </complexType>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllInput"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:Q1="urn:sobject.partner.soap.sforce.com" xmlns:tns="urn:partner.soap.sforce.com_updateAllInput">
+            <import namespace="urn:sobject.partner.soap.sforce.com"/>
+            <complexType name="updateAllInputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:connectionInfo"/>
+                    <element maxOccurs="1" minOccurs="1" name="update" type="tns:updateType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="update_Optional" type="tns:updateOptionalType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllInput" type="tns:updateAllInputType"/>
+            <element name="connectionInfo" nillable="false" type="tns:connectionInfoType"/>
+            <complexType name="connectionInfoType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="serverUrl" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="sessionId" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="externalSessionIdUsed" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="batchSize" type="integer"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateSObjects" type="tns:updateSObjects"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateSObjects">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:sObjects"/>
+                </sequence>
+            </complexType>
+            <element name="sObjects" nillable="false" type="Q1:sObject"/>
+            <complexType name="updateOptionalType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:_configData"/>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:headers"/>
+                </sequence>
+            </complexType>
+            <element name="_configData" nillable="false" type="tns:_configDataType"/>
+            <complexType name="_configDataType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="timeout" type="integer"/>
+                </sequence>
+            </complexType>
+            <element name="headers" nillable="false" type="tns:headersType"/>
+            <complexType name="headersType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="CallOptions" type="tns:CallOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AssignmentRuleHeader" type="tns:AssignmentRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="MruHeader" type="tns:MruHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllowFieldTruncationHeader" type="tns:AllowFieldTruncationHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DisableFeedTrackingHeader" type="tns:DisableFeedTrackingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="StreamingEnabledHeader" type="tns:StreamingEnabledHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllOrNoneHeader" type="tns:AllOrNoneHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DuplicateRuleHeader" type="tns:DuplicateRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="LocaleOptions" type="tns:LocaleOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DebuggingHeader" type="tns:DebuggingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="PackageVersionHeader" type="tns:PackageVersionHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="EmailHeader" type="tns:EmailHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="OwnerChangeOptions" type="tns:OwnerChangeOptionsType"/>
+                </sequence>
+            </complexType>
+            <complexType name="CallOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="client"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="defaultNamespace" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="AssignmentRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="assignmentRuleId" nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="useDefaultRule" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="MruHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateMru" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllowFieldTruncationHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowFieldTruncation" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DisableFeedTrackingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="disableFeedTracking" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="StreamingEnabledHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="streamingEnabled" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllOrNoneHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allOrNone" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DuplicateRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowSave" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="includeRecordDetails" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="runAsCurrentUser" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="LocaleOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="language"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="localizeErrors" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DebuggingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="debugLevel" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersionHeaderType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="PackageVersion" type="tns:PackageVersion"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersion">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:majorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:minorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:namespace"/>
+                </sequence>
+            </complexType>
+            <element name="majorNumber" nillable="false" type="integer"/>
+            <element name="minorNumber" nillable="false" type="integer"/>
+            <element name="namespace" nillable="false" type="string"/>
+            <complexType name="EmailHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerAutoResponseEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerOtherEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerUserEmail" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOptionsType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="OwnerChangeOption" type="tns:OwnerChangeOption"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOption">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:type"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:execute"/>
+                </sequence>
+            </complexType>
+            <element name="type" nillable="false" type="string"/>
+            <element name="execute" nillable="false" type="boolean"/>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllOutput"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:partner.soap.sforce.com_updateAllOutput">
+            <complexType name="updateAllOutputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="updateAllResponse" type="tns:updateAllResponseType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllOutput" type="tns:updateAllOutputType"/>
+            <complexType name="updateAllResponseType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:result"/>
+                </sequence>
+            </complexType>
+            <element name="result" nillable="false" type="tns:SaveResult"/>
+            <complexType name="SaveResult">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:errors"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:id"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:success"/>
+                </sequence>
+            </complexType>
+            <element name="errors" nillable="false" type="tns:Error"/>
+            <complexType name="Error">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:fields"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:message"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:statusCode"/>
+                </sequence>
+            </complexType>
+            <element name="fields" nillable="true" type="string"/>
+            <element name="message" nillable="false" type="string"/>
+            <element name="statusCode" nillable="false" type="string"/>
+            <element name="id" nillable="true" type="string"/>
+            <element name="success" nillable="false" type="boolean"/>
+        </schema>
     </tibex:Types>
     <tibex:ProcessInfo callable="true" createdBy="yakhubpasha.patan"
         createdOn="Sun Nov 13 15:13:08 IST 2016" description=""
@@ -747,8 +996,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.3"/>
-                                    <layoutConstraint x="185"
-                                    xsi:type="notation:Bounds" y="31"/>
+                                    <layoutConstraint x="298"
+                                    xsi:type="notation:Bounds" y="18"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -782,8 +1031,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.4"/>
-                                    <layoutConstraint x="477"
-                                    xsi:type="notation:Bounds" y="31"/>
+                                    <layoutConstraint x="511"
+                                    xsi:type="notation:Bounds" y="18"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -817,7 +1066,7 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.5"/>
-                                    <layoutConstraint x="45"
+                                    <layoutConstraint x="32"
                                     xsi:type="notation:Bounds" y="144"/>
                                     </children>
                                     <children type="4002">
@@ -852,7 +1101,7 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.6"/>
-                                    <layoutConstraint x="191"
+                                    <layoutConstraint x="257"
                                     xsi:type="notation:Bounds" y="144"/>
                                     </children>
                                     <children type="4002">
@@ -887,7 +1136,7 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.7"/>
-                                    <layoutConstraint x="444"
+                                    <layoutConstraint x="511"
                                     xsi:type="notation:Bounds" y="144"/>
                                     </children>
                                     <children type="4002">
@@ -922,8 +1171,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.8"/>
-                                    <layoutConstraint x="64"
-                                    xsi:type="notation:Bounds" y="260"/>
+                                    <layoutConstraint x="16"
+                                    xsi:type="notation:Bounds" y="273"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -957,8 +1206,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.9"/>
-                                    <layoutConstraint x="198"
-                                    xsi:type="notation:Bounds" y="260"/>
+                                    <layoutConstraint x="290"
+                                    xsi:type="notation:Bounds" y="244"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -992,8 +1241,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.10"/>
-                                    <layoutConstraint x="444"
-                                    xsi:type="notation:Bounds" y="260"/>
+                                    <layoutConstraint x="530"
+                                    xsi:type="notation:Bounds" y="250"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -1027,8 +1276,8 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.11"/>
-                                    <layoutConstraint x="324"
-                                    xsi:type="notation:Bounds" y="31"/>
+                                    <layoutConstraint x="396"
+                                    xsi:type="notation:Bounds" y="18"/>
                                     </children>
                                     <children type="4002">
                                     <children type="4017">
@@ -1062,7 +1311,7 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.12"/>
-                                    <layoutConstraint x="324"
+                                    <layoutConstraint x="387"
                                     xsi:type="notation:Bounds" y="144"/>
                                     </children>
                                     <children type="4002">
@@ -1097,8 +1346,113 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.13"/>
-                                    <layoutConstraint x="339"
-                                    xsi:type="notation:Bounds" y="260"/>
+                                    <layoutConstraint x="406"
+                                    xsi:type="notation:Bounds" y="250"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.14"/>
+                                    <layoutConstraint x="179"
+                                    xsi:type="notation:Bounds" y="18"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.15"/>
+                                    <layoutConstraint x="150"
+                                    xsi:type="notation:Bounds" y="96"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.16"/>
+                                    <layoutConstraint x="150"
+                                    xsi:type="notation:Bounds" y="231"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1159,7 +1513,7 @@
         </edges>
         <edges
             source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
-            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.14" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
@@ -1205,7 +1559,7 @@
         </edges>
         <edges
             source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5"
-            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.6" type="4006">
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.15" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
@@ -1250,7 +1604,7 @@
         </edges>
         <edges
             source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.8"
-            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.9" type="4006">
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.16" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
@@ -1315,8 +1669,43 @@
             <element href="//0/@process/@activity/@activity/@links/@children.14"/>
             <bendpoints points="[25, 0, -80, 0]$[81, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.14"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.15"/>
+            <bendpoints points="[25, 0, -94, 0]$[95, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.15"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.6" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.16"/>
+            <bendpoints points="[25, 11, -82, -37]$[83, 37, -24, -11]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.16"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.9" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.17"/>
+            <bendpoints points="[25, 8, -115, -40]$[116, 40, -24, -8]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SfQueueDataMapper"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema"
+        location="../../SalesforceResources/Salesforce_Metadata.xsd" namespace="urn:sobject.partner.soap.sforce.com"/>
     <bpws:variables>
         <bpws:variable element="ns:ProcessContext"
             name="_processContext" sca-bpel:internal="true"/>
@@ -1369,6 +1758,26 @@
         <bpws:variable element="ns10:ActivityInput"
             name="AROppDepositSFOM-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns10:ActivityInput" name="AROpp-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:updateAllInput"
+            name="SalesforceUpdateAll-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns12:updateAllOutput"
+            name="SalesforceUpdateAll" sca-bpel:internal="true"/>
+        <bpws:variable name="salesforceConnProperty"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://ns.tibco.com/bw/palette/salesforceconnection}SalesforceConnection" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>eagleview_mainflow.SalesforceConnection</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable element="ns11:updateAllInput"
+            name="SalesforceUpdateAll1-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns12:updateAllOutput"
+            name="SalesforceUpdateAll1" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:updateAllInput"
+            name="SalesforceUpdateAll2-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns12:updateAllOutput"
+            name="SalesforceUpdateAll2" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -1382,20 +1791,27 @@
         <bpws:flow name="flow">
             <bpws:links>
                 <bpws:link name="StartToMapper" tibex:linkType="SUCCESS"/>
-                <bpws:link name="MapperToRenderJSON" tibex:linkType="SUCCESS"/>
+                <bpws:link name="AccountMapperToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
                 <bpws:link name="RenderJSONToLog" tibex:linkType="SUCCESS"/>
                 <bpws:link name="InvokeRESTAPIToEnd" tibex:linkType="SUCCESS"/>
                 <bpws:link name="StartToMapper1" tibex:linkType="SUCCESS"/>
-                <bpws:link name="OpportunityMapperToRenderJSON1" tibex:linkType="SUCCESS"/>
+                <bpws:link
+                    name="OpportunityDepositMapperToSalesforceUpdateAll1" tibex:linkType="SUCCESS"/>
                 <bpws:link name="OpportunityDepositJSONToLog1" tibex:linkType="SUCCESS"/>
                 <bpws:link name="InvokeRESTAPI1ToEnd" tibex:linkType="SUCCESS"/>
                 <bpws:link name="StartToMapper2" tibex:linkType="SUCCESS"/>
-                <bpws:link name="MapperToRenderJSON1" tibex:linkType="SUCCESS"/>
+                <bpws:link
+                    name="OpportunityMapperToSalesforceUpdateAll2" tibex:linkType="SUCCESS"/>
                 <bpws:link name="OpportunityRenderJSONToLog2" tibex:linkType="SUCCESS"/>
                 <bpws:link name="InvokeRESTAPI1ToEnd1" tibex:linkType="SUCCESS"/>
                 <bpws:link name="LogToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
                 <bpws:link name="Log1ToInvokeOpportunityDeposit" tibex:linkType="SUCCESS"/>
                 <bpws:link name="Log2ToInvokeOpportunity" tibex:linkType="SUCCESS"/>
+                <bpws:link name="SalesforceUpdateAllToRenderJSON" tibex:linkType="SUCCESS"/>
+                <bpws:link
+                    name="SalesforceUpdateAll1ToOpportunityDepositJSON" tibex:linkType="SUCCESS"/>
+                <bpws:link
+                    name="SalesforceUpdateAll2ToOpportunityRenderJSON" tibex:linkType="SUCCESS"/>
             </bpws:links>
             <bpws:extensionActivity>
                 <tibex:receiveEvent createInstance="yes"
@@ -1447,7 +1863,7 @@
                         <bpws:target linkName="StartToMapper"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="MapperToRenderJSON"/>
+                        <bpws:source linkName="AccountMapperToSalesforceUpdateAll"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -1480,7 +1896,7 @@
                     outputVariable="RenderJSON"
                     tibex:xpdlId="4d1c8245-52a2-4671-8df4-aca16f399987" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="MapperToRenderJSON"/>
+                        <bpws:target linkName="SalesforceUpdateAllToRenderJSON"/>
                     </bpws:targets>
                     <bpws:sources>
                         <bpws:source linkName="RenderJSONToLog"/>
@@ -1559,7 +1975,7 @@
                         <bpws:target linkName="StartToMapper1"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="OpportunityMapperToRenderJSON1"/>
+                        <bpws:source linkName="OpportunityDepositMapperToSalesforceUpdateAll1"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -1593,7 +2009,7 @@
                     outputVariable="OpportunityDepositJSON"
                     tibex:xpdlId="92eec059-84fd-4506-a530-137990dec3f2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="OpportunityMapperToRenderJSON1"/>
+                        <bpws:target linkName="SalesforceUpdateAll1ToOpportunityDepositJSON"/>
                     </bpws:targets>
                     <bpws:sources>
                         <bpws:source linkName="OpportunityDepositJSONToLog1"/>
@@ -1673,7 +2089,7 @@
                         <bpws:target linkName="StartToMapper2"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="MapperToRenderJSON1"/>
+                        <bpws:source linkName="OpportunityMapperToSalesforceUpdateAll2"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -1707,7 +2123,7 @@
                     outputVariable="OpportunityRenderJSON"
                     tibex:xpdlId="c429543d-4227-40b4-93ee-ba82f2399420" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
-                        <bpws:target linkName="MapperToRenderJSON1"/>
+                        <bpws:target linkName="SalesforceUpdateAll2ToOpportunityRenderJSON"/>
                     </bpws:targets>
                     <bpws:sources>
                         <bpws:source linkName="OpportunityRenderJSONToLog2"/>
@@ -1876,6 +2292,114 @@
                                     <value loggerName="AROpp"
                                     role="Error"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;AccountMapper&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:for-each select=&quot;$AccountMapper/tns1:SFQueue&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists(tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'In Process'&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'I'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:for-each>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="SalesforceUpdateAll-input"
+                    name="SalesforceUpdateAll"
+                    outputVariable="SalesforceUpdateAll"
+                    tibex:xpdlId="3e5e7aa5-b90c-4a9a-8da0-fe3f96712f7b" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="AccountMapperToSalesforceUpdateAll"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="SalesforceUpdateAllToRenderJSON"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;AccountMapper&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:for-each select=&quot;$AccountMapper/tns1:SFQueue&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists(tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'In Process'&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'I'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:for-each>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;OpportunityDepositMapper&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll1-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:for-each select=&quot;$OpportunityDepositMapper/tns1:SFQueue&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists(tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'In Process'&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'I'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:for-each>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="SalesforceUpdateAll1-input"
+                    name="SalesforceUpdateAll1"
+                    outputVariable="SalesforceUpdateAll1"
+                    tibex:xpdlId="86e16a3c-3c8c-412d-b6da-49be8d2bc0d1" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="OpportunityDepositMapperToSalesforceUpdateAll1"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="SalesforceUpdateAll1ToOpportunityDepositJSON"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;OpportunityDepositMapper&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll1-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:for-each select=&quot;$OpportunityDepositMapper/tns1:SFQueue&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists(tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'In Process'&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'I'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:for-each>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+            <bpws:extensionActivity>
+                <tibex:activityExtension
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;OpportunityMapper&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll2-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:for-each select=&quot;$OpportunityMapper/tns1:SFQueue&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists(tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'In Process'&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'I'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:for-each>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="SalesforceUpdateAll2-input"
+                    name="SalesforceUpdateAll2"
+                    outputVariable="SalesforceUpdateAll2"
+                    tibex:xpdlId="d0e0c1f5-9912-4458-acf7-6620655b1f00" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="OpportunityMapperToSalesforceUpdateAll2"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="SalesforceUpdateAll2ToOpportunityRenderJSON"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:import-schema namespace=&quot;urn:sobject.partner.soap.sforce.com&quot; schema-location=&quot;../../SalesforceResources/Salesforce_Metadata.xsd&quot;/>&lt;xsl:param name=&quot;OpportunityMapper&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll2-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:for-each select=&quot;$OpportunityMapper/tns1:SFQueue&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists(tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'In Process'&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'I'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:for-each>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
                                 </properties>
                             </activityConfig>
                         </bwext:BWActivity>
