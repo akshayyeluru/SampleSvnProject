@@ -32,6 +32,8 @@
     xmlns:ns3="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
     xmlns:ns30="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+970e428c-2ce5-4ed9-a08b-94b4619991d6+RestInvokeInput"
     xmlns:ns31="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+970e428c-2ce5-4ed9-a08b-94b4619991d6+RestInvokeOutput"
+    xmlns:ns32="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeInput"
+    xmlns:ns33="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeOutput"
     xmlns:ns4="http://www.tibco.com/pe/WriteToLogActivitySchema"
     xmlns:ns5="activity.jsonRender.output+62357000-2fb7-47d8-aefd-3f625ffb27d9+ActivityOutputType"
     xmlns:ns6="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+fbee3bfa-66b9-421c-8c99-8443fa3670dc+RestInvokeInput"
@@ -830,6 +832,151 @@
         <xsd:schema
             targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+970e428c-2ce5-4ed9-a08b-94b4619991d6+RestInvokeOutput"
             xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+970e428c-2ce5-4ed9-a08b-94b4619991d6+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:PathParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="PathParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1"
+                            name="Id" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:complexType name="RestInvokeInputType">
                 <xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0"
@@ -1878,6 +2025,60 @@
                                     xsi:type="notation:Bounds" y="26"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    x="249"
+                                    xsi:type="notation:Bounds" y="26"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1900,7 +2101,7 @@
 
                                     <layoutConstraint
                                     height="168"
-                                    width="442" xsi:type="notation:Bounds"/>
+                                    width="661" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2607,6 +2808,17 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.9"/>
             <bendpoints points="[25, 2, -47, 0]$[60, 0, -12, -2]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/OMAccountSchema"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
@@ -2696,6 +2908,17 @@
             sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
             <bpws:from>
                 <bpws:literal>HttpClient.MainFlowHttpClientResource</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable element="ns32:RestActivityInput"
+            name="InvokeRESTAPI3-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns33:RestActivityOutput"
+            name="InvokeRESTAPI3" sca-bpel:internal="true"/>
+        <bpws:variable name="Property2" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>OMClient.OrderManagerClient_HttpClient</bpws:literal>
             </bpws:from>
         </bpws:variable>
     </bpws:variables>
@@ -2816,6 +3039,9 @@
 
                                     <bpws:link
                                     name="Log3ToRenderJSON2" tibex:linkType="SUCCESS"/>
+
+                                    <bpws:link
+                                    name="RenderJSON2ToInvokeRESTAPI3" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:extensionActivity>
 
@@ -2861,7 +3087,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMAccountSchema&quot; xmlns:tns1=&quot;http://www.example.org/OMStatusSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:template name=&quot;RenderJSON2-input&quot; match=&quot;/&quot;>&lt;tns1:OMStatusSchema>&lt;tns1:id>&lt;xsl:value-of select=&quot;$currentElement/tns:changeQueueId&quot;/>&lt;/tns1:id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$FaultDetails1/Data/*&quot;/>&lt;/tns1:Message>&lt;/tns1:OMStatusSchema>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMAccountSchema&quot; xmlns:tns1=&quot;http://www.example.org/OMStatusSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:template name=&quot;RenderJSON2-input&quot; match=&quot;/&quot;>&lt;tns1:OMStatusSchema>&lt;tns1:id>&lt;xsl:value-of select=&quot;$currentElement/tns:changeQueueId&quot;/>&lt;/tns1:id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;substring(concat($FaultDetails1/StackTrace,tib:concat-sequence($FaultDetails1/Data)),0,4998)&quot;/>&lt;/tns1:Message>&lt;/tns1:OMStatusSchema>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="RenderJSON2-input"
                                     name="RenderJSON2"
@@ -2871,10 +3097,14 @@
 
                                     <bpws:target linkName="Log3ToRenderJSON2"/>
                                     </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="RenderJSON2ToInvokeRESTAPI3"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMAccountSchema&quot; xmlns:tns1=&quot;http://www.example.org/OMStatusSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:template name=&quot;RenderJSON2-input&quot; match=&quot;/&quot;>&lt;tns1:OMStatusSchema>&lt;tns1:id>&lt;xsl:value-of select=&quot;$currentElement/tns:changeQueueId&quot;/>&lt;/tns1:id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$FaultDetails1/Data/*&quot;/>&lt;/tns1:Message>&lt;/tns1:OMStatusSchema>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OMAccountSchema&quot; xmlns:tns1=&quot;http://www.example.org/OMStatusSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:template name=&quot;RenderJSON2-input&quot; match=&quot;/&quot;>&lt;tns1:OMStatusSchema>&lt;tns1:id>&lt;xsl:value-of select=&quot;$currentElement/tns:changeQueueId&quot;/>&lt;/tns1:id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;substring(concat($FaultDetails1/StackTrace,tib:concat-sequence($FaultDetails1/Data)),0,4998)&quot;/>&lt;/tns1:Message>&lt;/tns1:OMStatusSchema>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -2896,6 +3126,52 @@
 
                                     <inputEditorElement href="platform:/resource/OM_SF_Integrations/Schemas/OMStatusSchema.xsd#//OMStatusSchema;XSDElementDeclaration"/>
                                     </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/OMAccountSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON2&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI3-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON2/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;Id>&lt;xsl:value-of select=&quot;$currentElement/tns1:changeQueueId&quot;/>&lt;/Id>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="InvokeRESTAPI3-input"
+                                    name="InvokeRESTAPI3"
+                                    outputVariable="InvokeRESTAPI3"
+                                    tibex:xpdlId="5e2c8a19-5391-4e43-aabe-c88930695a95" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="RenderJSON2ToInvokeRESTAPI3"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+5e2c8a19-5391-4e43-aabe-c88930695a95+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/OMAccountSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderJSON2&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI3-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON2/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;Id>&lt;xsl:value-of select=&quot;$currentElement/tns1:changeQueueId&quot;/>&lt;/Id>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="Property2"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    resourcePath="/ChangeQueue/{Id}"
+                                    responseAcceptType="JSON"
+                                    transferEncoding="Buffered" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
@@ -3266,7 +3542,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_upsertAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/AddQueue&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SalesforceUpsertAll&quot;/>&lt;xsl:template name=&quot;RenderJSON3-input&quot; match=&quot;/&quot;>&lt;tns1:AddQueueList>&lt;tns1:AddQueue>&lt;xsl:if test=&quot;not(($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:RecordID>&lt;xsl:value-of select=&quot;$SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id&quot;/>&lt;/tns1:RecordID>&lt;/xsl:if>&lt;tns1:RecordType>&lt;xsl:value-of select=&quot;&amp;quot;Account&amp;quot;&quot;/>&lt;/tns1:RecordType>&lt;tns1:StatusFlag>&lt;xsl:value-of select=&quot;&amp;quot;N&amp;quot;&quot;/>&lt;/tns1:StatusFlag>&lt;tns1:SourceSystem>&lt;xsl:value-of select=&quot;&amp;quot;Order Manager&amp;quot;&quot;/>&lt;/tns1:SourceSystem>&lt;tns1:DestinationSystem>&lt;xsl:value-of select=&quot;&amp;quot;Salesforce&amp;quot;&quot;/>&lt;/tns1:DestinationSystem>&lt;tns1:EventMessage>&lt;xsl:value-of select=&quot;&amp;quot;New&amp;quot;&quot;/>&lt;/tns1:EventMessage>&lt;/tns1:AddQueue>&lt;/tns1:AddQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_upsertAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/AddQueue&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SalesforceUpsertAll&quot;/>&lt;xsl:template name=&quot;RenderJSON3-input&quot; match=&quot;/&quot;>&lt;tns1:AddQueueList>&lt;tns1:AddQueue>&lt;xsl:if test=&quot;not(($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:RecordID>&lt;xsl:value-of select=&quot;$SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id&quot;/>&lt;/tns1:RecordID>&lt;/xsl:if>&lt;tns1:RecordType>&lt;xsl:value-of select=&quot;&amp;quot;Account&amp;quot;&quot;/>&lt;/tns1:RecordType>&lt;tns1:StatusFlag>&lt;xsl:value-of select=&quot;&amp;quot;N&amp;quot;&quot;/>&lt;/tns1:StatusFlag>&lt;tns1:SourceSystem>&lt;xsl:value-of select=&quot;&amp;quot;OrderManager&amp;quot;&quot;/>&lt;/tns1:SourceSystem>&lt;tns1:DestinationSystem>&lt;xsl:value-of select=&quot;&amp;quot;Salesforce&amp;quot;&quot;/>&lt;/tns1:DestinationSystem>&lt;tns1:EventMessage>&lt;xsl:value-of select=&quot;&amp;quot;New&amp;quot;&quot;/>&lt;/tns1:EventMessage>&lt;/tns1:AddQueue>&lt;/tns1:AddQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="RenderJSON3-input"
                                     name="RenderJSON3"
@@ -3285,7 +3561,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_upsertAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/AddQueue&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SalesforceUpsertAll&quot;/>&lt;xsl:template name=&quot;RenderJSON3-input&quot; match=&quot;/&quot;>&lt;tns1:AddQueueList>&lt;tns1:AddQueue>&lt;xsl:if test=&quot;not(($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:RecordID>&lt;xsl:value-of select=&quot;$SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id&quot;/>&lt;/tns1:RecordID>&lt;/xsl:if>&lt;tns1:RecordType>&lt;xsl:value-of select=&quot;&amp;quot;Account&amp;quot;&quot;/>&lt;/tns1:RecordType>&lt;tns1:StatusFlag>&lt;xsl:value-of select=&quot;&amp;quot;N&amp;quot;&quot;/>&lt;/tns1:StatusFlag>&lt;tns1:SourceSystem>&lt;xsl:value-of select=&quot;&amp;quot;Order Manager&amp;quot;&quot;/>&lt;/tns1:SourceSystem>&lt;tns1:DestinationSystem>&lt;xsl:value-of select=&quot;&amp;quot;Salesforce&amp;quot;&quot;/>&lt;/tns1:DestinationSystem>&lt;tns1:EventMessage>&lt;xsl:value-of select=&quot;&amp;quot;New&amp;quot;&quot;/>&lt;/tns1:EventMessage>&lt;/tns1:AddQueue>&lt;/tns1:AddQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_upsertAllOutput&quot; xmlns:tns1=&quot;http://www.example.org/AddQueue&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SalesforceUpsertAll&quot;/>&lt;xsl:template name=&quot;RenderJSON3-input&quot; match=&quot;/&quot;>&lt;tns1:AddQueueList>&lt;tns1:AddQueue>&lt;xsl:if test=&quot;not(($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:RecordID>&lt;xsl:value-of select=&quot;$SalesforceUpsertAll/upsertAllResponse/tns:result[1]/tns:id&quot;/>&lt;/tns1:RecordID>&lt;/xsl:if>&lt;tns1:RecordType>&lt;xsl:value-of select=&quot;&amp;quot;Account&amp;quot;&quot;/>&lt;/tns1:RecordType>&lt;tns1:StatusFlag>&lt;xsl:value-of select=&quot;&amp;quot;N&amp;quot;&quot;/>&lt;/tns1:StatusFlag>&lt;tns1:SourceSystem>&lt;xsl:value-of select=&quot;&amp;quot;OrderManager&amp;quot;&quot;/>&lt;/tns1:SourceSystem>&lt;tns1:DestinationSystem>&lt;xsl:value-of select=&quot;&amp;quot;Salesforce&amp;quot;&quot;/>&lt;/tns1:DestinationSystem>&lt;tns1:EventMessage>&lt;xsl:value-of select=&quot;&amp;quot;New&amp;quot;&quot;/>&lt;/tns1:EventMessage>&lt;/tns1:AddQueue>&lt;/tns1:AddQueueList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
