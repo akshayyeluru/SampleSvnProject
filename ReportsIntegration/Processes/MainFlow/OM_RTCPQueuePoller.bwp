@@ -152,6 +152,7 @@
                         name="MessageBody" type="tns:MessageBodyType"/>
                     <xsd:element maxOccurs="1" minOccurs="0"
                         name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:QueryParameters"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
@@ -210,6 +211,14 @@
                         name="Header" type="tns:dynamicHeadersTypeDetails"/>
                 </xsd:sequence>
             </xsd:complexType>
+            <xsd:element name="QueryParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="0"
+                            name="quantity" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
         </xsd:schema>
         <xsd:schema
             targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeOutput"
@@ -1077,7 +1086,7 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-QueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput/>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-RTCPQueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:QueryParameters>&lt;quantity>&lt;xsl:value-of select=&quot;bw:getModuleProperty('ReportsQuantity')&quot;/>&lt;/quantity>&lt;/tns:QueryParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     governedObjectTypes="BWHttpReference"
                     inputVariable="Retrieve-RTCPQueueRecords-input"
@@ -1105,7 +1114,7 @@
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-QueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput/>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2a1d4f0b-e1a8-42de-952b-2779d23f83e8+RestInvokeInput&quot; xmlns:bw=&quot;http://www.tibco.com/bw/xpath/bw-custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Retrieve-RTCPQueueRecords-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:QueryParameters>&lt;quantity>&lt;xsl:value-of select=&quot;bw:getModuleProperty('ReportsQuantity')&quot;/>&lt;/quantity>&lt;/tns:QueryParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -1118,7 +1127,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
                                     <value httpClientSR="Property"
                                     requestContentType="JSON"
-                                    resourcePath="/ChangeQueue/ReportsToCapturePayment"
+                                    resourcePath="/ChangeQueue/ReportsToCapturePayment?quantity"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
