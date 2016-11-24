@@ -2047,7 +2047,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="633" width="1309" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="633" width="1398" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -2485,6 +2485,29 @@
             name="PaymentInvoke-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns25:RestActivityOutput"
             name="PaymentInvoke" sca-bpel:internal="true"/>
+        <bpws:variable name="PaymentRestURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="PaymentRestURI" type="xsd:string"/>
+        <bpws:variable name="BW.APPNODE.NAME" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="BW.APPNODE.NAME" type="xsd:string"/>
+        <bpws:variable name="NSOpportunityURI"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="NSOpportunityURI" type="xsd:string"/>
+        <bpws:variable name="CreditMemoURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="CreditMemoURI" type="xsd:string"/>
+        <bpws:variable name="ARInvoiceURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="ARInvoiceURI" type="xsd:string"/>
+        <bpws:variable name="InvoiceCustomerURI"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="InvoiceCustomerURI" type="xsd:string"/>
+        <bpws:variable name="InvokePDFURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="InvokePDFURI" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2671,6 +2694,9 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="resourcePath" processProperty="InvoiceCustomerURI"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
@@ -2678,7 +2704,6 @@
                                     httpClientSR="httpClientResource"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/fug5deyip33nopa5sdjtjp3e7o3kak72/NSInvoiceCustomerPublisher/nsinvoicecustomerpublisher"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
@@ -3007,6 +3032,9 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="resourcePath" processProperty="ARInvoiceURI"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
@@ -3014,7 +3042,6 @@
                                     httpClientSR="httpClientResource"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/fug5deyip33nopa5sdjtjp3e7o3kak72/NSARInvoicePublisher/nsarinvoicepublisher"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
@@ -3047,13 +3074,16 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="resourcePath" processProperty="InvokePDFURI"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
                                     <value
                                     httpClientSR="httpClientResource"
+                                    httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/temp3"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
@@ -3086,6 +3116,9 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="resourcePath" processProperty="CreditMemoURI"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
@@ -3093,7 +3126,6 @@
                                     httpClientSR="httpClientResource"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/fug5deyip33nopa5sdjtjp3e7o3kak72/NSCreditMemoPublisher/nscreditmemopublisher"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
@@ -3126,6 +3158,9 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="resourcePath" processProperty="NSOpportunityURI"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
@@ -3133,7 +3168,6 @@
                                     httpClientSR="httpClientResource"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/fug5deyip33nopa5sdjtjp3e7o3kak72/NSOpportunityPublisher/nsopportunitypublisher"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
@@ -3446,6 +3480,9 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="resourcePath" processProperty="PaymentRestURI"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
@@ -3453,7 +3490,6 @@
                                     httpClientSR="httpClientResource"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/fug5deyip33nopa5sdjtjp3e7o3kak72/NSPaymentPublisher/nspaymentpublisher"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                 </properties>
                             </activityConfig>
