@@ -5627,6 +5627,18 @@
             <bendpoints
                 points="[12, 0, -76, 181]$[40, 0, -48, 181]$[40, -172, -48, 9]$[64, -172, -24, 9]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.11"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.4/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.13"/>
+            <bendpoints
+                points="[25, -18, -207, 151]$[220, -161, -12, 8]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/OMUserSchema.xsd" namespace="http://www.example.org/OMUserSchema"/>
@@ -6004,6 +6016,8 @@
                                     name="RenderJSONToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="GroupStart1ToUserMapper" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="UpdateOMIdentityToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:empty name="GroupStart1"
                                     tibex:group="groupStart" tibex:xpdlId="b5c56880-6169-41ba-8a79-8c691e4502ee">
@@ -6012,7 +6026,11 @@
                                     </bpws:sources>
                                     </bpws:empty>
                                     <bpws:empty name="GroupEnd1"
-                                    tibex:group="groupEnd" tibex:xpdlId="6abda65c-64f4-4609-98b8-9b145d9af347"/>
+                                    tibex:group="groupEnd" tibex:xpdlId="6abda65c-64f4-4609-98b8-9b145d9af347">
+                                    <bpws:targets>
+                                    <bpws:target linkName="UpdateOMIdentityToGroupEnd1"/>
+                                    </bpws:targets>
+                                    </bpws:empty>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1476948238661&quot; xmlns:tns1=&quot;http://www.example.org/OMUserSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/EmailSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;EmailElement&quot;/>&lt;xsl:template name=&quot;UserMapper-input&quot; match=&quot;/&quot;>&lt;tns2:EmailList>&lt;tns2:Email>&lt;xsl:if test=&quot;not(($EmailElement/tns1:Email/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($EmailElement/tns1:Email/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns2:Email>&lt;xsl:value-of select=&quot;$EmailElement/tns1:Email&quot;/>&lt;/tns2:Email>&lt;/xsl:if>&lt;/tns2:Email>&lt;/tns2:EmailList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
@@ -6446,7 +6464,9 @@
                                     <bpws:targets>
                                     <bpws:target linkName="RenderJSONToInvokeRESTAPI"/>
                                     </bpws:targets>
-                                    <bpws:sources/>
+                                    <bpws:sources>
+                                    <bpws:source linkName="UpdateOMIdentityToGroupEnd1"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a054f9c6-40aa-4d39-bb2d-36eebf1a5cf9+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/AllIdsSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;AllIDs&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;UpdateOMIdentity-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;EagleViewUserId>&lt;xsl:value-of select=&quot;$AllIDs/tns1:AllIds[1]/tns1:EVUID&quot;/>&lt;/EagleViewUserId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
