@@ -52,6 +52,14 @@
     xmlns:ns48="http://tns.tibco.com/bw/palette/internal/accumulateoutput+a41b0aa0-5278-4f04-ba87-6e80aaae5d32"
     xmlns:ns49="http://www.example.org/Integration_time_Parent"
     xmlns:ns5="activity.jsonParser.input+b18d2df4-29ab-4346-9b47-a2d30670addb+ActivityInputType"
+    xmlns:ns50="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeInput"
+    xmlns:ns51="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeOutput"
+    xmlns:ns52="activity.jsonParser.input+a5c8c1a0-7db0-4100-be81-6427c9129f2f+ActivityInputType"
+    xmlns:ns53="http://tns.tibco.com/bw/json/1480490737874"
+    xmlns:ns54="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeInput"
+    xmlns:ns55="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeOutput"
+    xmlns:ns56="http://tns.tibco.com/bw/json/1480499622861"
+    xmlns:ns57="activity.jsonRender.output+ad38a96b-1714-4a32-a3fa-65420a5d1cb7+ActivityOutputType"
     xmlns:ns6="http://www.example.org/ResultSchema"
     xmlns:ns7="http://tns.tibco.com/bw/json/1473685032806"
     xmlns:ns8="activity.jsonRender.output+28a1dee8-84f0-4e9a-ad6d-daa8652141ee+ActivityOutputType"
@@ -1715,6 +1723,327 @@
                 </sequence>
             </complexType>
             <element name="ActivityInputClass" type="tns:ActivityInputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:PathParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="PathParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1"
+                            name="id" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <schema elementFormDefault="unqualified"
+            targetNamespace="activity.jsonParser.input+a5c8c1a0-7db0-4100-be81-6427c9129f2f+ActivityInputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonParser.input+a5c8c1a0-7db0-4100-be81-6427c9129f2f+ActivityInputType">
+            <complexType name="ActivityInputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityInputClass" type="tns:ActivityInputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:QueryParameters"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:PathParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="QueryParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="0"
+                            name="expand" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PathParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1"
+                            name="id" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+ad38a96b-1714-4a32-a3fa-65420a5d1cb7+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+ad38a96b-1714-4a32-a3fa-65420a5d1cb7+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
         </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20160912180307PLT"
@@ -5829,8 +6158,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@activities.39"/>
 
                                     <layoutConstraint
-                                    x="383"
-                                    xsi:type="notation:Bounds" y="601"/>
+                                    x="499"
+                                    xsi:type="notation:Bounds" y="587"/>
                                     </children>
 
                                     <children type="4002">
@@ -6155,6 +6484,276 @@
                                     <layoutConstraint
                                     x="392"
                                     xsi:type="notation:Bounds" y="366"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@activities.46"/>
+
+                                    <layoutConstraint
+                                    x="30"
+                                    xsi:type="notation:Bounds" y="691"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@activities.47"/>
+
+                                    <layoutConstraint
+                                    x="136"
+                                    xsi:type="notation:Bounds" y="691"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@activities.48"/>
+
+                                    <layoutConstraint
+                                    x="207"
+                                    xsi:type="notation:Bounds" y="691"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@activities.49"/>
+
+                                    <layoutConstraint
+                                    x="405"
+                                    xsi:type="notation:Bounds" y="691"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@activities.50"/>
+
+                                    <layoutConstraint
+                                    x="321"
+                                    xsi:type="notation:Bounds" y="691"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -8144,17 +8743,6 @@
             <bendpoints points="[9, -24, -95, 257]$[95, -256, -9, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.23"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.35" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.38"/>
-            <bendpoints points="[0, -24, 0, 269]$[0, -268, 0, 25]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.35"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.6" type="4006">
             <children type="6002">
@@ -8162,7 +8750,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.39"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.38"/>
             <bendpoints points="[0, -24, 0, 221]$[0, -220, 0, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8173,7 +8761,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.40"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.39"/>
             <bendpoints points="[25, 0, -150, 0]$[151, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8184,8 +8772,9 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.41"/>
-            <bendpoints points="[11, -24, -49, 113]$[49, -112, -11, 25]" xsi:type="notation:RelativeBendpoints"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.40"/>
+            <bendpoints
+                points="[25, 13, -82, 208]$[107, 13, 0, 208]$[107, -170, 0, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.37"
@@ -8195,7 +8784,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.42"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.41"/>
             <bendpoints points="[-9, -24, 101, 283]$[-101, -282, 9, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8206,7 +8795,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.43"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.42"/>
             <bendpoints points="[-8, -24, 54, 174]$[-54, -173, 8, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8217,7 +8806,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.44"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.43"/>
             <bendpoints
                 points="[0, -24, 274, 351]$[0, -68, 274, 307]$[-72, -68, 202, 307]$[-72, -375, 202, 0]$[-249, -375, 25, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8229,7 +8818,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.45"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.44"/>
             <bendpoints
                 points="[0, -24, 67, 68]$[0, -60, 67, 32]$[-44, -60, 23, 32]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8241,7 +8830,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.46"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.45"/>
             <bendpoints points="[25, 1, -835, -36]$[836, 35, -24, -2]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8252,7 +8841,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.47"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.46"/>
             <bendpoints points="[25, 0, -98, 0]$[99, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8263,7 +8852,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.48"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.47"/>
             <bendpoints points="[25, 24, -99, -95]$[100, 95, -24, -24]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8274,7 +8863,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.49"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.48"/>
             <bendpoints
                 points="[0, 25, -1117, -12]$[0, 196, -1117, 159]$[1117, 196, 0, 159]$[1117, 72, 0, 35]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8286,7 +8875,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.50"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.49"/>
             <bendpoints points="[25, 9, -102, -39]$[103, 39, -24, -9]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8297,7 +8886,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.51"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.50"/>
             <bendpoints
                 points="[-361, 165, 678, -215]$[-525, 165, 514, -215]$[-525, 320, 514, -60]$[-1039, 320, 0, -60]$[-1039, 356, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8309,7 +8898,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.52"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.51"/>
             <bendpoints points="[-22, -24, 47, 53]$[-47, -52, 22, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
@@ -8320,7 +8909,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.53"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.52"/>
             <bendpoints
                 points="[25, 0, -486, -443]$[274, 0, -237, -443]$[274, 340, -237, -103]$[511, 340, 0, -103]$[511, 419, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8332,7 +8921,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.54"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.53"/>
             <bendpoints
                 points="[25, 13, -94, -304]$[119, 13, 0, -304]$[119, 293, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8344,7 +8933,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.55"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.54"/>
             <bendpoints
                 points="[0, 25, -153, -101]$[0, 126, -153, 0]$[129, 126, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8356,7 +8945,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.56"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.55"/>
             <bendpoints
                 points="[0, 25, -217, -101]$[0, 126, -217, 0]$[193, 126, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
@@ -8368,7 +8957,7 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.57"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.56"/>
             <bendpoints
                 points="[-337, 0, 380, -143]$[-717, 0, 0, -143]$[-717, 119, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
             <targetAnchor id="(0.3983739837398374,0.0)" xsi:type="notation:IdentityAnchor"/>
@@ -8381,9 +8970,9 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.58"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.57"/>
             <bendpoints
-                points="[-299, 199, 106, -70]$[-380, 253, 25, -16]" xsi:type="notation:RelativeBendpoints"/>
+                points="[0, 199, 405, -70]$[0, 226, 405, -43]$[-359, 226, 46, -43]$[-359, 246, 46, -23]$[-380, 246, 25, -23]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.11"
@@ -8393,9 +8982,100 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.59"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.58"/>
             <bendpoints
                 points="[-337, 0, 460, -143]$[-797, 0, 0, -143]$[-797, 119, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.23"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.44" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.59"/>
+            <bendpoints
+                points="[0, 25, 243, -79]$[0, 60, 243, -44]$[-254, 60, -11, -44]$[-254, 80, -11, -24]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.23"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.35" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.60"/>
+            <bendpoints points="[24, -24, 22, 360]$[24, -359, 22, 25]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.44"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.45" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.61"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.45"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.46" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.62"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.46"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.48" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.63"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.48"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.47" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.64"/>
+            <bendpoints points="[25, 0, -93, 0]$[94, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.47"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.35" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.65"/>
+            <bendpoints
+                points="[0, -24, 130, 464]$[0, -135, 130, 353]$[-130, -135, 0, 353]$[-130, -463, 0, 25]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.46"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.35" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.66"/>
+            <bendpoints
+                points="[24, -24, -44, 464]$[24, -244, -44, 244]$[68, -244, 0, 244]$[68, -463, 0, 25]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
@@ -8419,6 +9099,8 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1475582883860"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/CASE_Number"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/Integration_time_Parent"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1480490737874"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/json/1480499622861"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="jiraticketsubscriber"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="jiraticketsubscriber"/>
@@ -8700,6 +9382,26 @@
         <bpws:variable element="ns14:ActivityInput" name="Log3-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns14:ActivityInput" name="Log4-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns14:ActivityInput" name="Log5-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns50:RestActivityInput"
+            name="InvokeRESTAPI-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns51:RestActivityOutput"
+            name="InvokeRESTAPI" sca-bpel:internal="true"/>
+        <bpws:variable element="ns52:ActivityInputClass"
+            name="ParseJSON-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns53:Jira_status_UpdateElement"
+            name="ParseJSON" sca-bpel:internal="true"/>
+        <bpws:variable element="ns53:Jira_status_UpdateElement"
+            name="Mapper2-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns53:Jira_status_UpdateElement"
+            name="Mapper2" sca-bpel:internal="true"/>
+        <bpws:variable element="ns54:RestActivityInput"
+            name="InvokeRESTAPI1-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns55:RestActivityOutput"
+            name="InvokeRESTAPI1" sca-bpel:internal="true"/>
+        <bpws:variable element="ns56:JIRA_status_Update_PayloadElement"
+            name="RenderJSON-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns57:ActivityOutputClass"
+            name="RenderJSON" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -9222,8 +9924,6 @@
                                     <bpws:link
                                     name="UpdateParentIssueIDIssueLinkToChildCommentId's" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="ParentTicketResponseLogToChildCommentId's" tibex:linkType="SUCCESS"/>
-                                    <bpws:link
                                     name="ChildCommentId'sToRetrieveCommentIDs" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="SalesforceQueryAllToRetrieveAttachmentIDs" tibex:linkType="SUCCESS"/>
@@ -9265,6 +9965,22 @@
                                     name="Iterate1ToRetrieveAttachmentIDs" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
                                     name="Iterate1ToLog5" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    <bpws:link
+                                    name="ParentTicketResponseLogToInvokeRESTAPI" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    <bpws:link
+                                    name="ParentTicketResponseLogToChildCommentId's" tibex:linkType="SUCCESSWITHNOCONDITION"/>
+                                    <bpws:link
+                                    name="InvokeRESTAPIToParseJSON1" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="ParseJSONToMapper2" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Mapper2ToRenderJSON" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    <bpws:link
+                                    name="RenderJSONToInvokeRESTAPI11" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="InvokeRESTAPI1ToChildCommentId's" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Mapper2ToChildCommentId's" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -9627,9 +10343,9 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="$RetrieveComment-IDs/queryAllResponse/tns1:result/tns1:size > 0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$RetrieveComment-IDs/queryAllResponse/tns1:result/tns1:size > 0 or $ChildCommentIds/queryAllResponse/tns1:result/tns1:size>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$RetrieveComment-IDs/queryAllResponse/tns1:result/tns1:size > 0]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[$RetrieveComment-IDs/queryAllResponse/tns1:result/tns1:size > 0 or $ChildCommentIds/queryAllResponse/tns1:result/tns1:size>0]]></bpws:transitionCondition>
                                     </bpws:source>
 
                                     <bpws:source linkName="RetrieveCommentIDsToLog4">
@@ -9710,9 +10426,9 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="$RetrieveAttachment-IDs/queryAllResponse/tns1:result/tns1:size > 0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$RetrieveAttachment-IDs/queryAllResponse/tns1:result/tns1:size > 0 or $SalesforceQueryAll/queryAllResponse/tns1:result/tns1:size>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$RetrieveAttachment-IDs/queryAllResponse/tns1:result/tns1:size > 0]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[$RetrieveAttachment-IDs/queryAllResponse/tns1:result/tns1:size > 0 or $SalesforceQueryAll/queryAllResponse/tns1:result/tns1:size>0]]></bpws:transitionCondition>
                                     </bpws:source>
 
                                     <bpws:source linkName="RetrieveAttachmentIDsToLog2">
@@ -9856,7 +10572,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns2=&quot;http://www.example.org/SFCase&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1473685032806&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:param name=&quot;CreateJiraParentTicket&quot;/>&lt;xsl:param name=&quot;CreateJiraChildTicket&quot;/>&lt;xsl:param name=&quot;FaultDetails2&quot;/>&lt;xsl:param name=&quot;Comment_FaultVariable&quot;/>&lt;xsl:param name=&quot;Attachment_FaultVariable&quot;/>&lt;xsl:param name=&quot;ParseParentTicket-Response&quot;/>&lt;xsl:param name=&quot;Update-IntegrationTime&quot;/>&lt;xsl:param name=&quot;UpdateParentTicket&quot;/>&lt;xsl:param name=&quot;UpdateChildTicket&quot;/>&lt;xsl:template name=&quot;Update-SFQueue_Status-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($CaseRecord/tns2:SFQueueID)&quot;>&lt;xsl:value-of select=&quot;$CaseRecord/tns2:SFQueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Event_Message__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FaultDetails2/Data/*)&quot;>&lt;xsl:value-of select=&quot;$FaultDetails2/Data/*&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Event_Message__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns2=&quot;http://www.example.org/SFCase&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1473685032806&quot; xmlns:tns3=&quot;http://tns.tibco.com/bw/json/1480490737874&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:param name=&quot;CreateJiraParentTicket&quot;/>&lt;xsl:param name=&quot;CreateJiraChildTicket&quot;/>&lt;xsl:param name=&quot;FaultDetails2&quot;/>&lt;xsl:param name=&quot;Comment_FaultVariable&quot;/>&lt;xsl:param name=&quot;Attachment_FaultVariable&quot;/>&lt;xsl:param name=&quot;ParseParentTicket-Response&quot;/>&lt;xsl:param name=&quot;Update-IntegrationTime&quot;/>&lt;xsl:param name=&quot;UpdateParentTicket&quot;/>&lt;xsl:param name=&quot;UpdateChildTicket&quot;/>&lt;xsl:param name=&quot;Mapper2&quot;/>&lt;xsl:template name=&quot;Update-SFQueue_Status-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:choose>&lt;xsl:when test=&quot;$Mapper2/tns3:transitions[1]/tns3:id!='1'&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($CaseRecord/tns2:SFQueueID)&quot;>&lt;xsl:value-of select=&quot;$CaseRecord/tns2:SFQueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Event_Message__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FaultDetails2/Data/*)&quot;>&lt;xsl:value-of select=&quot;$FaultDetails2/Data/*&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Event_Message__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:sObjects>&lt;/xsl:when>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$Mapper2/tns3:transitions[1]/tns3:id='1'&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($CaseRecord/tns2:SFQueueID)&quot;>&lt;xsl:value-of select=&quot;$CaseRecord/tns2:SFQueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;It seems that you have tried to perform a workflow operation (Investigating) that is not valid for the current state of this issue (&amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot;). The likely cause is that somebody has changed the issue recently, please look at the issue history for details.&amp;quot;)&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:when>&lt;/xsl:choose>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Update-SFQueue_Status-input"
                                     name="Update SFQueue_Status"
@@ -9879,7 +10595,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns2=&quot;http://www.example.org/SFCase&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1473685032806&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:param name=&quot;CreateJiraParentTicket&quot;/>&lt;xsl:param name=&quot;CreateJiraChildTicket&quot;/>&lt;xsl:param name=&quot;FaultDetails2&quot;/>&lt;xsl:param name=&quot;Comment_FaultVariable&quot;/>&lt;xsl:param name=&quot;Attachment_FaultVariable&quot;/>&lt;xsl:param name=&quot;ParseParentTicket-Response&quot;/>&lt;xsl:param name=&quot;Update-IntegrationTime&quot;/>&lt;xsl:param name=&quot;UpdateParentTicket&quot;/>&lt;xsl:param name=&quot;UpdateChildTicket&quot;/>&lt;xsl:template name=&quot;Update-SFQueue_Status-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($CaseRecord/tns2:SFQueueID)&quot;>&lt;xsl:value-of select=&quot;$CaseRecord/tns2:SFQueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Event_Message__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FaultDetails2/Data/*)&quot;>&lt;xsl:value-of select=&quot;$FaultDetails2/Data/*&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Event_Message__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns2=&quot;http://www.example.org/SFCase&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1473685032806&quot; xmlns:tns3=&quot;http://tns.tibco.com/bw/json/1480490737874&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:param name=&quot;CreateJiraParentTicket&quot;/>&lt;xsl:param name=&quot;CreateJiraChildTicket&quot;/>&lt;xsl:param name=&quot;FaultDetails2&quot;/>&lt;xsl:param name=&quot;Comment_FaultVariable&quot;/>&lt;xsl:param name=&quot;Attachment_FaultVariable&quot;/>&lt;xsl:param name=&quot;ParseParentTicket-Response&quot;/>&lt;xsl:param name=&quot;Update-IntegrationTime&quot;/>&lt;xsl:param name=&quot;UpdateParentTicket&quot;/>&lt;xsl:param name=&quot;UpdateChildTicket&quot;/>&lt;xsl:param name=&quot;Mapper2&quot;/>&lt;xsl:template name=&quot;Update-SFQueue_Status-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;xsl:choose>&lt;xsl:when test=&quot;$Mapper2/tns3:transitions[1]/tns3:id!='1'&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($CaseRecord/tns2:SFQueueID)&quot;>&lt;xsl:value-of select=&quot;$CaseRecord/tns2:SFQueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Updated Parent Ticket fields in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$ParseParentTicket-Response/tns1:key,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;Created Parent Ticket in Jira : &amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot; : &amp;quot;,$Attachment_FaultVariable,&amp;quot; : &amp;quot;,$Comment_FaultVariable)&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/ns:Event_Message__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Event_Message__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($FaultDetails2/Data/*)&quot;>&lt;xsl:value-of select=&quot;$FaultDetails2/Data/*&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Event_Message__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) =0  and string-length($Attachment_FaultVariable) = 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) =0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) = 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraParentTicket/statusCode=201 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Engineering' and $CaseRecord/tns2:JiraTicketID!='New' and $UpdateParentTicket/statusCode=204 and string-length($Comment_FaultVariable) != 0 and string-length($Attachment_FaultVariable) != 0 or $Update-IntegrationTime/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and $CaseRecord/tns2:JiraTicketID='New' and $CreateJiraChildTicket/statusCode=201&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:when test=&quot;$CaseRecord/tns2:CaseRecordType='Pictometry' and  $CaseRecord/tns2:JiraTicketID!='New'   and $UpdateChildTicket/statusCode=204&quot;>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:when>&lt;xsl:otherwise>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:sObjects>&lt;/xsl:when>&lt;/xsl:choose>&lt;xsl:choose>&lt;xsl:when test=&quot;$Mapper2/tns3:transitions[1]/tns3:id='1'&quot;>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($CaseRecord/tns2:SFQueueID)&quot;>&lt;xsl:value-of select=&quot;$CaseRecord/tns2:SFQueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat(&amp;quot;It seems that you have tried to perform a workflow operation (Investigating) that is not valid for the current state of this issue (&amp;quot;,$CaseRecord/tns2:JiraTicketID,&amp;quot;). The likely cause is that somebody has changed the issue recently, please look at the issue history for details.&amp;quot;)&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/xsl:when>&lt;/xsl:choose>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -11450,7 +12166,23 @@
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="ParentTicketResponseLogToChildCommentId's"/>
+                                    <bpws:source linkName="ParentTicketResponseLogToInvokeRESTAPI">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$CaseRecord/tns:Engineering_status__c='Pending CTS' and $CaseRecord/tns:Engineering_Open__c='true'" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$CaseRecord/tns:Engineering_status__c='Pending CTS' and $CaseRecord/tns:Engineering_Open__c='true']]></bpws:transitionCondition>
+                                    </bpws:source>
+
+                                    <bpws:source linkName="ParentTicketResponseLogToChildCommentId's">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="##otherwise##" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -12016,9 +12748,13 @@
 
                                     <bpws:target linkName="UpdateParentIssueIDIssueLinkToChildCommentId's"/>
 
+                                    <bpws:target linkName="Mapper1ToChildCommentId's"/>
+
                                     <bpws:target linkName="ParentTicketResponseLogToChildCommentId's"/>
 
-                                    <bpws:target linkName="Mapper1ToChildCommentId's"/>
+                                    <bpws:target linkName="InvokeRESTAPI1ToChildCommentId's"/>
+
+                                    <bpws:target linkName="Mapper2ToChildCommentId's"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
@@ -12442,6 +13178,261 @@
                                     <value
                                     role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFCase&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:PathParameters>&lt;id>&lt;xsl:value-of select=&quot;$CaseRecord/tns1:JiraTicketID&quot;/>&lt;/id>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="InvokeRESTAPI-input"
+                                    name="InvokeRESTAPI"
+                                    outputVariable="InvokeRESTAPI"
+                                    tibex:xpdlId="963215af-ceec-46ea-ad39-01970019c7c5" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="ParentTicketResponseLogToInvokeRESTAPI"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="InvokeRESTAPIToParseJSON1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+963215af-ceec-46ea-ad39-01970019c7c5+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFCase&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:PathParameters>&lt;id>&lt;xsl:value-of select=&quot;$CaseRecord/tns1:JiraTicketID&quot;/>&lt;/id>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="httpClientResource"
+                                    requestContentType="JSON"
+                                    resourcePath="/rest/api/2/issue/{id}/transitions"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+a5c8c1a0-7db0-4100-be81-6427c9129f2f+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;InvokeRESTAPI&quot;/>&lt;xsl:template name=&quot;ParseJSON-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$InvokeRESTAPI/MessageBody/asciiContent&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="ParseJSON-input"
+                                    name="ParseJSON"
+                                    outputVariable="ParseJSON"
+                                    tibex:xpdlId="a5c8c1a0-7db0-4100-be81-6427c9129f2f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="InvokeRESTAPIToParseJSON1"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="ParseJSONToMapper2"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;activity.jsonParser.input+a5c8c1a0-7db0-4100-be81-6427c9129f2f+ActivityInputType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;InvokeRESTAPI&quot;/>&lt;xsl:template name=&quot;ParseJSON-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInputClass>&lt;jsonString>&lt;xsl:value-of select=&quot;$InvokeRESTAPI/MessageBody/asciiContent&quot;/>&lt;/jsonString>&lt;/tns:ActivityInputClass>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonParser"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonParser"/>
+
+                                    <value
+                                    jsonInputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonParser">
+
+                                    <outputEditorElement href="platform:/resource/CasesIntegration/Schemas/Jira_status_UpdateResource.xsd#//Jira_status_UpdateElement;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1480490737874&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ParseJSON&quot;/>&lt;xsl:template name=&quot;Mapper2-input&quot; match=&quot;/&quot;>&lt;xsl:for-each select=&quot;$ParseJSON&quot;>&lt;xsl:choose>&lt;xsl:when test=&quot;tns:transitions[1]/tns:name='Investigating'&amp;#xD;&amp;#xA;&quot;>&lt;tns:Jira_status_UpdateElement>&lt;tns:transitions>&lt;xsl:if test=&quot;tns:transitions[1]/tns:id&quot;>&lt;tns:id>&lt;xsl:value-of select=&quot;tns:transitions[1]/tns:id&quot;/>&lt;/tns:id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:transitions[1]/tns:name&quot;>&lt;tns:name>&lt;xsl:value-of select=&quot;tns:transitions[1]/tns:name&quot;/>&lt;/tns:name>&lt;/xsl:if>&lt;/tns:transitions>&lt;/tns:Jira_status_UpdateElement>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:Jira_status_UpdateElement>&lt;tns:transitions>&lt;tns:id>&lt;xsl:value-of select=&quot;1&quot;/>&lt;/tns:id>&lt;/tns:transitions>&lt;/tns:Jira_status_UpdateElement>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/xsl:for-each>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Mapper2-input"
+                                    name="Mapper2"
+                                    outputVariable="Mapper2"
+                                    tibex:xpdlId="849f35cf-2c9c-44da-8c4d-d839ed5c2d48" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="ParseJSONToMapper2"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="Mapper2ToRenderJSON">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$Mapper2/ns53:transitions[1]/ns53:id!='1'" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$Mapper2/ns53:transitions[1]/ns53:id!='1']]></bpws:transitionCondition>
+                                    </bpws:source>
+
+                                    <bpws:source linkName="Mapper2ToChildCommentId's">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$Mapper2/ns53:transitions[1]/ns53:id='1'" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$Mapper2/ns53:transitions[1]/ns53:id='1']]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1480490737874&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ParseJSON&quot;/>&lt;xsl:template name=&quot;Mapper2-input&quot; match=&quot;/&quot;>&lt;xsl:for-each select=&quot;$ParseJSON&quot;>&lt;xsl:choose>&lt;xsl:when test=&quot;tns:transitions[1]/tns:name='Investigating'&amp;#xD;&amp;#xA;&quot;>&lt;tns:Jira_status_UpdateElement>&lt;tns:transitions>&lt;xsl:if test=&quot;tns:transitions[1]/tns:id&quot;>&lt;tns:id>&lt;xsl:value-of select=&quot;tns:transitions[1]/tns:id&quot;/>&lt;/tns:id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:transitions[1]/tns:name&quot;>&lt;tns:name>&lt;xsl:value-of select=&quot;tns:transitions[1]/tns:name&quot;/>&lt;/tns:name>&lt;/xsl:if>&lt;/tns:transitions>&lt;/tns:Jira_status_UpdateElement>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:Jira_status_UpdateElement>&lt;tns:transitions>&lt;tns:id>&lt;xsl:value-of select=&quot;1&quot;/>&lt;/tns:id>&lt;/tns:transitions>&lt;/tns:Jira_status_UpdateElement>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/xsl:for-each>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.mapper"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities"
+                                    xmlns:json_1480490737874="http://tns.tibco.com/bw/json/1480490737874" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
+
+                                    <value
+                                    inputQName="json_1480490737874:Jira_status_UpdateElement" xsi:type="generalactivities:Mapper"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFCase&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI1-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:QueryParameters>&lt;expand>&lt;xsl:value-of select=&quot;&amp;quot;transitions.fields&amp;quot;&quot;/>&lt;/expand>&lt;/tns:QueryParameters>&lt;tns:PathParameters>&lt;id>&lt;xsl:value-of select=&quot;$CaseRecord/tns1:JiraTicketID&quot;/>&lt;/id>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="InvokeRESTAPI1-input"
+                                    name="InvokeRESTAPI1"
+                                    outputVariable="InvokeRESTAPI1"
+                                    tibex:xpdlId="626fc0de-a7fd-420f-9728-c63b215890f8" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="RenderJSONToInvokeRESTAPI11"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="InvokeRESTAPI1ToChildCommentId's"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+626fc0de-a7fd-420f-9728-c63b215890f8+RestInvokeInput&quot; xmlns:tns1=&quot;http://www.example.org/SFCase&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;CaseRecord&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI1-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:QueryParameters>&lt;expand>&lt;xsl:value-of select=&quot;&amp;quot;transitions.fields&amp;quot;&quot;/>&lt;/expand>&lt;/tns:QueryParameters>&lt;tns:PathParameters>&lt;id>&lt;xsl:value-of select=&quot;$CaseRecord/tns1:JiraTicketID&quot;/>&lt;/id>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="httpClientResource"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    resourcePath="/rest/api/2/issue/{id}/transitions?expand"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1480490737874&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1480499622861&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper2&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:JIRA_status_Update_PayloadElement>&lt;tns1:transition>&lt;xsl:if test=&quot;$Mapper2/tns:transitions[1]/tns:id&quot;>&lt;tns1:id>&lt;xsl:value-of select=&quot;$Mapper2/tns:transitions[1]/tns:id&quot;/>&lt;/tns1:id>&lt;/xsl:if>&lt;/tns1:transition>&lt;/tns1:JIRA_status_Update_PayloadElement>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="RenderJSON-input"
+                                    name="RenderJSON"
+                                    outputVariable="RenderJSON"
+                                    tibex:xpdlId="ad38a96b-1714-4a32-a3fa-65420a5d1cb7" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="Mapper2ToRenderJSON"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="RenderJSONToInvokeRESTAPI11"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1480490737874&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1480499622861&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper2&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns1:JIRA_status_Update_PayloadElement>&lt;tns1:transition>&lt;xsl:if test=&quot;$Mapper2/tns:transitions[1]/tns:id&quot;>&lt;tns1:id>&lt;xsl:value-of select=&quot;$Mapper2/tns:transitions[1]/tns:id&quot;/>&lt;/tns1:id>&lt;/xsl:if>&lt;/tns1:transition>&lt;/tns1:JIRA_status_Update_PayloadElement>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+
+                                    <inputEditorElement href="platform:/resource/CasesIntegration/Schemas/JIRA_status_Update_PayloadResource.xsd#//JIRA_status_Update_PayloadElement;XSDElementDeclaration"/>
+                                    </value>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
