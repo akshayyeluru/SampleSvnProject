@@ -3582,7 +3582,7 @@
                                     <bpws:link
                                     name="InvokeRESTAPIToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="NSContactUpsertToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    name="NSContactUpsertToSalesforceUpdateAll" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -3626,7 +3626,14 @@
                                     <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:EventType="Create"]]></bpws:transitionCondition>
                                     </bpws:source>
 
-                                    <bpws:source linkName="NSContactUpsertToSalesforceUpdateAll"/>
+                                    <bpws:source linkName="NSContactUpsertToSalesforceUpdateAll">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$ContactIteration/ns1:sfQueueId!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:sfQueueId!=""]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
