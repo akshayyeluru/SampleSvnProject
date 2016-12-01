@@ -28,9 +28,9 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "a string to be returned",
+            "description" : "a OppAccountList to be returned",
             "schema" : {
-              "type" : "string"
+              "$ref" : "#/definitions/OppAccountList"
             }
           }
         }
@@ -38,11 +38,44 @@
     }
   },
   "definitions" : {
+    "OppAccount" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "NetsuiteID" : {
+          "type" : "string"
+        },
+        "SFID" : {
+          "type" : "string"
+        },
+        "StatusMessage" : {
+          "type" : "string"
+        },
+        "ShippingCountry" : {
+          "type" : "string"
+        },
+        "ShippingCity" : {
+          "type" : "string"
+        },
+        "ShippingState" : {
+          "type" : "string"
+        },
+        "ShippingZip" : {
+          "type" : "string"
+        },
+        "ShippingStreet" : {
+          "type" : "string"
+        }
+      }
+    },
     "SFContact" : {
       "type" : "object",
       "required" : [ ],
       "properties" : {
         "sfId" : {
+          "type" : "string"
+        },
+        "SubsidiaryContactID" : {
           "type" : "string"
         },
         "AccountId" : {
@@ -96,6 +129,9 @@
         "Subsidiary" : {
           "type" : "string"
         },
+        "SubsidiaryName" : {
+          "type" : "string"
+        },
         "OtherState" : {
           "type" : "string"
         },
@@ -134,6 +170,22 @@
         },
         "OtherEmail" : {
           "type" : "string"
+        },
+        "EventType" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OppAccountList" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "OppAccount" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OppAccount",
+            "uniqueItems" : false
+          }
         }
       }
     },

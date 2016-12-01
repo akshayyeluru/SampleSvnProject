@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:platformCommon="urn:common_2015_1.platform.webservices.netsuite.com" xmlns:platformCommonTyp="urn:types.common_2015_1.platform.webservices.netsuite.com" xmlns:platformCore="urn:core_2015_1.platform.webservices.netsuite.com" xmlns:platformCoreTyp="urn:types.core_2015_1.platform.webservices.netsuite.com" xmlns:tranPurch="urn:purchases_2015_1.transactions.webservices.netsuite.com" xmlns:tranPurchTyp="urn:types.purchases_2015_1.transactions.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:purchases_2015_1.transactions.webservices.netsuite.com">
+  <import namespace="urn:core_2015_1.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
+  <import namespace="urn:common_2015_1.platform.webservices.netsuite.com" schemaLocation="common.xsd"/>
+  <import namespace="urn:types.common_2015_1.platform.webservices.netsuite.com" schemaLocation="commonTypes.xsd"/>
+  <import namespace="urn:types.purchases_2015_1.transactions.webservices.netsuite.com" schemaLocation="purchaseTypes.xsd"/>
+  <complexType name="PurchLandedCostList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="landedCost" type="platformCommon:LandedCostSummary"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--vendorBill/start-->
+  <element name="VendorBill" type="tranPurch:VendorBill"/>
+  <complexType name="VendorBill">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="approvalStatus" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="nextApprover" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="vatRegNum" type="xsd:string"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="terms" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="dueDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="discountDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="userTotal" type="xsd:double"/>
+          <element minOccurs="0" name="discountAmount" type="xsd:double"/>
+          <element minOccurs="0" name="taxTotal" type="xsd:double"/>
+          <element minOccurs="0" name="paymentHold" type="xsd:boolean"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="tax2Total" type="xsd:double"/>
+          <element minOccurs="0" name="creditLimit" type="xsd:double"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="landedCostMethod" type="platformCommonTyp:LandedCostMethod"/>
+          <element minOccurs="0" name="landedCostPerLine" type="xsd:boolean"/>
+          <element minOccurs="0" name="transactionNumber" type="xsd:string"/>
+          <element minOccurs="0" name="expenseList" type="tranPurch:VendorBillExpenseList"/>
+          <element minOccurs="0" name="itemList" type="tranPurch:VendorBillItemList"/>
+          <element minOccurs="0" name="landedCostsList" type="tranPurch:PurchLandedCostList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+          <element minOccurs="0" name="purchaseOrderList" type="platformCore:RecordRefList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="VendorBillExpense">
+    <sequence>
+      <element minOccurs="0" name="orderDoc" type="xsd:long"/>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="category" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="amortizationSched" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amortizStartDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationEndDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationResidual" type="xsd:string"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorBillExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="expense" type="tranPurch:VendorBillExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="VendorBillItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="vendorName" type="xsd:string"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="orderDoc" type="xsd:long"/>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="expirationDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="landedCostCategory" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="billVarianceStatus" type="tranPurchTyp:TransactionBillVarianceStatus"/>
+      <element minOccurs="0" name="billreceiptsList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="amortizationSched" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amortizStartDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationEndDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationResidual" type="xsd:string"/>
+      <element minOccurs="0" name="landedCost" type="platformCommon:LandedCost"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorBillItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranPurch:VendorBillItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--vendorBill/end-->
+  <!--purchaseOrder/start-->
+  <element name="PurchaseOrder" type="tranPurch:PurchaseOrder"/>
+  <complexType name="PurchaseOrder">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="purchaseContract" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="vatRegNum" type="xsd:string"/>
+          <element minOccurs="0" name="employee" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="supervisorApproval" type="xsd:boolean"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="terms" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="dueDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="otherRefNum" type="xsd:string"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="approvalStatus" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="nextApprover" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="source" type="xsd:string"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="toBePrinted" type="xsd:boolean"/>
+          <element minOccurs="0" name="toBeEmailed" type="xsd:boolean"/>
+          <element minOccurs="0" name="email" type="xsd:string"/>
+          <element minOccurs="0" name="toBeFaxed" type="xsd:boolean"/>
+          <element minOccurs="0" name="fax" type="xsd:string"/>
+          <element minOccurs="0" name="message" type="xsd:string"/>
+          <element minOccurs="0" name="billingAddress" type="platformCommon:Address"/>
+          <element minOccurs="0" name="billAddressList" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="shipTo" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subTotal" type="xsd:double"/>
+          <element minOccurs="0" name="taxTotal" type="xsd:double"/>
+          <element minOccurs="0" name="tax2Total" type="xsd:double"/>
+          <element minOccurs="0" name="shippingAddress" type="platformCommon:Address"/>
+          <element minOccurs="0" name="shipIsResidential" type="xsd:boolean"/>
+          <element minOccurs="0" name="shipAddressList" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="fob" type="xsd:string"/>
+          <element minOccurs="0" name="shipDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="shipMethod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="trackingNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="linkedTrackingNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="intercoTransaction" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="intercoStatus" type="platformCommonTyp:IntercoStatus"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="orderStatus" type="tranPurchTyp:PurchaseOrderOrderStatus"/>
+          <element minOccurs="0" name="itemList" type="tranPurch:PurchaseOrderItemList"/>
+          <element minOccurs="0" name="expenseList" type="tranPurch:PurchaseOrderExpenseList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="PurchaseOrderExpense">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="category" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="linkedOrderList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isClosed" type="xsd:boolean"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="PurchaseOrderExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="expense" type="tranPurch:PurchaseOrderExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="PurchaseOrderItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="vendorName" type="xsd:string"/>
+      <element minOccurs="0" name="quantityReceived" type="xsd:double"/>
+      <element minOccurs="0" name="quantityBilled" type="xsd:double"/>
+      <element minOccurs="0" name="quantityAvailable" type="xsd:double"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="purchaseContract" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="landedCostCategory" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="billVarianceStatus" type="tranPurchTyp:TransactionBillVarianceStatus"/>
+      <element minOccurs="0" name="matchBillToReceipt" type="xsd:boolean"/>
+      <element minOccurs="0" name="expectedReceiptDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="isClosed" type="xsd:boolean"/>
+      <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="linkedOrderList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="PurchaseOrderItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranPurch:PurchaseOrderItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--purchaseOrder/end-->
+  <!--itemReceipt/start-->
+  <element name="ItemReceipt" type="tranPurch:ItemReceipt"/>
+  <complexType name="ItemReceipt">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="partner" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="landedCostMethod" type="platformCommonTyp:LandedCostMethod"/>
+          <element minOccurs="0" name="landedCostPerLine" type="xsd:boolean"/>
+          <element minOccurs="0" name="itemList" type="tranPurch:ItemReceiptItemList"/>
+          <element minOccurs="0" name="expenseList" type="tranPurch:ItemReceiptExpenseList"/>
+          <element minOccurs="0" name="landedCostsList" type="tranPurch:PurchLandedCostList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ItemReceiptItem">
+    <sequence>
+      <element minOccurs="0" name="itemReceive" type="xsd:boolean"/>
+      <element minOccurs="0" name="jobName" type="xsd:string"/>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="itemName" type="xsd:string"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="onHand" type="xsd:double"/>
+      <element minOccurs="0" name="quantityRemaining" type="xsd:double"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="unitsDisplay" type="xsd:string"/>
+      <element minOccurs="0" name="unitCostOverride" type="xsd:double"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="expirationDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="currency" type="xsd:string"/>
+      <element minOccurs="0" name="restock" type="xsd:boolean"/>
+      <element minOccurs="0" name="billVarianceStatus" type="tranPurchTyp:TransactionBillVarianceStatus"/>
+      <element minOccurs="0" name="isDropShipment" type="xsd:boolean"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="landedCost" type="platformCommon:LandedCost"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="ItemReceiptItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranPurch:ItemReceiptItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="ItemReceiptExpense">
+    <sequence>
+      <element minOccurs="0" name="markReceived" type="xsd:boolean"/>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="account" type="xsd:string"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="ItemReceiptExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="expense" type="tranPurch:ItemReceiptExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--itemReceipt/end-->
+  <element name="vendorPayment" type="tranPurch:VendorPayment"/>
+  <complexType name="VendorPayment">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="balance" type="xsd:double"/>
+          <element minOccurs="0" name="apAcct" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="address" type="xsd:string"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="voidJournal" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="toAch" type="xsd:boolean"/>
+          <element minOccurs="0" name="toBePrinted" type="xsd:boolean"/>
+          <element minOccurs="0" name="printVoucher" type="xsd:boolean"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="transactionNumber" type="xsd:string"/>
+          <element minOccurs="0" name="applyList" type="tranPurch:VendorPaymentApplyList"/>
+          <element minOccurs="0" name="creditList" type="tranPurch:VendorPaymentCreditList"/>
+          <element minOccurs="0" name="billPay" type="xsd:boolean"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="VendorPaymentApply">
+    <sequence>
+      <element minOccurs="0" name="apply" type="xsd:boolean"/>
+      <element minOccurs="0" name="doc" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="job" type="xsd:string"/>
+      <element minOccurs="0" name="applyDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="type" type="xsd:string"/>
+      <element minOccurs="0" name="refNum" type="xsd:string"/>
+      <element minOccurs="0" name="total" type="xsd:double"/>
+      <element minOccurs="0" name="due" type="xsd:double"/>
+      <element minOccurs="0" name="currency" type="xsd:string"/>
+      <element minOccurs="0" name="discDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="discAmt" type="xsd:double"/>
+      <element minOccurs="0" name="disc" type="xsd:double"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorPaymentApplyList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="apply" type="tranPurch:VendorPaymentApply"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="VendorPaymentCredit">
+    <sequence>
+      <element minOccurs="0" name="apply" type="xsd:boolean"/>
+      <element minOccurs="0" name="doc" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="creditDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="type" type="xsd:string"/>
+      <element minOccurs="0" name="refNum" type="xsd:string"/>
+      <element minOccurs="0" name="appliedTo" type="xsd:string"/>
+      <element minOccurs="0" name="total" type="xsd:double"/>
+      <element minOccurs="0" name="due" type="xsd:double"/>
+      <element minOccurs="0" name="currency" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorPaymentCreditList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="credit" type="tranPurch:VendorPaymentCredit"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--vendorCredit/start-->
+  <element name="vendorCredit" type="tranPurch:VendorCredit"/>
+  <complexType name="VendorCredit">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="unApplied" type="xsd:double"/>
+          <element minOccurs="0" name="autoApply" type="xsd:boolean"/>
+          <element minOccurs="0" name="applied" type="xsd:double"/>
+          <element minOccurs="0" name="transactionNumber" type="xsd:string"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="userTotal" type="xsd:double"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="expenseList" type="tranPurch:VendorCreditExpenseList"/>
+          <element minOccurs="0" name="itemList" type="tranPurch:VendorCreditItemList"/>
+          <element minOccurs="0" name="applyList" type="tranPurch:VendorCreditApplyList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="VendorCreditExpense">
+    <sequence>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="category" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="amortizationSched" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amortizStartDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationEndDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationResidual" type="xsd:string"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorCreditExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="expense" type="tranPurch:VendorCreditExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="VendorCreditItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="vendorName" type="xsd:string"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="serialNumbersList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="amortizationSched" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amortizStartDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationEndDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationResidual" type="xsd:string"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorCreditItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranPurch:VendorCreditItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="VendorCreditApply">
+    <sequence>
+      <element minOccurs="0" name="apply" type="xsd:boolean"/>
+      <element minOccurs="0" name="applyDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="doc" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="type" type="xsd:string"/>
+      <element minOccurs="0" name="refNum" type="xsd:string"/>
+      <element minOccurs="0" name="total" type="xsd:double"/>
+      <element minOccurs="0" name="due" type="xsd:double"/>
+      <element minOccurs="0" name="currency" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorCreditApplyList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="apply" type="tranPurch:VendorCreditApply"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--vendorCredit/end-->
+  <!--vendorReturnAuthorization/start-->
+  <element name="vendorReturnAuthorization" type="tranPurch:VendorReturnAuthorization"/>
+  <complexType name="VendorReturnAuthorization">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="orderStatus" type="tranPurchTyp:VendorReturnAuthorizationOrderStatus"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="userTotal" type="xsd:double"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="intercoTransaction" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="intercoStatus" type="platformCommonTyp:IntercoStatus"/>
+          <element minOccurs="0" name="expenseList" type="tranPurch:VendorReturnAuthorizationExpenseList"/>
+          <element minOccurs="0" name="itemList" type="tranPurch:VendorReturnAuthorizationItemList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="VendorReturnAuthorizationExpense">
+    <sequence>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="category" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="amortizationSched" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amortizStartDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationEndDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationResidual" type="xsd:string"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorReturnAuthorizationExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="expense" type="tranPurch:VendorReturnAuthorizationExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="VendorReturnAuthorizationItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="vendorName" type="xsd:string"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="orderLine" type="xsd:long"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="serialNumbersList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="isClosed" type="xsd:boolean"/>
+      <element minOccurs="0" name="amortizationSched" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isDropShipment" type="xsd:boolean"/>
+      <element minOccurs="0" name="amortizStartDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationEndDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="amortizationResidual" type="xsd:string"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="VendorReturnAuthorizationItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranPurch:VendorReturnAuthorizationItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--vendorReturnAuthorization/end-->
+  <element name="purchaseRequisition" type="tranPurch:PurchaseRequisition"/>
+  <complexType name="PurchaseRequisition">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="source" type="xsd:string"/>
+          <element minOccurs="0" name="subTotal" type="xsd:double"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="vatRegNum" type="xsd:string"/>
+          <element minOccurs="0" name="nexus" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="taxRegNum" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="taxRegOverride" type="xsd:boolean"/>
+          <element minOccurs="0" name="estimatedTotal" type="xsd:double"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="dueDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="approvalStatus" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="nextApprover" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="taxTotal" type="xsd:double"/>
+          <element minOccurs="0" name="tax2Total" type="xsd:double"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="itemList" type="tranPurch:PurchaseRequisitionItemList"/>
+          <element minOccurs="0" name="expenseList" type="tranPurch:PurchaseRequisitionExpenseList"/>
+          <element minOccurs="0" name="accountingBookDetailList" type="tranPurch:PurchaseRequisitionAccountingBookDetailList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="PurchaseRequisitionExpense">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="category" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isClosed" type="xsd:boolean"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="poVendor" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="estimatedAmount" type="xsd:double"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="linkedOrderList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="linkedOrderStatus" type="xsd:string"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+    </sequence>
+  </complexType>
+  <complexType name="PurchaseRequisitionExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="purchaseRequisitionExpense" type="tranPurch:PurchaseRequisitionExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="PurchaseRequisitionItem">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="vendorName" type="xsd:string"/>
+      <element minOccurs="0" name="poVendor" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="estimatedRate" type="xsd:double"/>
+      <element minOccurs="0" name="estimatedAmount" type="xsd:double"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="linkedOrderList" type="platformCore:RecordRefList"/>
+      <element minOccurs="0" name="linkedOrderStatus" type="xsd:string"/>
+      <element minOccurs="0" name="expectedReceiptDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="isClosed" type="xsd:boolean"/>
+      <element minOccurs="0" name="expandItemGroup" type="xsd:boolean"/>
+    </sequence>
+  </complexType>
+  <complexType name="PurchaseRequisitionItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="purchaseRequisitionItem" type="tranPurch:PurchaseRequisitionItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="PurchaseRequisitionAccountingBookDetail">
+    <sequence>
+      <element minOccurs="0" name="accountingBook" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="PurchaseRequisitionAccountingBookDetailList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="purchaseRequisitionAccountingBookDetail" type="tranPurch:PurchaseRequisitionAccountingBookDetail"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+</schema>
