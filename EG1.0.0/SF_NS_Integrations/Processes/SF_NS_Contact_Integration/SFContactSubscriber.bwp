@@ -8,13 +8,19 @@
     xmlns:ns="http://xmlns.example.com/20160908130902PLT"
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
     xmlns:ns1="http://www.eagleview.com/SFContactList"
+    xmlns:ns10="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeInput"
+    xmlns:ns11="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeOutput"
     xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+697e712f-8dd7-4a96-ac22-a23d3805512b+input"
     xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+697e712f-8dd7-4a96-ac22-a23d3805512b+output"
     xmlns:ns4="urn:partner.soap.sforce.com_updateAllInput"
     xmlns:ns5="urn:partner.soap.sforce.com_updateAllOutput"
     xmlns:ns6="http://www.tibco.com/pe/WriteToLogActivitySchema"
+    xmlns:ns7="http://www.example.org/OppAccountMapper"
+    xmlns:ns8="http://tns.tibco.com/bw/json/1475841704045"
+    xmlns:ns9="activity.jsonRender.output+82675faa-8072-4ea1-957a-f299e2a5a6b7+ActivityOutputType"
     xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
     xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
+    xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
     xmlns:tibprop="http://ns.tibco.com/bw/property"
     xmlns:tns="urn:sobject.partner.soap.sforce.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -1351,9 +1357,166 @@
             </xs:complexType>
             <xs:element name="ActivityInput" type="tns:LogParametersType"/>
         </xs:schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+82675faa-8072-4ea1-957a-f299e2a5a6b7+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+82675faa-8072-4ea1-957a-f299e2a5a6b7+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:PathParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="PathParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1"
+                            name="ProfileId" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20160908130902PLT"
             xmlns:custom="http://www.eagleview.com/SFContactList"
+            xmlns:custom1="http://www.example.org/OppAccountMapper"
             xmlns:extns1="http://tns.tibco.com/bw/REST"
             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
             xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
@@ -1365,13 +1528,14 @@
             </plnk:partnerLinkType>
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
             <wsdl:import namespace="http://www.eagleview.com/SFContactList"/>
+            <wsdl:import namespace="http://www.example.org/OppAccountMapper"/>
             <wsdl:message name="postRequest">
                 <wsdl:part element="custom:SFContactList" name="item"/>
                 <wsdl:part element="extns1:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
             </wsdl:message>
             <wsdl:message name="postResponse">
-                <wsdl:part name="item" type="xsd:string"/>
+                <wsdl:part element="custom1:OppAccountList" name="item"/>
             </wsdl:message>
             <wsdl:message name="post4XXFaultMessage">
                 <wsdl:part element="extns1:client4XXError" name="clientError"/>
@@ -1602,7 +1766,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="634"
+                                    x="815"
                                     xsi:type="notation:Bounds" y="192"/>
                                     </children>
 
@@ -1816,6 +1980,114 @@
                                     xsi:type="notation:Bounds" y="-16"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.5"/>
+
+                                    <layoutConstraint
+                                    x="262"
+                                    xsi:type="notation:Bounds" y="-16"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.6"/>
+
+                                    <layoutConstraint
+                                    x="356"
+                                    xsi:type="notation:Bounds" y="-8"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1839,8 +2111,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity"/>
 
                                     <layoutConstraint
-                                    height="228"
-                                    width="337" xsi:type="notation:Bounds"/>
+                                    height="251"
+                                    width="510" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1861,8 +2133,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="216"
-                                    width="340"
+                                    height="251"
+                                    width="513"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -2146,6 +2418,60 @@
                                     xsi:type="notation:Bounds" y="29"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    x="219"
+                                    xsi:type="notation:Bounds" y="29"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2170,7 +2496,7 @@
 
                                     <layoutConstraint
                                     height="168"
-                                    width="259" xsi:type="notation:Bounds"/>
+                                    width="432" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2234,9 +2560,63 @@
 
                                     <layoutConstraint
                                     height="472"
-                                    width="380"
+                                    width="553"
                                     x="71"
                                     xsi:type="notation:Bounds" y="27"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.3"/>
+
+                                    <layoutConstraint
+                                    x="652"
+                                    xsi:type="notation:Bounds" y="120"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -2263,7 +2643,7 @@
 
                                     <layoutConstraint
                                     height="509"
-                                    width="597" xsi:type="notation:Bounds"/>
+                                    width="785" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2285,7 +2665,7 @@
 
                                     <layoutConstraint
                                     height="509"
-                                    width="540"
+                                    width="788"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
                                     </children>
@@ -2429,7 +2809,7 @@
 
                                     <layoutConstraint
                                     height="553"
-                                    width="580"
+                                    width="828"
                                     x="7"
                                     xsi:type="notation:Bounds" y="89"/>
                                     </children>
@@ -2520,7 +2900,7 @@
 
                                     <layoutConstraint
                                     height="652"
-                                    width="783" xsi:type="notation:Bounds"/>
+                                    width="971" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2542,7 +2922,7 @@
 
                                     <layoutConstraint
                                     height="652"
-                                    width="660"
+                                    width="974"
                                     x="15" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2558,7 +2938,7 @@
 
                                     <layoutConstraint
                                     height="676"
-                                    width="700" xsi:type="notation:Bounds"/>
+                                    width="1014" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -2622,7 +3002,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0"/>
                                     <layoutConstraint
                                     height="695"
-                                    width="762"
+                                    width="1076"
                                     x="2" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2635,7 +3015,8 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="725" width="907" xsi:type="notation:Bounds"/>
+                                    height="725"
+                                    width="1095" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2650,7 +3031,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
                                     <layoutConstraint height="735"
-                                    width="917" xsi:type="notation:Bounds"/>
+                                    width="1105" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
                                 <styles xsi:type="notation:FilteringStyle"/>
@@ -2660,7 +3041,7 @@
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="735" width="920" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="735" width="1108" xsi:type="notation:Bounds"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -2670,7 +3051,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="759" width="920" x="1"
+                    <layoutConstraint height="759" width="1108" x="1"
                         xsi:type="notation:Bounds" y="1"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
@@ -2679,7 +3060,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="811" width="1262" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="811" width="1450" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -2718,7 +3099,7 @@
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
             </children>
@@ -2726,6 +3107,7 @@
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
             <bendpoints points="[173, 16, -112, -11]$[273, 25, -12, -2]" xsi:type="notation:RelativeBendpoints"/>
+            <targetAnchor id="(0.23577235772357724,0.5466666666666666)" xsi:type="notation:IdentityAnchor"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
@@ -2737,17 +3119,6 @@
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.2"/>
             <bendpoints points="[25, 19, -48, -37]$[49, 37, -24, -19]" xsi:type="notation:RelativeBendpoints"/>
-        </edges>
-        <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
-            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
-            <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
-            </children>
-            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
-            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
-            <bendpoints points="[25, -12, -74, 38]$[75, -38, -24, 12]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0"
@@ -2796,6 +3167,50 @@
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[16, 25, -54, -80]$[62, 93, -8, -12]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.3"/>
+            <bendpoints points="[25, 0, -135, 0]$[136, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.4"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.5"/>
+            <bendpoints points="[25, 24, -66, -64]$[78, 76, -13, -12]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
@@ -2803,8 +3218,19 @@
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
-            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.4"/>
-            <bendpoints points="[25, -1, -166, 0]$[167, 0, -24, 1]" xsi:type="notation:RelativeBendpoints"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.6"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
@@ -2812,6 +3238,10 @@
         location="../../SalesforceResources/Salesforce_Metadata.xsd" namespace="urn:sobject.partner.soap.sforce.com"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/SalesforceSchemas/ContactSchema.xsd" namespace="http://www.eagleview.com/SFContactList"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/OppAccountMapper"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema"
+        location="../../Schemas/SalesforceSchemas/OmContactUpdate.xsd" namespace="http://tns.tibco.com/bw/json/1475841704045"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1472737199924"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="sfcontact-subscriber"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="sfcontact-subscriber"/>
@@ -2848,9 +3278,9 @@
             </bpws:from>
         </bpws:variable>
         <bpws:variable element="ns4:updateAllInput"
-            name="SFContactUpdate-input" sca-bpel:internal="true"/>
+            name="SFContactSubsidiaryUpdate-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns5:updateAllOutput"
-            name="SFContactUpdate" sca-bpel:internal="true"/>
+            name="SFContactSubsidiaryUpdate" sca-bpel:internal="true"/>
         <bpws:variable element="ns6:ActivityInput"
             name="NSContactCountRecord-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns6:ActivityInput"
@@ -2859,6 +3289,27 @@
             name="SalesforceUpdateAll1-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns5:updateAllOutput"
             name="SalesforceUpdateAll1" sca-bpel:internal="true"/>
+        <bpws:variable element="ns7:OppAccountList"
+            name="ContactDataMapper-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns7:OppAccountList"
+            name="ContactDataMapper" sca-bpel:internal="true"/>
+        <bpws:variable element="ns8:OMProfileUpdate"
+            name="RenderJSON-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns9:ActivityOutputClass"
+            name="RenderJSON" sca-bpel:internal="true"/>
+        <bpws:variable element="ns10:RestActivityInput"
+            name="InvokeRESTAPI-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:RestActivityOutput"
+            name="InvokeRESTAPI" sca-bpel:internal="true"/>
+        <bpws:variable name="httpClientResource"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>httpclient.OMClient_HttpClientResource</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable name="ContactErrorMessage" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2897,10 +3348,10 @@
                                 portType="ns:sfcontact-subscriber"
                                 tibex:xpdlId="3a163390-4b2f-4b6c-a067-187d1c00d968" variable="postOut-input">
                                 <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20160908130902PLT" version="2.0"&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;xsl:value-of select="&amp;quot;Success&amp;quot;"/&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://xmlns.example.com/20160908130902PLT" xmlns:tns1="http://www.example.org/OppAccountMapper" version="2.0"&gt;&lt;xsl:param name="ContactDataMapper"/&gt;&lt;xsl:template name="postOut-input" match="/"&gt;&lt;tns:postResponse&gt;&lt;item&gt;&lt;tns1:OppAccountList&gt;&lt;xsl:for-each select="$ContactDataMapper/tns1:OppAccount"&gt;&lt;tns1:OppAccount&gt;&lt;xsl:if test="tns1:NetsuiteID"&gt;&lt;tns1:NetsuiteID&gt;&lt;xsl:value-of select="tns1:NetsuiteID"/&gt;&lt;/tns1:NetsuiteID&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:SFID"&gt;&lt;tns1:SFID&gt;&lt;xsl:value-of select="tns1:SFID"/&gt;&lt;/tns1:SFID&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:StatusMessage"&gt;&lt;tns1:StatusMessage&gt;&lt;xsl:value-of select="tns1:StatusMessage"/&gt;&lt;/tns1:StatusMessage&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:ShippingCountry"&gt;&lt;tns1:ShippingCountry&gt;&lt;xsl:value-of select="tns1:ShippingCountry"/&gt;&lt;/tns1:ShippingCountry&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:ShippingCity"&gt;&lt;tns1:ShippingCity&gt;&lt;xsl:value-of select="tns1:ShippingCity"/&gt;&lt;/tns1:ShippingCity&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:ShippingState"&gt;&lt;tns1:ShippingState&gt;&lt;xsl:value-of select="tns1:ShippingState"/&gt;&lt;/tns1:ShippingState&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:ShippingZip"&gt;&lt;tns1:ShippingZip&gt;&lt;xsl:value-of select="tns1:ShippingZip"/&gt;&lt;/tns1:ShippingZip&gt;&lt;/xsl:if&gt;&lt;xsl:if test="tns1:ShippingStreet"&gt;&lt;tns1:ShippingStreet&gt;&lt;xsl:value-of select="tns1:ShippingStreet"/&gt;&lt;/tns1:ShippingStreet&gt;&lt;/xsl:if&gt;&lt;/tns1:OppAccount&gt;&lt;/xsl:for-each&gt;&lt;/tns1:OppAccountList&gt;&lt;/item&gt;&lt;/tns:postResponse&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
                                 <tibex:inputBindings>
                                     <tibex:partBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20160908130902PLT&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;item>&#xa;            &lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&#xa;        &lt;/item>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://xmlns.example.com/20160908130902PLT&quot; xmlns:tns1=&quot;http://www.example.org/OppAccountMapper&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;ContactDataMapper&quot;/>&#xa;    &lt;xsl:template name=&quot;postOut-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns1:OppAccountList>&#xa;            &lt;xsl:for-each select=&quot;$ContactDataMapper/tns1:OppAccount&quot;>&#xa;                &lt;tns1:OppAccount>&#xa;                    &lt;xsl:if test=&quot;tns1:NetsuiteID&quot;>&#xa;                        &lt;tns1:NetsuiteID>&#xa;                            &lt;xsl:value-of select=&quot;tns1:NetsuiteID&quot;/>&#xa;                        &lt;/tns1:NetsuiteID>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:SFID&quot;>&#xa;                        &lt;tns1:SFID>&#xa;                            &lt;xsl:value-of select=&quot;tns1:SFID&quot;/>&#xa;                        &lt;/tns1:SFID>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:StatusMessage&quot;>&#xa;                        &lt;tns1:StatusMessage>&#xa;                            &lt;xsl:value-of select=&quot;tns1:StatusMessage&quot;/>&#xa;                        &lt;/tns1:StatusMessage>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:ShippingCountry&quot;>&#xa;                        &lt;tns1:ShippingCountry>&#xa;                            &lt;xsl:value-of select=&quot;tns1:ShippingCountry&quot;/>&#xa;                        &lt;/tns1:ShippingCountry>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:ShippingCity&quot;>&#xa;                        &lt;tns1:ShippingCity>&#xa;                            &lt;xsl:value-of select=&quot;tns1:ShippingCity&quot;/>&#xa;                        &lt;/tns1:ShippingCity>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:ShippingState&quot;>&#xa;                        &lt;tns1:ShippingState>&#xa;                            &lt;xsl:value-of select=&quot;tns1:ShippingState&quot;/>&#xa;                        &lt;/tns1:ShippingState>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:ShippingZip&quot;>&#xa;                        &lt;tns1:ShippingZip>&#xa;                            &lt;xsl:value-of select=&quot;tns1:ShippingZip&quot;/>&#xa;                        &lt;/tns1:ShippingZip>&#xa;                    &lt;/xsl:if>&#xa;                    &lt;xsl:if test=&quot;tns1:ShippingStreet&quot;>&#xa;                        &lt;tns1:ShippingStreet>&#xa;                            &lt;xsl:value-of select=&quot;tns1:ShippingStreet&quot;/>&#xa;                        &lt;/tns1:ShippingStreet>&#xa;                    &lt;/xsl:if>&#xa;                &lt;/tns1:OppAccount>&#xa;            &lt;/xsl:for-each>&#xa;        &lt;/tns1:OppAccountList>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                 </tibex:inputBindings>
                                 <bpws:targets>
                                     <bpws:target linkName="IterateTopostOut"/>
@@ -2931,7 +3382,9 @@
                                     <bpws:link
                                     name="GroupStartToScope" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="ScopeToGroupEnd" tibex:linkType="SUCCESS"/>
+                                    name="ScopeToMapper" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="MapperToGroupEnd" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:assign
                                     name="GroupStart"
@@ -2949,7 +3402,7 @@
                                     name="GroupEnd"
                                     tibex:group="groupEnd" tibex:xpdlId="88ef2404-4467-4703-923a-6d17fe54a7d8">
                                     <bpws:targets>
-                                    <bpws:target linkName="ScopeToGroupEnd"/>
+                                    <bpws:target linkName="MapperToGroupEnd"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:scope name="Scope"
@@ -2958,7 +3411,7 @@
                                     <bpws:target linkName="GroupStartToScope"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="ScopeToGroupEnd"/>
+                                    <bpws:source linkName="ScopeToMapper"/>
                                     </bpws:sources>
                                     <bpws:variables>
                                     <bpws:variable
@@ -2979,6 +3432,9 @@
 
                                     <bpws:link
                                     name="LogToSalesforceUpdateAll1" tibex:linkType="SUCCESS"/>
+
+                                    <bpws:link
+                                    name="SalesforceUpdateAll1ToAssign" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:extensionActivity>
 
@@ -3035,6 +3491,10 @@
 
                                     <bpws:target linkName="LogToSalesforceUpdateAll1"/>
                                     </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="SalesforceUpdateAll1ToAssign"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
@@ -3063,6 +3523,46 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="concat(tib:concat-sequence($FaultDetails/Data/*),$FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace)"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+                                    inputVariable="ContactErrorMessage"
+                                    name="ContactError"
+                                    outputVariable="ContactErrorMessage"
+                                    tibex:xpdlId="a29ec8cc-5951-4166-8665-1ef648dbad31" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="SalesforceUpdateAll1ToAssign"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="concat(tib:concat-sequence($FaultDetails/Data/*),$FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace)" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.bwassign"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//BWAssign"/>
+
+                                    <value
+                                    processVariable="ContactErrorMessage" xsi:type="generalactivities:BWAssign"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
                                     </bpws:flow>
                                     </bpws:scope>
                                     </bpws:catchAll>
@@ -3076,9 +3576,13 @@
                                     <bpws:link
                                     name="NetSuiteUpsertRecordToSalesforceUpdateAll1" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
-                                    name="SalesforceUpdateAll1ToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    name="SFContactSubsidiaryUpdateToRenderJSON" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
-                                    name="NSContactUpsertToSalesforceUpdateAll" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    name="RenderJSONToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="InvokeRESTAPIToGroupEnd1" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="NSContactUpsertToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -3094,12 +3598,14 @@
                                     <bpws:targets>
 
                                     <bpws:target linkName="SalesforceUpdateAllToGroupEnd1"/>
+
+                                    <bpws:target linkName="InvokeRESTAPIToGroupEnd1"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+697e712f-8dd7-4a96-ac22-a23d3805512b+input&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:template name=&quot;NSContactUpsert-input&quot; match=&quot;/&quot;>&lt;tns:Records>&lt;xsl:for-each select=&quot;$ContactIteration&quot;>&lt;tns:Record>&lt;xsl:attribute name=&quot;externalId&quot;>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/xsl:attribute>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:FirstName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;firstName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;lastName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;title&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;phone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;fax&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;email&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherEmail=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;altEmail&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;officePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;homePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;mobilePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;assistantPhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;comments&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;company>&lt;xsl:if test=&quot;ns:AccountId&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:AccountId&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/company>&lt;xsl:if test=&quot;ns:FirstName!=''&quot;>&lt;xsl:if test=&quot;ns:FirstName&quot;>&lt;firstName>&lt;xsl:value-of select=&quot;ns:FirstName&quot;/>&lt;/firstName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName!=''&quot;>&lt;xsl:if test=&quot;ns:LastName&quot;>&lt;lastName>&lt;xsl:value-of select=&quot;ns:LastName&quot;/>&lt;/lastName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle!=''&quot;>&lt;xsl:if test=&quot;ns:Tiltle&quot;>&lt;title>&lt;xsl:value-of select=&quot;ns:Tiltle&quot;/>&lt;/title>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone!=''&quot;>&lt;xsl:if test=&quot;ns:Phone&quot;>&lt;phone>&lt;xsl:value-of select=&quot;ns:Phone&quot;/>&lt;/phone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax!=''&quot;>&lt;xsl:if test=&quot;ns:Fax&quot;>&lt;fax>&lt;xsl:value-of select=&quot;ns:Fax&quot;/>&lt;/fax>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email!=''&quot;>&lt;xsl:if test=&quot;ns:Email&quot;>&lt;email>&lt;xsl:value-of select=&quot;ns:Email&quot;/>&lt;/email>&lt;/xsl:if>&lt;/xsl:if>&lt;subsidiary>&lt;xsl:if test=&quot;ns:Subsidiary&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:Subsidiary&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/subsidiary>&lt;xsl:if test=&quot;ns:OtherEmail!=''&quot;>&lt;xsl:if test=&quot;ns:OtherEmail&quot;>&lt;altEmail>&lt;xsl:value-of select=&quot;ns:OtherEmail&quot;/>&lt;/altEmail>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPhone&quot;>&lt;officePhone>&lt;xsl:value-of select=&quot;ns:OtherPhone&quot;/>&lt;/officePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone!=''&quot;>&lt;xsl:if test=&quot;ns:HomePhone&quot;>&lt;homePhone>&lt;xsl:value-of select=&quot;ns:HomePhone&quot;/>&lt;/homePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile!=''&quot;>&lt;xsl:if test=&quot;ns:Mobile&quot;>&lt;mobilePhone>&lt;xsl:value-of select=&quot;ns:Mobile&quot;/>&lt;/mobilePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone!=''&quot;>&lt;xsl:if test=&quot;ns:AsstPhone&quot;>&lt;assistantPhone>&lt;xsl:value-of select=&quot;ns:AsstPhone&quot;/>&lt;/assistantPhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description!=''&quot;>&lt;xsl:if test=&quot;ns:Description&quot;>&lt;comments>&lt;xsl:value-of select=&quot;ns:Description&quot;/>&lt;/comments>&lt;/xsl:if>&lt;/xsl:if>&lt;addressbookList>&lt;addressbook>&lt;defaultBilling>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultBilling>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:OtherState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:OtherCountry!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:OtherCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet!=''&quot;>&lt;xsl:if test=&quot;ns:OtherStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:OtherStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:OtherCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherState!=''&quot;>&lt;xsl:if test=&quot;ns:OtherState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:OtherState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:OtherPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;addressbook>&lt;defaultShipping>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultShipping>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:MailingState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:MailingCountry!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:MailingCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet!=''&quot;>&lt;xsl:if test=&quot;ns:MailingStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:MailingStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:MailingCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingState!=''&quot;>&lt;xsl:if test=&quot;ns:MailingState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:MailingState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:MailingPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:MailingPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;/addressbookList>&lt;customFieldList>&lt;xsl:if test=&quot;ns:OrderManagerID!=''&quot;>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_order_manager_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:OrderManagerID&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/xsl:if>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_salesforce_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/customFieldList>&lt;/tns:Record>&lt;/xsl:for-each>&lt;/tns:Records>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+697e712f-8dd7-4a96-ac22-a23d3805512b+input&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:template name=&quot;NSContactUpsert-input&quot; match=&quot;/&quot;>&lt;tns:Records>&lt;xsl:for-each select=&quot;$ContactIteration&quot;>&lt;tns:Record>&lt;xsl:attribute name=&quot;externalId&quot;>&lt;xsl:value-of select=&quot;ns:SubsidiaryContactID&quot;/>&lt;/xsl:attribute>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:FirstName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;firstName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;lastName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;title&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;phone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;fax&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;email&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherEmail=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;altEmail&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;officePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;homePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;mobilePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;assistantPhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;comments&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;company>&lt;xsl:if test=&quot;ns:AccountId&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:AccountId&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/company>&lt;xsl:if test=&quot;ns:FirstName!=''&quot;>&lt;xsl:if test=&quot;ns:FirstName&quot;>&lt;firstName>&lt;xsl:value-of select=&quot;ns:FirstName&quot;/>&lt;/firstName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName!=''&quot;>&lt;xsl:if test=&quot;ns:LastName&quot;>&lt;lastName>&lt;xsl:value-of select=&quot;ns:LastName&quot;/>&lt;/lastName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle!=''&quot;>&lt;xsl:if test=&quot;ns:Tiltle&quot;>&lt;title>&lt;xsl:value-of select=&quot;ns:Tiltle&quot;/>&lt;/title>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone!=''&quot;>&lt;xsl:if test=&quot;ns:Phone&quot;>&lt;phone>&lt;xsl:value-of select=&quot;ns:Phone&quot;/>&lt;/phone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax!=''&quot;>&lt;xsl:if test=&quot;ns:Fax&quot;>&lt;fax>&lt;xsl:value-of select=&quot;ns:Fax&quot;/>&lt;/fax>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email!=''&quot;>&lt;xsl:if test=&quot;ns:Email&quot;>&lt;email>&lt;xsl:value-of select=&quot;ns:Email&quot;/>&lt;/email>&lt;/xsl:if>&lt;/xsl:if>&lt;subsidiary>&lt;xsl:if test=&quot;ns:Subsidiary&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:Subsidiary&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/subsidiary>&lt;xsl:if test=&quot;ns:OtherEmail!=''&quot;>&lt;xsl:if test=&quot;ns:OtherEmail&quot;>&lt;altEmail>&lt;xsl:value-of select=&quot;ns:OtherEmail&quot;/>&lt;/altEmail>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPhone&quot;>&lt;officePhone>&lt;xsl:value-of select=&quot;ns:OtherPhone&quot;/>&lt;/officePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone!=''&quot;>&lt;xsl:if test=&quot;ns:HomePhone&quot;>&lt;homePhone>&lt;xsl:value-of select=&quot;ns:HomePhone&quot;/>&lt;/homePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile!=''&quot;>&lt;xsl:if test=&quot;ns:Mobile&quot;>&lt;mobilePhone>&lt;xsl:value-of select=&quot;ns:Mobile&quot;/>&lt;/mobilePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone!=''&quot;>&lt;xsl:if test=&quot;ns:AsstPhone&quot;>&lt;assistantPhone>&lt;xsl:value-of select=&quot;ns:AsstPhone&quot;/>&lt;/assistantPhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description!=''&quot;>&lt;xsl:if test=&quot;ns:Description&quot;>&lt;comments>&lt;xsl:value-of select=&quot;ns:Description&quot;/>&lt;/comments>&lt;/xsl:if>&lt;/xsl:if>&lt;addressbookList>&lt;addressbook>&lt;defaultBilling>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultBilling>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:OtherState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:OtherCountry!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:OtherCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet!=''&quot;>&lt;xsl:if test=&quot;ns:OtherStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:OtherStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:OtherCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherState!=''&quot;>&lt;xsl:if test=&quot;ns:OtherState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:OtherState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:OtherPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;addressbook>&lt;defaultShipping>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultShipping>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:MailingState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:MailingCountry!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:MailingCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet!=''&quot;>&lt;xsl:if test=&quot;ns:MailingStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:MailingStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:MailingCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingState!=''&quot;>&lt;xsl:if test=&quot;ns:MailingState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:MailingState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:MailingPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:MailingPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;/addressbookList>&lt;customFieldList>&lt;xsl:if test=&quot;ns:OrderManagerID!=''&quot;>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_order_manager_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:OrderManagerID&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/xsl:if>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_salesforce_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/customFieldList>&lt;/tns:Record>&lt;/xsl:for-each>&lt;/tns:Records>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="NSContactUpsert-input"
                                     name="NSContactUpsert"
@@ -3115,24 +3621,17 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="$NSContactUpsert/Results/Result[1]/status/@isSuccess=true()" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$ContactIteration/ns1:EventType=&quot;Create&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$NSContactUpsert/Results/Result[1]/status/@isSuccess=true()]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:EventType="Create"]]></bpws:transitionCondition>
                                     </bpws:source>
 
-                                    <bpws:source linkName="NSContactUpsertToSalesforceUpdateAll">
-                                    <tibex:DesignExpression>
-
-                                    <tibex:expression
-                                    expression="$NSContactUpsert/Results/Result[1]/status/@isSuccess=false()" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
-                                    </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$NSContactUpsert/Results/Result[1]/status/@isSuccess=false()]]></bpws:transitionCondition>
-                                    </bpws:source>
+                                    <bpws:source linkName="NSContactUpsertToSalesforceUpdateAll"/>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+697e712f-8dd7-4a96-ac22-a23d3805512b+input&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:template name=&quot;NSContactUpsert-input&quot; match=&quot;/&quot;>&lt;tns:Records>&lt;xsl:for-each select=&quot;$ContactIteration&quot;>&lt;tns:Record>&lt;xsl:attribute name=&quot;externalId&quot;>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/xsl:attribute>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:FirstName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;firstName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;lastName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;title&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;phone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;fax&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;email&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherEmail=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;altEmail&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;officePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;homePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;mobilePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;assistantPhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;comments&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;company>&lt;xsl:if test=&quot;ns:AccountId&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:AccountId&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/company>&lt;xsl:if test=&quot;ns:FirstName!=''&quot;>&lt;xsl:if test=&quot;ns:FirstName&quot;>&lt;firstName>&lt;xsl:value-of select=&quot;ns:FirstName&quot;/>&lt;/firstName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName!=''&quot;>&lt;xsl:if test=&quot;ns:LastName&quot;>&lt;lastName>&lt;xsl:value-of select=&quot;ns:LastName&quot;/>&lt;/lastName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle!=''&quot;>&lt;xsl:if test=&quot;ns:Tiltle&quot;>&lt;title>&lt;xsl:value-of select=&quot;ns:Tiltle&quot;/>&lt;/title>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone!=''&quot;>&lt;xsl:if test=&quot;ns:Phone&quot;>&lt;phone>&lt;xsl:value-of select=&quot;ns:Phone&quot;/>&lt;/phone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax!=''&quot;>&lt;xsl:if test=&quot;ns:Fax&quot;>&lt;fax>&lt;xsl:value-of select=&quot;ns:Fax&quot;/>&lt;/fax>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email!=''&quot;>&lt;xsl:if test=&quot;ns:Email&quot;>&lt;email>&lt;xsl:value-of select=&quot;ns:Email&quot;/>&lt;/email>&lt;/xsl:if>&lt;/xsl:if>&lt;subsidiary>&lt;xsl:if test=&quot;ns:Subsidiary&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:Subsidiary&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/subsidiary>&lt;xsl:if test=&quot;ns:OtherEmail!=''&quot;>&lt;xsl:if test=&quot;ns:OtherEmail&quot;>&lt;altEmail>&lt;xsl:value-of select=&quot;ns:OtherEmail&quot;/>&lt;/altEmail>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPhone&quot;>&lt;officePhone>&lt;xsl:value-of select=&quot;ns:OtherPhone&quot;/>&lt;/officePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone!=''&quot;>&lt;xsl:if test=&quot;ns:HomePhone&quot;>&lt;homePhone>&lt;xsl:value-of select=&quot;ns:HomePhone&quot;/>&lt;/homePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile!=''&quot;>&lt;xsl:if test=&quot;ns:Mobile&quot;>&lt;mobilePhone>&lt;xsl:value-of select=&quot;ns:Mobile&quot;/>&lt;/mobilePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone!=''&quot;>&lt;xsl:if test=&quot;ns:AsstPhone&quot;>&lt;assistantPhone>&lt;xsl:value-of select=&quot;ns:AsstPhone&quot;/>&lt;/assistantPhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description!=''&quot;>&lt;xsl:if test=&quot;ns:Description&quot;>&lt;comments>&lt;xsl:value-of select=&quot;ns:Description&quot;/>&lt;/comments>&lt;/xsl:if>&lt;/xsl:if>&lt;addressbookList>&lt;addressbook>&lt;defaultBilling>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultBilling>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:OtherState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:OtherCountry!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:OtherCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet!=''&quot;>&lt;xsl:if test=&quot;ns:OtherStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:OtherStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:OtherCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherState!=''&quot;>&lt;xsl:if test=&quot;ns:OtherState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:OtherState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:OtherPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;addressbook>&lt;defaultShipping>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultShipping>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:MailingState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:MailingCountry!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:MailingCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet!=''&quot;>&lt;xsl:if test=&quot;ns:MailingStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:MailingStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:MailingCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingState!=''&quot;>&lt;xsl:if test=&quot;ns:MailingState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:MailingState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:MailingPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:MailingPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;/addressbookList>&lt;customFieldList>&lt;xsl:if test=&quot;ns:OrderManagerID!=''&quot;>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_order_manager_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:OrderManagerID&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/xsl:if>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_salesforce_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/customFieldList>&lt;/tns:Record>&lt;/xsl:for-each>&lt;/tns:Records>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+697e712f-8dd7-4a96-ac22-a23d3805512b+input&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:template name=&quot;NSContactUpsert-input&quot; match=&quot;/&quot;>&lt;tns:Records>&lt;xsl:for-each select=&quot;$ContactIteration&quot;>&lt;tns:Record>&lt;xsl:attribute name=&quot;externalId&quot;>&lt;xsl:value-of select=&quot;ns:SubsidiaryContactID&quot;/>&lt;/xsl:attribute>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:FirstName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;firstName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;lastName&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;title&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;phone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;fax&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;email&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherEmail=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;altEmail&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;officePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;homePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;mobilePhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;assistantPhone&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;comments&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;company>&lt;xsl:if test=&quot;ns:AccountId&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:AccountId&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/company>&lt;xsl:if test=&quot;ns:FirstName!=''&quot;>&lt;xsl:if test=&quot;ns:FirstName&quot;>&lt;firstName>&lt;xsl:value-of select=&quot;ns:FirstName&quot;/>&lt;/firstName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:LastName!=''&quot;>&lt;xsl:if test=&quot;ns:LastName&quot;>&lt;lastName>&lt;xsl:value-of select=&quot;ns:LastName&quot;/>&lt;/lastName>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Tiltle!=''&quot;>&lt;xsl:if test=&quot;ns:Tiltle&quot;>&lt;title>&lt;xsl:value-of select=&quot;ns:Tiltle&quot;/>&lt;/title>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Phone!=''&quot;>&lt;xsl:if test=&quot;ns:Phone&quot;>&lt;phone>&lt;xsl:value-of select=&quot;ns:Phone&quot;/>&lt;/phone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Fax!=''&quot;>&lt;xsl:if test=&quot;ns:Fax&quot;>&lt;fax>&lt;xsl:value-of select=&quot;ns:Fax&quot;/>&lt;/fax>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Email!=''&quot;>&lt;xsl:if test=&quot;ns:Email&quot;>&lt;email>&lt;xsl:value-of select=&quot;ns:Email&quot;/>&lt;/email>&lt;/xsl:if>&lt;/xsl:if>&lt;subsidiary>&lt;xsl:if test=&quot;ns:Subsidiary&quot;>&lt;xsl:attribute name=&quot;internalId&quot;>&lt;xsl:value-of select=&quot;ns:Subsidiary&quot;/>&lt;/xsl:attribute>&lt;/xsl:if>&lt;/subsidiary>&lt;xsl:if test=&quot;ns:OtherEmail!=''&quot;>&lt;xsl:if test=&quot;ns:OtherEmail&quot;>&lt;altEmail>&lt;xsl:value-of select=&quot;ns:OtherEmail&quot;/>&lt;/altEmail>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPhone!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPhone&quot;>&lt;officePhone>&lt;xsl:value-of select=&quot;ns:OtherPhone&quot;/>&lt;/officePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:HomePhone!=''&quot;>&lt;xsl:if test=&quot;ns:HomePhone&quot;>&lt;homePhone>&lt;xsl:value-of select=&quot;ns:HomePhone&quot;/>&lt;/homePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Mobile!=''&quot;>&lt;xsl:if test=&quot;ns:Mobile&quot;>&lt;mobilePhone>&lt;xsl:value-of select=&quot;ns:Mobile&quot;/>&lt;/mobilePhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AsstPhone!=''&quot;>&lt;xsl:if test=&quot;ns:AsstPhone&quot;>&lt;assistantPhone>&lt;xsl:value-of select=&quot;ns:AsstPhone&quot;/>&lt;/assistantPhone>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Description!=''&quot;>&lt;xsl:if test=&quot;ns:Description&quot;>&lt;comments>&lt;xsl:value-of select=&quot;ns:Description&quot;/>&lt;/comments>&lt;/xsl:if>&lt;/xsl:if>&lt;addressbookList>&lt;addressbook>&lt;defaultBilling>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultBilling>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:OtherState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:OtherCountry!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:OtherCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherStreet!=''&quot;>&lt;xsl:if test=&quot;ns:OtherStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:OtherStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherCity!=''&quot;>&lt;xsl:if test=&quot;ns:OtherCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:OtherCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherState!=''&quot;>&lt;xsl:if test=&quot;ns:OtherState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:OtherState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OtherPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:OtherPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:OtherPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;addressbook>&lt;defaultShipping>&lt;xsl:value-of select=&quot;xsd:boolean(&amp;quot;1&amp;quot;)&quot;/>&lt;/defaultShipping>&lt;addressbookAddress>&lt;nullFieldList>&lt;xsl:if test=&quot;ns:MailingState=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;state&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCountry=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;country&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;city&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;addr1&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode=''&quot;>&lt;name>&lt;xsl:value-of select=&quot;&amp;quot;zip&amp;quot;&quot;/>&lt;/name>&lt;/xsl:if>&lt;/nullFieldList>&lt;xsl:if test=&quot;ns:MailingCountry!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCountry&quot;>&lt;country>&lt;xsl:value-of select=&quot;ns:MailingCountry&quot;/>&lt;/country>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingStreet!=''&quot;>&lt;xsl:if test=&quot;ns:MailingStreet&quot;>&lt;addr1>&lt;xsl:value-of select=&quot;ns:MailingStreet&quot;/>&lt;/addr1>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingCity!=''&quot;>&lt;xsl:if test=&quot;ns:MailingCity&quot;>&lt;city>&lt;xsl:value-of select=&quot;ns:MailingCity&quot;/>&lt;/city>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingState!=''&quot;>&lt;xsl:if test=&quot;ns:MailingState&quot;>&lt;state>&lt;xsl:value-of select=&quot;ns:MailingState&quot;/>&lt;/state>&lt;/xsl:if>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:MailingPostalCode!=''&quot;>&lt;xsl:if test=&quot;ns:MailingPostalCode&quot;>&lt;zip>&lt;xsl:value-of select=&quot;ns:MailingPostalCode&quot;/>&lt;/zip>&lt;/xsl:if>&lt;/xsl:if>&lt;/addressbookAddress>&lt;/addressbook>&lt;/addressbookList>&lt;customFieldList>&lt;xsl:if test=&quot;ns:OrderManagerID!=''&quot;>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_order_manager_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:OrderManagerID&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/xsl:if>&lt;stringCustomFieldRef>&lt;xsl:attribute name=&quot;scriptId&quot;>&lt;xsl:value-of select=&quot;&amp;quot;custentity_salesforce_id&amp;quot;&quot;/>&lt;/xsl:attribute>&lt;value>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/value>&lt;/stringCustomFieldRef>&lt;/customFieldList>&lt;/tns:Record>&lt;/xsl:for-each>&lt;/tns:Records>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -3169,8 +3668,6 @@
                                     outputVariable="SalesforceUpdateAll"
                                     tibex:xpdlId="73923a33-808b-4a40-a5a2-e2f2e0ec3fb8" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
-
-                                    <bpws:target linkName="SalesforceUpdateAll1ToSalesforceUpdateAll"/>
 
                                     <bpws:target linkName="NSContactUpsertToSalesforceUpdateAll"/>
                                     </bpws:targets>
@@ -3209,11 +3706,11 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:template name=&quot;SFContactUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Contact&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($ContactIteration/ns1:sfId)&quot;>&lt;xsl:value-of select=&quot;$ContactIteration/ns1:sfId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:NetSuite_ID__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($NSContactUpsert/Results/Result[1]/baseRef/@internalId)&quot;>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:NetSuite_ID__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:template name=&quot;SFContactUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Contact_Subsidiary__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($ContactIteration/ns1:SubsidiaryContactID)&quot;>&lt;xsl:value-of select=&quot;$ContactIteration/ns1:SubsidiaryContactID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:NetSuite_Contact_ID__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($NSContactUpsert/Results/Result[1]/baseRef/@internalId)&quot;>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:NetSuite_Contact_ID__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="SFContactUpdate-input"
-                                    name="SFContactUpdate"
-                                    outputVariable="SFContactUpdate"
+                                    inputVariable="SFContactSubsidiaryUpdate-input"
+                                    name="SFContactSubsidiaryUpdate"
+                                    outputVariable="SFContactSubsidiaryUpdate"
                                     tibex:xpdlId="262efb67-6f70-4602-b284-fdafb32eae8f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
@@ -3221,12 +3718,19 @@
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="SalesforceUpdateAll1ToSalesforceUpdateAll"/>
+                                    <bpws:source linkName="SFContactSubsidiaryUpdateToRenderJSON">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$ContactIteration/ns1:SubsidiaryName = &quot;EagleView Technologies, Inc.&quot; and$ContactIteration/ns1:OrderManagerID!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:SubsidiaryName = "EagleView Technologies, Inc." and$ContactIteration/ns1:OrderManagerID!=""]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:template name=&quot;SFContactUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Contact&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($ContactIteration/ns1:sfId)&quot;>&lt;xsl:value-of select=&quot;$ContactIteration/ns1:sfId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:NetSuite_ID__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($NSContactUpsert/Results/Result[1]/baseRef/@internalId)&quot;>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:NetSuite_ID__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:template name=&quot;SFContactUpdate-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Contact_Subsidiary__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($ContactIteration/ns1:SubsidiaryContactID)&quot;>&lt;xsl:value-of select=&quot;$ContactIteration/ns1:SubsidiaryContactID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:NetSuite_Contact_ID__c>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($NSContactUpsert/Results/Result[1]/baseRef/@internalId)&quot;>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:NetSuite_Contact_ID__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -3251,8 +3755,149 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475841704045&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:OMProfileUpdate>&lt;xsl:if test=&quot;$ContactIteration/ns:OrderManagerID&quot;>&lt;tns:ProfileId>&lt;xsl:value-of select=&quot;$ContactIteration/ns:OrderManagerID&quot;/>&lt;/tns:ProfileId>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:sfId&quot;>&lt;tns:SalesForceId>&lt;xsl:value-of select=&quot;$ContactIteration/ns:sfId&quot;/>&lt;/tns:SalesForceId>&lt;/xsl:if>&lt;xsl:if test=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;>&lt;tns:NetSuiteId>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/tns:NetSuiteId>&lt;/xsl:if>&lt;/tns:OMProfileUpdate>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="RenderJSON-input"
+                                    name="RenderJSON"
+                                    outputVariable="RenderJSON"
+                                    tibex:xpdlId="82675faa-8072-4ea1-957a-f299e2a5a6b7" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="SFContactSubsidiaryUpdateToRenderJSON"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="RenderJSONToInvokeRESTAPI"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://tns.tibco.com/bw/json/1475841704045&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:OMProfileUpdate>&lt;xsl:if test=&quot;$ContactIteration/ns:OrderManagerID&quot;>&lt;tns:ProfileId>&lt;xsl:value-of select=&quot;$ContactIteration/ns:OrderManagerID&quot;/>&lt;/tns:ProfileId>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:sfId&quot;>&lt;tns:SalesForceId>&lt;xsl:value-of select=&quot;$ContactIteration/ns:sfId&quot;/>&lt;/tns:SalesForceId>&lt;/xsl:if>&lt;xsl:if test=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;>&lt;tns:NetSuiteId>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/tns:NetSuiteId>&lt;/xsl:if>&lt;/tns:OMProfileUpdate>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+
+                                    <inputEditorElement href="platform:/resource/SF_NS_Integrations/Schemas/SalesforceSchemas/OmContactUpdate.xsd#//OMProfileUpdate;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeInput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;ProfileId>&lt;xsl:value-of select=&quot;$ContactIteration/ns:OrderManagerID&quot;/>&lt;/ProfileId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="InvokeRESTAPI-input"
+                                    name="InvokeRESTAPI"
+                                    outputVariable="InvokeRESTAPI"
+                                    tibex:xpdlId="7b53ab6e-9a1d-4faa-9201-24271c7cf40c" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="RenderJSONToInvokeRESTAPI"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="InvokeRESTAPIToGroupEnd1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+7b53ab6e-9a1d-4faa-9201-24271c7cf40c+RestInvokeInput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;RenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;tns:PathParameters>&lt;ProfileId>&lt;xsl:value-of select=&quot;$ContactIteration/ns:OrderManagerID&quot;/>&lt;/ProfileId>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="httpClientResource"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    resourcePath="/Profile/{ProfileId}/UpdateIdentity"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
                                     </bpws:flow>
                                     </bpws:scope>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OppAccountMapper&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_updateAllOutput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;InvokeRESTAPI&quot;/>&lt;xsl:param name=&quot;SFContactSubsidiaryUpdate&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:param name=&quot;ContactErrorMessage&quot;/>&lt;xsl:template name=&quot;ContactDataMapper-input&quot; match=&quot;/&quot;>&lt;tns:OppAccountList>&lt;xsl:choose>&lt;xsl:when test=&quot;$NSContactUpsert/Results/Result[1]/status/@isSuccess=true() and $SFContactSubsidiaryUpdate/updateAllResponse/tns1:result[1]/tns1:success=true() and ($ContactIteration/ns:OrderManagerID=&amp;quot;&amp;quot;or  $InvokeRESTAPI/statusCode=200)&quot;>&lt;tns:OppAccount>&lt;xsl:if test=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;>&lt;tns:NetsuiteID>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/tns:NetsuiteID>&lt;/xsl:if>&lt;tns:StatusMessage>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/tns:StatusMessage>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingCountry&quot;>&lt;tns:ShippingCountry>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingCountry&quot;/>&lt;/tns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingCity&quot;>&lt;tns:ShippingCity>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingCity&quot;/>&lt;/tns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingState&quot;>&lt;tns:ShippingState>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingState&quot;/>&lt;/tns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingPostalCode&quot;>&lt;tns:ShippingZip>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingPostalCode&quot;/>&lt;/tns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingStreet&quot;>&lt;tns:ShippingStreet>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingStreet&quot;/>&lt;/tns:ShippingStreet>&lt;/xsl:if>&lt;/tns:OppAccount>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:OppAccount>&lt;tns:StatusMessage>&lt;xsl:value-of select=&quot;$ContactErrorMessage&quot;/>&lt;/tns:StatusMessage>&lt;/tns:OppAccount>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:OppAccountList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="ContactDataMapper-input"
+                                    name="ContactDataMapper"
+                                    outputVariable="ContactDataMapper"
+                                    tibex:xpdlId="2f817c79-c170-4a92-9a16-1b15a4a49992" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="ScopeToMapper"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="MapperToGroupEnd"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/OppAccountMapper&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_updateAllOutput&quot; xmlns:ns=&quot;http://www.eagleview.com/SFContactList&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ContactIteration&quot;/>&lt;xsl:param name=&quot;InvokeRESTAPI&quot;/>&lt;xsl:param name=&quot;SFContactSubsidiaryUpdate&quot;/>&lt;xsl:param name=&quot;NSContactUpsert&quot;/>&lt;xsl:param name=&quot;ContactErrorMessage&quot;/>&lt;xsl:template name=&quot;ContactDataMapper-input&quot; match=&quot;/&quot;>&lt;tns:OppAccountList>&lt;xsl:choose>&lt;xsl:when test=&quot;$NSContactUpsert/Results/Result[1]/status/@isSuccess=true() and $SFContactSubsidiaryUpdate/updateAllResponse/tns1:result[1]/tns1:success=true() and ($ContactIteration/ns:OrderManagerID=&amp;quot;&amp;quot;or  $InvokeRESTAPI/statusCode=200)&quot;>&lt;tns:OppAccount>&lt;xsl:if test=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;>&lt;tns:NetsuiteID>&lt;xsl:value-of select=&quot;$NSContactUpsert/Results/Result[1]/baseRef/@internalId&quot;/>&lt;/tns:NetsuiteID>&lt;/xsl:if>&lt;tns:StatusMessage>&lt;xsl:value-of select=&quot;&amp;quot;Success&amp;quot;&quot;/>&lt;/tns:StatusMessage>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingCountry&quot;>&lt;tns:ShippingCountry>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingCountry&quot;/>&lt;/tns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingCity&quot;>&lt;tns:ShippingCity>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingCity&quot;/>&lt;/tns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingState&quot;>&lt;tns:ShippingState>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingState&quot;/>&lt;/tns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingPostalCode&quot;>&lt;tns:ShippingZip>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingPostalCode&quot;/>&lt;/tns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;$ContactIteration/ns:MailingStreet&quot;>&lt;tns:ShippingStreet>&lt;xsl:value-of select=&quot;$ContactIteration/ns:MailingStreet&quot;/>&lt;/tns:ShippingStreet>&lt;/xsl:if>&lt;/tns:OppAccount>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns:OppAccount>&lt;tns:StatusMessage>&lt;xsl:value-of select=&quot;$ContactErrorMessage&quot;/>&lt;/tns:StatusMessage>&lt;/tns:OppAccount>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:OppAccountList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.mapper"
+                                    version="6.0.0.001"
+                                    xmlns:OppAccountMapper="http://www.example.org/OppAccountMapper"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
+
+                                    <value
+                                    inputQName="OppAccountMapper:OppAccountList" xsi:type="generalactivities:Mapper"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
                                     </bpws:flow>
                                     </bpws:scope>
                                     </bpws:forEach>
