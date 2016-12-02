@@ -218,7 +218,7 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.1"/>
-                                    <layoutConstraint x="401"
+                                    <layoutConstraint x="596"
                                     xsi:type="notation:Bounds" y="127"/>
                                     </children>
                                     <children type="4002">
@@ -253,7 +253,7 @@
                                     gradientEndColor="50431"
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.2"/>
-                                    <layoutConstraint x="267"
+                                    <layoutConstraint x="297"
                                     xsi:type="notation:Bounds" y="127"/>
                                     </children>
                                     <children type="4018">
@@ -442,6 +442,41 @@
                                     x="71"
                                     xsi:type="notation:Bounds" y="71"/>
                                     </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.4"/>
+                                    <layoutConstraint x="411"
+                                    xsi:type="notation:Bounds" y="191"/>
+                                    </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -542,6 +577,30 @@
             <element href="//0/@process/@activity/@activity/@links/@children.2"/>
             <bendpoints points="[25, 0, -109, 0]$[110, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.3"/>
+            <bendpoints
+                points="[25, 0, -77, -64]$[51, 0, -51, -64]$[51, 72, -51, 8]$[78, 72, -24, 8]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.4"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.4"/>
+            <bendpoints
+                points="[25, 8, -160, 72]$[93, 8, -92, 72]$[93, -64, -92, 0]$[161, -64, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/PricebookEntrySchema"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
@@ -557,6 +616,10 @@
         <bpws:variable element="ns0:PricebookEntry" name="Mapper" sca-bpel:internal="true"/>
         <bpws:variable element="ns0:PricebookEntry" name="End-input"
             sca-bpel:internal="true" tibex:parameter="out"/>
+        <bpws:variable element="ns0:PricebookEntry"
+            name="Invoke-RefreshPricebook-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns0:PricebookEntry"
+            name="Invoke-RefreshPricebook" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -571,7 +634,9 @@
             <bpws:links>
                 <bpws:link name="StartToCriticalSection" tibex:linkType="SUCCESS"/>
                 <bpws:link name="CriticalSectionToMapper" tibex:linkType="SUCCESS"/>
-                <bpws:link name="MapperToEnd" tibex:linkType="SUCCESS"/>
+                <bpws:link name="MapperToEnd" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="MapperToCallProcess" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link name="Invoke RefreshPricebookToEnd" tibex:linkType="SUCCESS"/>
             </bpws:links>
             <bpws:extensionActivity>
                 <tibex:receiveEvent createInstance="yes"
@@ -588,16 +653,18 @@
             </bpws:extensionActivity>
             <bpws:extensionActivity>
                 <tibex:activityExtension
-                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns=&quot;http://www.example.org/PricebookEntrySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper&quot;/>&lt;xsl:template name=&quot;End-input&quot; match=&quot;/&quot;>&lt;tns:PricebookEntry>&lt;xsl:for-each select=&quot;$Mapper/tns:PricebookList&quot;>&lt;tns:PricebookList>&lt;xsl:if test=&quot;tns:Product2Id&quot;>&lt;tns:Product2Id>&lt;xsl:value-of select=&quot;tns:Product2Id&quot;/>&lt;/tns:Product2Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:PricebookEntryId&quot;>&lt;tns:PricebookEntryId>&lt;xsl:value-of select=&quot;tns:PricebookEntryId&quot;/>&lt;/tns:PricebookEntryId>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/xsl:for-each>&lt;/tns:PricebookEntry>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns=&quot;http://www.example.org/PricebookEntrySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper&quot;/>&lt;xsl:param name=&quot;Invoke-RefreshPricebook&quot;/>&lt;xsl:template name=&quot;End-input&quot; match=&quot;/&quot;>&lt;tns:PricebookEntry>&lt;xsl:choose>&lt;xsl:when test=&quot;string-length($Mapper/tns:PricebookList[1]/tns:PricebookEntryId)!=0&quot;>&lt;tns:PricebookList>&lt;xsl:if test=&quot;$Mapper/tns:PricebookList[1]/tns:PricebookEntryId&quot;>&lt;tns:PricebookEntryId>&lt;xsl:value-of select=&quot;$Mapper/tns:PricebookList[1]/tns:PricebookEntryId&quot;/>&lt;/tns:PricebookEntryId>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/xsl:when>&lt;xsl:when test=&quot;string-length($Mapper/tns:PricebookList[1]/tns:PricebookEntryId)=0&quot;>&lt;tns:PricebookList>&lt;xsl:if test=&quot;$Invoke-RefreshPricebook/tns:PricebookList[1]/tns:PricebookEntryId&quot;>&lt;tns:PricebookEntryId>&lt;xsl:value-of select=&quot;$Invoke-RefreshPricebook/tns:PricebookList[1]/tns:PricebookEntryId&quot;/>&lt;/tns:PricebookEntryId>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/xsl:when>&lt;xsl:otherwise/>&lt;/xsl:choose>&lt;/tns:PricebookEntry>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                     inputVariable="End-input" name="End"
                     tibex:xpdlId="50d8b50d-3f3a-4472-8672-def66f92dd9e" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
                         <bpws:target linkName="MapperToEnd"/>
+                        <bpws:target linkName="Invoke RefreshPricebookToEnd"/>
                     </bpws:targets>
+                    <bpws:sources/>
                     <tibex:inputBindings>
                         <tibex:inputBinding
-                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns=&quot;http://www.example.org/PricebookEntrySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper&quot;/>&lt;xsl:template name=&quot;End-input&quot; match=&quot;/&quot;>&lt;tns:PricebookEntry>&lt;xsl:for-each select=&quot;$Mapper/tns:PricebookList&quot;>&lt;tns:PricebookList>&lt;xsl:if test=&quot;tns:Product2Id&quot;>&lt;tns:Product2Id>&lt;xsl:value-of select=&quot;tns:Product2Id&quot;/>&lt;/tns:Product2Id>&lt;/xsl:if>&lt;xsl:if test=&quot;tns:PricebookEntryId&quot;>&lt;tns:PricebookEntryId>&lt;xsl:value-of select=&quot;tns:PricebookEntryId&quot;/>&lt;/tns:PricebookEntryId>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/xsl:for-each>&lt;/tns:PricebookEntry>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns=&quot;http://www.example.org/PricebookEntrySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Mapper&quot;/>&lt;xsl:param name=&quot;Invoke-RefreshPricebook&quot;/>&lt;xsl:template name=&quot;End-input&quot; match=&quot;/&quot;>&lt;tns:PricebookEntry>&lt;xsl:choose>&lt;xsl:when test=&quot;string-length($Mapper/tns:PricebookList[1]/tns:PricebookEntryId)!=0&quot;>&lt;tns:PricebookList>&lt;xsl:if test=&quot;$Mapper/tns:PricebookList[1]/tns:PricebookEntryId&quot;>&lt;tns:PricebookEntryId>&lt;xsl:value-of select=&quot;$Mapper/tns:PricebookList[1]/tns:PricebookEntryId&quot;/>&lt;/tns:PricebookEntryId>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/xsl:when>&lt;xsl:when test=&quot;string-length($Mapper/tns:PricebookList[1]/tns:PricebookEntryId)=0&quot;>&lt;tns:PricebookList>&lt;xsl:if test=&quot;$Invoke-RefreshPricebook/tns:PricebookList[1]/tns:PricebookEntryId&quot;>&lt;tns:PricebookEntryId>&lt;xsl:value-of select=&quot;$Invoke-RefreshPricebook/tns:PricebookList[1]/tns:PricebookEntryId&quot;/>&lt;/tns:PricebookEntryId>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/xsl:when>&lt;xsl:otherwise/>&lt;/xsl:choose>&lt;/tns:PricebookEntry>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
                     <tibex:config>
                         <bwext:BWActivity
@@ -626,7 +693,20 @@
                         <bpws:target linkName="CriticalSectionToMapper"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="MapperToEnd"/>
+                        <bpws:source linkName="MapperToEnd">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="string-length($Mapper/ns0:PricebookList[1]/ns0:PricebookEntryId)!=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[string-length($Mapper/ns0:PricebookList[1]/ns0:PricebookEntryId)!=0]]></bpws:transitionCondition>
+                        </bpws:source>
+                        <bpws:source linkName="MapperToCallProcess">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="string-length($Mapper/ns0:PricebookList[1]/ns0:PricebookEntryId)=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[string-length($Mapper/ns0:PricebookList[1]/ns0:PricebookEntryId)=0]]></bpws:transitionCondition>
+                        </bpws:source>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
@@ -692,6 +772,29 @@
                     </bpws:extensionActivity>
                 </bpws:flow>
             </bpws:scope>
+            <bpws:extensionActivity>
+                <tibex:extActivity
+                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/PricebookEntrySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Start&quot;/>&lt;xsl:template name=&quot;Invoke-RefreshPricebook-input&quot; match=&quot;/&quot;>&lt;tns:PricebookEntry>&lt;tns:PricebookList>&lt;xsl:if test=&quot;$Start/tns:PricebookList[1]/tns:Product2Id&quot;>&lt;tns:Product2Id>&lt;xsl:value-of select=&quot;$Start/tns:PricebookList[1]/tns:Product2Id&quot;/>&lt;/tns:Product2Id>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/tns:PricebookEntry>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                    inputVariable="Invoke-RefreshPricebook-input"
+                    name="Invoke RefreshPricebook"
+                    outputVariable="Invoke-RefreshPricebook"
+                    tibex:xpdlId="43d3019c-42d1-4dfa-9f60-10f5cd012423"
+                    type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="MapperToCallProcess"/>
+                    </bpws:targets>
+                    <bpws:sources>
+                        <bpws:source linkName="Invoke RefreshPricebookToEnd"/>
+                    </bpws:sources>
+                    <tibex:inputBindings>
+                        <tibex:inputBinding
+                            expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/PricebookEntrySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;Start&quot;/>&lt;xsl:template name=&quot;Invoke-RefreshPricebook-input&quot; match=&quot;/&quot;>&lt;tns:PricebookEntry>&lt;tns:PricebookList>&lt;xsl:if test=&quot;$Start/tns:PricebookList[1]/tns:Product2Id&quot;>&lt;tns:Product2Id>&lt;xsl:value-of select=&quot;$Start/tns:PricebookList[1]/tns:Product2Id&quot;/>&lt;/tns:Product2Id>&lt;/xsl:if>&lt;/tns:PricebookList>&lt;/tns:PricebookEntry>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                    </tibex:inputBindings>
+                    <tibex:CallProcess
+                        subProcessName="OtherProcesses.RefreshPriceBookEntry" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                </tibex:extActivity>
+            </bpws:extensionActivity>
         </bpws:flow>
     </bpws:scope>
 </bpws:process>
