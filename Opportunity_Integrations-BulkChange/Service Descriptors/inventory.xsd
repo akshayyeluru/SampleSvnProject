@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:platformCommon="urn:common_2015_1.platform.webservices.netsuite.com" xmlns:platformCommonTyp="urn:types.common_2015_1.platform.webservices.netsuite.com" xmlns:platformCore="urn:core_2015_1.platform.webservices.netsuite.com" xmlns:platformCoreTyp="urn:types.core_2015_1.platform.webservices.netsuite.com" xmlns:tranInvt="urn:inventory_2015_1.transactions.webservices.netsuite.com" xmlns:tranInvtTyp="urn:types.inventory_2015_1.transactions.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:inventory_2015_1.transactions.webservices.netsuite.com">
+  <import namespace="urn:core_2015_1.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
+  <import namespace="urn:common_2015_1.platform.webservices.netsuite.com" schemaLocation="common.xsd"/>
+  <import namespace="urn:types.inventory_2015_1.transactions.webservices.netsuite.com" schemaLocation="inventoryTypes.xsd"/>
+  <!--inventoryAdjustment/start-->
+  <element name="InventoryAdjustment" type="tranInvt:InventoryAdjustment"/>
+  <complexType name="InventoryAdjustment">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="estimatedTotalValue" type="xsd:double"/>
+          <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="adjLocation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="inventoryList" type="tranInvt:InventoryAdjustmentInventoryList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="InventoryAdjustmentInventory">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="currentValue" type="xsd:double"/>
+      <element minOccurs="0" name="adjustQtyBy" type="xsd:double"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="newQuantity" type="xsd:double"/>
+      <element minOccurs="0" name="unitCost" type="xsd:double"/>
+      <element minOccurs="0" name="foreignCurrencyUnitCost" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="currency" type="xsd:string"/>
+      <element minOccurs="0" name="expirationDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="InventoryAdjustmentInventoryList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="inventory" type="tranInvt:InventoryAdjustmentInventory"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--inventoryAdjustment/end-->
+  <element name="assemblyBuild" type="tranInvt:AssemblyBuild"/>
+  <complexType name="AssemblyBuild">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="expirationDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="buildable" type="xsd:double"/>
+          <element minOccurs="0" name="quantity" type="xsd:double"/>
+          <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+          <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="revision" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="componentList" type="tranInvt:AssemblyComponentList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <!--assemblyBuild/end-->
+  <!--assemblyUnbuild/start-->
+  <element name="assemblyUnbuild" type="tranInvt:AssemblyUnbuild"/>
+  <complexType name="AssemblyUnbuild">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="built" type="xsd:double"/>
+          <element minOccurs="0" name="quantity" type="xsd:double"/>
+          <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+          <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="componentList" type="tranInvt:AssemblyComponentList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AssemblyComponent">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="componentInventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="componentNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+    </sequence>
+  </complexType>
+  <complexType name="AssemblyComponentList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="component" type="tranInvt:AssemblyComponent"/>
+    </sequence>
+    <attribute default="false" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--assemblyUnbuild/end-->
+  <!--transferOrder/start-->
+  <element name="transferOrder" type="tranInvt:TransferOrder"/>
+  <complexType name="TransferOrder">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="shippingCost" type="xsd:double"/>
+          <element minOccurs="0" name="subTotal" type="xsd:double"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="shippingAddress" type="platformCommon:Address"/>
+          <element minOccurs="0" name="shipIsResidential" type="xsd:boolean"/>
+          <element minOccurs="0" name="shipAddressList" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="fob" type="xsd:string"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="source" type="xsd:string"/>
+          <element minOccurs="0" name="orderStatus" type="tranInvtTyp:TransferOrderOrderStatus"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="employee" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="firmed" type="xsd:boolean"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="transferLocation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="shipDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="shipMethod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="trackingNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="linkedTrackingNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="shipComplete" type="xsd:boolean"/>
+          <element minOccurs="0" name="altShippingCost" type="xsd:double"/>
+          <element minOccurs="0" name="shippingTax1Rate" type="xsd:double"/>
+          <element minOccurs="0" name="shippingTax2Rate" type="xsd:double"/>
+          <element minOccurs="0" name="handlingTax1Rate" type="xsd:double"/>
+          <element minOccurs="0" name="handlingTax2Rate" type="xsd:double"/>
+          <element minOccurs="0" name="shippingTaxCode" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="handlingTaxCode" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="itemList" type="tranInvt:TransferOrderItemList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="TransferOrderItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="quantityAvailable" type="xsd:double"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="quantityBackOrdered" type="xsd:double"/>
+      <element minOccurs="0" name="quantityCommitted" type="xsd:double"/>
+      <element minOccurs="0" name="quantityFulfilled" type="xsd:double"/>
+      <element minOccurs="0" name="quantityPacked" type="xsd:double"/>
+      <element minOccurs="0" name="quantityPicked" type="xsd:double"/>
+      <element minOccurs="0" name="quantityReceived" type="xsd:double"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="rate" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="commitInventory" type="tranInvtTyp:TransferOrderItemCommitInventory"/>
+      <element minOccurs="0" name="orderPriority" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="isClosed" type="xsd:boolean"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="lastPurchasePrice" type="xsd:double"/>
+      <element minOccurs="0" name="averageCost" type="xsd:double"/>
+      <element minOccurs="0" name="expectedShipDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="expectedReceiptDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="TransferOrderItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranInvt:TransferOrderItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--transferOrder/end-->
+  <element name="interCompanyTransferOrder" type="tranInvt:InterCompanyTransferOrder"/>
+  <complexType name="InterCompanyTransferOrder">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="shippingCost" type="xsd:double"/>
+          <element minOccurs="0" name="subTotal" type="xsd:double"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="shippingAddress" type="platformCommon:Address"/>
+          <element minOccurs="0" name="shipIsResidential" type="xsd:boolean"/>
+          <element minOccurs="0" name="shipAddressList" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="fob" type="xsd:string"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="source" type="xsd:string"/>
+          <element minOccurs="0" name="orderStatus" type="tranInvtTyp:TransferOrderOrderStatus"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="toSubsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="employee" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="transferLocation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="shipDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="shipMethod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="trackingNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="linkedTrackingNumbers" type="xsd:string"/>
+          <element minOccurs="0" name="shipComplete" type="xsd:boolean"/>
+          <element minOccurs="0" name="altShippingCost" type="xsd:double"/>
+          <element minOccurs="0" name="shippingTax1Rate" type="xsd:double"/>
+          <element minOccurs="0" name="handlingTax1Rate" type="xsd:double"/>
+          <element minOccurs="0" name="shippingTax2Rate" type="xsd:double"/>
+          <element minOccurs="0" name="handlingTax2Rate" type="xsd:double"/>
+          <element minOccurs="0" name="shippingTaxCode" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="handlingTaxCode" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="itemList" type="tranInvt:InterCompanyTransferOrderItemList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="InterCompanyTransferOrderItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="quantityAvailable" type="xsd:double"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="quantityBackOrdered" type="xsd:double"/>
+      <element minOccurs="0" name="quantityCommitted" type="xsd:double"/>
+      <element minOccurs="0" name="quantityFulfilled" type="xsd:double"/>
+      <element minOccurs="0" name="quantityReceived" type="xsd:double"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="rate" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="commitInventory" type="tranInvtTyp:TransferOrderItemCommitInventory"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="lastPurchasePrice" type="xsd:double"/>
+      <element minOccurs="0" name="averageCost" type="xsd:double"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="InterCompanyTransferOrderItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranInvt:InterCompanyTransferOrderItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="workOrder" type="tranInvt:WorkOrder"/>
+  <complexType name="WorkOrder">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="manufacturingRouting" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="autoCalculateLag" type="xsd:boolean"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="job" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="assemblyItem" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="expandAssembly" type="xsd:boolean"/>
+          <element minOccurs="0" name="isWip" type="xsd:boolean"/>
+          <element minOccurs="0" name="quantity" type="xsd:double"/>
+          <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="orderStatus" type="tranInvtTyp:WorkOrderOrderStatus"/>
+          <element minOccurs="0" name="firmed" type="xsd:boolean"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="itemList" type="tranInvt:WorkOrderItemList"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="schedulingMethod" type="tranInvtTyp:WorkOrderSchedulingMethod"/>
+          <element minOccurs="0" name="salesTeamList" type="tranInvt:SalesTeamList"/>
+          <element minOccurs="0" name="partnersList" type="tranInvt:PartnersList"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="sourceTransactionId" type="xsd:string"/>
+          <element minOccurs="0" name="sourceTransactionLine" type="xsd:long"/>
+          <element minOccurs="0" name="specialOrder" type="xsd:boolean"/>
+          <element minOccurs="0" name="buildable" type="xsd:double"/>
+          <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+          <element minOccurs="0" name="built" type="xsd:double"/>
+          <element minOccurs="0" name="startDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="endDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="revision" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="WorkOrderItem">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="operationSequenceNumber" type="xsd:long"/>
+      <element minOccurs="0" name="componentYield" type="xsd:double"/>
+      <element minOccurs="0" name="bomQuantity" type="xsd:double"/>
+      <element minOccurs="0" name="quantityCommitted" type="xsd:double"/>
+      <element minOccurs="0" name="quantityBackOrdered" type="xsd:double"/>
+      <element minOccurs="0" name="quantityAvailable" type="xsd:double"/>
+      <element minOccurs="0" name="averageCost" type="xsd:double"/>
+      <element minOccurs="0" name="lastPurchasePrice" type="xsd:double"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="orderPriority" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="poVendor" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="poRate" type="xsd:double"/>
+      <element minOccurs="0" name="percentComplete" type="xsd:double"/>
+      <element minOccurs="0" name="contribution" type="xsd:double"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="commit" type="tranInvtTyp:WorkOrderItemItemCommitInventory"/>
+      <element minOccurs="0" name="createPo" type="tranInvtTyp:WorkOrderItemItemCreatePo"/>
+      <element minOccurs="0" name="createWo" type="xsd:boolean"/>
+      <element minOccurs="0" name="plannedIssueDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <!--List-->
+  <complexType name="WorkOrderItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranInvt:WorkOrderItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="SalesTeamList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="salesTeam" type="platformCommon:CustomerSalesTeam"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="PartnersList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="partners" type="platformCommon:Partners"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="inventoryTransfer" type="tranInvt:InventoryTransfer"/>
+  <complexType name="InventoryTransfer">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="transferLocation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="inventoryList" type="tranInvt:InventoryTransferInventoryList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="InventoryTransferInventory">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
+      <element minOccurs="0" name="adjustQtyBy" type="xsd:double"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="fromBinNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="toBinNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+    </sequence>
+  </complexType>
+  <complexType name="InventoryTransferInventoryList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="inventory" type="tranInvt:InventoryTransferInventory"/>
+      <!--<element name="invt" type="tranInvt:InventoryTransferInvt" minOccurs="0" maxOccurs="unbounded"/>-->
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="binTransfer" type="tranInvt:BinTransfer"/>
+  <complexType name="BinTransfer">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="inventoryList" type="tranInvt:BinTransferInventoryList"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="BinTransferInventory">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="preferredBin" type="xsd:string"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="itemUnitsLabel" type="xsd:string"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="fromBins" type="xsd:string"/>
+      <element minOccurs="0" name="toBins" type="xsd:string"/>
+    </sequence>
+  </complexType>
+  <complexType name="BinTransferInventoryList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="inventory" type="tranInvt:BinTransferInventory"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="binWorksheet" type="tranInvt:BinWorksheet"/>
+  <complexType name="BinWorksheet">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="itemList" type="tranInvt:BinWorksheetItemList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="BinWorksheetItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="itemName" type="xsd:string"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="itemOnHand" type="xsd:string"/>
+      <element minOccurs="0" name="itemUnitsLabel" type="xsd:string"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="itemBins" type="xsd:string"/>
+      <element minOccurs="0" name="itemBinNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="itemBinList" type="xsd:string"/>
+      <element minOccurs="0" name="itemPreferBin" type="xsd:string"/>
+      <element minOccurs="0" name="itemBlank" type="xsd:string"/>
+    </sequence>
+  </complexType>
+  <complexType name="BinWorksheetItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranInvt:BinWorksheetItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="workOrderIssue" type="tranInvt:WorkOrderIssue"/>
+  <complexType name="WorkOrderIssue">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="revision" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="manufacturingRouting" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="startOperation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="endOperation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="componentList" type="tranInvt:WorkOrderIssueComponentList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="WorkOrderIssueComponent">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="operationSequenceNumber" type="xsd:long"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="componentInventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="lineNumber" type="xsd:long"/>
+    </sequence>
+  </complexType>
+  <complexType name="WorkOrderIssueComponentList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="workOrderIssueComponent" type="tranInvt:WorkOrderIssueComponent"/>
+    </sequence>
+    <attribute default="false" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="workOrderCompletion" type="tranInvt:WorkOrderCompletion"/>
+  <complexType name="WorkOrderCompletion">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="quantity" type="xsd:double"/>
+          <element minOccurs="0" name="scrapQuantity" type="xsd:double"/>
+          <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="isBackflush" type="xsd:boolean"/>
+          <element minOccurs="0" name="orderQuantity" type="xsd:double"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="revision" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="startOperation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="endOperation" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="completedQuantity" type="xsd:double"/>
+          <element minOccurs="0" name="manufacturingRouting" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="componentList" type="tranInvt:WorkOrderCompletionComponentList"/>
+          <element minOccurs="0" name="operationList" type="tranInvt:WorkOrderCompletionOperationList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="WorkOrderCompletionComponent">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="operationSequenceNumber" type="xsd:long"/>
+      <element minOccurs="0" name="quantityPer" type="xsd:double"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="componentInventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="lineNumber" type="xsd:long"/>
+    </sequence>
+  </complexType>
+  <complexType name="WorkOrderCompletionComponentList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="workOrderCompletionComponent" type="tranInvt:WorkOrderCompletionComponent"/>
+    </sequence>
+    <attribute default="false" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="workOrderClose" type="tranInvt:WorkOrderClose"/>
+  <complexType name="WorkOrderClose">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="quantity" type="xsd:double"/>
+          <element minOccurs="0" name="orderQuantity" type="xsd:double"/>
+          <element minOccurs="0" name="scrapQuantity" type="xsd:double"/>
+          <element minOccurs="0" name="createdFrom" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="revision" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="WorkOrderCompletionOperation">
+    <sequence>
+      <element minOccurs="0" name="operationSequence" type="xsd:long"/>
+      <element minOccurs="0" name="operationName" type="xsd:string"/>
+      <element minOccurs="0" name="workCenter" type="xsd:string"/>
+      <element minOccurs="0" name="machineResources" type="xsd:long"/>
+      <element minOccurs="0" name="laborResources" type="xsd:long"/>
+      <element minOccurs="0" name="inputQuantity" type="xsd:double"/>
+      <element minOccurs="0" name="quantityRemaining" type="xsd:double"/>
+      <element minOccurs="0" name="predecessorCompletedQuantity" type="xsd:double"/>
+      <element minOccurs="0" name="completedQuantity" type="xsd:double"/>
+      <element minOccurs="0" name="recordSetup" type="xsd:boolean"/>
+      <element minOccurs="0" name="machineSetupTime" type="xsd:double"/>
+      <element minOccurs="0" name="laborSetupTime" type="xsd:double"/>
+      <element minOccurs="0" name="machineRunTime" type="xsd:double"/>
+      <element minOccurs="0" name="laborRunTime" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="WorkOrderCompletionOperationList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="workOrderCompletionOperation" type="tranInvt:WorkOrderCompletionOperation"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <element name="inventoryCostRevaluation" type="tranInvt:InventoryCostRevaluation"/>
+  <complexType name="InventoryCostRevaluation">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="inventoryValue" type="xsd:double"/>
+          <element minOccurs="0" name="unitCost" type="xsd:double"/>
+          <element minOccurs="0" name="costComponentList" type="tranInvt:InventoryCostRevaluationCostComponentList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="InventoryCostRevaluationCostComponent">
+    <sequence>
+      <element minOccurs="0" name="cost" type="xsd:double"/>
+      <element minOccurs="0" name="componentItem" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="costCategory" type="platformCore:RecordRef"/>
+    </sequence>
+  </complexType>
+  <complexType name="InventoryCostRevaluationCostComponentList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="costComponent" type="tranInvt:InventoryCostRevaluationCostComponent"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+</schema>
