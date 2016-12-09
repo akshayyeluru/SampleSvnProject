@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:platformCommon="urn:common_2015_1.platform.webservices.netsuite.com" xmlns:platformCommonTyp="urn:types.common_2015_1.platform.webservices.netsuite.com" xmlns:platformCore="urn:core_2015_1.platform.webservices.netsuite.com" xmlns:platformCoreTyp="urn:types.core_2015_1.platform.webservices.netsuite.com" xmlns:tranBank="urn:bank_2015_1.transactions.webservices.netsuite.com" xmlns:tranBankTyp="urn:types.bank_2015_1.transactions.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:bank_2015_1.transactions.webservices.netsuite.com">
+  <import namespace="urn:core_2015_1.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
+  <import namespace="urn:common_2015_1.platform.webservices.netsuite.com" schemaLocation="common.xsd"/>
+  <import namespace="urn:types.common_2015_1.platform.webservices.netsuite.com" schemaLocation="commonTypes.xsd"/>
+  <import namespace="urn:types.bank_2015_1.transactions.webservices.netsuite.com" schemaLocation="bankTypes.xsd"/>
+  <complexType name="CheckLandedCostList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="landedCost" type="platformCommon:LandedCostSummary"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--check/start-->
+  <element name="Check" type="tranBank:Check"/>
+  <complexType name="Check">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="status" type="xsd:string"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="balance" type="xsd:double"/>
+          <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="address" type="xsd:string"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="voidJournal" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="toBePrinted" type="xsd:boolean"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="taxTotal" type="xsd:double"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="tax2Total" type="xsd:double"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="userTotal" type="xsd:double"/>
+          <element minOccurs="0" name="landedCostMethod" type="platformCommonTyp:LandedCostMethod"/>
+          <element minOccurs="0" name="landedCostPerLine" type="xsd:boolean"/>
+          <element minOccurs="0" name="transactionNumber" type="xsd:string"/>
+          <element minOccurs="0" name="expenseList" type="tranBank:CheckExpenseList"/>
+          <element minOccurs="0" name="itemList" type="tranBank:CheckItemList"/>
+          <element minOccurs="0" name="landedCostsList" type="tranBank:CheckLandedCostList"/>
+          <element minOccurs="0" name="billPay" type="xsd:boolean"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CheckExpense">
+    <sequence>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="category" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="CheckExpenseList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="expense" type="tranBank:CheckExpense"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="CheckItem">
+    <sequence>
+      <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="vendorName" type="xsd:string"/>
+      <element minOccurs="0" name="line" type="xsd:long"/>
+      <element minOccurs="0" name="quantity" type="xsd:double"/>
+      <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="inventoryDetail" type="platformCommon:InventoryDetail"/>
+      <element minOccurs="0" name="description" type="xsd:string"/>
+      <element minOccurs="0" name="binNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="serialNumbers" type="xsd:string"/>
+      <element minOccurs="0" name="expirationDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="rate" type="xsd:string"/>
+      <element minOccurs="0" name="taxCode" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="options" type="platformCore:CustomFieldList"/>
+      <element minOccurs="0" name="taxRate1" type="xsd:double"/>
+      <element minOccurs="0" name="taxRate2" type="xsd:double"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="grossAmt" type="xsd:double"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="tax1Amt" type="xsd:double"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="customer" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="isBillable" type="xsd:boolean"/>
+      <element minOccurs="0" name="landedCost" type="platformCommon:LandedCost"/>
+      <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+    </sequence>
+  </complexType>
+  <complexType name="CheckItemList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="item" type="tranBank:CheckItem"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <!--check/end-->
+  <element name="deposit" type="tranBank:Deposit"/>
+  <complexType name="Deposit">
+    <complexContent>
+      <extension base="platformCore:Record">
+        <sequence>
+          <element minOccurs="0" name="createdDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="lastModifiedDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="currencyName" type="xsd:string"/>
+          <element minOccurs="0" name="tranId" type="xsd:string"/>
+          <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="total" type="xsd:double"/>
+          <element minOccurs="0" name="exchangeRate" type="xsd:double"/>
+          <element minOccurs="0" name="tranDate" type="xsd:dateTime"/>
+          <element minOccurs="0" name="postingPeriod" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="memo" type="xsd:string"/>
+          <element minOccurs="0" name="toBePrinted" type="xsd:boolean"/>
+          <element minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+          <element minOccurs="0" name="paymentList" type="tranBank:DepositPaymentList"/>
+          <element minOccurs="0" name="otherList" type="tranBank:DepositOtherList"/>
+          <element minOccurs="0" name="cashBackList" type="tranBank:DepositCashBackList"/>
+          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+        </sequence>
+        <!--primary record internalId-->
+        <attribute name="internalId" type="xsd:string"/>
+        <attribute name="externalId" type="xsd:string"/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="DepositPayment">
+    <sequence>
+      <element minOccurs="0" name="deposit" type="xsd:boolean"/>
+      <element minOccurs="0" name="id" type="xsd:long"/>
+      <element minOccurs="0" name="docDate" type="xsd:dateTime"/>
+      <element minOccurs="0" name="type" type="xsd:string"/>
+      <element minOccurs="0" name="docNumber" type="xsd:string"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+      <element minOccurs="0" name="paymentMethod" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="refNum" type="xsd:string"/>
+      <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="currency" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="transactionAmount" type="xsd:double"/>
+      <element minOccurs="0" name="paymentAmount" type="xsd:double"/>
+    </sequence>
+  </complexType>
+  <complexType name="DepositPaymentList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="depositPayment" type="tranBank:DepositPayment"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="DepositCashBack">
+    <sequence>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+    </sequence>
+  </complexType>
+  <complexType name="DepositCashBackList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="depositCashBack" type="tranBank:DepositCashBack"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+  <complexType name="DepositOther">
+    <sequence>
+      <element minOccurs="0" name="entity" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="amount" type="xsd:double"/>
+      <element minOccurs="0" name="account" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="paymentMethod" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="refNum" type="xsd:string"/>
+      <element minOccurs="0" name="department" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="class" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="location" type="platformCore:RecordRef"/>
+      <element minOccurs="0" name="memo" type="xsd:string"/>
+    </sequence>
+  </complexType>
+  <complexType name="DepositOtherList">
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="depositOther" type="tranBank:DepositOther"/>
+    </sequence>
+    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+  </complexType>
+</schema>
