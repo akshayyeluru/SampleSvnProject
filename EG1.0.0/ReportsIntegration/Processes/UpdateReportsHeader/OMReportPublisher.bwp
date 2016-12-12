@@ -1530,6 +1530,60 @@
                                     xsi:type="notation:Bounds" y="171"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@activities.16"/>
+
+                                    <layoutConstraint
+                                    x="490"
+                                    xsi:type="notation:Bounds" y="94"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2995,6 +3049,17 @@
             <bendpoints
                 points="[25, 0, -101, 72]$[73, 0, -53, 72]$[73, -65, -53, 7]$[102, -65, -24, 7]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.5"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.14" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.18"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/OrderManager/OMReport.xsd" namespace="http://www.example.org/OMReport"/>
@@ -3097,6 +3162,7 @@
             sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
             sca-bpel:property="yes"
             tibex:propertySource="BillpayerPublisher" type="xsd:string"/>
+        <bpws:variable element="ns18:DefaultFault" name="Throw1-input" sca-bpel:internal="true"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -3517,7 +3583,7 @@
                                     <bpws:link
                                     name="RenderInvokeBillPayerToInvokeBillPayer" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="ParseBillPayerToAfterInvokeBillPayer" tibex:linkType="SUCCESS"/>
+                                    name="ParseBillPayerToAfterInvokeBillPayer" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
                                     name="ParseOrgNodeToAfterInvokeOrgNode" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
@@ -3538,6 +3604,8 @@
                                     name="BeforeInvokeBillPayerToRenderInvokeBillPayer1" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="AfterInvokeBillPayerToReportDataMapper" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="ParseBillPayerToThrow1" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty name="GroupStart1"
                                     tibex:group="groupStart" tibex:xpdlId="ed193dd9-c7c4-4545-8896-2c1da0985dfc">
@@ -3787,7 +3855,22 @@
                                     <bpws:target linkName="InvokeRESTAPIToParseJSON1"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="ParseBillPayerToAfterInvokeBillPayer"/>
+                                    <bpws:source linkName="ParseBillPayerToAfterInvokeBillPayer">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length($ParseBillPayer/ns10:BillPayerResult[1]/ns10:SFID)!=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length($ParseBillPayer/ns10:BillPayerResult[1]/ns10:SFID)!=0]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    <bpws:source linkName="ParseBillPayerToThrow1">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length($ParseBillPayer/ns10:BillPayerResult[1]/ns10:SFID)=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length($ParseBillPayer/ns10:BillPayerResult[1]/ns10:SFID)=0]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
@@ -4129,6 +4212,20 @@
                                     </tibex:config>
                                     </tibex:activityExtension>
                                     </bpws:extensionActivity>
+                                    <bpws:throw
+                                    faultName="ns18:DefaultFault"
+                                    faultVariable="Throw1-input"
+                                    name="Throw1" tibex:xpdlId="b4663eb5-0260-40b3-ad60-cd54e29c1def">
+                                    <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions" xmlns:tns1="http://www.example.org/BillPayerResultMapper" version="2.0"&gt;&lt;xsl:param name="ParseBillPayer"/&gt;&lt;xsl:template name="Throw1-input" match="/"&gt;&lt;tns:DefaultFault&gt;&lt;message&gt;&lt;xsl:value-of select="concat(&amp;quot;Error occured while invoking Billpayer : &amp;quot;,$ParseBillPayer/tns1:BillPayerResult[1]/tns1:StatusMessage)"/&gt;&lt;/message&gt;&lt;msgCode&gt;&lt;xsl:value-of select="&amp;quot;UpdateReportsHeader:OMReportPublisher&amp;quot;"/&gt;&lt;/msgCode&gt;&lt;/tns:DefaultFault&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+                                    <tibex:inputBindings>
+                                    <tibex:partBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions&quot; xmlns:tns1=&quot;http://www.example.org/BillPayerResultMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ParseBillPayer&quot;/>&lt;xsl:template name=&quot;Throw1-input&quot; match=&quot;/&quot;>&lt;tns:DefaultFault>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured while invoking Billpayer : &amp;quot;,$ParseBillPayer/tns1:BillPayerResult[1]/tns1:StatusMessage)&quot;/>&lt;/message>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;UpdateReportsHeader:OMReportPublisher&amp;quot;&quot;/>&lt;/msgCode>&lt;/tns:DefaultFault>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <bpws:targets>
+                                    <bpws:target linkName="ParseBillPayerToThrow1"/>
+                                    </bpws:targets>
+                                    </bpws:throw>
                                     </bpws:flow>
                                 </bpws:scope>
                                 <bpws:extensionActivity>
