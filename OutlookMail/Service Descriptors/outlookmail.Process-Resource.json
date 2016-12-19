@@ -1,0 +1,67 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "Summary about the new REST service.",
+    "description" : "Summary about the new REST service."
+  },
+  "host" : "localhost:8082",
+  "basePath" : "/",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/Mail" : {
+      "post" : {
+        "description" : "",
+        "operationId" : "post-Mail",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "description" : "",
+          "schema" : {
+            "$ref" : "#/definitions/MailList"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a string to be returned",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Mail" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "Subject" : {
+          "type" : "string"
+        },
+        "Body" : {
+          "type" : "string"
+        }
+      }
+    },
+    "MailList" : {
+      "type" : "object",
+      "required" : [ ],
+      "properties" : {
+        "Mail" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Mail",
+            "uniqueItems" : false
+          }
+        }
+      }
+    }
+  }
+}
