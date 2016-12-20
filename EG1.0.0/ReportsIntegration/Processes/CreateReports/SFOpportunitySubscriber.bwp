@@ -20,6 +20,13 @@
     xmlns:ns19="http://www.example.org/SFCase"
     xmlns:ns2="http://tns.tibco.com/bw/json/1477641114308"
     xmlns:ns20="http://www.example.org/CaseResultSchema"
+    xmlns:ns21="activity.jsonRender.output+9fe3cf93-de63-4fe9-abb3-62c5a6c23adf+ActivityOutputType"
+    xmlns:ns22="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeInput"
+    xmlns:ns23="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeOutput"
+    xmlns:ns24="http://www.example.org/Mail"
+    xmlns:ns25="activity.jsonRender.output+48aa143e-b22c-47bc-b060-000677698ac7+ActivityOutputType"
+    xmlns:ns26="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeInput"
+    xmlns:ns27="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeOutput"
     xmlns:ns3="activity.jsonRender.output+165fc804-d0f5-4ac6-9331-88a31c757a7c+ActivityOutputType"
     xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2bb93e67-0b81-4f71-8482-5501cd199dfd+RestInvokeInput"
     xmlns:ns5="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+2bb93e67-0b81-4f71-8482-5501cd199dfd+RestInvokeOutput"
@@ -730,6 +737,300 @@
             </xs:complexType>
             <xs:element name="ActivityInput" type="tns:LogParametersType"/>
         </xs:schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+9fe3cf93-de63-4fe9-abb3-62c5a6c23adf+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+9fe3cf93-de63-4fe9-abb3-62c5a6c23adf+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+48aa143e-b22c-47bc-b060-000677698ac7+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+48aa143e-b22c-47bc-b060-000677698ac7+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161105171304"
             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
@@ -2178,6 +2479,170 @@
                                     x="30"
                                     xsi:type="notation:Bounds" y="42"/>
                                     </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint
+                                    x="507"
+                                    xsi:type="notation:Bounds" y="42"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint
+                                    x="376"
+                                    xsi:type="notation:Bounds" y="42"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@activities.3"/>
+                                    <layoutConstraint
+                                    x="129"
+                                    xsi:type="notation:Bounds" y="42"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@activities.4"/>
+                                    <layoutConstraint
+                                    x="264"
+                                    xsi:type="notation:Bounds" y="42"/>
+                                    </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -2192,7 +2657,7 @@
                                     <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity"/>
                                     <layoutConstraint
                                     height="168"
-                                    width="1490" xsi:type="notation:Bounds"/>
+                                    width="1595" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -2498,6 +2963,50 @@
             <bendpoints
                 points="[25, 13, -22, -84]$[47, 13, 0, -84]$[47, 73, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[25, 0, -74, 0]$[75, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.4"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@faultHandlers/@catchAll/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[25, 0, -87, 0]$[88, 0, -24, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/Salesforce/SFOpportunity.xsd" namespace="http://www.example.org/SFOpportunity"/>
@@ -2511,6 +3020,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/CaseResultSchema"/>
     <bpws:import importType="http://schemas.xmlsoap.org/wsdl/"
         location="../../Service%20Descriptors/OpportunityServiceUtils.wsdl" namespace="http://soap.sforce.com/schemas/class/OpportunityServiceUtils"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/Mail"/>
     <bpws:partnerLinks>
         <bpws:partnerLink name="OpportunityServiceUtilsPortType"
             partnerLinkType="ns6:partnerLinkType" partnerRole="use"
@@ -2805,6 +3315,24 @@
         <bpws:variable element="ns18:ActivityInput"
             name="ScopeErrorLog-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns18:ActivityInput" name="Log1-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns2:OMQueueChangeStatusElementArray"
+            name="RenderErrorData-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns21:ActivityOutputClass"
+            name="RenderErrorData" sca-bpel:internal="true"/>
+        <bpws:variable element="ns22:RestActivityInput"
+            name="UpdateQueue-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns23:RestActivityOutput"
+            name="UpdateQueue" sca-bpel:internal="true"/>
+        <bpws:variable element="ns24:MailList" name="RenderMail-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns25:ActivityOutputClass"
+            name="RenderMail" sca-bpel:internal="true"/>
+        <bpws:variable element="ns26:RestActivityInput"
+            name="InvokeMail-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns27:RestActivityOutput"
+            name="InvokeMail" sca-bpel:internal="true"/>
+        <bpws:variable name="MailPath1" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="MailPath" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2820,13 +3348,22 @@
                 tibex:faultNameVar="FaultName1" tibex:xpdlId="193f04a2-1c19-4d2a-aaee-80764c1b8064">
                 <bpws:scope name="scope2">
                     <bpws:flow name="flow3">
-                        <bpws:links/>
+                        <bpws:links>
+                            <bpws:link name="__Link" tibex:linkType="SUCCESS"/>
+                            <bpws:link name="__Link1" tibex:linkType="SUCCESS"/>
+                            <bpws:link name="LogToRenderMail" tibex:linkType="SUCCESS"/>
+                            <bpws:link
+                                name="InvokeMailToRenderErrorData" tibex:linkType="SUCCESS"/>
+                        </bpws:links>
                         <bpws:extensionActivity>
                             <tibex:activityExtension
                                 expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:tns1=&quot;http://www.example.org/SFOpportunity&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:param name=&quot;SFOpportunityMapper&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;CreateReports:SFOpportunitySubscriber&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured processing Queue Records : &amp;quot;,tib:concat-sequence-format($SFOpportunityMapper/tns1:SFOpportunityList/tns1:OMQueueID,&amp;quot;,&amp;quot;),&amp;quot; ; &amp;quot;,tib:concat-sequence($FaultDetails1/Data/*),$FaultDetails1/StackTrace)&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                 expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                 inputVariable="Log-input" name="Log"
                                 tibex:xpdlId="abf59da4-826e-4391-8fe7-934b611aa231" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <bpws:sources>
+                                    <bpws:source linkName="LogToRenderMail"/>
+                                </bpws:sources>
                                 <tibex:inputBindings>
                                     <tibex:inputBinding
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:tns1=&quot;http://www.example.org/SFOpportunity&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:param name=&quot;SFOpportunityMapper&quot;/>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;CreateReports:SFOpportunitySubscriber&amp;quot;&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured processing Queue Records : &amp;quot;,tib:concat-sequence-format($SFOpportunityMapper/tns1:SFOpportunityList/tns1:OMQueueID,&amp;quot;,&amp;quot;),&amp;quot; ; &amp;quot;,tib:concat-sequence($FaultDetails1/Data/*),$FaultDetails1/StackTrace)&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
@@ -2843,6 +3380,161 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
                                     <value role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                </tibex:config>
+                            </tibex:activityExtension>
+                        </bpws:extensionActivity>
+                        <bpws:extensionActivity>
+                            <tibex:activityExtension
+                                expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderErrorData&quot;/>&lt;xsl:template name=&quot;UpdateQueue-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderErrorData/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                governedObjectTypes="BWHttpReference"
+                                inputVariable="UpdateQueue-input"
+                                name="UpdateQueue"
+                                outputVariable="UpdateQueue"
+                                tibex:xpdlId="a2116a03-ec92-4aa7-ab77-cbf0ffbff789" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <bpws:targets>
+                                    <bpws:target linkName="__Link"/>
+                                </bpws:targets>
+                                <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+a2116a03-ec92-4aa7-ab77-cbf0ffbff789+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderErrorData&quot;/>&lt;xsl:template name=&quot;UpdateQueue-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderErrorData/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                </tibex:inputBindings>
+                                <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+                                    <value
+                                    httpClientSR="httpClientResource"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    resourcePath="/ChangeQueue"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                </tibex:config>
+                            </tibex:activityExtension>
+                        </bpws:extensionActivity>
+                        <bpws:extensionActivity>
+                            <tibex:activityExtension
+                                expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477641114308&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFOpportunityMapper&quot;/>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:template name=&quot;RenderErrorData-input&quot; match=&quot;/&quot;>&lt;tns1:OMQueueChangeStatusElementArray>&lt;xsl:for-each select=&quot;$SFOpportunityMapper/tns:SFOpportunityList&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer(tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured processing Queue Records in  CreateReports:SFOpportunitySubscriber : &amp;quot;,tib:concat-sequence-format(tns:OMQueueID,&amp;quot;,&amp;quot;),&amp;quot; ; &amp;quot;,tib:concat-sequence($FaultDetails1/Data/*),$FaultDetails1/StackTrace)&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:for-each>&lt;/tns1:OMQueueChangeStatusElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                inputVariable="RenderErrorData-input"
+                                name="RenderErrorData"
+                                outputVariable="RenderErrorData"
+                                tibex:xpdlId="9fe3cf93-de63-4fe9-abb3-62c5a6c23adf" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <bpws:targets>
+                                    <bpws:target linkName="InvokeMailToRenderErrorData"/>
+                                </bpws:targets>
+                                <bpws:sources>
+                                    <bpws:source linkName="__Link"/>
+                                </bpws:sources>
+                                <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477641114308&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFOpportunityMapper&quot;/>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:template name=&quot;RenderErrorData-input&quot; match=&quot;/&quot;>&lt;tns1:OMQueueChangeStatusElementArray>&lt;xsl:for-each select=&quot;$SFOpportunityMapper/tns:SFOpportunityList&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer(tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;&amp;quot;E&amp;quot;&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured processing Queue Records in  CreateReports:SFOpportunitySubscriber : &amp;quot;,tib:concat-sequence-format(tns:OMQueueID,&amp;quot;,&amp;quot;),&amp;quot; ; &amp;quot;,tib:concat-sequence($FaultDetails1/Data/*),$FaultDetails1/StackTrace)&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:for-each>&lt;/tns1:OMQueueChangeStatusElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                </tibex:inputBindings>
+                                <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+                                    <value
+                                    jsonOutputStyle="Anonymous Array"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+                                    <inputEditorElement href="platform:/resource/ReportsIntegration/Schemas/OrderManager/OMQueueChangeStatusResource.xsd#//OMQueueChangeStatusElementArray;XSDElementDeclaration=1"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                </tibex:config>
+                            </tibex:activityExtension>
+                        </bpws:extensionActivity>
+                        <bpws:extensionActivity>
+                            <tibex:activityExtension
+                                expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:tns1=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:param name=&quot;SFOpportunityMapper&quot;/>&lt;xsl:template name=&quot;RenderMail-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured in CreateReports:SFOpportunitySubscriber : &amp;quot;,$FaultDetails1/Msg)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured processing Queue Records : &amp;quot;,tib:concat-sequence-format($SFOpportunityMapper/tns1:SFOpportunityList/tns1:OMQueueID,&amp;quot;,&amp;quot;),&amp;quot; ; &amp;quot;,tib:concat-sequence($FaultDetails1/Data/*),$FaultDetails1/StackTrace)&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                inputVariable="RenderMail-input"
+                                name="RenderMail"
+                                outputVariable="RenderMail"
+                                tibex:xpdlId="48aa143e-b22c-47bc-b060-000677698ac7" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <bpws:targets>
+                                    <bpws:target linkName="LogToRenderMail"/>
+                                </bpws:targets>
+                                <bpws:sources>
+                                    <bpws:source linkName="__Link1"/>
+                                </bpws:sources>
+                                <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:tns1=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:param name=&quot;SFOpportunityMapper&quot;/>&lt;xsl:template name=&quot;RenderMail-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured in CreateReports:SFOpportunitySubscriber : &amp;quot;,$FaultDetails1/Msg)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error occured processing Queue Records : &amp;quot;,tib:concat-sequence-format($SFOpportunityMapper/tns1:SFOpportunityList/tns1:OMQueueID,&amp;quot;,&amp;quot;),&amp;quot; ; &amp;quot;,tib:concat-sequence($FaultDetails1/Data/*),$FaultDetails1/StackTrace)&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                </tibex:inputBindings>
+                                <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+                                    <inputEditorElement href="platform:/resource/ReportsIntegration/Schemas/OtherSchemas/MailSchema.xsd#//MailList;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                </tibex:config>
+                            </tibex:activityExtension>
+                        </bpws:extensionActivity>
+                        <bpws:extensionActivity>
+                            <tibex:activityExtension
+                                expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderMail&quot;/>&lt;xsl:template name=&quot;InvokeMail-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderMail/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                governedObjectTypes="BWHttpReference"
+                                inputVariable="InvokeMail-input"
+                                name="InvokeMail"
+                                outputVariable="InvokeMail"
+                                tibex:xpdlId="4c11ff9b-bb89-4fea-8612-553592c08ca7" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <bpws:targets>
+                                    <bpws:target linkName="__Link1"/>
+                                </bpws:targets>
+                                <bpws:sources>
+                                    <bpws:source linkName="InvokeMailToRenderErrorData"/>
+                                </bpws:sources>
+                                <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+4c11ff9b-bb89-4fea-8612-553592c08ca7+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;RenderMail&quot;/>&lt;xsl:template name=&quot;InvokeMail-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$RenderMail/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                </tibex:inputBindings>
+                                <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <attributeBindings
+                                    bindingType="moduleProperty"
+                                    eAttributeName="resourcePath" processProperty="MailPath1"/>
+                                    <activityConfig>
+                                    <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+                                    <value
+                                    httpClientSR="Property"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
@@ -3264,7 +3956,7 @@
                                     </bpws:empty>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477641114308&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns2=&quot;http://soap.sforce.com/schemas/class/OpportunityServiceUtils&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns3=&quot;http://www.example.org/CaseResultSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ReportData&quot;/>&lt;xsl:param name=&quot;index&quot;/>&lt;xsl:param name=&quot;Create-Opportunity&quot;/>&lt;xsl:param name=&quot;UpdateSFID&quot;/>&lt;xsl:param name=&quot;Invoke-CreateCase&quot;/>&lt;xsl:template name=&quot;RenderQueueStatus-input&quot; match=&quot;/&quot;>&lt;tns1:OMQueueChangeStatusElementArray>&lt;xsl:choose>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and string-length($ReportData/tns:OMBulkOrderID) = 0 and string-length($ReportData/tns:OwnerId) != 0&quot;>&lt;xsl:choose>&lt;xsl:when test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusFlag='true'&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;xsl:if test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;/>&lt;/tns1:Message>&lt;/xsl:if>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and (string-length($ReportData/tns:OMBulkOrderID) != 0 or string-length($ReportData/tns:OwnerId) = 0)&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode != 200&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;concat('Error occured while updating SFID to OMReport : ',$UpdateSFID/reasonPhrase,$UpdateSFID/MessageBody/asciiContent)&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = false()&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;xsl:if test=&quot;not(($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage&quot;/>&lt;/tns1:Message>&lt;/xsl:if>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:otherwise/>&lt;/xsl:choose>&lt;/tns1:OMQueueChangeStatusElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477641114308&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns2=&quot;http://soap.sforce.com/schemas/class/OpportunityServiceUtils&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns3=&quot;http://www.example.org/CaseResultSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;ReportData&quot;/>&lt;xsl:param name=&quot;index&quot;/>&lt;xsl:param name=&quot;Create-Opportunity&quot;/>&lt;xsl:param name=&quot;UpdateSFID&quot;/>&lt;xsl:param name=&quot;Invoke-CreateCase&quot;/>&lt;xsl:template name=&quot;RenderQueueStatus-input&quot; match=&quot;/&quot;>&lt;tns1:OMQueueChangeStatusElementArray>&lt;xsl:choose>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and string-length($ReportData/tns:OMBulkOrderID) = 0 and string-length($ReportData/tns:OwnerId) != 0&quot;>&lt;xsl:choose>&lt;xsl:when test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusFlag='true'&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:otherwise>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;xsl:if test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;/>&lt;/tns1:Message>&lt;/xsl:if>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and (string-length($ReportData/tns:OMBulkOrderID) != 0 or string-length($ReportData/tns:OwnerId) = 0)&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'S'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;'Success'&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode != 200&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;tns1:Message>&lt;xsl:value-of select=&quot;concat('Error occured while updating SFID to OMReport : ',$UpdateSFID/reasonPhrase,$UpdateSFID/MessageBody/asciiContent)&quot;/>&lt;/tns1:Message>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = false() and contains($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage, &amp;quot;UNABLE_TO_LOCK_ROW&amp;quot;)&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'N'&quot;/>&lt;/tns1:Status>&lt;xsl:if test=&quot;not(($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage&quot;/>&lt;/tns1:Message>&lt;/xsl:if>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:when test=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:isSuccess = false()&quot;>&lt;tns1:OMQueueChangeStatusElement>&lt;tns1:Id>&lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&lt;/tns1:Id>&lt;tns1:Status>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/tns1:Status>&lt;xsl:if test=&quot;not(($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns1:Message>&lt;xsl:value-of select=&quot;$Create-Opportunity/parameters/tns2:createMultipleSelfServiceOppsResponse/tns2:result[number($index)]/tns2:errorMessage&quot;/>&lt;/tns1:Message>&lt;/xsl:if>&lt;/tns1:OMQueueChangeStatusElement>&lt;/xsl:when>&lt;xsl:otherwise/>&lt;/xsl:choose>&lt;/tns1:OMQueueChangeStatusElementArray>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="RenderQueueStatus-input"
                                     name="RenderQueueStatus"
@@ -3280,7 +3972,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477641114308&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns2=&quot;http://soap.sforce.com/schemas/class/OpportunityServiceUtils&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns3=&quot;http://www.example.org/CaseResultSchema&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Create-Opportunity.parameters&quot;/>&#xa;    &lt;xsl:param name=&quot;ReportData&quot;/>&#xa;    &lt;xsl:param name=&quot;index&quot;/>&#xa;    &lt;xsl:param name=&quot;UpdateSFID&quot;/>&#xa;    &lt;xsl:param name=&quot;Invoke-CreateCase&quot;/>&#xa;    &lt;xsl:template name=&quot;RenderQueueStatus-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns1:OMQueueChangeStatusElementArray>&#xa;            &lt;xsl:choose>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and string-length($ReportData/tns:OMBulkOrderID) = 0 and string-length($ReportData/tns:OwnerId) != 0&quot;>&#xa;                    &lt;xsl:choose>&#xa;                        &lt;xsl:when test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusFlag='true'&quot;>&#xa;                            &lt;tns1:OMQueueChangeStatusElement>&#xa;                                &lt;tns1:Id>&#xa;                                    &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                                &lt;/tns1:Id>&#xa;                                &lt;tns1:Status>&#xa;                                    &lt;xsl:value-of select=&quot;'S'&quot;/>&#xa;                                &lt;/tns1:Status>&#xa;                                &lt;tns1:Message>&#xa;                                    &lt;xsl:value-of select=&quot;'Success'&quot;/>&#xa;                                &lt;/tns1:Message>&#xa;                            &lt;/tns1:OMQueueChangeStatusElement>&#xa;                        &lt;/xsl:when>&#xa;                        &lt;xsl:otherwise>&#xa;                            &lt;tns1:OMQueueChangeStatusElement>&#xa;                                &lt;tns1:Id>&#xa;                                    &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                                &lt;/tns1:Id>&#xa;                                &lt;tns1:Status>&#xa;                                    &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                                &lt;/tns1:Status>&#xa;                                &lt;xsl:if test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;>&#xa;                                    &lt;tns1:Message>&#xa;                                        &lt;xsl:value-of select=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;/>&#xa;                                    &lt;/tns1:Message>&#xa;                                &lt;/xsl:if>&#xa;                            &lt;/tns1:OMQueueChangeStatusElement>&#xa;                        &lt;/xsl:otherwise>&#xa;                    &lt;/xsl:choose>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and (string-length($ReportData/tns:OMBulkOrderID) != 0 or string-length($ReportData/tns:OwnerId) = 0)&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'S'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;tns1:Message>&#xa;                            &lt;xsl:value-of select=&quot;'Success'&quot;/>&#xa;                        &lt;/tns1:Message>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode != 200&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;tns1:Message>&#xa;                            &lt;xsl:value-of select=&quot;concat('Error occured while updating SFID to OMReport : ',$UpdateSFID/reasonPhrase,$UpdateSFID/MessageBody/asciiContent)&quot;/>&#xa;                        &lt;/tns1:Message>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = false()&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;xsl:if test=&quot;not(($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&#xa;                            &lt;tns1:Message>&#xa;                                &lt;xsl:value-of select=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage&quot;/>&#xa;                            &lt;/tns1:Message>&#xa;                        &lt;/xsl:if>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:otherwise/>&#xa;            &lt;/xsl:choose>&#xa;        &lt;/tns1:OMQueueChangeStatusElementArray>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/SFOpportunity&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477641114308&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns2=&quot;http://soap.sforce.com/schemas/class/OpportunityServiceUtils&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns3=&quot;http://www.example.org/CaseResultSchema&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;Create-Opportunity.parameters&quot;/>&#xa;    &lt;xsl:param name=&quot;ReportData&quot;/>&#xa;    &lt;xsl:param name=&quot;index&quot;/>&#xa;    &lt;xsl:param name=&quot;UpdateSFID&quot;/>&#xa;    &lt;xsl:param name=&quot;Invoke-CreateCase&quot;/>&#xa;    &lt;xsl:template name=&quot;RenderQueueStatus-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns1:OMQueueChangeStatusElementArray>&#xa;            &lt;xsl:choose>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and string-length($ReportData/tns:OMBulkOrderID) = 0 and string-length($ReportData/tns:OwnerId) != 0&quot;>&#xa;                    &lt;xsl:choose>&#xa;                        &lt;xsl:when test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusFlag='true'&quot;>&#xa;                            &lt;tns1:OMQueueChangeStatusElement>&#xa;                                &lt;tns1:Id>&#xa;                                    &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                                &lt;/tns1:Id>&#xa;                                &lt;tns1:Status>&#xa;                                    &lt;xsl:value-of select=&quot;'S'&quot;/>&#xa;                                &lt;/tns1:Status>&#xa;                                &lt;tns1:Message>&#xa;                                    &lt;xsl:value-of select=&quot;'Success'&quot;/>&#xa;                                &lt;/tns1:Message>&#xa;                            &lt;/tns1:OMQueueChangeStatusElement>&#xa;                        &lt;/xsl:when>&#xa;                        &lt;xsl:otherwise>&#xa;                            &lt;tns1:OMQueueChangeStatusElement>&#xa;                                &lt;tns1:Id>&#xa;                                    &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                                &lt;/tns1:Id>&#xa;                                &lt;tns1:Status>&#xa;                                    &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                                &lt;/tns1:Status>&#xa;                                &lt;xsl:if test=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;>&#xa;                                    &lt;tns1:Message>&#xa;                                        &lt;xsl:value-of select=&quot;$Invoke-CreateCase/tns3:CaseResultList/tns3:StatusMessage&quot;/>&#xa;                                    &lt;/tns1:Message>&#xa;                                &lt;/xsl:if>&#xa;                            &lt;/tns1:OMQueueChangeStatusElement>&#xa;                        &lt;/xsl:otherwise>&#xa;                    &lt;/xsl:choose>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode = 200 and (string-length($ReportData/tns:OMBulkOrderID) != 0 or string-length($ReportData/tns:OwnerId) = 0)&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'S'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;tns1:Message>&#xa;                            &lt;xsl:value-of select=&quot;'Success'&quot;/>&#xa;                        &lt;/tns1:Message>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = true() and $UpdateSFID/statusCode != 200&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;tns1:Message>&#xa;                            &lt;xsl:value-of select=&quot;concat('Error occured while updating SFID to OMReport : ',$UpdateSFID/reasonPhrase,$UpdateSFID/MessageBody/asciiContent)&quot;/>&#xa;                        &lt;/tns1:Message>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = false() and contains($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage, &amp;quot;UNABLE_TO_LOCK_ROW&amp;quot;)&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'N'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;xsl:if test=&quot;not(($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&#xa;                            &lt;tns1:Message>&#xa;                                &lt;xsl:value-of select=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage&quot;/>&#xa;                            &lt;/tns1:Message>&#xa;                        &lt;/xsl:if>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:when test=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:isSuccess = false()&quot;>&#xa;                    &lt;tns1:OMQueueChangeStatusElement>&#xa;                        &lt;tns1:Id>&#xa;                            &lt;xsl:value-of select=&quot;xsd:integer($ReportData/tns:OMQueueID)&quot;/>&#xa;                        &lt;/tns1:Id>&#xa;                        &lt;tns1:Status>&#xa;                            &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                        &lt;/tns1:Status>&#xa;                        &lt;xsl:if test=&quot;not(($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&#xa;                            &lt;tns1:Message>&#xa;                                &lt;xsl:value-of select=&quot;$Create-Opportunity.parameters/tns2:result[number($index)]/tns2:errorMessage&quot;/>&#xa;                            &lt;/tns1:Message>&#xa;                        &lt;/xsl:if>&#xa;                    &lt;/tns1:OMQueueChangeStatusElement>&#xa;                &lt;/xsl:when>&#xa;                &lt;xsl:otherwise/>&#xa;            &lt;/xsl:choose>&#xa;        &lt;/tns1:OMQueueChangeStatusElementArray>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
