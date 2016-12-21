@@ -4,6 +4,7 @@
     suppressJoinFailure="yes"
     targetNamespace="http://xmlns.example.com/20160908130902"
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:bw="http://www.tibco.com/bw/xpath/bw-custom-functions"
     xmlns:info="http://www.tibco.com/bw/process/info"
     xmlns:ns="http://xmlns.example.com/20160908130902PLT"
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
@@ -3211,7 +3212,7 @@
             <bendpoints points="[25, 24, -66, -64]$[78, 76, -13, -12]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
         <edges
-            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
                 <layoutConstraint xsi:type="notation:Location" y="40"/>
@@ -3582,7 +3583,7 @@
                                     <bpws:link
                                     name="InvokeRESTAPIToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="NSContactUpsertToSalesforceUpdateAll" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                    name="SFContactSubsidiaryUpdateToSalesforceUpdateAll" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -3624,15 +3625,6 @@
                                     expression="$ContactIteration/ns1:EventType=&quot;Create&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
                                     <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:EventType="Create"]]></bpws:transitionCondition>
-                                    </bpws:source>
-
-                                    <bpws:source linkName="NSContactUpsertToSalesforceUpdateAll">
-                                    <tibex:DesignExpression>
-
-                                    <tibex:expression
-                                    expression="$ContactIteration/ns1:sfQueueId!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
-                                    </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:sfQueueId!=""]]></bpws:transitionCondition>
                                     </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
@@ -3676,7 +3668,7 @@
                                     tibex:xpdlId="73923a33-808b-4a40-a5a2-e2f2e0ec3fb8" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="NSContactUpsertToSalesforceUpdateAll"/>
+                                    <bpws:target linkName="SFContactSubsidiaryUpdateToSalesforceUpdateAll"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
@@ -3729,9 +3721,18 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="$ContactIteration/ns1:SubsidiaryName = &quot;EagleView Technologies, Inc.&quot; and$ContactIteration/ns1:OrderManagerID!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$ContactIteration/ns1:SubsidiaryName = bw:getModuleProperty(&quot;SubsidiaryName&quot;) and$ContactIteration/ns1:OrderManagerID!=&quot;&quot; and$SFContactSubsidiaryUpdate/updateAllResponse/ns5:result[1]/ns5:success=true()" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:SubsidiaryName = "EagleView Technologies, Inc." and$ContactIteration/ns1:OrderManagerID!=""]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:SubsidiaryName = bw:getModuleProperty("SubsidiaryName") and$ContactIteration/ns1:OrderManagerID!="" and$SFContactSubsidiaryUpdate/updateAllResponse/ns5:result[1]/ns5:success=true()]]></bpws:transitionCondition>
+                                    </bpws:source>
+
+                                    <bpws:source linkName="SFContactSubsidiaryUpdateToSalesforceUpdateAll">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$ContactIteration/ns1:sfQueueId!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$ContactIteration/ns1:sfQueueId!=""]]></bpws:transitionCondition>
                                     </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>

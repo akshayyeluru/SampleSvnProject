@@ -4,6 +4,7 @@
     suppressJoinFailure="yes"
     targetNamespace="http://xmlns.example.com/20161005171128"
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:bw="http://www.tibco.com/bw/xpath/bw-custom-functions"
     xmlns:info="http://www.tibco.com/bw/process/info"
     xmlns:ns="http://xmlns.example.com/20161005171128PLT"
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
@@ -127,16 +128,6 @@
                 </complexContent>
             </complexType>
             <element name="ActivityTimedOutException" type="tns:ActivityTimedOutExceptionType"/>
-        </schema>
-        <schema attributeFormDefault="unqualified"
-            elementFormDefault="qualified"
-            targetNamespace="http://www.example.org/BillpayerSchema"
-            xmlns="http://www.w3.org/2001/XMLSchema"
-            xmlns:source="bw.group.iterate"
-            xmlns:tns="http://www.example.org/BillpayerSchema"
-            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-            <include schemaLocation="../../Schemas/SalesforceSchemas/BillpayerSchema.xsd"/>
-            <element name="Iterate_Current_Element_BillPayerData" type="tns:BillPayerdata"/>
         </schema>
         <schema
             targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/netsuite/upsertrecord+cd05cd48-d03e-4826-8c32-ee28db1b2add+input"
@@ -1962,6 +1953,16 @@
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.example.org/BillpayerSchema"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:source="bw.group.iterate"
+            xmlns:tns="http://www.example.org/BillpayerSchema"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <include schemaLocation="../../Schemas/SalesforceSchemas/BillpayerSchema.xsd"/>
+            <element name="Iterate_Current_Element_BillPayerData" type="tns:BillPayerdata"/>
+        </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161005171128PLT"
             xmlns:extns="http://tns.tibco.com/bw/REST"
@@ -4027,9 +4028,9 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="$Netsuite_Update/Success=false() and $currentElement/tns:QID!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$Updating-NSID-in-SF/updateAllResponse/ns4:result[1]/ns4:success=false() and $currentElement/tns:QID!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[$Netsuite_Update/Success=false() and $currentElement/tns:QID!=""]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[$Updating-NSID-in-SF/updateAllResponse/ns4:result[1]/ns4:success=false() and $currentElement/tns:QID!=""]]></bpws:transitionCondition>
                                     </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
@@ -4090,9 +4091,9 @@
                                     <tibex:DesignExpression>
 
                                     <tibex:expression
-                                    expression="string-length($currentElement/tns:OM_BillPayer_ID)>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="string-length($currentElement/tns:OM_BillPayer_ID)>0  and $Updating-NSID-in-SF/updateAllResponse/ns4:result[1]/ns4:success = true() and $currentElement/tns:SubsidaryName = bw:getModuleProperty(&quot;SubsidiaryName&quot;)" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
-                                    <bpws:transitionCondition><![CDATA[string-length($currentElement/tns:OM_BillPayer_ID)>0]]></bpws:transitionCondition>
+                                    <bpws:transitionCondition><![CDATA[string-length($currentElement/tns:OM_BillPayer_ID)>0  and $Updating-NSID-in-SF/updateAllResponse/ns4:result[1]/ns4:success = true() and $currentElement/tns:SubsidaryName = bw:getModuleProperty("SubsidiaryName")]]></bpws:transitionCondition>
                                     </bpws:source>
 
                                     <bpws:source linkName="UpdatingNSIDinSFToGroupEnd1"/>
