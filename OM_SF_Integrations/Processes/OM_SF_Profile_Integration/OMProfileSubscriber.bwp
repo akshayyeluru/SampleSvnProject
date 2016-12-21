@@ -3368,6 +3368,18 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.2"/>
             <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.8"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@activity/@links/@children.13"/>
+            <bendpoints
+                points="[0, 25, -89, -164]$[0, 101, -89, -88]$[24, 101, -65, -88]$[24, 189, -65, 0]$[77, 189, -12, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.eagleview.com/OMProfileList"/>
@@ -3838,13 +3850,15 @@
                                     <bpws:link
                                     name="Log3ToAfterSfupsertRenderJSON" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="Log4ToStatusUpdate" tibex:linkType="SUCCESS"/>
+                                    name="Log4ToStatusUpdate" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
                                     name="Log5ToGroupEnd1" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="InvokeRESTAPI1ToLog5" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="RenderJSON1ToUpdateSFQueue" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Log4ToGroupEnd1" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty
                                     name="GroupStart1"
@@ -3860,6 +3874,8 @@
                                     <bpws:targets>
 
                                     <bpws:target linkName="Log5ToGroupEnd1"/>
+
+                                    <bpws:target linkName="Log4ToGroupEnd1"/>
                                     </bpws:targets>
                                     </bpws:empty>
                                     <bpws:extensionActivity>
@@ -4240,7 +4256,23 @@
                                     </bpws:targets>
                                     <bpws:sources>
 
-                                    <bpws:source linkName="Log4ToStatusUpdate"/>
+                                    <bpws:source linkName="Log4ToStatusUpdate">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length($currentElement/ns1:ObjectId)>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length($currentElement/ns1:ObjectId)>0]]></bpws:transitionCondition>
+                                    </bpws:source>
+
+                                    <bpws:source linkName="Log4ToGroupEnd1">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length($currentElement/ns1:ObjectId)=0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length($currentElement/ns1:ObjectId)=0]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
