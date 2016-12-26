@@ -34,6 +34,10 @@
     xmlns:ns31="activity.jsonParser.input+1a18b403-ade9-429c-9da7-832e60ec0959+ActivityInputType"
     xmlns:ns32="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
     xmlns:ns33="activity.jsonParser.input+387bd1b5-9aee-46ae-85de-4753ec5a51f5+ActivityInputType"
+    xmlns:ns34="http://www.example.org/Mail"
+    xmlns:ns35="activity.jsonRender.output+bbf507f6-586d-4654-bfcc-5766c034d77a+ActivityOutputType"
+    xmlns:ns36="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeInput"
+    xmlns:ns37="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeOutput"
     xmlns:ns4="http://tns.tibco.com/bw/json/1475838662550"
     xmlns:ns5="http://tns.tibco.com/bw/json/1476786659339"
     xmlns:ns6="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+e713fc50-133f-4f56-b372-1b016e03ea1b+RestInvokeInput"
@@ -978,6 +982,153 @@
             </complexType>
             <element name="ActivityInputClass" type="tns:ActivityInputClassType"/>
         </schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+bbf507f6-586d-4654-bfcc-5766c034d77a+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+bbf507f6-586d-4654-bfcc-5766c034d77a+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20161018180932PLT"
             xmlns:custom="http://www.example.org/BillPayerResultMapper"
@@ -2393,6 +2544,114 @@
                                     xsi:type="notation:Bounds" y="18"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.3"/>
+
+                                    <layoutConstraint
+                                    x="343"
+                                    xsi:type="notation:Bounds" y="18"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.4"/>
+
+                                    <layoutConstraint
+                                    x="522"
+                                    xsi:type="notation:Bounds" y="18"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -2415,7 +2674,7 @@
 
                                     <layoutConstraint
                                     height="168"
-                                    width="471" xsi:type="notation:Bounds"/>
+                                    width="716" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -3096,6 +3355,28 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@links/@children.1"/>
             <bendpoints points="[401, -7, -167, 0]$[556, 0, -12, 7]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/OMQueueDataMapper"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
@@ -3106,6 +3387,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/OMStatusSchema"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/BillPayerResultMapper"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/AccountResultMapper"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/Mail"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="ombillpayerparentpublisher"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="ombillpayerparentpublisher"/>
@@ -3217,6 +3499,24 @@
             name="ParseJSON4-input" sca-bpel:internal="true"/>
         <bpws:variable element="tns1:AccountResultList"
             name="ParseJSON4" sca-bpel:internal="true"/>
+        <bpws:variable element="ns34:MailList"
+            name="EMailRenderJSON-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns35:ActivityOutputClass"
+            name="EMailRenderJSON" sca-bpel:internal="true"/>
+        <bpws:variable element="ns36:RestActivityInput"
+            name="EMailInvokeRESTAPI2-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns37:RestActivityOutput"
+            name="EMailInvokeRESTAPI2" sca-bpel:internal="true"/>
+        <bpws:variable name="Property1" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>HttpClient.MainFlowHttpClientResource</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable name="MailURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="MailURI" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -3369,11 +3669,17 @@
 
                                     <bpws:link
                                     name="RenderJSON2ToInvokeRESTAPI4" tibex:linkType="SUCCESS"/>
+
+                                    <bpws:link
+                                    name="InvokeRESTAPI4ToRenderJSON" tibex:linkType="SUCCESS"/>
+
+                                    <bpws:link
+                                    name="EMailRenderJSONToInvokeRESTAPI2" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'OM Billpayer Parent Publisher Log1'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/Data/*&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'OM Billpayer Parent Publisher Log1'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat($FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace,tib:concat-sequence($FaultDetails/Data/*))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Log1-input"
                                     name="Log1"
@@ -3385,7 +3691,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'OM Billpayer Parent Publisher Log1'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/Data/*&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'OM Billpayer Parent Publisher Log1'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat($FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace,tib:concat-sequence($FaultDetails/Data/*))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -3473,6 +3779,10 @@
 
                                     <bpws:target linkName="RenderJSON2ToInvokeRESTAPI4"/>
                                     </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="InvokeRESTAPI4ToRenderJSON"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
@@ -3499,6 +3809,102 @@
                                     resourcePath="/ChangeQueue/{Id}"
                                     responseAcceptType="JSON"
                                     transferEncoding="Buffered" xsi:type="restjson:RestInvokeActivity"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns1=&quot;http://www.example.org/OMQueueDataMapper&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;EMailRenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;OM_SF OMBillPayerParentPublisher :Error Occured While processing OM-SF BillPayer&amp;quot;,&amp;quot;QueueId : &amp;quot;,xsd:string($currentElement/tns1:Id),&amp;quot;BillPayerID : &amp;quot;,$currentElement/tns1:ObjectId)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;concat($FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace,tib:concat-sequence($FaultDetails/Data/*))&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="EMailRenderJSON-input"
+                                    name="EMailRenderJSON"
+                                    outputVariable="EMailRenderJSON"
+                                    tibex:xpdlId="bbf507f6-586d-4654-bfcc-5766c034d77a" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="InvokeRESTAPI4ToRenderJSON"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="EMailRenderJSONToInvokeRESTAPI2"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns1=&quot;http://www.example.org/OMQueueDataMapper&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;EMailRenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;OM_SF OMBillPayerParentPublisher :Error Occured While processing OM-SF BillPayer&amp;quot;,&amp;quot;QueueId : &amp;quot;,xsd:string($currentElement/tns1:Id),&amp;quot;BillPayerID : &amp;quot;,$currentElement/tns1:ObjectId)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;concat($FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace,tib:concat-sequence($FaultDetails/Data/*))&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+
+                                    <inputEditorElement href="platform:/resource/OM_SF_Integrations/Schemas/MailSchema.xsd#//MailList;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;EMailRenderJSON&quot;/>&lt;xsl:template name=&quot;EMailInvokeRESTAPI2-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$EMailRenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="EMailInvokeRESTAPI2-input"
+                                    name="EMailInvokeRESTAPI2"
+                                    outputVariable="EMailInvokeRESTAPI2"
+                                    tibex:xpdlId="bf123ac1-f0c9-44c8-a3c6-d06af36f65d3" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="EMailRenderJSONToInvokeRESTAPI2"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+bf123ac1-f0c9-44c8-a3c6-d06af36f65d3+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;EMailRenderJSON&quot;/>&lt;xsl:template name=&quot;EMailInvokeRESTAPI2-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$EMailRenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+                                    <attributeBindings
+                                    bindingType="moduleProperty"
+                                    eAttributeName="resourcePath" processProperty="MailURI"/>
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="Property1"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
