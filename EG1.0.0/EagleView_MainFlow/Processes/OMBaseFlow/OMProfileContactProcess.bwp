@@ -2581,9 +2581,12 @@
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
             sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
             <bpws:from>
-                <bpws:literal>HttpClient.SubscriberHttpClientResource</bpws:literal>
+                <bpws:literal>HttpClient.MainFlowHttpClientResource</bpws:literal>
             </bpws:from>
         </bpws:variable>
+        <bpws:variable name="MailURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="/RestURIs/MailURI" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2695,6 +2698,9 @@
                                     xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                                     xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                                     xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <attributeBindings
+                                    bindingType="moduleProperty"
+                                    eAttributeName="resourcePath" processProperty="MailURI"/>
                                     <activityConfig>
                                     <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
@@ -2702,7 +2708,6 @@
                                     httpClientSR="Property3"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/3nf5oppu5iqz5fhcxeqqcijredvqxc7v/Outlook/Mail"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
@@ -3228,6 +3233,10 @@
                                     xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                                     xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                                     xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+                                    <attributeBindings
+                                    bindingType="moduleProperty"
+                                    eAttributeName="resourcePath" processProperty="MailURI"/>
                                     <activityConfig>
 
                                     <properties
@@ -3239,7 +3248,6 @@
                                     httpClientSR="Property2"
                                     httpMethod="POST"
                                     requestContentType="JSON"
-                                    resourcePath="/3nf5oppu5iqz5fhcxeqqcijredvqxc7v/Outlook/Mail"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
