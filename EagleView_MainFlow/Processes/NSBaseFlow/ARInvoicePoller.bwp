@@ -2557,6 +2557,10 @@
         <bpws:variable name="MailURI" sca-bpel:hotUpdate="false"
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
             tibex:propertySource="/RestURIs/MailURI" type="xsd:string"/>
+        <bpws:variable name="NetSuiteSearchPageSize"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="NetSuiteSearchPageSize" type="xsd:int"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -2767,11 +2771,13 @@
                             xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
                             xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
                             xmlns:netsuite="http://ns.tibco.com/bw/palette/netsuite" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <attributeBindings
+                                bindingType="moduleProperty"
+                                eAttributeName="pagesize" processProperty="NetSuiteSearchPageSize"/>
                             <activityConfig>
                                 <properties name="config" xsi:type="activityconfig:EMFProperty">
                                     <type href="http://ns.tibco.com/bw/palette/netsuite#//SearchRecord"/>
-                                    <value pagesize="50"
-                                    recordCategory="setup"
+                                    <value recordCategory="setup"
                                     recordSubCategory="customization"
                                     searchRecord="CustomRecordSearch"
                                     sharedConnection="Property" xsi:type="netsuite:SearchRecord"/>
