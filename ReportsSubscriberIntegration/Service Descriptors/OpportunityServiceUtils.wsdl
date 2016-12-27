@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Web Services API : OpportunityServiceUtil
+--><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:tns="http://soap.sforce.com/schemas/class/OpportunityServiceUtils" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soap.sforce.com/schemas/class/OpportunityServiceUtils" tibex:src="file:/C:/Users/chaitanya.gudivada/Downloads/OpportunityServiceUtils.wsdl">
+ <types>
+  <xsd:schema elementFormDefault="qualified" targetNamespace="http://soap.sforce.com/schemas/class/OpportunityServiceUtils">
+   <xsd:element name="AllowFieldTruncationHeader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="allowFieldTruncation" type="xsd:boolean"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="CallOptions">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="client" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="DebuggingHeader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="categories" type="tns:LogInfo"/>
+      <xsd:element name="debugLevel" type="tns:LogType"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="LogInfo">
+    <xsd:sequence>
+     <xsd:element name="category" type="tns:LogCategory"/>
+     <xsd:element name="level" type="tns:LogCategoryLevel"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="LogCategory">
+    <xsd:restriction base="xsd:string">
+     <xsd:enumeration value="Db"/>
+     <xsd:enumeration value="Workflow"/>
+     <xsd:enumeration value="Validation"/>
+     <xsd:enumeration value="Callout"/>
+     <xsd:enumeration value="Apex_code"/>
+     <xsd:enumeration value="Apex_profiling"/>
+     <xsd:enumeration value="Visualforce"/>
+     <xsd:enumeration value="System"/>
+     <xsd:enumeration value="All"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="LogCategoryLevel">
+    <xsd:restriction base="xsd:string">
+     <xsd:enumeration value="None"/>
+     <xsd:enumeration value="Finest"/>
+     <xsd:enumeration value="Finer"/>
+     <xsd:enumeration value="Fine"/>
+     <xsd:enumeration value="Debug"/>
+     <xsd:enumeration value="Info"/>
+     <xsd:enumeration value="Warn"/>
+     <xsd:enumeration value="Error"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="LogType">
+    <xsd:restriction base="xsd:string">
+     <xsd:enumeration value="None"/>
+     <xsd:enumeration value="Debugonly"/>
+     <xsd:enumeration value="Db"/>
+     <xsd:enumeration value="Profiling"/>
+     <xsd:enumeration value="Callout"/>
+     <xsd:enumeration value="Detail"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:element name="DebuggingInfo">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="debugLog" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SessionHeader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:simpleType name="ID">
+    <xsd:restriction base="xsd:string">
+     <xsd:length value="18"/>
+     <xsd:pattern value="[a-zA-Z0-9]{18}"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="SaveResult">
+    <xsd:sequence>
+     <xsd:element minOccurs="0" name="errorFields" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="errorMessage" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="isSuccess" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="OpportunityID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ReportID" nillable="true" type="xsd:string"/>
+     <xsd:element maxOccurs="unbounded" minOccurs="0" name="ssLines" nillable="true" type="tns:SaveResultLine"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SaveResultLine">
+    <xsd:sequence>
+     <xsd:element minOccurs="0" name="errorFields" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="errorMessage" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="isSuccess" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="OpportunityID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OppProductID" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SelfServiceOpportunity">
+    <xsd:sequence>
+     <xsd:element minOccurs="0" name="AccountID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="AdjustmentReasonCodes" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="AllowRedelivery" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="Appropriation" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Assignment" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="BillingType" nillable="true" type="xsd:string"/>
+	 <xsd:element minOccurs="0" name="BillPayer" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="BldgNumber" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Campaign" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="CATID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ClaimInfo" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ClaimNumber" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="CloseDate" nillable="true" type="xsd:date"/>
+     <xsd:element minOccurs="0" name="Contact" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="CreditCardType" nillable="true" type="xsd:string"/>
+	 <xsd:element minOccurs="0" name="CurrencyCode" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="DateofLoss" nillable="true" type="xsd:date"/>
+     <xsd:element minOccurs="0" name="Division" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="DoNotCharge" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="Facets" nillable="true" type="xsd:int"/>
+     <xsd:element minOccurs="0" name="FlightNumber" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="FundingType" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="GovernmentSponsor" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ImageSource" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="InsuredName" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="InvoiceNeeded" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="LicenseTerm" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="NetSuiteID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OMSubStatus" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OppType" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OrderManagerBillPayerID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OriginalDocumentDate" nillable="true" type="xsd:date"/>
+     <xsd:element minOccurs="0" name="OwnerID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Paid" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="PaymentAuthorizationToken" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="PaymentWebsiteOpportunity" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="Policy" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="recordID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="RelatedReport" nillable="true" type="xsd:string"/>
+	 <xsd:element minOccurs="0" name="ReportCity" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ReportCountry" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ReportID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ReportState" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ReportStreetAddress" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ReportTerms" nillable="true" type="xsd:boolean"/>
+     <xsd:element minOccurs="0" name="ReportZip" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Squares" nillable="true" type="xsd:int"/>
+     <xsd:element maxOccurs="unbounded" minOccurs="0" name="ssLines" nillable="true" type="tns:SelfServiceOpportunityLine"/>
+     <xsd:element minOccurs="0" name="StageName" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="TerminationforConvenience" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Urgency" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="ZoneRegion" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SelfServiceOpportunityLine">
+    <xsd:sequence>
+     <xsd:element minOccurs="0" name="LicenseTermYears" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OMDiscountCodes" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="OMInitialAmount" nillable="true" type="xsd:decimal"/>
+     <xsd:element minOccurs="0" name="OpportunityID" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="PriceBookEntryId" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="PricingTierMaxSize" nillable="true" type="xsd:int"/>
+     <xsd:element minOccurs="0" name="PricingTierMinSize" nillable="true" type="xsd:int"/>
+     <xsd:element minOccurs="0" name="PricingTierName" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="PricingTierType" nillable="true" type="xsd:string"/>
+     <xsd:element minOccurs="0" name="Quantity" nillable="true" type="xsd:decimal"/>
+     <xsd:element minOccurs="0" name="UnitPrice" nillable="true" type="xsd:decimal"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="address">
+    <xsd:complexContent>
+     <xsd:extension base="tns:location">
+      <xsd:sequence>
+       <xsd:element name="city" type="xsd:string"/>
+       <xsd:element name="country" type="xsd:string"/>
+       <xsd:element name="countryCode" type="xsd:string"/>
+       <xsd:element name="geocodeAccuracy" type="xsd:string"/>
+       <xsd:element name="postalCode" type="xsd:string"/>
+       <xsd:element name="state" type="xsd:string"/>
+       <xsd:element name="stateCode" type="xsd:string"/>
+       <xsd:element name="street" type="xsd:string"/>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="location">
+    <xsd:sequence>
+     <xsd:element name="latitude" type="xsd:double"/>
+     <xsd:element name="longitude" type="xsd:double"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="createMultipleSelfServiceOpps">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="opps" nillable="true" type="tns:SelfServiceOpportunity"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createMultipleSelfServiceOppsResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:SaveResult"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createSelfServiceOpp">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="rOpp" nillable="true" type="tns:SelfServiceOpportunity"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createSelfServiceOppResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="result" nillable="true" type="tns:SaveResult"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="insertAdjustmentLines">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="opps" nillable="true" type="tns:SelfServiceOpportunity"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="insertAdjustmentLinesResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:SaveResult"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="updateMultipleSelfServiceOpps">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="opps" nillable="true" type="tns:SelfServiceOpportunity"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="updateMultipleSelfServiceOppsResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="tns:SaveResult"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:schema>
+ </types>
+ <!-- Message for the header parts -->
+ <message name="Header">
+  <part element="tns:AllowFieldTruncationHeader" name="AllowFieldTruncationHeader"/>
+  <part element="tns:CallOptions" name="CallOptions"/>
+  <part element="tns:DebuggingHeader" name="DebuggingHeader"/>
+  <part element="tns:DebuggingInfo" name="DebuggingInfo"/>
+  <part element="tns:SessionHeader" name="SessionHeader"/>
+ </message>
+ <!-- Operation Messages -->
+ <message name="createMultipleSelfServiceOppsRequest">
+  <part element="tns:createMultipleSelfServiceOpps" name="parameters"/>
+ </message>
+ <message name="createMultipleSelfServiceOppsResponse">
+  <part element="tns:createMultipleSelfServiceOppsResponse" name="parameters"/>
+ </message>
+ <message name="createSelfServiceOppRequest">
+  <part element="tns:createSelfServiceOpp" name="parameters"/>
+ </message>
+ <message name="createSelfServiceOppResponse">
+  <part element="tns:createSelfServiceOppResponse" name="parameters"/>
+ </message>
+ <message name="insertAdjustmentLinesRequest">
+  <part element="tns:insertAdjustmentLines" name="parameters"/>
+ </message>
+ <message name="insertAdjustmentLinesResponse">
+  <part element="tns:insertAdjustmentLinesResponse" name="parameters"/>
+ </message>
+ <message name="updateMultipleSelfServiceOppsRequest">
+  <part element="tns:updateMultipleSelfServiceOpps" name="parameters"/>
+ </message>
+ <message name="updateMultipleSelfServiceOppsResponse">
+  <part element="tns:updateMultipleSelfServiceOppsResponse" name="parameters"/>
+ </message>
+ <portType name="OpportunityServiceUtilsPortType">
+  <operation name="createMultipleSelfServiceOpps">
+   <input message="tns:createMultipleSelfServiceOppsRequest"/>
+   <output message="tns:createMultipleSelfServiceOppsResponse"/>
+  </operation>
+  <operation name="createSelfServiceOpp">
+   <input message="tns:createSelfServiceOppRequest"/>
+   <output message="tns:createSelfServiceOppResponse"/>
+  </operation>
+  <operation name="insertAdjustmentLines">
+   <input message="tns:insertAdjustmentLinesRequest"/>
+   <output message="tns:insertAdjustmentLinesResponse"/>
+  </operation>
+  <operation name="updateMultipleSelfServiceOpps">
+   <input message="tns:updateMultipleSelfServiceOppsRequest"/>
+   <output message="tns:updateMultipleSelfServiceOppsResponse"/>
+  </operation>
+ </portType>
+ <binding name="OpportunityServiceUtilsBinding" type="tns:OpportunityServiceUtilsPortType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="createMultipleSelfServiceOpps">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:header message="tns:Header" part="SessionHeader" use="literal"/>
+    <soap:header message="tns:Header" part="CallOptions" use="literal"/>
+    <soap:header message="tns:Header" part="DebuggingHeader" use="literal"/>
+    <soap:header message="tns:Header" part="AllowFieldTruncationHeader" use="literal"/>
+    <soap:body parts="parameters" use="literal"/>
+   </input>
+   <output>
+    <soap:header message="tns:Header" part="DebuggingInfo" use="literal"/>
+    <soap:body use="literal"/>
+   </output>
+  </operation>
+  <operation name="createSelfServiceOpp">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:header message="tns:Header" part="SessionHeader" use="literal"/>
+    <soap:header message="tns:Header" part="CallOptions" use="literal"/>
+    <soap:header message="tns:Header" part="DebuggingHeader" use="literal"/>
+    <soap:header message="tns:Header" part="AllowFieldTruncationHeader" use="literal"/>
+    <soap:body parts="parameters" use="literal"/>
+   </input>
+   <output>
+    <soap:header message="tns:Header" part="DebuggingInfo" use="literal"/>
+    <soap:body use="literal"/>
+   </output>
+  </operation>
+  <operation name="insertAdjustmentLines">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:header message="tns:Header" part="SessionHeader" use="literal"/>
+    <soap:header message="tns:Header" part="CallOptions" use="literal"/>
+    <soap:header message="tns:Header" part="DebuggingHeader" use="literal"/>
+    <soap:header message="tns:Header" part="AllowFieldTruncationHeader" use="literal"/>
+    <soap:body parts="parameters" use="literal"/>
+   </input>
+   <output>
+    <soap:header message="tns:Header" part="DebuggingInfo" use="literal"/>
+    <soap:body use="literal"/>
+   </output>
+  </operation>
+  <operation name="updateMultipleSelfServiceOpps">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:header message="tns:Header" part="SessionHeader" use="literal"/>
+    <soap:header message="tns:Header" part="CallOptions" use="literal"/>
+    <soap:header message="tns:Header" part="DebuggingHeader" use="literal"/>
+    <soap:header message="tns:Header" part="AllowFieldTruncationHeader" use="literal"/>
+    <soap:body parts="parameters" use="literal"/>
+   </input>
+   <output>
+    <soap:header message="tns:Header" part="DebuggingInfo" use="literal"/>
+    <soap:body use="literal"/>
+   </output>
+  </operation>
+ </binding>
+ <service name="OpportunityServiceUtilsService">
+  <documentation/>
+  <port binding="tns:OpportunityServiceUtilsBinding" name="OpportunityServiceUtils">
+   <soap:address location="https://cs41.salsforce.com/services/Soap/class/OpportunityServiceUtils"/>
+  </port>
+ </service>
+</definitions>
