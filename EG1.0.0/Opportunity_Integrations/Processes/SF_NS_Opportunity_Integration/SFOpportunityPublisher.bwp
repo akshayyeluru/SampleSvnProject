@@ -53,6 +53,10 @@
     xmlns:ns49="http://www.eagleview.com/BillingType"
     xmlns:ns5="http://www.tibco.com/namespaces/tnt/plugins/generalactivities/mapper/1472737199924"
     xmlns:ns50="http://www.eagleview.com/OppCreditCardType"
+    xmlns:ns51="http://www.example.org/Mail"
+    xmlns:ns52="activity.jsonRender.output+d49f2a9c-310e-4901-b596-c2d8f9d6e071+ActivityOutputType"
+    xmlns:ns53="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeInput"
+    xmlns:ns54="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeOutput"
     xmlns:ns6="http://www.powerschool.com/schemas/PowerSchoolIntegrationFlows/SchemaDefinition/Salesforce/Schema.xsd"
     xmlns:ns7="http://tns.tibco.com/bw/palette/internal/accumulateoutput+5deb6edc-d917-41f5-855d-7b861321f689"
     xmlns:ns8="activity.jsonRender.output+54550387-0dc2-440e-a901-d83a1ace17f9+ActivityOutputType"
@@ -1109,6 +1113,153 @@
             </complexType>
             <element name="ActivityInputClass" type="tns:ActivityInputClassType"/>
         </schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+d49f2a9c-310e-4901-b596-c2d8f9d6e071+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+d49f2a9c-310e-4901-b596-c2d8f9d6e071+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20160901160412PLT"
             xmlns:custom="http://www.powerschool.com/schemas/PowerSchoolIntegrationFlows/SchemaDefinition/Salesforce/Schema.xsd"
@@ -4594,7 +4745,7 @@
 
                                     <layoutConstraint
                                     x="-68"
-                                    xsi:type="notation:Bounds" y="636"/>
+                                    xsi:type="notation:Bounds" y="654"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -4943,6 +5094,114 @@
                                     xsi:type="notation:Bounds" y="28"/>
                                     </children>
 
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activities.1/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@activities.3"/>
+
+                                    <layoutConstraint
+                                    x="359"
+                                    xsi:type="notation:Bounds" y="28"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activities.1/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@activities.4"/>
+
+                                    <layoutConstraint
+                                    x="473"
+                                    xsi:type="notation:Bounds" y="28"/>
+                                    </children>
+
                                     <styles xsi:type="notation:DrawerStyle"/>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -4965,7 +5224,7 @@
 
                                     <layoutConstraint
                                     height="168"
-                                    width="1404" xsi:type="notation:Bounds"/>
+                                    width="1579" xsi:type="notation:Bounds"/>
                                     </children>
 
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -6605,7 +6864,7 @@
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.23"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.38" type="4006">
             <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
+                <layoutConstraint x="-249" xsi:type="notation:Location" y="50"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
@@ -6934,12 +7193,34 @@
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.23"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.60" type="4006">
             <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
+                <layoutConstraint x="-3" xsi:type="notation:Location" y="-44"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
             <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activities.1/@activity/@activity/@activities.3/@activity/@links/@children.68"/>
             <bendpoints points="[0, 25, 0, -55]$[0, 56, 0, -24]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activities.1/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.4" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activities.1/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/SfQueueDataMapper"/>
@@ -6968,6 +7249,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.eagleview.com/OMSFBillingType"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.eagleview.com/BillingType"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.eagleview.com/OppCreditCardType"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/Mail"/>
     <bpws:variables>
         <bpws:variable element="ns0:ProcessContext"
             name="_processContext" sca-bpel:internal="true"/>
@@ -7137,34 +7419,10 @@
         <bpws:variable name="Timer1" sca-bpel:hotUpdate="false"
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
             tibex:propertySource="Timer" type="xsd:int"/>
-        <bpws:variable element="ns30:OppIndustryList"
-            name="GetIndustry-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns30:OppIndustryList" name="GetIndustry" sca-bpel:internal="true"/>
-        <bpws:variable element="ns29:OppAdjReasonCodesList"
-            name="GetAdjustmentCodes-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns29:OppAdjReasonCodesList"
-            name="GetAdjustmentCodes" sca-bpel:internal="true"/>
-        <bpws:variable element="ns27:OppCommissonPartnerList"
-            name="GetCommPartner-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns27:OppCommissonPartnerList"
-            name="GetCommPartner" sca-bpel:internal="true"/>
-        <bpws:variable element="ns28:CurrencyList"
-            name="GetCurrency-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns28:CurrencyList" name="GetCurrency" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="CallSO-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="CallInvoice-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="CallMemo-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns1:queryAllInput"
             name="SFQueryAccountSubsidiaryTable-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns2:queryAllOutput"
             name="SFQueryAccountSubsidiaryTable" sca-bpel:internal="true"/>
-        <bpws:variable element="ns42:CountryList"
-            name="GetShippingCountry-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns42:CountryList"
-            name="GetShippingCountry" sca-bpel:internal="true"/>
         <bpws:variable element="ns12:ActivityInput"
             name="SFContact-ID-input" sca-bpel:internal="true"/>
         <bpws:variable element="tns:SFQueueList"
@@ -7200,28 +7458,25 @@
             name="SOMemoMapper-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns11:SFOpportunityList"
             name="SOMemoMapper" sca-bpel:internal="true"/>
-        <bpws:variable element="ns11:SFOpportunityList"
-            name="SOCallMemo-input" sca-bpel:internal="true"/>
         <bpws:variable name="ContactRestURI" sca-bpel:hotUpdate="false"
             sca-bpel:privateProperty="true" sca-bpel:property="yes"
             tibex:propertySource="ContactRestURI" type="xsd:string"/>
         <bpws:variable element="ns12:ActivityInput"
             name="BeforeInvoiceInvoke-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns10:OppLineType" name="OppLines-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns10:OppLineType" name="OppLines" sca-bpel:internal="true"/>
-        <bpws:variable element="ns49:BillingTypeList"
-            name="BillingType-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns49:BillingTypeList" name="BillingType" sca-bpel:internal="true"/>
-        <bpws:variable element="ns50:OppCreditCardTypeList"
-            name="CreditCardType-input" sca-bpel:internal="true"/>
-        <bpws:variable element="ns50:OppCreditCardTypeList"
-            name="CreditCardType" sca-bpel:internal="true"/>
         <bpws:variable element="ns25:updateAllInput"
             name="SalesforceUpdateAll-input" sca-bpel:internal="true"/>
         <bpws:variable element="ns26:updateAllOutput"
             name="SalesforceUpdateAll" sca-bpel:internal="true"/>
-        <bpws:variable element="ns20:DefaultFault"
-            name="BillPayer-throw-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns51:MailList" name="MailJson-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns52:ActivityOutputClass"
+            name="MailJson" sca-bpel:internal="true"/>
+        <bpws:variable element="ns53:RestActivityInput"
+            name="MailInvoke-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns54:RestActivityOutput"
+            name="MailInvoke" sca-bpel:internal="true"/>
+        <bpws:variable name="MailRestURI" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="MailRestURI" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -7442,6 +7697,10 @@
                                     name="SFOpportunityErrorToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
                                     <bpws:link
                                     name="SFQueueUpdateToAssign1" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Assign1ToRenderJSON" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="RenderJSONToInvokeRESTAPI1" tibex:linkType="SUCCESS"/>
                                     </bpws:links>
                                     <bpws:extensionActivity>
 
@@ -7543,6 +7802,10 @@
 
                                     <bpws:target linkName="SFQueueUpdateToAssign1"/>
                                     </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="Assign1ToRenderJSON"/>
+                                    </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
@@ -7564,6 +7827,102 @@
 
                                     <value
                                     processVariable="FailedStatus" xsi:type="generalactivities:BWAssign"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;QueueData&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error Occured in SF_NSOpportunity Publisher :&amp;quot;,&amp;quot;Queue ID :&amp;quot;,$QueueData/tns1:QueueID,&amp;quot;Record ID :&amp;quot;,$QueueData/tns1:RecordID)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;substring(concat($FaultDetails/Msg,$FaultDetails/StackTrace,$FaultDetails/MsgCode,tib:concat-sequence($FaultDetails/Data/*)),0,100000)&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="MailJson-input"
+                                    name="MailJson"
+                                    outputVariable="MailJson"
+                                    tibex:xpdlId="d49f2a9c-310e-4901-b596-c2d8f9d6e071" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="Assign1ToRenderJSON"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="RenderJSONToInvokeRESTAPI1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;QueueData&quot;/>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;RenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;Error Occured in SF_NSOpportunity Publisher :&amp;quot;,&amp;quot;Queue ID :&amp;quot;,$QueueData/tns1:QueueID,&amp;quot;Record ID :&amp;quot;,$QueueData/tns1:RecordID)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;substring(concat($FaultDetails/Msg,$FaultDetails/StackTrace,$FaultDetails/MsgCode,tib:concat-sequence($FaultDetails/Data/*)),0,100000)&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+
+                                    <inputEditorElement href="platform:/resource/Opportunity_Integrations/Schemas/OtherSchemas/MailSchema.xsd#//MailList;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?> &lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeInput&quot; version=&quot;2.0&quot;> &lt;xsl:template name=&quot;InvokeRESTAPI1-input&quot; match=&quot;/&quot;> &lt;tns:RestActivityInput/> &lt;/xsl:template> &lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="MailInvoke-input"
+                                    name="MailInvoke"
+                                    outputVariable="MailInvoke"
+                                    tibex:xpdlId="ee5e698f-c051-4444-b8c0-745470d39c72" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="RenderJSONToInvokeRESTAPI1"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?> &lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+ee5e698f-c051-4444-b8c0-745470d39c72+RestInvokeInput&quot; version=&quot;2.0&quot;> &lt;xsl:template name=&quot;InvokeRESTAPI1-input&quot; match=&quot;/&quot;> &lt;tns:RestActivityInput/> &lt;/xsl:template> &lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+                                    <attributeBindings
+                                    bindingType="moduleProperty"
+                                    eAttributeName="resourcePath" processProperty="MailRestURI"/>
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="Property"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
                                     </bwext:BWActivity>
@@ -7672,7 +8031,8 @@
                                     <bpws:link
                                     name="SFQueryAccountSubsidiaryTableToSFQueryContactSubsidiaryTable" tibex:linkType="SUCCESS"/>
                                     <bpws:link
-                                    name="SFId'sMapperToGetShippingCountry" tibex:linkType="SUCCESS"/>
+                                    name="SFId'sMapperToGetShippingCountry_Ifbillpayerisnotnull"
+                                    tibex:label="If billpayer is not null" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
                                     name="GetShippingCountryToSFMapperData" tibex:linkType="SUCCESS"/>
                                     <bpws:link
@@ -7721,7 +8081,8 @@
                                     name="SFQueryOppADJToCopy_1_size1"
                                     tibex:label="size!=1" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     <bpws:link
-                                    name="SFId'sMapperToBillPayerthrow" tibex:linkType="SUCCESS"/>
+                                    name="SFId'sMapperToCopy_1_BillPayerthrow"
+                                    tibex:label="If billpayer is null" tibex:linkType="SUCCESSWITHCONDITION"/>
                                     </bpws:links>
                                     <bpws:empty name="GroupStart2"
                                     tibex:group="groupStart" tibex:xpdlId="7b4ff73f-fb75-4b74-a91b-69ae903b1340">
@@ -8092,9 +8453,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/OppCommissonPartner&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFOppMapping&quot; xmlns:ns2=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;GetCommPartner-input&quot; match=&quot;/&quot;>&lt;ns:OppCommissonPartnerList>&lt;ns:OppCommissonPartnerData>&lt;xsl:if test=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:CommissionPartner&quot;>&lt;ns:SFCommissonPartner>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:CommissionPartner&quot;/>&lt;/ns:SFCommissonPartner>&lt;/xsl:if>&lt;/ns:OppCommissonPartnerData>&lt;/ns:OppCommissonPartnerList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="GetCommPartner-input"
                                     name="GetCommPartner"
-                                    outputVariable="GetCommPartner"
                                     tibex:xpdlId="3ec16561-26e6-49e8-b7fa-ed3a4262b504"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -8116,9 +8475,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/OppAdjReasonCodes&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFOppMapping&quot; xmlns:ns2=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;GetAdjustmentCodes-input&quot; match=&quot;/&quot;>&lt;ns:OppAdjReasonCodesList>&lt;ns:OppAdjReasonCodesData>&lt;xsl:if test=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:AdjustmentReasonCodes&quot;>&lt;ns:SFOppAdjReasonCodes>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:AdjustmentReasonCodes&quot;/>&lt;/ns:SFOppAdjReasonCodes>&lt;/xsl:if>&lt;/ns:OppAdjReasonCodesData>&lt;/ns:OppAdjReasonCodesList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="GetAdjustmentCodes-input"
                                     name="GetAdjustmentCodes"
-                                    outputVariable="GetAdjustmentCodes"
                                     tibex:xpdlId="b5d0b9b8-e659-44f7-a664-eb8000ddb113"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -8140,9 +8497,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/Currency&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFOppMapping&quot; xmlns:ns2=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;GetCurrency-input&quot; match=&quot;/&quot;>&lt;ns:CurrencyList>&lt;ns:CurrencyData>&lt;xsl:if test=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:Currency&quot;>&lt;ns:SFCurrency>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:Currency&quot;/>&lt;/ns:SFCurrency>&lt;/xsl:if>&lt;/ns:CurrencyData>&lt;/ns:CurrencyList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="GetCurrency-input"
                                     name="GetCurrency"
-                                    outputVariable="GetCurrency"
                                     tibex:xpdlId="0bd2f254-a698-4b1a-b8f8-681078e80920"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -8164,9 +8519,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/OppIndustry&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFOppMapping&quot; xmlns:ns2=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;GetIndustry-input&quot; match=&quot;/&quot;>&lt;ns:OppIndustryList>&lt;ns:OppIndustryData>&lt;xsl:if test=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:Industry_Class&quot;>&lt;ns:SFIndustry>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns2:SFOpportunityHeader[1]/ns2:Industry_Class&quot;/>&lt;/ns:SFIndustry>&lt;/xsl:if>&lt;/ns:OppIndustryData>&lt;/ns:OppIndustryList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="GetIndustry-input"
                                     name="GetIndustry"
-                                    outputVariable="GetIndustry"
                                     tibex:xpdlId="86f1a5fc-8192-4c33-a901-9f1cdd05ef50"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -8607,8 +8960,22 @@
                                     <bpws:target linkName="SFQueryContactSubsidiaryTableToSFId'sMapper"/>
                                     </bpws:targets>
                                     <bpws:sources>
-                                    <bpws:source linkName="SFId'sMapperToGetShippingCountry"/>
-                                    <bpws:source linkName="SFId'sMapperToBillPayerthrow"/>
+                                    <bpws:source linkName="SFId'sMapperToGetShippingCountry_Ifbillpayerisnotnull">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$SFIdsMapper/ns11:SFOpportunityHeader[1]/ns11:BilltoaccountSFId!=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$SFIdsMapper/ns11:SFOpportunityHeader[1]/ns11:BilltoaccountSFId!=""]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    <bpws:source linkName="SFId'sMapperToCopy_1_BillPayerthrow">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="$SFIdsMapper/ns11:SFOpportunityHeader[1]/ns11:BilltoaccountSFId=&quot;&quot;" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$SFIdsMapper/ns11:SFOpportunityHeader[1]/ns11:BilltoaccountSFId=""]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
@@ -9246,13 +9613,11 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;http://www.eagleview.com/Country&quot; xmlns:ns1=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;GetShippingCountry-input&quot; match=&quot;/&quot;>&lt;ns:CountryList>&lt;ns:CountryData>&lt;xsl:if test=&quot;$SFIdsMapper/ns1:SFOpportunityHeader[1]/ns1:ShippingCountry&quot;>&lt;ns:SFCountry>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns1:SFOpportunityHeader[1]/ns1:ShippingCountry&quot;/>&lt;/ns:SFCountry>&lt;/xsl:if>&lt;/ns:CountryData>&lt;/ns:CountryList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="GetShippingCountry-input"
                                     name="GetShippingCountry"
-                                    outputVariable="GetShippingCountry"
                                     tibex:xpdlId="2d927466-8561-42a5-9586-f9ab664186a4"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
-                                    <bpws:target linkName="SFId'sMapperToGetShippingCountry"/>
+                                    <bpws:target linkName="SFId'sMapperToGetShippingCountry_Ifbillpayerisnotnull"/>
                                     </bpws:targets>
                                     <bpws:sources>
                                     <bpws:source linkName="GetShippingCountryToSFMapperData"/>
@@ -9773,9 +10138,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.eagleview.com/OppLineSchema&quot; xmlns:tns2=&quot;http://www.eagleview.com/OppStageFlag&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;StageFlag&quot;/>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;OppLines-input&quot; match=&quot;/&quot;>&lt;tns:OppLineType>&lt;xsl:choose>&lt;xsl:when test=&quot;$StageFlag/tns2:OppStageFlagUpdate[1]/tns2:oppStatustype='PositiveInvoice' or $StageFlag/tns2:OppStageFlagUpdate[1]/tns2:oppStatustype='Memo'&quot;>&lt;xsl:for-each select=&quot;$SFIdsMapper/ns:SFOpportunityHeader/ns:SFOpportunityLine&quot;>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite=false()&quot;>&lt;tns:OppLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;tns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/tns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;tns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/tns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;tns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/tns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;tns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/tns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;tns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/tns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;tns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/tns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;tns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/tns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;tns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/tns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;tns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/tns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;tns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/tns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;tns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/tns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;tns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/tns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/tns:OppLine>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/xsl:when>&lt;xsl:when test=&quot;$StageFlag/tns2:OppStageFlagUpdate[1]/tns2:oppStatustype='SalesOrder' or $StageFlag/tns2:OppStageFlagUpdate[1]/tns2:oppStatustype='Invoice' or $StageFlag/tns2:OppStageFlagUpdate[1]/tns2:oppStatustype='SalesOrderMemo' or $StageFlag/tns2:OppStageFlagUpdate[1]/tns2:oppStatustype='WrongHouse'&quot;>&lt;xsl:for-each select=&quot;$SFIdsMapper/ns:SFOpportunityHeader/ns:SFOpportunityLine&quot;>&lt;tns:OppLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;tns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/tns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;tns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/tns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;tns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/tns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;tns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/tns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;tns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/tns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;tns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/tns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;tns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/tns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;tns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/tns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;tns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/tns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;tns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/tns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;tns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/tns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;tns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/tns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/tns:OppLine>&lt;/xsl:for-each>&lt;/xsl:when>&lt;/xsl:choose>&lt;/tns:OppLineType>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="OppLines-input"
                                     name="OppLines"
-                                    outputVariable="OppLines"
                                     tibex:xpdlId="fc4ccc8c-3e5d-4346-be2c-1d11b8a0c5b5"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -9796,9 +10159,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns2=&quot;http://www.eagleview.com/BillingType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;BillingType-input&quot; match=&quot;/&quot;>&lt;ns2:BillingTypeList>&lt;ns2:BillingTypeData>&lt;ns2:SFBillingType>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($SFIdsMapper/ns:SFOpportunityHeader[1]/ns:BillingType)&quot;>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:BillingType&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns2:SFBillingType>&lt;/ns2:BillingTypeData>&lt;/ns2:BillingTypeList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="BillingType-input"
                                     name="BillingType"
-                                    outputVariable="BillingType"
                                     tibex:xpdlId="e9343dd6-4ad2-4dc2-9995-594a7284582e"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -9820,9 +10181,7 @@
                                     <tibex:extActivity
                                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; xmlns:ns1=&quot;http://www.eagleview.com/OppCreditCardType&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFIdsMapper&quot;/>&lt;xsl:template name=&quot;CreditCardType-input&quot; match=&quot;/&quot;>&lt;ns1:OppCreditCardTypeList>&lt;ns1:OppCreditCardTypeData>&lt;xsl:if test=&quot;$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:CreditCardType&quot;>&lt;ns1:SFOppCreditCard>&lt;xsl:value-of select=&quot;$SFIdsMapper/ns:SFOpportunityHeader[1]/ns:CreditCardType&quot;/>&lt;/ns1:SFOppCreditCard>&lt;/xsl:if>&lt;/ns1:OppCreditCardTypeData>&lt;/ns1:OppCreditCardTypeList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                                    inputVariable="CreditCardType-input"
                                     name="CreditCardType"
-                                    outputVariable="CreditCardType"
                                     tibex:xpdlId="a5559550-ffe3-4250-8c57-09f0fd537262"
                                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
@@ -9929,20 +10288,39 @@
                                     </bpws:throw>
                                     <bpws:throw
                                     faultVariable="BillPayer-throw-input" name="Adjustment throw">
+                                    <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:tns1="urn:partner.soap.sforce.com_queryAllOutput" version="2.0"&gt;&lt;xsl:param name="SFQueryOppADJ"/&gt;&lt;xsl:template name="BillPayer-throw-input" match="/"&gt;&lt;tns:DefaultFault&gt;&lt;message&gt;&lt;xsl:value-of select="concat(&amp;quot;Opportunity errored out  beacuse there are no records or more than one record existing in invoice table for wrong house&amp;quot;,&amp;quot;Record Id's : &amp;quot;,tib:concat-sequence($SFQueryOppADJ/queryAllResponse/tns1:result/tns1:records))"/&gt;&lt;/message&gt;&lt;msgCode&gt;&lt;xsl:value-of select="&amp;quot;Opportunity Error&amp;quot;"/&gt;&lt;/msgCode&gt;&lt;/tns:DefaultFault&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+                                    <tibex:inputBindings>
+                                    <tibex:partBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFQueryOppADJ&quot;/>&lt;xsl:template name=&quot;BillPayer-throw-input&quot; match=&quot;/&quot;>&lt;tns:DefaultFault>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Opportunity errored out  beacuse there are no records or more than one record existing in invoice table for wrong house&amp;quot;,&amp;quot;Record Id's : &amp;quot;,tib:concat-sequence($SFQueryOppADJ/queryAllResponse/tns1:result/tns1:records))&quot;/>&lt;/message>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Opportunity Error&amp;quot;&quot;/>&lt;/msgCode>&lt;/tns:DefaultFault>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
                                     <bpws:targets>
                                     <bpws:target linkName="SFQueryOppADJToCopy_1_size1"/>
                                     </bpws:targets>
                                     </bpws:throw>
                                     <bpws:throw
                                     faultVariable="BillPayer-throw-input" name="Invoice Throw">
+                                    <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:tns1="urn:partner.soap.sforce.com_queryAllOutput" version="2.0"&gt;&lt;xsl:param name="SFQueryOppInvoice"/&gt;&lt;xsl:template name="BillPayer-throw-input" match="/"&gt;&lt;tns:DefaultFault&gt;&lt;message&gt;&lt;xsl:value-of select="concat(&amp;quot;Opportunity errored out  beacuse there are no records or more than one record existing in invoice table for Opportunity&amp;quot;,&amp;quot;Record Id's : &amp;quot;,tib:concat-sequence($SFQueryOppInvoice/queryAllResponse/tns1:result/tns1:records))"/&gt;&lt;/message&gt;&lt;msgCode&gt;&lt;xsl:value-of select="&amp;quot;Opportunity Error&amp;quot;"/&gt;&lt;/msgCode&gt;&lt;/tns:DefaultFault&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+                                    <tibex:inputBindings>
+                                    <tibex:partBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SFQueryOppInvoice&quot;/>&lt;xsl:template name=&quot;BillPayer-throw-input&quot; match=&quot;/&quot;>&lt;tns:DefaultFault>&lt;message>&lt;xsl:value-of select=&quot;concat(&amp;quot;Opportunity errored out  beacuse there are no records or more than one record existing in invoice table for Opportunity&amp;quot;,&amp;quot;Record Id's : &amp;quot;,tib:concat-sequence($SFQueryOppInvoice/queryAllResponse/tns1:result/tns1:records))&quot;/>&lt;/message>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Opportunity Error&amp;quot;&quot;/>&lt;/msgCode>&lt;/tns:DefaultFault>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
                                     <bpws:targets>
                                     <bpws:target linkName="SFQueryOppInvoiceToCopy_2_size1"/>
                                     </bpws:targets>
                                     </bpws:throw>
                                     <bpws:throw
-                                    faultVariable="BillPayer-throw-input" name="BillPayer throw">
+                                    faultVariable="BillPayer-throw-input"
+                                    name="BillPayer throw" tibex:xpdlId="97c7684a-4564-46f4-a4e9-197aa63a19d1">
+                                    <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions" version="2.0"&gt;&lt;xsl:template name="BillPayer-throw-input" match="/"&gt;&lt;tns:DefaultFault&gt;&lt;message&gt;&lt;xsl:value-of select="&amp;quot;Opportunity failed as billpayer is empty&amp;quot;"/&gt;&lt;/message&gt;&lt;msgCode&gt;&lt;xsl:value-of select="&amp;quot;Opportunity Error&amp;quot;"/&gt;&lt;/msgCode&gt;&lt;/tns:DefaultFault&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+                                    <tibex:inputBindings>
+                                    <tibex:partBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;BillPayer-throw-input&quot; match=&quot;/&quot;>&lt;tns:DefaultFault>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;Opportunity failed as billpayer is empty&amp;quot;&quot;/>&lt;/message>&lt;msgCode>&lt;xsl:value-of select=&quot;&amp;quot;Opportunity Error&amp;quot;&quot;/>&lt;/msgCode>&lt;/tns:DefaultFault>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
                                     <bpws:targets>
-                                    <bpws:target linkName="SFId'sMapperToBillPayerthrow"/>
+                                    <bpws:target linkName="SFId'sMapperToCopy_1_BillPayerthrow"/>
                                     </bpws:targets>
                                     </bpws:throw>
                                     </bpws:flow>
@@ -9956,7 +10334,7 @@
                 <tibex:extActivity
                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SOMapper&quot;/>&lt;xsl:template name=&quot;CallSO-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$SOMapper/ns:SFOpportunityHeader&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                    inputVariable="CallSO-input" name="CallSO"
+                    name="CallSO"
                     tibex:xpdlId="c2e53c81-bb4c-42b9-953c-d65a055f20c9"
                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
@@ -9966,7 +10344,7 @@
                         <tibex:inputBinding
                             expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SOMapper&quot;/>&lt;xsl:template name=&quot;CallSO-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$SOMapper/ns:SFOpportunityHeader&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
-                    <tibex:CallProcess
+                    <tibex:CallProcess spawn="true"
                         subProcessName="SF_NS_Opportunity_Integration.NSSalesOrderSubscriber" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                 </tibex:extActivity>
             </bpws:extensionActivity>
@@ -10324,7 +10702,7 @@
                 <tibex:extActivity
                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;InvoiceMapper&quot;/>&lt;xsl:template name=&quot;CallInvoice-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$InvoiceMapper/ns:SFOpportunityHeader&quot;>&lt;xsl:if test=&quot;ns:NetsuiteRecordType=&amp;quot;Invoice&amp;quot; or ns:NetsuiteRecordType=&amp;quot;PositiveInvoice&amp;quot;&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:InvoiceNeeded&quot;>&lt;ns:InvoiceNeeded>&lt;xsl:value-of select=&quot;ns:InvoiceNeeded&quot;/>&lt;/ns:InvoiceNeeded>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PaymentWebSiteOpportunity&quot;>&lt;ns:PaymentWebSiteOpportunity>&lt;xsl:value-of select=&quot;ns:PaymentWebSiteOpportunity&quot;/>&lt;/ns:PaymentWebSiteOpportunity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BillingType&quot;>&lt;ns:BillingType>&lt;xsl:value-of select=&quot;ns:BillingType&quot;/>&lt;/ns:BillingType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardType&quot;>&lt;ns:CreditCardType>&lt;xsl:value-of select=&quot;ns:CreditCardType&quot;/>&lt;/ns:CreditCardType>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                    inputVariable="CallInvoice-input" name="CallInvoice"
+                    name="CallInvoice"
                     tibex:xpdlId="ccf2b4a4-61ae-43a7-b0b8-f1c28b8ec897"
                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
@@ -10334,7 +10712,7 @@
                         <tibex:inputBinding
                             expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;InvoiceMapper&quot;/>&lt;xsl:template name=&quot;CallInvoice-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$InvoiceMapper/ns:SFOpportunityHeader&quot;>&lt;xsl:if test=&quot;ns:NetsuiteRecordType=&amp;quot;Invoice&amp;quot; or ns:NetsuiteRecordType=&amp;quot;PositiveInvoice&amp;quot;&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:InvoiceNeeded&quot;>&lt;ns:InvoiceNeeded>&lt;xsl:value-of select=&quot;ns:InvoiceNeeded&quot;/>&lt;/ns:InvoiceNeeded>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PaymentWebSiteOpportunity&quot;>&lt;ns:PaymentWebSiteOpportunity>&lt;xsl:value-of select=&quot;ns:PaymentWebSiteOpportunity&quot;/>&lt;/ns:PaymentWebSiteOpportunity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BillingType&quot;>&lt;ns:BillingType>&lt;xsl:value-of select=&quot;ns:BillingType&quot;/>&lt;/ns:BillingType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardType&quot;>&lt;ns:CreditCardType>&lt;xsl:value-of select=&quot;ns:CreditCardType&quot;/>&lt;/ns:CreditCardType>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:if>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
-                    <tibex:CallProcess
+                    <tibex:CallProcess spawn="true"
                         subProcessName="SF_NS_Opportunity_Integration.NSInvoiceSubscriber" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                 </tibex:extActivity>
             </bpws:extensionActivity>
@@ -10384,7 +10762,7 @@
                 <tibex:extActivity
                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;MemoMapper&quot;/>&lt;xsl:template name=&quot;CallMemo-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$MemoMapper/ns:SFOpportunityHeader&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                    inputVariable="CallMemo-input" name="CallMemo"
+                    name="CallMemo"
                     tibex:xpdlId="1ec4d372-191d-409f-b87f-6b0e7234ea44"
                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
@@ -10394,7 +10772,7 @@
                         <tibex:inputBinding
                             expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;MemoMapper&quot;/>&lt;xsl:template name=&quot;CallMemo-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$MemoMapper/ns:SFOpportunityHeader&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
-                    <tibex:CallProcess
+                    <tibex:CallProcess spawn="true"
                         subProcessName="SF_NS_Opportunity_Integration.CreditmemoSubscriber" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                 </tibex:extActivity>
             </bpws:extensionActivity>
@@ -10481,7 +10859,7 @@
                 <tibex:extActivity
                     expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SOMemoMapper&quot;/>&lt;xsl:template name=&quot;SOCallMemo-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$SOMemoMapper/ns:SFOpportunityHeader&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
-                    inputVariable="SOCallMemo-input" name="SOCallMemo"
+                    name="SOCallMemo"
                     tibex:xpdlId="324d9c31-f720-4667-a642-04c599eebb3e"
                     type="bw.generalactivities.callprocess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
@@ -10491,7 +10869,7 @@
                         <tibex:inputBinding
                             expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns=&quot;http://www.eagleview.com/SFOpportunityHeader&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;SOMemoMapper&quot;/>&lt;xsl:template name=&quot;SOCallMemo-input&quot; match=&quot;/&quot;>&lt;ns:SFOpportunityList>&lt;xsl:for-each select=&quot;$SOMemoMapper/ns:SFOpportunityHeader&quot;>&lt;ns:SFOpportunityHeader>&lt;xsl:if test=&quot;ns:sfId&quot;>&lt;ns:sfId>&lt;xsl:value-of select=&quot;ns:sfId&quot;/>&lt;/ns:sfId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:nsId&quot;>&lt;ns:nsId>&lt;xsl:value-of select=&quot;ns:nsId&quot;/>&lt;/ns:nsId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountSFId&quot;>&lt;ns:ShiptoaccountSFId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountSFId&quot;/>&lt;/ns:ShiptoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShiptoaccountNSId&quot;>&lt;ns:ShiptoaccountNSId>&lt;xsl:value-of select=&quot;ns:ShiptoaccountNSId&quot;/>&lt;/ns:ShiptoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountSFId&quot;>&lt;ns:BilltoaccountSFId>&lt;xsl:value-of select=&quot;ns:BilltoaccountSFId&quot;/>&lt;/ns:BilltoaccountSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:BilltoaccountNSId&quot;>&lt;ns:BilltoaccountNSId>&lt;xsl:value-of select=&quot;ns:BilltoaccountNSId&quot;/>&lt;/ns:BilltoaccountNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactSFId&quot;>&lt;ns:ContactSFId>&lt;xsl:value-of select=&quot;ns:ContactSFId&quot;/>&lt;/ns:ContactSFId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ContactNSId&quot;>&lt;ns:ContactNSId>&lt;xsl:value-of select=&quot;ns:ContactNSId&quot;/>&lt;/ns:ContactNSId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UserId&quot;>&lt;ns:UserId>&lt;xsl:value-of select=&quot;ns:UserId&quot;/>&lt;/ns:UserId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Stage_OrderCancelled&quot;>&lt;ns:Stage_OrderCancelled>&lt;xsl:value-of select=&quot;ns:Stage_OrderCancelled&quot;/>&lt;/ns:Stage_OrderCancelled>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubStatus&quot;>&lt;ns:SubStatus>&lt;xsl:value-of select=&quot;ns:SubStatus&quot;/>&lt;/ns:SubStatus>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Currency&quot;>&lt;ns:Currency>&lt;xsl:value-of select=&quot;ns:Currency&quot;/>&lt;/ns:Currency>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Subsidary&quot;>&lt;ns:Subsidary>&lt;xsl:value-of select=&quot;ns:Subsidary&quot;/>&lt;/ns:Subsidary>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SubsidiaryName&quot;>&lt;ns:SubsidiaryName>&lt;xsl:value-of select=&quot;ns:SubsidiaryName&quot;/>&lt;/ns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AnnualAppropriation&quot;>&lt;ns:AnnualAppropriation>&lt;xsl:value-of select=&quot;ns:AnnualAppropriation&quot;/>&lt;/ns:AnnualAppropriation>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CommissionPartner&quot;>&lt;ns:CommissionPartner>&lt;xsl:value-of select=&quot;ns:CommissionPartner&quot;/>&lt;/ns:CommissionPartner>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Industry_Class&quot;>&lt;ns:Industry_Class>&lt;xsl:value-of select=&quot;ns:Industry_Class&quot;/>&lt;/ns:Industry_Class>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ProjectNumber_Memo&quot;>&lt;ns:ProjectNumber_Memo>&lt;xsl:value-of select=&quot;ns:ProjectNumber_Memo&quot;/>&lt;/ns:ProjectNumber_Memo>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:AdjustmentReasonCodes&quot;>&lt;ns:AdjustmentReasonCodes>&lt;xsl:value-of select=&quot;ns:AdjustmentReasonCodes&quot;/>&lt;/ns:AdjustmentReasonCodes>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:OMReportID&quot;>&lt;ns:OMReportID>&lt;xsl:value-of select=&quot;ns:OMReportID&quot;/>&lt;/ns:OMReportID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:NetsuiteRecordType&quot;>&lt;ns:NetsuiteRecordType>&lt;xsl:value-of select=&quot;ns:NetsuiteRecordType&quot;/>&lt;/ns:NetsuiteRecordType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Invoice_ID&quot;>&lt;ns:Opportunity_Invoice_ID>&lt;xsl:value-of select=&quot;ns:Opportunity_Invoice_ID&quot;/>&lt;/ns:Opportunity_Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Street_Address&quot;>&lt;ns:Report_Street_Address>&lt;xsl:value-of select=&quot;ns:Report_Street_Address&quot;/>&lt;/ns:Report_Street_Address>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_City&quot;>&lt;ns:Report_City>&lt;xsl:value-of select=&quot;ns:Report_City&quot;/>&lt;/ns:Report_City>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_State&quot;>&lt;ns:Report_State>&lt;xsl:value-of select=&quot;ns:Report_State&quot;/>&lt;/ns:Report_State>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Zip&quot;>&lt;ns:Report_Zip>&lt;xsl:value-of select=&quot;ns:Report_Zip&quot;/>&lt;/ns:Report_Zip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Report_Country&quot;>&lt;ns:Report_Country>&lt;xsl:value-of select=&quot;ns:Report_Country&quot;/>&lt;/ns:Report_Country>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Bldg_Number&quot;>&lt;ns:Bldg_Number>&lt;xsl:value-of select=&quot;ns:Bldg_Number&quot;/>&lt;/ns:Bldg_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Number&quot;>&lt;ns:Claim_Number>&lt;xsl:value-of select=&quot;ns:Claim_Number&quot;/>&lt;/ns:Claim_Number>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Claim_Info&quot;>&lt;ns:Claim_Info>&lt;xsl:value-of select=&quot;ns:Claim_Info&quot;/>&lt;/ns:Claim_Info>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Date_of_Loss&quot;>&lt;ns:Date_of_Loss>&lt;xsl:value-of select=&quot;ns:Date_of_Loss&quot;/>&lt;/ns:Date_of_Loss>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CAT_ID&quot;>&lt;ns:CAT_ID>&lt;xsl:value-of select=&quot;ns:CAT_ID&quot;/>&lt;/ns:CAT_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Insured_Name&quot;>&lt;ns:Insured_Name>&lt;xsl:value-of select=&quot;ns:Insured_Name&quot;/>&lt;/ns:Insured_Name>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Assignment&quot;>&lt;ns:Assignment>&lt;xsl:value-of select=&quot;ns:Assignment&quot;/>&lt;/ns:Assignment>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Image_Source&quot;>&lt;ns:Image_Source>&lt;xsl:value-of select=&quot;ns:Image_Source&quot;/>&lt;/ns:Image_Source>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Original_Document_Date&quot;>&lt;ns:Original_Document_Date>&lt;xsl:value-of select=&quot;ns:Original_Document_Date&quot;/>&lt;/ns:Original_Document_Date>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Facets&quot;>&lt;ns:Facets>&lt;xsl:value-of select=&quot;ns:Facets&quot;/>&lt;/ns:Facets>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Squares&quot;>&lt;ns:Squares>&lt;xsl:value-of select=&quot;ns:Squares&quot;/>&lt;/ns:Squares>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Division&quot;>&lt;ns:Division>&lt;xsl:value-of select=&quot;ns:Division&quot;/>&lt;/ns:Division>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ZoneRegion&quot;>&lt;ns:ZoneRegion>&lt;xsl:value-of select=&quot;ns:ZoneRegion&quot;/>&lt;/ns:ZoneRegion>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Policy&quot;>&lt;ns:Policy>&lt;xsl:value-of select=&quot;ns:Policy&quot;/>&lt;/ns:Policy>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:CreditCardAuthorizationID&quot;>&lt;ns:CreditCardAuthorizationID>&lt;xsl:value-of select=&quot;ns:CreditCardAuthorizationID&quot;/>&lt;/ns:CreditCardAuthorizationID>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCountry&quot;>&lt;ns:ShippingCountry>&lt;xsl:value-of select=&quot;ns:ShippingCountry&quot;/>&lt;/ns:ShippingCountry>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingCity&quot;>&lt;ns:ShippingCity>&lt;xsl:value-of select=&quot;ns:ShippingCity&quot;/>&lt;/ns:ShippingCity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingState&quot;>&lt;ns:ShippingState>&lt;xsl:value-of select=&quot;ns:ShippingState&quot;/>&lt;/ns:ShippingState>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingZip&quot;>&lt;ns:ShippingZip>&lt;xsl:value-of select=&quot;ns:ShippingZip&quot;/>&lt;/ns:ShippingZip>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ShippingStreet&quot;>&lt;ns:ShippingStreet>&lt;xsl:value-of select=&quot;ns:ShippingStreet&quot;/>&lt;/ns:ShippingStreet>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:Opportunity_Number&quot;>&lt;ns:Opportunity_Number>&lt;xsl:value-of select=&quot;ns:Opportunity_Number&quot;/>&lt;/ns:Opportunity_Number>&lt;/xsl:if>&lt;xsl:for-each select=&quot;ns:SFOpportunityLine&quot;>&lt;ns:SFOpportunityLine>&lt;xsl:if test=&quot;ns:quantity&quot;>&lt;ns:quantity>&lt;xsl:value-of select=&quot;ns:quantity&quot;/>&lt;/ns:quantity>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:productExternalId&quot;>&lt;ns:productExternalId>&lt;xsl:value-of select=&quot;ns:productExternalId&quot;/>&lt;/ns:productExternalId>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:TotalPrice&quot;>&lt;ns:TotalPrice>&lt;xsl:value-of select=&quot;ns:TotalPrice&quot;/>&lt;/ns:TotalPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:UnitPrice&quot;>&lt;ns:UnitPrice>&lt;xsl:value-of select=&quot;ns:UnitPrice&quot;/>&lt;/ns:UnitPrice>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:opplineid&quot;>&lt;ns:opplineid>&lt;xsl:value-of select=&quot;ns:opplineid&quot;/>&lt;/ns:opplineid>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:ominitialamount&quot;>&lt;ns:ominitialamount>&lt;xsl:value-of select=&quot;ns:ominitialamount&quot;/>&lt;/ns:ominitialamount>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:omdiscountcode&quot;>&lt;ns:omdiscountcode>&lt;xsl:value-of select=&quot;ns:omdiscountcode&quot;/>&lt;/ns:omdiscountcode>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:SyncedtoNetsuite&quot;>&lt;ns:SyncedtoNetsuite>&lt;xsl:value-of select=&quot;ns:SyncedtoNetsuite&quot;/>&lt;/ns:SyncedtoNetsuite>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTier&quot;>&lt;ns:PricingTier>&lt;xsl:value-of select=&quot;ns:PricingTier&quot;/>&lt;/ns:PricingTier>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierType&quot;>&lt;ns:PricingTierType>&lt;xsl:value-of select=&quot;ns:PricingTierType&quot;/>&lt;/ns:PricingTierType>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMinimumSize&quot;>&lt;ns:PricingTierMinimumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMinimumSize&quot;/>&lt;/ns:PricingTierMinimumSize>&lt;/xsl:if>&lt;xsl:if test=&quot;ns:PricingTierMaximumSize&quot;>&lt;ns:PricingTierMaximumSize>&lt;xsl:value-of select=&quot;ns:PricingTierMaximumSize&quot;/>&lt;/ns:PricingTierMaximumSize>&lt;/xsl:if>&lt;/ns:SFOpportunityLine>&lt;/xsl:for-each>&lt;xsl:if test=&quot;ns:sfQueueId&quot;>&lt;ns:sfQueueId>&lt;xsl:value-of select=&quot;ns:sfQueueId&quot;/>&lt;/ns:sfQueueId>&lt;/xsl:if>&lt;/ns:SFOpportunityHeader>&lt;/xsl:for-each>&lt;/ns:SFOpportunityList>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                     </tibex:inputBindings>
-                    <tibex:CallProcess
+                    <tibex:CallProcess spawn="true"
                         subProcessName="SF_NS_Opportunity_Integration.NSCreditMemoForNegativeSO" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                 </tibex:extActivity>
             </bpws:extensionActivity>
