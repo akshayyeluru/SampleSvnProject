@@ -2399,8 +2399,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
 
                                     <layoutConstraint
-                                    x="248"
-                                    xsi:type="notation:Bounds" y="33"/>
+                                    x="296"
+                                    xsi:type="notation:Bounds" y="19"/>
                                     </children>
 
                                     <children type="4002">
@@ -2453,8 +2453,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="114"
-                                    xsi:type="notation:Bounds" y="33"/>
+                                    x="174"
+                                    xsi:type="notation:Bounds" y="19"/>
                                     </children>
 
                                     <children type="4002">
@@ -2507,8 +2507,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    x="357"
-                                    xsi:type="notation:Bounds" y="33"/>
+                                    x="423"
+                                    xsi:type="notation:Bounds" y="12"/>
                                     </children>
 
                                     <children type="4002">
@@ -3457,7 +3457,7 @@
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2" type="4006">
             <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
+                <layoutConstraint x="13" xsi:type="notation:Location" y="-1"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
@@ -4033,7 +4033,8 @@
                                     <bpws:links>
 
                                     <bpws:link
-                                    name="Log1ToRenderJSON1" tibex:linkType="SUCCESS"/>
+                                    name="Log1ToRenderJSON1_IfIDExists"
+                                    tibex:label="If ID Exists" tibex:linkType="SUCCESSWITHCONDITION"/>
 
                                     <bpws:link
                                     name="RenderJSON1ToInvokeRESTAPI2" tibex:linkType="SUCCESS"/>
@@ -4047,19 +4048,26 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'OM Account Publisher'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/Data/*&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'Error Occured IN OM Account Publisher'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat($FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace,tib:concat-sequence($FaultDetails/Data/*))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Log1-input"
                                     name="Log1"
                                     tibex:xpdlId="981e7da0-0179-4285-a1e0-aa7966d622dd" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:sources>
 
-                                    <bpws:source linkName="Log1ToRenderJSON1"/>
+                                    <bpws:source linkName="Log1ToRenderJSON1_IfIDExists">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length(xsd:string($currentElement/tns:Id))>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length(xsd:string($currentElement/tns:Id))>0]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'OM Account Publisher'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;$FaultDetails/Data/*&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails&quot;/>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;msgCode>&lt;xsl:value-of select=&quot;'Error Occured IN OM Account Publisher'&quot;/>&lt;/msgCode>&lt;message>&lt;xsl:value-of select=&quot;concat($FaultDetails/Msg,$FaultDetails/MsgCode,$FaultDetails/StackTrace,tib:concat-sequence($FaultDetails/Data/*))&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -4077,7 +4085,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
 
                                     <value
-                                    role="Info"
+                                    role="Error"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
                                     </properties>
                                     </activityConfig>
@@ -4146,7 +4154,7 @@
                                     tibex:xpdlId="5138c0d2-7fa5-41fb-b11e-aea147a8a610" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="Log1ToRenderJSON1"/>
+                                    <bpws:target linkName="Log1ToRenderJSON1_IfIDExists"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
@@ -4477,7 +4485,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
 
                                     <value
-                                    role="Error"
+                                    role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
                                     </properties>
                                     </activityConfig>
@@ -4522,7 +4530,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
 
                                     <value
-                                    role="Error"
+                                    role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
                                     </properties>
                                     </activityConfig>
@@ -4583,7 +4591,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
 
                                     <value
-                                    role="Error"
+                                    role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
                                     </properties>
                                     </activityConfig>
@@ -4848,7 +4856,7 @@
                                     <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
 
                                     <value
-                                    role="Error"
+                                    role="Info"
                                     suppressJobInfo="true" xsi:type="generalactivities:Log"/>
                                     </properties>
                                     </activityConfig>

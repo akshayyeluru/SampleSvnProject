@@ -2685,8 +2685,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
 
                                     <layoutConstraint
-                                    x="144"
-                                    xsi:type="notation:Bounds" y="29"/>
+                                    x="245"
+                                    xsi:type="notation:Bounds" y="38"/>
                                     </children>
 
                                     <children type="4002">
@@ -2739,8 +2739,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    x="261"
-                                    xsi:type="notation:Bounds" y="29"/>
+                                    x="385"
+                                    xsi:type="notation:Bounds" y="38"/>
                                     </children>
 
                                     <children type="4002">
@@ -2793,8 +2793,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    x="357"
-                                    xsi:type="notation:Bounds" y="12"/>
+                                    x="509"
+                                    xsi:type="notation:Bounds" y="38"/>
                                     </children>
 
                                     <children type="4002">
@@ -2847,8 +2847,8 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.4"/>
 
                                     <layoutConstraint
-                                    x="495"
-                                    xsi:type="notation:Bounds" y="12"/>
+                                    x="646"
+                                    xsi:type="notation:Bounds" y="38"/>
                                     </children>
 
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -3590,7 +3590,7 @@
             source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
             target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1" type="4006">
             <children type="6002">
-                <layoutConstraint xsi:type="notation:Location" y="40"/>
+                <layoutConstraint x="-22" xsi:type="notation:Location" y="6"/>
             </children>
             <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
             <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
@@ -4015,7 +4015,8 @@
                                     <bpws:links>
 
                                     <bpws:link
-                                    name="Log12ToRenderJSON2" tibex:linkType="SUCCESS"/>
+                                    name="Log12ToRenderJSON2_IfIDExists"
+                                    tibex:label="If ID Exists" tibex:linkType="SUCCESSWITHCONDITION"/>
 
                                     <bpws:link
                                     name="RenderJSON2ToInvokeRESTAPI4" tibex:linkType="SUCCESS"/>
@@ -4036,7 +4037,14 @@
                                     tibex:xpdlId="d0b473ae-e282-4be6-b500-00b750d274fc" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:sources>
 
-                                    <bpws:source linkName="Log12ToRenderJSON2"/>
+                                    <bpws:source linkName="Log12ToRenderJSON2_IfIDExists">
+                                    <tibex:DesignExpression>
+
+                                    <tibex:expression
+                                    expression="string-length(xsd:string($currentElement/tns:Id))>0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[string-length(xsd:string($currentElement/tns:Id))>0]]></bpws:transitionCondition>
+                                    </bpws:source>
                                     </bpws:sources>
                                     <tibex:inputBindings>
 
@@ -4078,7 +4086,7 @@
                                     tibex:xpdlId="037a75b6-a171-4ac9-aed4-7852cc519242" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                     <bpws:targets>
 
-                                    <bpws:target linkName="Log12ToRenderJSON2"/>
+                                    <bpws:target linkName="Log12ToRenderJSON2_IfIDExists"/>
                                     </bpws:targets>
                                     <bpws:sources>
 
