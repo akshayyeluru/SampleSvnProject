@@ -143,6 +143,7 @@
                         name="MessageBody" type="tns:MessageBodyType"/>
                     <xsd:element maxOccurs="1" minOccurs="0"
                         name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="tns:QueryParameters"/>
                     <xsd:element maxOccurs="1" minOccurs="1" ref="tns:PathParameters"/>
                 </xsd:sequence>
             </xsd:complexType>
@@ -202,6 +203,14 @@
                         name="Header" type="tns:dynamicHeadersTypeDetails"/>
                 </xsd:sequence>
             </xsd:complexType>
+            <xsd:element name="QueryParameters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="0"
+                            name="changeQueueId" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
             <xsd:element name="PathParameters">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -3490,7 +3499,7 @@
                                     </bpws:empty>
                                     <bpws:extensionActivity>
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+792f1cb9-0ae8-4d04-aacd-e07c36bf977f+RestInvokeInput&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477463740790&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;QueueData&quot;/>&lt;xsl:template name=&quot;RetrieveReportData-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:PathParameters>&lt;ReportID>&lt;xsl:value-of select=&quot;$QueueData/tns1:ObjectId&quot;/>&lt;/ReportID>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+792f1cb9-0ae8-4d04-aacd-e07c36bf977f+RestInvokeInput&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477463740790&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;QueueData&quot;/>&lt;xsl:template name=&quot;RetrieveReportData-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:QueryParameters>&lt;xsl:if test=&quot;$QueueData/tns1:Id&quot;>&lt;changeQueueId>&lt;xsl:value-of select=&quot;$QueueData/tns1:Id&quot;/>&lt;/changeQueueId>&lt;/xsl:if>&lt;/tns:QueryParameters>&lt;tns:PathParameters>&lt;ReportID>&lt;xsl:value-of select=&quot;$QueueData/tns1:ObjectId&quot;/>&lt;/ReportID>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     governedObjectTypes="BWHttpReference"
                                     inputVariable="RetrieveReportData-input"
@@ -3505,7 +3514,7 @@
                                     </bpws:sources>
                                     <tibex:inputBindings>
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+792f1cb9-0ae8-4d04-aacd-e07c36bf977f+RestInvokeInput&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477463740790&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;QueueData&quot;/>&lt;xsl:template name=&quot;RetrieveReportData-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:PathParameters>&lt;ReportID>&lt;xsl:value-of select=&quot;$QueueData/tns1:ObjectId&quot;/>&lt;/ReportID>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+792f1cb9-0ae8-4d04-aacd-e07c36bf977f+RestInvokeInput&quot; xmlns:tns1=&quot;http://tns.tibco.com/bw/json/1477463740790&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;QueueData&quot;/>&lt;xsl:template name=&quot;RetrieveReportData-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;tns:QueryParameters>&lt;xsl:if test=&quot;$QueueData/tns1:Id&quot;>&lt;changeQueueId>&lt;xsl:value-of select=&quot;$QueueData/tns1:Id&quot;/>&lt;/changeQueueId>&lt;/xsl:if>&lt;/tns:QueryParameters>&lt;tns:PathParameters>&lt;ReportID>&lt;xsl:value-of select=&quot;$QueueData/tns1:ObjectId&quot;/>&lt;/ReportID>&lt;/tns:PathParameters>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
                                     <bwext:BWActivity
@@ -3520,7 +3529,7 @@
                                     <value
                                     httpClientSR="httpClientResource"
                                     requestContentType="JSON"
-                                    resourcePath="/Report/{ReportID}"
+                                    resourcePath="/Report/{ReportID}?changeQueueId"
                                     responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
                                     </properties>
                                     </activityConfig>
