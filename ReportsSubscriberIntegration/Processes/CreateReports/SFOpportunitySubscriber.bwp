@@ -4344,6 +4344,18 @@
             <bendpoints
                 points="[0, 25, -458, -19]$[0, 135, -458, 91]$[413, 135, -45, 91]$[413, 49, -45, 5]$[446, 49, -12, 5]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.7"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.9"/>
+            <bendpoints
+                points="[0, -24, -881, 73]$[0, -156, -881, -59]$[881, -156, 0, -59]$[881, -122, 0, -25]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
         location="../../Schemas/Salesforce/SFOpportunity.xsd" namespace="http://www.example.org/SFOpportunity"/>
@@ -4705,9 +4717,10 @@
                 <bpws:link name="QueueRecordsLogToRenderQueueData" tibex:linkType="SUCCESS"/>
                 <bpws:link name="StartToIterate" tibex:linkType="SUCCESS"/>
                 <bpws:link name="RenderJSONToInvokeRESTAPI" tibex:linkType="SUCCESS"/>
-                <bpws:link name="UpdateQueueStatusToIterate1" tibex:linkType="SUCCESS"/>
+                <bpws:link name="UpdateQueueStatusToIterate1" tibex:linkType="SUCCESSWITHNOCONDITION"/>
                 <bpws:link name="InvokeAddQueueDataToRenderQueueStatus" tibex:linkType="SUCCESS"/>
                 <bpws:link name="Iterate1ToEnd" tibex:linkType="SUCCESS"/>
+                <bpws:link name="UpdateQueueStatusToEnd" tibex:linkType="SUCCESS"/>
             </bpws:links>
             <bpws:extensionActivity>
                 <tibex:receiveEvent createInstance="yes"
@@ -4727,6 +4740,7 @@
                     tibex:xpdlId="ebe05978-da23-4db5-b357-682371c5dd6f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets>
                         <bpws:target linkName="Iterate1ToEnd"/>
+                        <bpws:target linkName="UpdateQueueStatusToEnd"/>
                     </bpws:targets>
                     <tibex:config>
                         <bwext:BWActivity
@@ -5474,7 +5488,14 @@
                         <bpws:target linkName="RenderJSONToInvokeRESTAPI"/>
                     </bpws:targets>
                     <bpws:sources>
-                        <bpws:source linkName="UpdateQueueStatusToIterate1"/>
+                        <bpws:source linkName="UpdateQueueStatusToIterate1">
+                            <tibex:DesignExpression>
+                                <tibex:expression
+                                    expression="##otherwise##" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                            </tibex:DesignExpression>
+                            <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                        </bpws:source>
+                        <bpws:source linkName="UpdateQueueStatusToEnd"/>
                     </bpws:sources>
                     <tibex:inputBindings>
                         <tibex:inputBinding
