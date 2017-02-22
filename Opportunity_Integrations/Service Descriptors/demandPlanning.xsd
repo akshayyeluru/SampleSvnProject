@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:demandPlanning="urn:demandplanning_2015_1.transactions.webservices.netsuite.com" xmlns:demandPlanningTyp="urn:types.demandplanning_2015_1.transactions.webservices.netsuite.com" xmlns:platformCommon="urn:common_2015_1.platform.webservices.netsuite.com" xmlns:platformCore="urn:core_2015_1.platform.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:demandplanning_2015_1.transactions.webservices.netsuite.com">
-  <import namespace="urn:core_2015_1.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
-  <import namespace="urn:common_2015_1.platform.webservices.netsuite.com" schemaLocation="common.xsd"/>
-  <import namespace="urn:types.demandplanning_2015_1.transactions.webservices.netsuite.com" schemaLocation="demandPlanningTypes.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="urn:demandplanning_2015_2.transactions.webservices.netsuite.com" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:demandPlanning="urn:demandplanning_2015_2.transactions.webservices.netsuite.com" xmlns:demandPlanningTyp="urn:types.demandplanning_2015_2.transactions.webservices.netsuite.com" xmlns:platformCore="urn:core_2015_2.platform.webservices.netsuite.com" xmlns:platformCommon="urn:common_2015_2.platform.webservices.netsuite.com">
+  <import namespace="urn:core_2015_2.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
+  <import namespace="urn:common_2015_2.platform.webservices.netsuite.com" schemaLocation="common.xsd"/>
+  <import namespace="urn:types.demandplanning_2015_2.transactions.webservices.netsuite.com" schemaLocation="demandPlanningTypes.xsd"/>
   <element name="itemDemandPlan" type="demandPlanning:ItemDemandPlan"/>
   <complexType name="ItemDemandPlan">
     <complexContent>
       <extension base="platformCore:Record">
         <sequence>
-          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
-          <element maxOccurs="1" minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
-          <element maxOccurs="1" minOccurs="0" name="location" type="platformCore:RecordRef"/>
-          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
-          <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
-          <element minOccurs="0" name="memo" type="xsd:string"/>
-          <element minOccurs="0" name="year" type="xsd:long"/>
-          <element minOccurs="0" name="month" type="demandPlanningTyp:DemandPlanMonth"/>
-          <element minOccurs="0" name="startDate" type="xsd:dateTime"/>
-          <element minOccurs="0" name="endDate" type="xsd:dateTime"/>
-          <element minOccurs="0" name="demandPlanCalendarType" type="demandPlanningTyp:DemandPlanCalendarType"/>
-          <element minOccurs="0" name="demandPlanMatrix" type="demandPlanning:DemandPlanMatrix"/>
-          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+          <element name="customForm" type="platformCore:RecordRef" minOccurs="0"/>
+          <element name="subsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+          <element name="location" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+          <element name="item" type="platformCore:RecordRef" minOccurs="0"/>
+          <element name="units" type="platformCore:RecordRef" minOccurs="0"/>
+          <element name="memo" type="xsd:string" minOccurs="0"/>
+          <element name="year" type="xsd:long" minOccurs="0"/>
+          <element name="month" type="demandPlanningTyp:DemandPlanMonth" minOccurs="0"/>
+          <element name="startDate" type="xsd:dateTime" minOccurs="0"/>
+          <element name="endDate" type="xsd:dateTime" minOccurs="0"/>
+          <element name="demandPlanCalendarType" type="demandPlanningTyp:DemandPlanCalendarType" minOccurs="0"/>
+          <element name="demandPlanMatrix" type="demandPlanning:DemandPlanMatrix" minOccurs="0"/>
+          <element name="customFieldList" type="platformCore:CustomFieldList" minOccurs="0"/>
         </sequence>
         <!--primary record internalId-->
         <attribute name="internalId" type="xsd:string"/>
@@ -30,27 +30,27 @@
   </complexType>
   <complexType name="DemandPlan">
     <sequence>
-      <element minOccurs="1" name="startDate" type="xsd:dateTime"/>
-      <element minOccurs="0" name="endDate" type="xsd:dateTime"/>
-      <element minOccurs="0" name="calculatedQuantity" type="xsd:double"/>
-      <element minOccurs="0" name="periodDemandPlanList" type="demandPlanning:PeriodDemandPlanList"/>
+      <element name="startDate" type="xsd:dateTime" minOccurs="1"/>
+      <element name="endDate" type="xsd:dateTime" minOccurs="0"/>
+      <element name="calculatedQuantity" type="xsd:double" minOccurs="0"/>
+      <element name="periodDemandPlanList" type="demandPlanning:PeriodDemandPlanList" minOccurs="0"/>
     </sequence>
   </complexType>
   <complexType name="DemandPlanMatrix">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="demandPlan" type="demandPlanning:DemandPlan"/>
+      <element name="demandPlan" type="demandPlanning:DemandPlan" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
-    <attribute default="false" name="replaceAll" type="xsd:boolean"/>
+    <attribute name="replaceAll" type="xsd:boolean" default="false"/>
   </complexType>
   <complexType name="PeriodDemandPlanList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="periodDemandPlan" type="demandPlanning:PeriodDemandPlan"/>
+      <element name="periodDemandPlan" type="demandPlanning:PeriodDemandPlan" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="PeriodDemandPlan">
     <sequence>
-      <element minOccurs="1" name="quantity" type="xsd:double"/>
-      <element minOccurs="0" name="dayOfTheWeek" type="demandPlanningTyp:DayOfTheWeek"/>
+      <element name="quantity" type="xsd:double" minOccurs="1"/>
+      <element name="dayOfTheWeek" type="demandPlanningTyp:DayOfTheWeek" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="itemDemandPlanSearch" type="demandPlanning:ItemDemandPlanSearch"/>
@@ -58,12 +58,12 @@
     <complexContent>
       <extension base="platformCore:SearchRecord">
         <sequence>
-          <element minOccurs="0" name="basic" type="platformCommon:ItemDemandPlanSearchBasic"/>
-          <element minOccurs="0" name="itemJoin" type="platformCommon:ItemSearchBasic"/>
-          <element minOccurs="0" name="lastAlternateSourceItemJoin" type="platformCommon:ItemSearchBasic"/>
-          <element minOccurs="0" name="locationJoin" type="platformCommon:LocationSearchBasic"/>
-          <element minOccurs="0" name="userJoin" type="platformCommon:EmployeeSearchBasic"/>
-          <element maxOccurs="unbounded" minOccurs="0" name="customSearchJoin" type="platformCommon:CustomSearchJoin"/>
+          <element name="basic" type="platformCommon:ItemDemandPlanSearchBasic" minOccurs="0"/>
+          <element name="itemJoin" type="platformCommon:ItemSearchBasic" minOccurs="0"/>
+          <element name="lastAlternateSourceItemJoin" type="platformCommon:ItemSearchBasic" minOccurs="0"/>
+          <element name="locationJoin" type="platformCommon:LocationSearchBasic" minOccurs="0"/>
+          <element name="userJoin" type="platformCommon:EmployeeSearchBasic" minOccurs="0"/>
+          <element name="customSearchJoin" type="platformCommon:CustomSearchJoin" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>
@@ -72,8 +72,8 @@
     <complexContent>
       <extension base="platformCore:SearchRecord">
         <sequence>
-          <element minOccurs="0" name="criteria" type="demandPlanning:ItemDemandPlanSearch"/>
-          <element minOccurs="0" name="columns" type="demandPlanning:ItemDemandPlanSearchRow"/>
+          <element name="criteria" type="demandPlanning:ItemDemandPlanSearch" minOccurs="0"/>
+          <element name="columns" type="demandPlanning:ItemDemandPlanSearchRow" minOccurs="0"/>
         </sequence>
         <attribute name="savedSearchId" type="xsd:string"/>
         <attribute name="savedSearchScriptId" type="xsd:string"/>
@@ -84,12 +84,12 @@
     <complexContent>
       <extension base="platformCore:SearchRow">
         <sequence>
-          <element minOccurs="0" name="basic" type="platformCommon:ItemDemandPlanSearchRowBasic"/>
-          <element minOccurs="0" name="itemJoin" type="platformCommon:ItemSearchRowBasic"/>
-          <element minOccurs="0" name="lastAlternateSourceItemJoin" type="platformCommon:ItemSearchRowBasic"/>
-          <element minOccurs="0" name="locationJoin" type="platformCommon:LocationSearchRowBasic"/>
-          <element minOccurs="0" name="userJoin" type="platformCommon:EmployeeSearchRowBasic"/>
-          <element maxOccurs="unbounded" minOccurs="0" name="customSearchJoin" type="platformCommon:CustomSearchRowBasic"/>
+          <element name="basic" type="platformCommon:ItemDemandPlanSearchRowBasic" minOccurs="0"/>
+          <element name="itemJoin" type="platformCommon:ItemSearchRowBasic" minOccurs="0"/>
+          <element name="lastAlternateSourceItemJoin" type="platformCommon:ItemSearchRowBasic" minOccurs="0"/>
+          <element name="locationJoin" type="platformCommon:LocationSearchRowBasic" minOccurs="0"/>
+          <element name="userJoin" type="platformCommon:EmployeeSearchRowBasic" minOccurs="0"/>
+          <element name="customSearchJoin" type="platformCommon:CustomSearchRowBasic" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>
@@ -99,14 +99,14 @@
     <complexContent>
       <extension base="platformCore:Record">
         <sequence>
-          <element minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
-          <element maxOccurs="1" minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
-          <element maxOccurs="1" minOccurs="0" name="location" type="platformCore:RecordRef"/>
-          <element minOccurs="0" name="item" type="platformCore:RecordRef"/>
-          <element minOccurs="0" name="units" type="platformCore:RecordRef"/>
-          <element minOccurs="0" name="memo" type="xsd:string"/>
-          <element minOccurs="0" name="orderList" type="demandPlanning:ItemSupplyPlanOrderList"/>
-          <element minOccurs="0" name="customFieldList" type="platformCore:CustomFieldList"/>
+          <element name="customForm" type="platformCore:RecordRef" minOccurs="0"/>
+          <element name="subsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+          <element name="location" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+          <element name="item" type="platformCore:RecordRef" minOccurs="0"/>
+          <element name="units" type="platformCore:RecordRef" minOccurs="0"/>
+          <element name="memo" type="xsd:string" minOccurs="0"/>
+          <element name="orderList" type="demandPlanning:ItemSupplyPlanOrderList" minOccurs="0"/>
+          <element name="customFieldList" type="platformCore:CustomFieldList" minOccurs="0"/>
         </sequence>
         <!--primary record internalId-->
         <attribute name="internalId" type="xsd:string"/>
@@ -116,31 +116,31 @@
   </complexType>
   <complexType name="ItemSupplyPlanOrder">
     <sequence>
-      <element minOccurs="0" name="orderLineId" type="xsd:long"/>
-      <element minOccurs="0" name="orderDate" type="xsd:dateTime"/>
-      <element minOccurs="0" name="receiptDate" type="xsd:dateTime"/>
-      <element minOccurs="0" name="sourceLocation" type="platformCore:RecordRef"/>
-      <element minOccurs="0" name="quantity" type="xsd:double"/>
-      <element minOccurs="0" name="orderCreated" type="xsd:boolean"/>
-      <element minOccurs="0" name="orderType" type="demandPlanningTyp:ItemSupplyPlanOrderType"/>
+      <element name="orderLineId" type="xsd:long" minOccurs="0"/>
+      <element name="orderDate" type="xsd:dateTime" minOccurs="0"/>
+      <element name="receiptDate" type="xsd:dateTime" minOccurs="0"/>
+      <element name="sourceLocation" type="platformCore:RecordRef" minOccurs="0"/>
+      <element name="quantity" type="xsd:double" minOccurs="0"/>
+      <element name="orderCreated" type="xsd:boolean" minOccurs="0"/>
+      <element name="orderType" type="demandPlanningTyp:ItemSupplyPlanOrderType" minOccurs="0"/>
     </sequence>
   </complexType>
   <complexType name="ItemSupplyPlanOrderList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="itemSupplyPlanOrder" type="demandPlanning:ItemSupplyPlanOrder"/>
+      <element name="itemSupplyPlanOrder" type="demandPlanning:ItemSupplyPlanOrder" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
-    <attribute default="true" name="replaceAll" type="xsd:boolean"/>
+    <attribute name="replaceAll" type="xsd:boolean" default="true"/>
   </complexType>
   <element name="itemSupplyPlanSearch" type="demandPlanning:ItemSupplyPlanSearch"/>
   <complexType name="ItemSupplyPlanSearch">
     <complexContent>
       <extension base="platformCore:SearchRecord">
         <sequence>
-          <element minOccurs="0" name="basic" type="platformCommon:ItemSupplyPlanSearchBasic"/>
-          <element minOccurs="0" name="itemJoin" type="platformCommon:ItemSearchBasic"/>
-          <element minOccurs="0" name="locationJoin" type="platformCommon:LocationSearchBasic"/>
-          <element minOccurs="0" name="userJoin" type="platformCommon:EmployeeSearchBasic"/>
-          <element maxOccurs="unbounded" minOccurs="0" name="customSearchJoin" type="platformCommon:CustomSearchJoin"/>
+          <element name="basic" type="platformCommon:ItemSupplyPlanSearchBasic" minOccurs="0"/>
+          <element name="itemJoin" type="platformCommon:ItemSearchBasic" minOccurs="0"/>
+          <element name="locationJoin" type="platformCommon:LocationSearchBasic" minOccurs="0"/>
+          <element name="userJoin" type="platformCommon:EmployeeSearchBasic" minOccurs="0"/>
+          <element name="customSearchJoin" type="platformCommon:CustomSearchJoin" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>
@@ -149,8 +149,8 @@
     <complexContent>
       <extension base="platformCore:SearchRecord">
         <sequence>
-          <element minOccurs="0" name="criteria" type="demandPlanning:ItemSupplyPlanSearch"/>
-          <element minOccurs="0" name="columns" type="demandPlanning:ItemSupplyPlanSearchRow"/>
+          <element name="criteria" type="demandPlanning:ItemSupplyPlanSearch" minOccurs="0"/>
+          <element name="columns" type="demandPlanning:ItemSupplyPlanSearchRow" minOccurs="0"/>
         </sequence>
         <attribute name="savedSearchId" type="xsd:string"/>
         <attribute name="savedSearchScriptId" type="xsd:string"/>
@@ -161,11 +161,11 @@
     <complexContent>
       <extension base="platformCore:SearchRow">
         <sequence>
-          <element minOccurs="0" name="basic" type="platformCommon:ItemSupplyPlanSearchRowBasic"/>
-          <element minOccurs="0" name="itemJoin" type="platformCommon:ItemSearchRowBasic"/>
-          <element minOccurs="0" name="locationJoin" type="platformCommon:LocationSearchRowBasic"/>
-          <element minOccurs="0" name="userJoin" type="platformCommon:EmployeeSearchRowBasic"/>
-          <element maxOccurs="unbounded" minOccurs="0" name="customSearchJoin" type="platformCommon:CustomSearchRowBasic"/>
+          <element name="basic" type="platformCommon:ItemSupplyPlanSearchRowBasic" minOccurs="0"/>
+          <element name="itemJoin" type="platformCommon:ItemSearchRowBasic" minOccurs="0"/>
+          <element name="locationJoin" type="platformCommon:LocationSearchRowBasic" minOccurs="0"/>
+          <element name="userJoin" type="platformCommon:EmployeeSearchRowBasic" minOccurs="0"/>
+          <element name="customSearchJoin" type="platformCommon:CustomSearchRowBasic" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>

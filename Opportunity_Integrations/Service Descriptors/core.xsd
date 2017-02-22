@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:platformCore="urn:core_2015_1.platform.webservices.netsuite.com" xmlns:platformCoreTyp="urn:types.core_2015_1.platform.webservices.netsuite.com" xmlns:platformFaultTyp="urn:types.faults_2015_1.platform.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:core_2015_1.platform.webservices.netsuite.com">
-  <import namespace="urn:types.core_2015_1.platform.webservices.netsuite.com" schemaLocation="coreTypes.xsd"/>
-  <import namespace="urn:types.faults_2015_1.platform.webservices.netsuite.com" schemaLocation="faultTypes.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="urn:core_2015_2.platform.webservices.netsuite.com" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:platformCore="urn:core_2015_2.platform.webservices.netsuite.com" xmlns:platformCoreTyp="urn:types.core_2015_2.platform.webservices.netsuite.com" xmlns:platformFaultTyp="urn:types.faults_2015_2.platform.webservices.netsuite.com">
+  <import namespace="urn:types.core_2015_2.platform.webservices.netsuite.com" schemaLocation="coreTypes.xsd"/>
+  <import namespace="urn:types.faults_2015_2.platform.webservices.netsuite.com" schemaLocation="faultTypes.xsd"/>
   <!--Login Passport-->
   <complexType name="Passport">
     <sequence>
       <element name="email" type="xsd:string"/>
       <element name="password" type="xsd:string"/>
       <element name="account" type="xsd:string"/>
-      <element minOccurs="0" name="role" type="platformCore:RecordRef"/>
+      <element name="role" type="platformCore:RecordRef" minOccurs="0"/>
     </sequence>
   </complexType>
   <!--SSO Passport-->
@@ -16,7 +16,8 @@
     <sequence>
       <element name="authenticationToken" type="xsd:string"/>
       <element name="partnerId" type="xsd:string"/>
-      <element minOccurs="0" name="partnerAccount" type="xsd:string"/>
+      <element name="partnerAccount" type="xsd:string"/>
+      <element name="partnerUserId" type="xsd:string"/>
     </sequence>
   </complexType>
   <!--SSO Credentials-->
@@ -25,17 +26,36 @@
       <element name="email" type="xsd:string"/>
       <element name="password" type="xsd:string"/>
       <element name="account" type="xsd:string"/>
-      <element minOccurs="0" name="role" type="platformCore:RecordRef"/>
+      <element name="role" type="platformCore:RecordRef" minOccurs="0"/>
       <element name="authenticationToken" type="xsd:string"/>
       <element name="partnerId" type="xsd:string"/>
     </sequence>
   </complexType>
+  <!--TBA Credentials-->
+  <complexType name="TokenPassportSignature">
+    <simpleContent>
+      <extension base="xsd:string">
+        <attribute name="algorithm" type="xsd:string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="TokenPassport">
+    <sequence>
+      <element name="account" type="xsd:string"/>
+      <element name="consumerKey" type="xsd:string"/>
+      <element name="token" type="xsd:string"/>
+      <element name="nonce" type="xsd:string"/>
+      <element name="timestamp" type="xsd:long"/>
+      <element name="signature" type="platformCore:TokenPassportSignature"/>
+    </sequence>
+  </complexType>
+  <!--TBA Credentials end-->
   <complexType name="ChangePassword">
     <sequence>
       <element name="currentPassword" type="xsd:string"/>
-      <element minOccurs="0" name="newPassword" type="xsd:string"/>
-      <element minOccurs="0" name="newPassword2" type="xsd:string"/>
-      <element minOccurs="0" name="justThisAccount" type="xsd:boolean"/>
+      <element name="newPassword" type="xsd:string" minOccurs="0"/>
+      <element name="newPassword2" type="xsd:string" minOccurs="0"/>
+      <element name="justThisAccount" type="xsd:boolean" minOccurs="0"/>
     </sequence>
   </complexType>
   <complexType name="ChangeEmail">
@@ -43,60 +63,60 @@
       <element name="currentPassword" type="xsd:string"/>
       <element name="newEmail" type="xsd:string"/>
       <element name="newEmail2" type="xsd:string"/>
-      <element minOccurs="0" name="justThisAccount" type="xsd:boolean"/>
+      <element name="justThisAccount" type="xsd:boolean" minOccurs="0"/>
     </sequence>
   </complexType>
   <!--Status-->
   <complexType name="StatusDetail">
     <sequence>
       <element name="code" type="platformFaultTyp:StatusDetailCodeType"/>
-      <element minOccurs="0" name="message" type="xsd:string"/>
+      <element name="message" type="xsd:string" minOccurs="0"/>
     </sequence>
-    <attribute default="ERROR" name="type" type="platformFaultTyp:StatusDetailType"/>
+    <attribute name="type" type="platformFaultTyp:StatusDetailType" default="ERROR"/>
   </complexType>
   <complexType name="Status">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="statusDetail" type="platformCore:StatusDetail"/>
+      <element name="statusDetail" type="platformCore:StatusDetail" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
     <attribute name="isSuccess" type="xsd:boolean"/>
   </complexType>
   <element name="status" type="platformCore:Status"/>
   <complexType name="WsRole">
     <sequence>
-      <element minOccurs="0" name="role" type="platformCore:RecordRef"/>
-      <element minOccurs="0" name="isDefault" type="xsd:boolean"/>
-      <element minOccurs="0" name="isInactive" type="xsd:boolean"/>
-      <element minOccurs="0" name="isLoggedInRole" type="xsd:boolean"/>
+      <element name="role" type="platformCore:RecordRef" minOccurs="0"/>
+      <element name="isDefault" type="xsd:boolean" minOccurs="0"/>
+      <element name="isInactive" type="xsd:boolean" minOccurs="0"/>
+      <element name="isLoggedInRole" type="xsd:boolean" minOccurs="0"/>
     </sequence>
   </complexType>
   <complexType name="WsRoleList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="wsRole" type="platformCore:WsRole"/>
+      <element name="wsRole" type="platformCore:WsRole" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <element name="wsRoleList" type="platformCore:WsRoleList"/>
   <!--Record-->
-  <complexType abstract="true" name="Record">
+  <complexType name="Record" abstract="true">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="nullFieldList" type="platformCore:NullField"/>
+      <element name="nullFieldList" type="platformCore:NullField" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="record" type="platformCore:Record"/>
   <complexType name="NullField">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="name" type="xsd:string"/>
+      <element name="name" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  <complexType abstract="true" name="SearchRecord"/>
+  <complexType name="SearchRecord" abstract="true"/>
   <element name="searchRecord" type="platformCore:SearchRecord"/>
-  <complexType abstract="true" name="SearchRecordBasic">
+  <complexType name="SearchRecordBasic" abstract="true">
     <complexContent>
       <extension base="platformCore:SearchRecord"/>
     </complexContent>
   </complexType>
   <element name="searchRecordBasic" type="platformCore:SearchRecordBasic"/>
-  <complexType abstract="true" name="SearchRow"/>
-  <complexType abstract="true" name="SearchRowBasic">
+  <complexType name="SearchRow" abstract="true"/>
+  <complexType name="SearchRowBasic" abstract="true">
     <complexContent>
       <extension base="platformCore:SearchRow"/>
     </complexContent>
@@ -105,13 +125,13 @@
   <complexType name="SearchResult">
     <sequence>
       <element ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" name="pageSize" type="xsd:int"/>
-      <element minOccurs="0" name="totalPages" type="xsd:int"/>
-      <element minOccurs="0" name="pageIndex" type="xsd:int"/>
-      <element minOccurs="0" name="searchId" type="xsd:string"/>
-      <element minOccurs="0" ref="platformCore:recordList"/>
-      <element minOccurs="0" ref="platformCore:searchRowList"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element name="pageSize" type="xsd:int" minOccurs="0"/>
+      <element name="totalPages" type="xsd:int" minOccurs="0"/>
+      <element name="pageIndex" type="xsd:int" minOccurs="0"/>
+      <element name="searchId" type="xsd:string" minOccurs="0"/>
+      <element ref="platformCore:recordList" minOccurs="0"/>
+      <element ref="platformCore:searchRowList" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="searchResult" type="platformCore:SearchResult"/>
@@ -127,66 +147,66 @@
   <complexType name="GetAllResult">
     <sequence>
       <element ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" ref="platformCore:recordList"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element ref="platformCore:recordList" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="getAllResult" type="platformCore:GetAllResult"/>
   <complexType name="GetSavedSearchResult">
     <sequence>
       <element ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" ref="platformCore:recordRefList"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element ref="platformCore:recordRefList" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="getSavedSearchResult" type="platformCore:GetSavedSearchResult"/>
   <complexType name="GetCustomizationIdResult">
     <sequence>
       <element ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" ref="platformCore:customizationRefList"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element ref="platformCore:customizationRefList" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="getCustomizationIdResult" type="platformCore:GetCustomizationIdResult"/>
   <complexType name="GetSelectValueResult">
     <sequence>
       <element ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" name="totalPages" type="xsd:int"/>
-      <element minOccurs="0" ref="platformCore:baseRefList"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element name="totalPages" type="xsd:int" minOccurs="0"/>
+      <element ref="platformCore:baseRefList" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="getSelectValueResult" type="platformCore:GetSelectValueResult"/>
   <complexType name="RecordList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="record" type="platformCore:Record"/>
+      <element name="record" type="platformCore:Record" minOccurs="0" maxOccurs="unbounded"/>
       <!--record name-->
     </sequence>
   </complexType>
   <element name="recordList" type="platformCore:RecordList"/>
   <complexType name="SearchRowList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="searchRow" type="platformCore:SearchRow"/>
+      <element name="searchRow" type="platformCore:SearchRow" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <element name="searchRowList" type="platformCore:SearchRowList"/>
   <complexType name="RecordRefList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="recordRef" type="platformCore:RecordRef"/>
+      <element name="recordRef" type="platformCore:RecordRef" minOccurs="0" maxOccurs="unbounded"/>
       <!--record refs-->
     </sequence>
   </complexType>
   <element name="recordRefList" type="platformCore:RecordRefList"/>
-  <complexType abstract="true" name="BaseRef">
+  <complexType name="BaseRef" abstract="true">
     <sequence>
-      <element minOccurs="0" name="name" type="xsd:string"/>
+      <element name="name" type="xsd:string" minOccurs="0"/>
       <!--record name-->
     </sequence>
   </complexType>
   <element name="baseRef" type="platformCore:BaseRef"/>
   <complexType name="BaseRefList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="baseRef" type="platformCore:BaseRef"/>
+      <element name="baseRef" type="platformCore:BaseRef" minOccurs="0" maxOccurs="unbounded"/>
       <!--record refs-->
     </sequence>
   </complexType>
@@ -240,16 +260,16 @@
   </complexType>
   <complexType name="CustomizationRefList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="customizationRef" type="platformCore:CustomizationRef"/>
+      <element name="customizationRef" type="platformCore:CustomizationRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <element name="customizationRefList" type="platformCore:CustomizationRefList"/>
   <complexType name="InitializeRecord">
     <sequence>
-      <element minOccurs="1" name="type" type="platformCoreTyp:InitializeType"/>
-      <element minOccurs="0" name="reference" type="platformCore:InitializeRef"/>
-      <element minOccurs="0" name="auxReference" type="platformCore:InitializeAuxRef"/>
-      <element minOccurs="0" name="referenceList" type="platformCore:InitializeRefList"/>
+      <element name="type" type="platformCoreTyp:InitializeType" minOccurs="1"/>
+      <element name="reference" type="platformCore:InitializeRef" minOccurs="0"/>
+      <element name="auxReference" type="platformCore:InitializeAuxRef" minOccurs="0"/>
+      <element name="referenceList" type="platformCore:InitializeRefList" minOccurs="0"/>
     </sequence>
   </complexType>
   <complexType name="InitializeRef">
@@ -266,7 +286,7 @@
   </complexType>
   <complexType name="InitializeRefList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="initializeRef" type="platformCore:InitializeRef"/>
+      <element name="initializeRef" type="platformCore:InitializeRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <element name="initializeRefList" type="platformCore:InitializeRefList"/>
@@ -284,8 +304,8 @@
   </complexType>
   <complexType name="UpdateInviteeStatusReference">
     <sequence>
-      <element minOccurs="1" name="eventId" type="platformCore:RecordRef"/>
-      <element minOccurs="1" name="responseCode" type="platformCoreTyp:CalendarEventAttendeeResponse"/>
+      <element name="eventId" type="platformCore:RecordRef" minOccurs="1"/>
+      <element name="responseCode" type="platformCoreTyp:CalendarEventAttendeeResponse" minOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="GetAllRecord">
@@ -306,7 +326,7 @@
   <!--ListOrRecordRef-->
   <complexType name="ListOrRecordRef">
     <sequence>
-      <element minOccurs="0" name="name" type="xsd:string"/>
+      <element name="name" type="xsd:string" minOccurs="0"/>
       <!--record name-->
     </sequence>
     <attribute name="internalId" type="xsd:string"/>
@@ -314,7 +334,7 @@
     <attribute name="typeId" type="xsd:string"/>
   </complexType>
   <!--CustomFieldRef-->
-  <complexType abstract="true" name="CustomFieldRef">
+  <complexType name="CustomFieldRef" abstract="true">
     <attribute name="internalId" type="xsd:string"/>
     <attribute name="scriptId" type="xsd:string"/>
   </complexType>
@@ -383,7 +403,7 @@
     <complexContent>
       <extension base="platformCore:CustomFieldRef">
         <sequence>
-          <element maxOccurs="unbounded" name="value" type="platformCore:ListOrRecordRef"/>
+          <element name="value" type="platformCore:ListOrRecordRef" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>
@@ -391,7 +411,7 @@
   <!--CustomFieldList-->
   <complexType name="CustomFieldList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="customField" type="platformCore:CustomFieldRef"/>
+      <element name="customField" type="platformCore:CustomFieldRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <!--element name="customFieldList" type="platformCore:CustomFieldList"/-->
@@ -401,60 +421,60 @@
   <!--SearchBooleanField-->
   <complexType name="SearchBooleanField">
     <sequence>
-      <element minOccurs="0" name="searchValue" type="xsd:boolean"/>
+      <element name="searchValue" type="xsd:boolean" minOccurs="0"/>
     </sequence>
   </complexType>
   <!--SearchStringField-->
   <complexType name="SearchStringField">
     <sequence>
-      <element minOccurs="0" name="searchValue" type="xsd:string"/>
+      <element name="searchValue" type="xsd:string" minOccurs="0"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchStringFieldOperator"/>
   </complexType>
   <!--SearchLongField-->
   <complexType name="SearchLongField">
     <sequence>
-      <element minOccurs="0" name="searchValue" type="xsd:long"/>
-      <element minOccurs="0" name="searchValue2" type="xsd:long"/>
+      <element name="searchValue" type="xsd:long" minOccurs="0"/>
+      <element name="searchValue2" type="xsd:long" minOccurs="0"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchLongFieldOperator"/>
   </complexType>
   <!--SearchTextNumberField-->
   <complexType name="SearchTextNumberField">
     <sequence>
-      <element minOccurs="0" name="searchValue" type="xsd:string"/>
-      <element minOccurs="0" name="searchValue2" type="xsd:string"/>
+      <element name="searchValue" type="xsd:string" minOccurs="0"/>
+      <element name="searchValue2" type="xsd:string" minOccurs="0"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchTextNumberFieldOperator"/>
   </complexType>
   <!--SearchDoubleField-->
   <complexType name="SearchDoubleField">
     <sequence>
-      <element minOccurs="0" name="searchValue" type="xsd:double"/>
-      <element minOccurs="0" name="searchValue2" type="xsd:double"/>
+      <element name="searchValue" type="xsd:double" minOccurs="0"/>
+      <element name="searchValue2" type="xsd:double" minOccurs="0"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchDoubleFieldOperator"/>
   </complexType>
   <!--SearchDateField-->
   <complexType name="SearchDateField">
     <sequence>
-      <element minOccurs="0" name="predefinedSearchValue" type="platformCoreTyp:SearchDate"/>
-      <element minOccurs="0" name="searchValue" type="xsd:dateTime"/>
-      <element minOccurs="0" name="searchValue2" type="xsd:dateTime"/>
+      <element name="predefinedSearchValue" type="platformCoreTyp:SearchDate" minOccurs="0"/>
+      <element name="searchValue" type="xsd:dateTime" minOccurs="0"/>
+      <element name="searchValue2" type="xsd:dateTime" minOccurs="0"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchDateFieldOperator"/>
   </complexType>
   <!--SearchMultiSelectListField-->
   <complexType name="SearchEnumMultiSelectField">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="searchValue" type="xsd:string"/>
+      <element name="searchValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchEnumMultiSelectFieldOperator"/>
   </complexType>
   <!--SearchMultiSelectListField-->
   <complexType name="SearchMultiSelectField">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="searchValue" type="platformCore:RecordRef"/>
+      <element name="searchValue" type="platformCore:RecordRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:SearchMultiSelectFieldOperator"/>
   </complexType>
@@ -462,7 +482,7 @@
   <!--Search Custom Field Types-->
   <!--********************************************************************-->
   <!--CustomFieldRef-->
-  <complexType abstract="true" name="SearchCustomField">
+  <complexType name="SearchCustomField" abstract="true">
     <attribute name="internalId" type="xsd:string"/>
     <attribute name="scriptId" type="xsd:string"/>
   </complexType>
@@ -471,7 +491,7 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:boolean"/>
+          <element name="searchValue" type="xsd:boolean" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -481,7 +501,7 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0"/>
         </sequence>
         <attribute name="operator" type="platformCoreTyp:SearchStringFieldOperator"/>
       </extension>
@@ -492,8 +512,8 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:long"/>
-          <element minOccurs="0" name="searchValue2" type="xsd:long"/>
+          <element name="searchValue" type="xsd:long" minOccurs="0"/>
+          <element name="searchValue2" type="xsd:long" minOccurs="0"/>
         </sequence>
         <attribute name="operator" type="platformCoreTyp:SearchLongFieldOperator"/>
       </extension>
@@ -504,8 +524,8 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:double"/>
-          <element minOccurs="0" name="searchValue2" type="xsd:double"/>
+          <element name="searchValue" type="xsd:double" minOccurs="0"/>
+          <element name="searchValue2" type="xsd:double" minOccurs="0"/>
         </sequence>
         <attribute name="operator" type="platformCoreTyp:SearchDoubleFieldOperator"/>
       </extension>
@@ -516,9 +536,9 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element minOccurs="0" name="predefinedSearchValue" type="platformCoreTyp:SearchDate"/>
-          <element minOccurs="0" name="searchValue" type="xsd:dateTime"/>
-          <element minOccurs="0" name="searchValue2" type="xsd:dateTime"/>
+          <element name="predefinedSearchValue" type="platformCoreTyp:SearchDate" minOccurs="0"/>
+          <element name="searchValue" type="xsd:dateTime" minOccurs="0"/>
+          <element name="searchValue2" type="xsd:dateTime" minOccurs="0"/>
         </sequence>
         <attribute name="operator" type="platformCoreTyp:SearchDateFieldOperator"/>
       </extension>
@@ -529,7 +549,7 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element maxOccurs="unbounded" minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
         <attribute name="operator" type="platformCoreTyp:SearchEnumMultiSelectFieldOperator"/>
       </extension>
@@ -540,7 +560,7 @@
     <complexContent>
       <extension base="platformCore:SearchCustomField">
         <sequence>
-          <element maxOccurs="unbounded" minOccurs="0" name="searchValue" type="platformCore:ListOrRecordRef"/>
+          <element name="searchValue" type="platformCore:ListOrRecordRef" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
         <attribute name="operator" type="platformCoreTyp:SearchMultiSelectFieldOperator"/>
       </extension>
@@ -549,15 +569,15 @@
   <!--CustomFieldList-->
   <complexType name="SearchCustomFieldList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="customField" type="platformCore:SearchCustomField"/>
+      <element name="customField" type="platformCore:SearchCustomField" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <!--Search Column Types-->
   <!--********************************************************************-->
   <!--SearchColumnDoubleField-->
-  <complexType abstract="true" name="SearchColumnField">
+  <complexType name="SearchColumnField" abstract="true">
     <sequence>
-      <element minOccurs="0" name="customLabel" type="xsd:string"/>
+      <element name="customLabel" type="xsd:string" minOccurs="0"/>
     </sequence>
   </complexType>
   <!--SearchColumnBooleanField-->
@@ -565,7 +585,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:boolean"/>
+          <element name="searchValue" type="xsd:boolean" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -575,7 +595,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -585,7 +605,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:long"/>
+          <element name="searchValue" type="xsd:long" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -595,7 +615,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -605,7 +625,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:double"/>
+          <element name="searchValue" type="xsd:double" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -615,7 +635,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:dateTime"/>
+          <element name="searchValue" type="xsd:dateTime" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -625,7 +645,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -635,7 +655,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="platformCore:RecordRef"/>
+          <element name="searchValue" type="platformCore:RecordRef" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -643,9 +663,9 @@
   <!--********************************************************************-->
   <!--Search Column Custom Field Types-->
   <!--********************************************************************-->
-  <complexType abstract="true" name="SearchColumnCustomField">
+  <complexType name="SearchColumnCustomField" abstract="true">
     <sequence>
-      <element minOccurs="0" name="customLabel" type="xsd:string"/>
+      <element name="customLabel" type="xsd:string" minOccurs="0"/>
     </sequence>
     <attribute name="internalId" type="xsd:string"/>
     <attribute name="scriptId" type="xsd:string"/>
@@ -655,7 +675,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:boolean"/>
+          <element name="searchValue" type="xsd:boolean" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -665,7 +685,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -675,7 +695,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:long"/>
+          <element name="searchValue" type="xsd:long" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -685,7 +705,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:double"/>
+          <element name="searchValue" type="xsd:double" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -695,7 +715,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="xsd:dateTime"/>
+          <element name="searchValue" type="xsd:dateTime" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -705,7 +725,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element maxOccurs="unbounded" minOccurs="0" name="searchValue" type="xsd:string"/>
+          <element name="searchValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>
@@ -715,7 +735,7 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element minOccurs="0" name="searchValue" type="platformCore:ListOrRecordRef"/>
+          <element name="searchValue" type="platformCore:ListOrRecordRef" minOccurs="0"/>
         </sequence>
       </extension>
     </complexContent>
@@ -725,14 +745,14 @@
     <complexContent>
       <extension base="platformCore:SearchColumnCustomField">
         <sequence>
-          <element maxOccurs="unbounded" minOccurs="0" name="searchValue" type="platformCore:ListOrRecordRef"/>
+          <element name="searchValue" type="platformCore:ListOrRecordRef" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </extension>
     </complexContent>
   </complexType>
   <complexType name="SearchColumnCustomFieldList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="customField" type="platformCore:SearchColumnCustomField"/>
+      <element name="customField" type="platformCore:SearchColumnCustomField" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <!--********************************************************************-->
@@ -740,34 +760,34 @@
   <!--********************************************************************-->
   <complexType name="ItemAvailabilityFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="item" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="lastQtyAvailableChange" type="xsd:dateTime"/>
+      <element name="item" type="platformCore:RecordRefList" minOccurs="1" maxOccurs="1"/>
+      <element name="lastQtyAvailableChange" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="ItemAvailability">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="item" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="lastQtyAvailableChange" type="xsd:dateTime"/>
-      <element minOccurs="0" name="locationId" type="platformCore:RecordRef"/>
-      <element minOccurs="0" name="quantityOnHand" type="xsd:double"/>
-      <element minOccurs="0" name="onHandValueMli" type="xsd:double"/>
-      <element minOccurs="0" name="reorderPoint" type="xsd:double"/>
-      <element minOccurs="0" name="preferredStockLevel" type="xsd:double"/>
-      <element minOccurs="0" name="quantityOnOrder" type="xsd:double"/>
-      <element minOccurs="0" name="quantityCommitted" type="xsd:double"/>
-      <element minOccurs="0" name="quantityBackOrdered" type="xsd:double"/>
-      <element minOccurs="0" name="quantityAvailable" type="xsd:double"/>
+      <element name="item" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="lastQtyAvailableChange" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+      <element name="locationId" type="platformCore:RecordRef" minOccurs="0"/>
+      <element name="quantityOnHand" type="xsd:double" minOccurs="0"/>
+      <element name="onHandValueMli" type="xsd:double" minOccurs="0"/>
+      <element name="reorderPoint" type="xsd:double" minOccurs="0"/>
+      <element name="preferredStockLevel" type="xsd:double" minOccurs="0"/>
+      <element name="quantityOnOrder" type="xsd:double" minOccurs="0"/>
+      <element name="quantityCommitted" type="xsd:double" minOccurs="0"/>
+      <element name="quantityBackOrdered" type="xsd:double" minOccurs="0"/>
+      <element name="quantityAvailable" type="xsd:double" minOccurs="0"/>
     </sequence>
   </complexType>
   <complexType name="ItemAvailabilityList">
     <sequence>
-      <element maxOccurs="unbounded" name="itemAvailability" type="platformCore:ItemAvailability"/>
+      <element name="itemAvailability" type="platformCore:ItemAvailability" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="GetItemAvailabilityResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element maxOccurs="1" minOccurs="0" name="itemAvailabilityList" type="platformCore:ItemAvailabilityList"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="itemAvailabilityList" type="platformCore:ItemAvailabilityList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getItemAvailabilityResult" type="platformCore:GetItemAvailabilityResult"/>
@@ -777,30 +797,30 @@
   <!--********************************************************************-->
   <complexType name="BudgetExchangeRateFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="period" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="fromSubsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="toSubsidiary" type="platformCore:RecordRef"/>
+      <element name="period" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="fromSubsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="toSubsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="BudgetExchangeRate">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="period" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="fromSubsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="toSubsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="currentRate" type="xsd:double"/>
-      <element maxOccurs="1" minOccurs="0" name="averageRate" type="xsd:double"/>
-      <element maxOccurs="1" minOccurs="0" name="historicalRate" type="xsd:double"/>
+      <element name="period" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="fromSubsidiary" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="toSubsidiary" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="currentRate" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+      <element name="averageRate" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+      <element name="historicalRate" type="xsd:double" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="BudgetExchangeRateList">
     <sequence>
-      <element maxOccurs="unbounded" name="budgetExchangeRate" type="platformCore:BudgetExchangeRate"/>
+      <element name="budgetExchangeRate" type="platformCore:BudgetExchangeRate" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="GetBudgetExchangeRateResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element maxOccurs="1" minOccurs="0" name="budgetExchangeRateList" type="platformCore:BudgetExchangeRateList"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="budgetExchangeRateList" type="platformCore:BudgetExchangeRateList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getBudgetExchangeRateResult" type="platformCore:GetBudgetExchangeRateResult"/>
@@ -810,30 +830,30 @@
   <!--********************************************************************-->
   <complexType name="ConsolidatedExchangeRateFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="period" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="fromSubsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="toSubsidiary" type="platformCore:RecordRef"/>
+      <element name="period" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="fromSubsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="toSubsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="ConsolidatedExchangeRate">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="period" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="fromSubsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="toSubsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="currentRate" type="xsd:double"/>
-      <element maxOccurs="1" minOccurs="0" name="averageRate" type="xsd:double"/>
-      <element maxOccurs="1" minOccurs="0" name="historicalRate" type="xsd:double"/>
+      <element name="period" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="fromSubsidiary" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="toSubsidiary" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="currentRate" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+      <element name="averageRate" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+      <element name="historicalRate" type="xsd:double" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="ConsolidatedExchangeRateList">
     <sequence>
-      <element maxOccurs="unbounded" name="consolidatedExchangeRate" type="platformCore:ConsolidatedExchangeRate"/>
+      <element name="consolidatedExchangeRate" type="platformCore:ConsolidatedExchangeRate" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="GetConsolidatedExchangeRateResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element maxOccurs="1" minOccurs="0" name="consolidatedExchangeRateList" type="platformCore:ConsolidatedExchangeRateList"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="consolidatedExchangeRateList" type="platformCore:ConsolidatedExchangeRateList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getConsolidatedExchangeRateResult" type="platformCore:GetConsolidatedExchangeRateResult"/>
@@ -843,28 +863,28 @@
   <!--********************************************************************-->
   <complexType name="CurrencyRateFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="baseCurrency" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="fromCurrency" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="effectiveDate" type="xsd:dateTime"/>
+      <element name="baseCurrency" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="fromCurrency" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="effectiveDate" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="CurrencyRate">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="baseCurrency" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="fromCurrency" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="exchangeRate" type="xsd:double"/>
-      <element maxOccurs="1" minOccurs="1" name="effectiveDate" type="xsd:dateTime"/>
+      <element name="baseCurrency" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="fromCurrency" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="exchangeRate" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+      <element name="effectiveDate" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="CurrencyRateList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="currencyRate" type="platformCore:CurrencyRate"/>
+      <element name="currencyRate" type="platformCore:CurrencyRate" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="GetCurrencyRateResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element maxOccurs="1" minOccurs="0" name="currencyRateList" type="platformCore:CurrencyRateList"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="currencyRateList" type="platformCore:CurrencyRateList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getCurrencyRateResult" type="platformCore:GetCurrencyRateResult"/>
@@ -874,15 +894,15 @@
   <!--********************************************************************-->
   <complexType name="DataCenterUrls">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="restDomain" type="xsd:string"/>
-      <element maxOccurs="1" minOccurs="1" name="webservicesDomain" type="xsd:string"/>
-      <element maxOccurs="1" minOccurs="1" name="systemDomain" type="xsd:string"/>
+      <element name="restDomain" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <element name="webservicesDomain" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <element name="systemDomain" type="xsd:string" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="GetDataCenterUrlsResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element maxOccurs="1" minOccurs="0" name="dataCenterUrls" type="platformCore:DataCenterUrls"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="dataCenterUrls" type="platformCore:DataCenterUrls" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getDataCenterUrlsResult" type="platformCore:GetDataCenterUrlsResult"/>
@@ -892,60 +912,60 @@
   <!--********************************************************************-->
   <complexType name="PostingTransactionSummaryField">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="period" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="account" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="parentItem" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="item" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="entity" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="department" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="class" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="location" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="subsidiary" type="xsd:boolean"/>
-      <element maxOccurs="1" minOccurs="0" name="book" type="xsd:boolean"/>
+      <element name="period" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="account" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="parentItem" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="item" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="entity" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="department" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="class" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="location" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="subsidiary" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+      <element name="book" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="PostingTransactionSummaryFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="period" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="account" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="parentItem" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="item" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="entity" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="department" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="class" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="location" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="subsidiary" type="platformCore:RecordRefList"/>
-      <element maxOccurs="1" minOccurs="0" name="book" type="platformCore:RecordRefList"/>
+      <element name="period" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="account" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="parentItem" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="item" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="entity" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="department" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="class" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="location" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="subsidiary" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
+      <element name="book" type="platformCore:RecordRefList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="PostingTransactionSummary">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="period" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="account" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="parentItem" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="item" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="entity" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="department" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="class" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="location" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="subsidiary" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="book" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="1" name="amount" type="xsd:double"/>
+      <element name="period" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="account" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="parentItem" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="item" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="entity" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="department" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="class" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="location" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="subsidiary" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="book" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="amount" type="xsd:double" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="PostingTransactionSummaryList">
     <sequence>
-      <element maxOccurs="unbounded" name="postingTransactionSummary" type="platformCore:PostingTransactionSummary"/>
+      <element name="postingTransactionSummary" type="platformCore:PostingTransactionSummary" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="GetPostingTransactionSummaryResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" name="pageSize" type="xsd:int"/>
-      <element minOccurs="0" name="totalPages" type="xsd:int"/>
-      <element minOccurs="0" name="pageIndex" type="xsd:int"/>
-      <element maxOccurs="1" minOccurs="0" name="postingTransactionSummaryList" type="platformCore:PostingTransactionSummaryList"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element name="pageSize" type="xsd:int" minOccurs="0"/>
+      <element name="totalPages" type="xsd:int" minOccurs="0"/>
+      <element name="pageIndex" type="xsd:int" minOccurs="0"/>
+      <element name="postingTransactionSummaryList" type="platformCore:PostingTransactionSummaryList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getPostingTransactionSummaryResult" type="platformCore:GetPostingTransactionSummaryResult"/>
@@ -955,32 +975,32 @@
   <!--********************************************************************-->
   <complexType name="GetSelectValueFieldDescription">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="recordType" type="platformCoreTyp:RecordType"/>
-      <element maxOccurs="1" minOccurs="0" name="customRecordType" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="customTransactionType" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="sublist" type="xsd:string"/>
-      <element maxOccurs="1" minOccurs="1" name="field" type="xsd:string"/>
-      <element maxOccurs="1" minOccurs="0" name="customForm" type="platformCore:RecordRef"/>
-      <element maxOccurs="1" minOccurs="0" name="filter" type="platformCore:GetSelectValueFilter"/>
-      <element maxOccurs="1" minOccurs="0" name="filterByValueList" type="platformCore:GetSelectFilterByFieldValueList"/>
+      <element name="recordType" type="platformCoreTyp:RecordType" minOccurs="0" maxOccurs="1"/>
+      <element name="customRecordType" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="customTransactionType" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="sublist" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <element name="field" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <element name="customForm" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
+      <element name="filter" type="platformCore:GetSelectValueFilter" minOccurs="0" maxOccurs="1"/>
+      <element name="filterByValueList" type="platformCore:GetSelectFilterByFieldValueList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="GetSelectValueFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="filterValue" type="xsd:string"/>
+      <element name="filterValue" type="xsd:string" minOccurs="1" maxOccurs="1"/>
     </sequence>
     <attribute name="operator" type="platformCoreTyp:GetSelectValueFilterOperator" use="required"/>
   </complexType>
   <complexType name="GetSelectFilterByFieldValueList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="1" name="filterBy" type="platformCore:GetSelectFilterByFieldValue"/>
+      <element name="filterBy" type="platformCore:GetSelectFilterByFieldValue" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="GetSelectFilterByFieldValue">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="sublist" type="xsd:string"/>
-      <element maxOccurs="1" minOccurs="1" name="field" type="xsd:string"/>
-      <element maxOccurs="1" minOccurs="1" name="internalId" type="xsd:string"/>
+      <element name="sublist" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <element name="field" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <element name="internalId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
   <!--getSelectValue/end-->
@@ -989,8 +1009,8 @@
   <!--********************************************************************-->
   <complexType name="GetServerTimeResult">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" ref="platformCore:status"/>
-      <element maxOccurs="1" minOccurs="1" name="serverTime" type="xsd:dateTime"/>
+      <element ref="platformCore:status" minOccurs="1" maxOccurs="1"/>
+      <element name="serverTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
   <element name="getServerTimeResult" type="platformCore:GetServerTimeResult"/>
@@ -1000,53 +1020,53 @@
   <!--********************************************************************-->
   <complexType name="DeletedRecord">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="deletedDate" type="xsd:dateTime"/>
-      <element maxOccurs="1" minOccurs="0" name="record" type="platformCore:BaseRef"/>
+      <element name="deletedDate" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+      <element name="record" type="platformCore:BaseRef" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="DeletedRecordList">
     <sequence>
-      <element maxOccurs="unbounded" minOccurs="0" name="deletedRecord" type="platformCore:DeletedRecord"/>
+      <element name="deletedRecord" type="platformCore:DeletedRecord" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <element name="deletedRecordList" type="platformCore:DeletedRecordList"/>
   <complexType name="GetDeletedResult">
     <sequence>
       <element ref="platformCore:status"/>
-      <element minOccurs="0" name="totalRecords" type="xsd:int"/>
-      <element minOccurs="0" name="pageSize" type="xsd:int"/>
-      <element minOccurs="0" name="totalPages" type="xsd:int"/>
-      <element minOccurs="0" name="pageIndex" type="xsd:int"/>
-      <element minOccurs="0" ref="platformCore:deletedRecordList"/>
+      <element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <element name="pageSize" type="xsd:int" minOccurs="0"/>
+      <element name="totalPages" type="xsd:int" minOccurs="0"/>
+      <element name="pageIndex" type="xsd:int" minOccurs="0"/>
+      <element ref="platformCore:deletedRecordList" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="getDeletedResult" type="platformCore:GetDeletedResult"/>
   <complexType name="GetDeletedFilter">
     <sequence>
-      <element maxOccurs="1" minOccurs="0" name="deletedDate" type="platformCore:SearchDateField"/>
-      <element maxOccurs="1" minOccurs="0" name="type" type="platformCore:SearchEnumMultiSelectField"/>
-      <element maxOccurs="1" minOccurs="0" name="scriptId" type="platformCore:SearchStringField"/>
+      <element name="deletedDate" type="platformCore:SearchDateField" minOccurs="0" maxOccurs="1"/>
+      <element name="type" type="platformCore:SearchEnumMultiSelectField" minOccurs="0" maxOccurs="1"/>
+      <element name="scriptId" type="platformCore:SearchStringField" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
   <!--********************************************************************-->
   <!--Attach-->
   <!--********************************************************************-->
-  <complexType abstract="true" name="AttachReference">
+  <complexType name="AttachReference" abstract="true">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="attachTo" type="platformCore:BaseRef"/>
+      <element name="attachTo" type="platformCore:BaseRef" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
-  <complexType abstract="true" name="DetachReference">
+  <complexType name="DetachReference" abstract="true">
     <sequence>
-      <element maxOccurs="1" minOccurs="1" name="detachFrom" type="platformCore:BaseRef"/>
+      <element name="detachFrom" type="platformCore:BaseRef" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </complexType>
   <complexType name="AttachContactReference">
     <complexContent>
       <extension base="platformCore:AttachReference">
         <sequence>
-          <element maxOccurs="1" minOccurs="1" name="contact" type="platformCore:RecordRef"/>
-          <element maxOccurs="1" minOccurs="0" name="contactRole" type="platformCore:RecordRef"/>
+          <element name="contact" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+          <element name="contactRole" type="platformCore:RecordRef" minOccurs="0" maxOccurs="1"/>
         </sequence>
       </extension>
     </complexContent>
@@ -1055,7 +1075,7 @@
     <complexContent>
       <extension base="platformCore:AttachReference">
         <sequence>
-          <element maxOccurs="1" minOccurs="1" name="attachedRecord" type="platformCore:BaseRef"/>
+          <element name="attachedRecord" type="platformCore:BaseRef" minOccurs="1" maxOccurs="1"/>
         </sequence>
       </extension>
     </complexContent>
@@ -1064,10 +1084,18 @@
     <complexContent>
       <extension base="platformCore:DetachReference">
         <sequence>
-          <element maxOccurs="1" minOccurs="1" name="detachedRecord" type="platformCore:BaseRef"/>
+          <element name="detachedRecord" type="platformCore:BaseRef" minOccurs="1" maxOccurs="1"/>
         </sequence>
       </extension>
     </complexContent>
   </complexType>
   <!--attach/end-->
+  <!--deletionReason/start-->
+  <complexType name="DeletionReason">
+    <sequence>
+      <element name="deletionReasonCode" type="platformCore:RecordRef" minOccurs="1" maxOccurs="1"/>
+      <element name="deletionReasonMemo" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <!--deletionReason/end-->
 </schema>
