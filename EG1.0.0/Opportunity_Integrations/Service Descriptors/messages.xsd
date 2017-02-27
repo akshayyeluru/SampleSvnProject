@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="urn:messages_2015_2.platform.webservices.netsuite.com" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:platformMsgs="urn:messages_2015_2.platform.webservices.netsuite.com" xmlns:platformFaultTyp="urn:types.faults_2015_2.platform.webservices.netsuite.com" xmlns:platformCore="urn:core_2015_2.platform.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <import namespace="urn:core_2015_2.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
-  <import namespace="urn:types.faults_2015_2.platform.webservices.netsuite.com" schemaLocation="faultTypes.xsd"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:platformCore="urn:core_2015_1.platform.webservices.netsuite.com" xmlns:platformFaultTyp="urn:types.faults_2015_1.platform.webservices.netsuite.com" xmlns:platformMsgs="urn:messages_2015_1.platform.webservices.netsuite.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:messages_2015_1.platform.webservices.netsuite.com">
+  <import namespace="urn:core_2015_1.platform.webservices.netsuite.com" schemaLocation="core.xsd"/>
+  <import namespace="urn:types.faults_2015_1.platform.webservices.netsuite.com" schemaLocation="faultTypes.xsd"/>
   <!--********************************************************************-->
   <!--Header Information-->
   <!--********************************************************************-->
   <complexType name="ApplicationInfo">
     <sequence>
-      <element name="applicationId" minOccurs="0" type="xsd:string"/>
+      <element minOccurs="0" name="applicationId" type="xsd:string"/>
     </sequence>
   </complexType>
   <element name="applicationInfo" type="platformMsgs:ApplicationInfo"/>
   <complexType name="PartnerInfo">
     <sequence>
-      <element name="partnerId" minOccurs="0" type="xsd:string"/>
+      <element minOccurs="0" name="partnerId" type="xsd:string"/>
     </sequence>
   </complexType>
   <element name="partnerInfo" type="platformMsgs:PartnerInfo"/>
@@ -25,59 +25,58 @@
   <element name="documentInfo" type="platformMsgs:DocumentInfo"/>
   <complexType name="Preferences">
     <sequence>
-      <element name="warningAsError" minOccurs="0" type="xsd:boolean"/>
-      <element name="disableMandatoryCustomFieldValidation" minOccurs="0" type="xsd:boolean"/>
-      <element name="disableSystemNotesForCustomFields" minOccurs="0" type="xsd:boolean"/>
-      <element name="ignoreReadOnlyFields" minOccurs="0" type="xsd:boolean"/>
+      <element minOccurs="0" name="warningAsError" type="xsd:boolean"/>
+      <element minOccurs="0" name="disableMandatoryCustomFieldValidation" type="xsd:boolean"/>
+      <element minOccurs="0" name="disableSystemNotesForCustomFields" type="xsd:boolean"/>
+      <element minOccurs="0" name="ignoreReadOnlyFields" type="xsd:boolean"/>
     </sequence>
   </complexType>
   <element name="preferences" type="platformMsgs:Preferences"/>
   <complexType name="SearchPreferences">
     <sequence>
-      <element name="bodyFieldsOnly" minOccurs="0" type="xsd:boolean" default="true"/>
-      <element name="returnSearchColumns" minOccurs="0" type="xsd:boolean" default="true"/>
-      <element name="pageSize" minOccurs="0" type="xsd:int"/>
+      <element default="true" minOccurs="0" name="bodyFieldsOnly" type="xsd:boolean"/>
+      <element default="true" minOccurs="0" name="returnSearchColumns" type="xsd:boolean"/>
+      <element minOccurs="0" name="pageSize" type="xsd:int"/>
     </sequence>
   </complexType>
   <element name="searchPreferences" type="platformMsgs:SearchPreferences"/>
   <element name="passport" type="platformCore:Passport"/>
-  <element name="tokenPassport" type="platformCore:TokenPassport"/>
   <!--********************************************************************-->
   <!--Responses-->
   <!--********************************************************************-->
   <complexType name="SessionResponse">
     <sequence>
       <element ref="platformCore:status"/>
-      <element name="userId" type="platformCore:RecordRef" minOccurs="0"/>
-      <element ref="platformCore:wsRoleList" minOccurs="0"/>
+      <element minOccurs="0" name="userId" type="platformCore:RecordRef"/>
+      <element minOccurs="0" ref="platformCore:wsRoleList"/>
     </sequence>
   </complexType>
   <element name="sessionResponse" type="platformMsgs:SessionResponse"/>
   <complexType name="WriteResponse">
     <sequence>
       <element ref="platformCore:status"/>
-      <element name="baseRef" type="platformCore:BaseRef" minOccurs="0"/>
+      <element minOccurs="0" name="baseRef" type="platformCore:BaseRef"/>
     </sequence>
   </complexType>
   <element name="writeResponse" type="platformMsgs:WriteResponse"/>
   <complexType name="ReadResponse">
     <sequence>
       <element ref="platformCore:status"/>
-      <element name="record" type="platformCore:Record" minOccurs="0"/>
+      <element minOccurs="0" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <element name="readResponse" type="platformMsgs:ReadResponse"/>
   <complexType name="WriteResponseList">
     <sequence>
-      <element ref="platformCore:status" minOccurs="0"/>
-      <element name="writeResponse" type="platformMsgs:WriteResponse" maxOccurs="unbounded"/>
+      <element minOccurs="0" ref="platformCore:status"/>
+      <element maxOccurs="unbounded" name="writeResponse" type="platformMsgs:WriteResponse"/>
     </sequence>
   </complexType>
   <element name="writeResponseList" type="platformMsgs:WriteResponseList"/>
   <complexType name="ReadResponseList">
     <sequence>
-      <element ref="platformCore:status" minOccurs="0"/>
-      <element name="readResponse" type="platformMsgs:ReadResponse" minOccurs="0" maxOccurs="unbounded"/>
+      <element minOccurs="0" ref="platformCore:status"/>
+      <element maxOccurs="unbounded" minOccurs="0" name="readResponse" type="platformMsgs:ReadResponse"/>
     </sequence>
   </complexType>
   <element name="readResponseList" type="platformMsgs:ReadResponseList"/>
@@ -346,12 +345,12 @@
   <element name="checkAsyncStatusResponse" type="platformMsgs:AsyncStatusResponse"/>
   <complexType name="GetAsyncResultResponse">
     <sequence>
-      <element ref="platformMsgs:asyncResult" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" ref="platformMsgs:asyncResult"/>
     </sequence>
   </complexType>
   <element name="getAsyncResultResponse" type="platformMsgs:GetAsyncResultResponse"/>
   <!--Async Results-->
-  <complexType name="AsyncResult" abstract="true"/>
+  <complexType abstract="true" name="AsyncResult"/>
   <element name="asyncResult" type="platformMsgs:AsyncResult"/>
   <complexType name="AsyncAddListResult">
     <complexContent>
@@ -481,7 +480,6 @@
   <complexType name="DeleteRequest">
     <sequence>
       <element name="baseRef" type="platformCore:BaseRef"/>
-      <element name="deletionReason" type="platformCore:DeletionReason" minOccurs="0"/>
     </sequence>
   </complexType>
   <element name="delete" type="platformMsgs:DeleteRequest"/>
@@ -523,26 +521,25 @@
   <element name="upsert" type="platformMsgs:UpsertRequest"/>
   <complexType name="AddListRequest">
     <sequence>
-      <element name="record" type="platformCore:Record" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <element name="addList" type="platformMsgs:AddListRequest"/>
   <complexType name="DeleteListRequest">
     <sequence>
-      <element name="baseRef" type="platformCore:BaseRef" minOccurs="1" maxOccurs="unbounded"/>
-      <element name="deletionReason" type="platformCore:DeletionReason" minOccurs="0"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="baseRef" type="platformCore:BaseRef"/>
     </sequence>
   </complexType>
   <element name="deleteList" type="platformMsgs:DeleteListRequest"/>
   <complexType name="UpdateListRequest">
     <sequence>
-      <element name="record" type="platformCore:Record" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <element name="updateList" type="platformMsgs:UpdateListRequest"/>
   <complexType name="UpsertListRequest">
     <sequence>
-      <element name="record" type="platformCore:Record" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <element name="upsertList" type="platformMsgs:UpsertListRequest"/>
@@ -554,83 +551,83 @@
   <element name="get" type="platformMsgs:GetRequest"/>
   <complexType name="GetListRequest">
     <sequence>
-      <element name="baseRef" type="platformCore:BaseRef" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="baseRef" type="platformCore:BaseRef"/>
     </sequence>
   </complexType>
   <element name="getList" type="platformMsgs:GetListRequest"/>
   <complexType name="GetAllRequest">
     <sequence>
-      <element name="record" type="platformCore:GetAllRecord" minOccurs="1"/>
+      <element minOccurs="1" name="record" type="platformCore:GetAllRecord"/>
     </sequence>
   </complexType>
   <element name="getAll" type="platformMsgs:GetAllRequest"/>
   <complexType name="GetSavedSearchRequest">
     <sequence>
-      <element name="record" type="platformCore:GetSavedSearchRecord" minOccurs="1"/>
+      <element minOccurs="1" name="record" type="platformCore:GetSavedSearchRecord"/>
     </sequence>
   </complexType>
   <element name="getSavedSearch" type="platformMsgs:GetSavedSearchRequest"/>
   <complexType name="GetCustomizationIdRequest">
     <sequence>
-      <element name="customizationType" type="platformCore:CustomizationType" minOccurs="1"/>
-      <element name="includeInactives" type="xsd:boolean" minOccurs="1"/>
+      <element minOccurs="1" name="customizationType" type="platformCore:CustomizationType"/>
+      <element minOccurs="1" name="includeInactives" type="xsd:boolean"/>
     </sequence>
   </complexType>
   <element name="getCustomizationId" type="platformMsgs:GetCustomizationIdRequest"/>
   <complexType name="InitializeRequest">
     <sequence>
-      <element name="initializeRecord" type="platformCore:InitializeRecord" minOccurs="1"/>
+      <element minOccurs="1" name="initializeRecord" type="platformCore:InitializeRecord"/>
     </sequence>
   </complexType>
   <element name="initialize" type="platformMsgs:InitializeRequest"/>
   <complexType name="InitializeListRequest">
     <sequence>
-      <element name="initializeRecord" type="platformCore:InitializeRecord" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="initializeRecord" type="platformCore:InitializeRecord"/>
     </sequence>
   </complexType>
   <element name="initializeList" type="platformMsgs:InitializeListRequest"/>
   <complexType name="getSelectValueRequest">
     <sequence>
-      <element name="fieldDescription" type="platformCore:GetSelectValueFieldDescription" minOccurs="1" maxOccurs="1"/>
-      <element name="pageIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="fieldDescription" type="platformCore:GetSelectValueFieldDescription"/>
+      <element maxOccurs="1" minOccurs="1" name="pageIndex" type="xsd:int"/>
     </sequence>
   </complexType>
   <element name="getSelectValue" type="platformMsgs:getSelectValueRequest"/>
   <complexType name="GetItemAvailabilityRequest">
     <sequence>
-      <element name="itemAvailabilityFilter" type="platformCore:ItemAvailabilityFilter" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="itemAvailabilityFilter" type="platformCore:ItemAvailabilityFilter"/>
     </sequence>
   </complexType>
   <element name="getItemAvailability" type="platformMsgs:GetItemAvailabilityRequest"/>
   <complexType name="GetBudgetExchangeRateRequest">
     <sequence>
-      <element name="budgetExchangeRateFilter" type="platformCore:BudgetExchangeRateFilter" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="budgetExchangeRateFilter" type="platformCore:BudgetExchangeRateFilter"/>
     </sequence>
   </complexType>
   <element name="getBudgetExchangeRate" type="platformMsgs:GetBudgetExchangeRateRequest"/>
   <complexType name="GetConsolidatedExchangeRateRequest">
     <sequence>
-      <element name="consolidatedExchangeRateFilter" type="platformCore:ConsolidatedExchangeRateFilter" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="consolidatedExchangeRateFilter" type="platformCore:ConsolidatedExchangeRateFilter"/>
     </sequence>
   </complexType>
   <element name="getConsolidatedExchangeRate" type="platformMsgs:GetConsolidatedExchangeRateRequest"/>
   <complexType name="GetCurrencyRateRequest">
     <sequence>
-      <element name="currencyRateFilter" type="platformCore:CurrencyRateFilter" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="currencyRateFilter" type="platformCore:CurrencyRateFilter"/>
     </sequence>
   </complexType>
   <element name="getCurrencyRate" type="platformMsgs:GetCurrencyRateRequest"/>
   <complexType name="GetDataCenterUrlsRequest">
     <sequence>
-      <element name="account" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="account" type="xsd:string"/>
     </sequence>
   </complexType>
   <element name="getDataCenterUrls" type="platformMsgs:GetDataCenterUrlsRequest"/>
   <complexType name="GetPostingTransactionSummaryRequest">
     <sequence>
-      <element name="fields" type="platformCore:PostingTransactionSummaryField" minOccurs="1" maxOccurs="1"/>
-      <element name="filters" type="platformCore:PostingTransactionSummaryFilter" minOccurs="0" maxOccurs="1"/>
-      <element name="pageIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="fields" type="platformCore:PostingTransactionSummaryField"/>
+      <element maxOccurs="1" minOccurs="0" name="filters" type="platformCore:PostingTransactionSummaryFilter"/>
+      <element maxOccurs="1" minOccurs="1" name="pageIndex" type="xsd:int"/>
     </sequence>
   </complexType>
   <element name="getPostingTransactionSummary" type="platformMsgs:GetPostingTransactionSummaryRequest"/>
@@ -638,64 +635,63 @@
   <element name="getServerTime" type="platformMsgs:GetServerTimeRequest"/>
   <complexType name="AttachRequest">
     <sequence>
-      <element name="attachReference" type="platformCore:AttachReference" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="attachReference" type="platformCore:AttachReference"/>
     </sequence>
   </complexType>
   <element name="attach" type="platformMsgs:AttachRequest"/>
   <complexType name="DetachRequest">
     <sequence>
-      <element name="detachReference" type="platformCore:DetachReference" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="detachReference" type="platformCore:DetachReference"/>
     </sequence>
   </complexType>
   <element name="detach" type="platformMsgs:DetachRequest"/>
   <!--Async-->
   <complexType name="AsyncAddListRequest">
     <sequence>
-      <element name="record" type="platformCore:Record" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <!--UpdateInviteeStatus requests-->
   <complexType name="UpdateInviteeStatusRequest">
     <sequence>
-      <element name="updateInviteeStatusReference" type="platformCore:UpdateInviteeStatusReference" minOccurs="1"/>
+      <element minOccurs="1" name="updateInviteeStatusReference" type="platformCore:UpdateInviteeStatusReference"/>
     </sequence>
   </complexType>
   <element name="updateInviteeStatus" type="platformMsgs:UpdateInviteeStatusRequest"/>
   <complexType name="UpdateInviteeStatusListRequest">
     <sequence>
-      <element name="updateInviteeStatusReference" type="platformCore:UpdateInviteeStatusReference" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="updateInviteeStatusReference" type="platformCore:UpdateInviteeStatusReference"/>
     </sequence>
   </complexType>
   <element name="updateInviteeStatusList" type="platformMsgs:UpdateInviteeStatusListRequest"/>
   <element name="asyncAddList" type="platformMsgs:AsyncAddListRequest"/>
   <complexType name="AsyncUpdateListRequest">
     <sequence>
-      <element name="record" type="platformCore:Record" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <element name="asyncUpdateList" type="platformMsgs:AsyncUpdateListRequest"/>
   <complexType name="AsyncUpsertListRequest">
     <sequence>
-      <element name="record" type="platformCore:Record" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="record" type="platformCore:Record"/>
     </sequence>
   </complexType>
   <element name="asyncUpsertList" type="platformMsgs:AsyncUpsertListRequest"/>
   <complexType name="AsyncDeleteListRequest">
     <sequence>
-      <element name="baseRef" type="platformCore:BaseRef" minOccurs="1" maxOccurs="unbounded"/>
-      <element name="deletionReason" type="platformCore:DeletionReason" minOccurs="0"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="baseRef" type="platformCore:BaseRef"/>
     </sequence>
   </complexType>
   <element name="asyncDeleteList" type="platformMsgs:AsyncDeleteListRequest"/>
   <complexType name="AsyncGetListRequest">
     <sequence>
-      <element name="baseRef" type="platformCore:BaseRef" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="baseRef" type="platformCore:BaseRef"/>
     </sequence>
   </complexType>
   <element name="asyncGetList" type="platformMsgs:AsyncGetListRequest"/>
   <complexType name="AsyncInitializeListRequest">
     <sequence>
-      <element name="initializeRecord" type="platformCore:InitializeRecord" minOccurs="1" maxOccurs="unbounded"/>
+      <element maxOccurs="unbounded" minOccurs="1" name="initializeRecord" type="platformCore:InitializeRecord"/>
     </sequence>
   </complexType>
   <element name="asyncInitializeList" type="platformMsgs:AsyncInitializeListRequest"/>
@@ -707,22 +703,22 @@
   <element name="asyncSearch" type="platformMsgs:AsyncSearchRequest"/>
   <complexType name="CheckAsyncStatusRequest">
     <sequence>
-      <element name="jobId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="jobId" type="xsd:string"/>
     </sequence>
   </complexType>
   <element name="checkAsyncStatus" type="platformMsgs:CheckAsyncStatusRequest"/>
   <complexType name="GetAsyncResultRequest">
     <sequence>
-      <element name="jobId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-      <element name="pageIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="jobId" type="xsd:string"/>
+      <element maxOccurs="1" minOccurs="1" name="pageIndex" type="xsd:int"/>
     </sequence>
   </complexType>
   <element name="getAsyncResult" type="platformMsgs:GetAsyncResultRequest"/>
   <!--Deletion-->
   <complexType name="GetDeletedRequest">
     <sequence>
-      <element name="getDeletedFilter" type="platformCore:GetDeletedFilter" minOccurs="1" maxOccurs="1"/>
-      <element name="pageIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <element maxOccurs="1" minOccurs="1" name="getDeletedFilter" type="platformCore:GetDeletedFilter"/>
+      <element maxOccurs="1" minOccurs="1" name="pageIndex" type="xsd:int"/>
     </sequence>
   </complexType>
   <element name="getDeleted" type="platformMsgs:GetDeletedRequest"/>
