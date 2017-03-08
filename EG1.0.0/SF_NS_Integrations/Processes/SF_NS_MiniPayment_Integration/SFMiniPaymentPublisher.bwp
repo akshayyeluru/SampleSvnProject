@@ -434,7 +434,7 @@
             xmlns:tns="http://www.example.org/SfQueueDataMapper"
             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <include schemaLocation="../../Schemas/SfQueueDataMapper.xsd"/>
-            <element name="Iterate_Current_Element_SFQueue" type="tns:SFQueueType"/>
+            <element name="Iterate_Current_Element_SFQueueMP" type="tns:SFQueueTypeMP"/>
         </schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20170228120021PLT"
@@ -456,7 +456,7 @@
             <wsdl:import location="../../Schemas/SfQueueDataMapper.xsd" namespace="http://www.example.org/SfQueueDataMapper"/>
             <wsdl:import namespace="urn:platform_2015_1.webservices.netsuite.com"/>
             <wsdl:message name="postRequest">
-                <wsdl:part element="extns1:SFQueueList" name="item"/>
+                <wsdl:part element="extns1:SFQueueListMP" name="item"/>
                 <wsdl:part element="extns:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
             </wsdl:message>
@@ -6659,14 +6659,14 @@
                                     name="iterate" parallel="no" tibex:group="iterate">
                                     <tibex:DesignExpression name="variableList">
                                     <tibex:expression
-                                    expression="$post/item/tns:SFQueueList/tns:SFQueue" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$post/item/tns:SFQueueListMP/tns:SFQueueMP" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
                                     <bpws:startCounterValue><![CDATA[1]]></bpws:startCounterValue>
-                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns:SFQueue)]]></bpws:finalCounterValue>
+                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns:SFQueueMP)]]></bpws:finalCounterValue>
                                     <bpws:scope name="innerScope">
                                     <bpws:variables>
                                     <bpws:variable
-                                    element="tns:Iterate_Current_Element_SFQueue"
+                                    element="tns:Iterate_Current_Element_SFQueueMP"
                                     name="currentElement" sca-bpel:internal="true"/>
                                     </bpws:variables>
                                     <bpws:flow name="flow2">
@@ -6688,7 +6688,7 @@
                                     <bpws:source linkName="GroupStartToScope"/>
                                     </bpws:sources>
                                     <bpws:copy>
-                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns:SFQueue)[number($index)]]]></bpws:from>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns:SFQueueMP)[number($index)]]]></bpws:from>
                                     <bpws:to variable="currentElement"/>
                                     </bpws:copy>
                                     </bpws:assign>
