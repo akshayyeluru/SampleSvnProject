@@ -9,6 +9,14 @@
     xmlns:ns0="http://www.tibco.com/pe/EngineTypes"
     xmlns:ns1="urn:partner.soap.sforce.com_queryAllInput"
     xmlns:ns10="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+c1b13198-df7e-4862-8576-aa8e8c96b1ea+RestInvokeOutput"
+    xmlns:ns11="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
+    xmlns:ns12="http://www.tibco.com/pe/WriteToLogActivitySchema"
+    xmlns:ns13="urn:partner.soap.sforce.com_updateAllInput"
+    xmlns:ns14="urn:partner.soap.sforce.com_updateAllOutput"
+    xmlns:ns15="http://www.example.org/Mail"
+    xmlns:ns16="activity.jsonRender.output+e90f1991-ccaf-46c7-95aa-0629e5119564+ActivityOutputType"
+    xmlns:ns17="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeInput"
+    xmlns:ns18="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeOutput"
     xmlns:ns2="urn:partner.soap.sforce.com_queryAllOutput"
     xmlns:ns3="http://www.example.org/Minipayment_Data"
     xmlns:ns4="urn:platform_2015_1.webservices.netsuite.com"
@@ -24,7 +32,8 @@
     xmlns:tns="http://www.example.org/SfQueueDataMapper"
     xmlns:tns0="urn:sobject.partner.soap.sforce.com"
     xmlns:tns1="urn:core_2015_1.platform.webservices.netsuite.com"
-    xmlns:tns2="urn:customers_2015_1.transactions.webservices.netsuite.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    xmlns:tns2="urn:customers_2015_1.transactions.webservices.netsuite.com"
+    xmlns:tns3="http://www.example.org/SfQueueDataMapper55" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:Types>
         <xs:schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
@@ -428,16 +437,426 @@
         </xsd:schema>
         <schema attributeFormDefault="unqualified"
             elementFormDefault="qualified"
-            targetNamespace="http://www.example.org/SfQueueDataMapper"
+            targetNamespace="http://www.example.org/SfQueueDataMapper55"
             xmlns="http://www.w3.org/2001/XMLSchema"
             xmlns:source="bw.group.iterate"
-            xmlns:tns="http://www.example.org/SfQueueDataMapper"
+            xmlns:tns="http://www.example.org/SfQueueDataMapper55"
             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <include schemaLocation="../../Schemas/SfQueueDataMapper.xsd"/>
-            <element name="Iterate_Current_Element_SFQueueMP" type="tns:SFQueueTypeMP"/>
+            <element name="Iterate_Current_Element_SFQueue" type="tns:SFQueueType"/>
         </schema>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/WriteToLogActivitySchema"
+            xmlns:tns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType name="LogParametersType">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="msgCode" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="loggerName" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0"
+                        name="logLevel" type="xs:string"/>
+                    <xs:element form="unqualified" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ActivityInput" type="tns:LogParametersType"/>
+        </xs:schema>
+        <schema
+            targetNamespace="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:tibex="http://www.tibco.com/bpel/2007/extensions" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions">
+            <element name="DefaultFault">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="message" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="msgCode" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllInput"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:Q1="urn:sobject.partner.soap.sforce.com" xmlns:tns="urn:partner.soap.sforce.com_updateAllInput">
+            <import namespace="urn:sobject.partner.soap.sforce.com"/>
+            <complexType name="updateAllInputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:connectionInfo"/>
+                    <element maxOccurs="1" minOccurs="1" name="update" type="tns:updateType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="update_Optional" type="tns:updateOptionalType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllInput" type="tns:updateAllInputType"/>
+            <element name="connectionInfo" nillable="false" type="tns:connectionInfoType"/>
+            <complexType name="connectionInfoType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="serverUrl" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="sessionId" type="string"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="externalSessionIdUsed" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="batchSize" type="integer"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateSObjects" type="tns:updateSObjects"/>
+                </sequence>
+            </complexType>
+            <complexType name="updateSObjects">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:sObjects"/>
+                </sequence>
+            </complexType>
+            <element name="sObjects" nillable="false" type="Q1:sObject"/>
+            <complexType name="updateOptionalType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:_configData"/>
+                    <element maxOccurs="1" minOccurs="0" ref="tns:headers"/>
+                </sequence>
+            </complexType>
+            <element name="_configData" nillable="false" type="tns:_configDataType"/>
+            <complexType name="_configDataType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="timeout" type="integer"/>
+                </sequence>
+            </complexType>
+            <element name="headers" nillable="false" type="tns:headersType"/>
+            <complexType name="headersType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="CallOptions" type="tns:CallOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AssignmentRuleHeader" type="tns:AssignmentRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="MruHeader" type="tns:MruHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllowFieldTruncationHeader" type="tns:AllowFieldTruncationHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DisableFeedTrackingHeader" type="tns:DisableFeedTrackingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="StreamingEnabledHeader" type="tns:StreamingEnabledHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="AllOrNoneHeader" type="tns:AllOrNoneHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DuplicateRuleHeader" type="tns:DuplicateRuleHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="LocaleOptions" type="tns:LocaleOptionsType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="DebuggingHeader" type="tns:DebuggingHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="PackageVersionHeader" type="tns:PackageVersionHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="EmailHeader" type="tns:EmailHeaderType"/>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="OwnerChangeOptions" type="tns:OwnerChangeOptionsType"/>
+                </sequence>
+            </complexType>
+            <complexType name="CallOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="client"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="defaultNamespace" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="AssignmentRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="assignmentRuleId" nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="useDefaultRule" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="MruHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="updateMru" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllowFieldTruncationHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowFieldTruncation" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DisableFeedTrackingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="disableFeedTracking" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="StreamingEnabledHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="streamingEnabled" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="AllOrNoneHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allOrNone" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DuplicateRuleHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="allowSave" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="includeRecordDetails" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="runAsCurrentUser" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="LocaleOptionsType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="language"
+                        nillable="false" type="string"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="localizeErrors" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="DebuggingHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="debugLevel" nillable="false" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersionHeaderType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="PackageVersion" type="tns:PackageVersion"/>
+                </sequence>
+            </complexType>
+            <complexType name="PackageVersion">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:majorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:minorNumber"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:namespace"/>
+                </sequence>
+            </complexType>
+            <element name="majorNumber" nillable="false" type="integer"/>
+            <element name="minorNumber" nillable="false" type="integer"/>
+            <element name="namespace" nillable="false" type="string"/>
+            <complexType name="EmailHeaderType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerAutoResponseEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerOtherEmail" nillable="false" type="boolean"/>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="triggerUserEmail" nillable="false" type="boolean"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOptionsType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0"
+                        name="OwnerChangeOption" type="tns:OwnerChangeOption"/>
+                </sequence>
+            </complexType>
+            <complexType name="OwnerChangeOption">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:type"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:execute"/>
+                </sequence>
+            </complexType>
+            <element name="type" nillable="false" type="string"/>
+            <element name="execute" nillable="false" type="boolean"/>
+        </schema>
+        <schema
+            targetNamespace="urn:partner.soap.sforce.com_updateAllOutput"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:partner.soap.sforce.com_updateAllOutput">
+            <complexType name="updateAllOutputType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0"
+                        name="updateAllResponse" type="tns:updateAllResponseType"/>
+                </sequence>
+            </complexType>
+            <element name="updateAllOutput" type="tns:updateAllOutputType"/>
+            <complexType name="updateAllResponseType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:result"/>
+                </sequence>
+            </complexType>
+            <element name="result" nillable="false" type="tns:SaveResult"/>
+            <complexType name="SaveResult">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:errors"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:id"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:success"/>
+                </sequence>
+            </complexType>
+            <element name="errors" nillable="false" type="tns:Error"/>
+            <complexType name="Error">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" ref="tns:fields"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:message"/>
+                    <element maxOccurs="1" minOccurs="1" ref="tns:statusCode"/>
+                </sequence>
+            </complexType>
+            <element name="fields" nillable="true" type="string"/>
+            <element name="message" nillable="false" type="string"/>
+            <element name="statusCode" nillable="false" type="string"/>
+            <element name="id" nillable="true" type="string"/>
+            <element name="success" nillable="false" type="boolean"/>
+        </schema>
+        <schema
+            targetNamespace="activity.jsonRender.output+e90f1991-ccaf-46c7-95aa-0629e5119564+ActivityOutputType"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="activity.jsonRender.output+e90f1991-ccaf-46c7-95aa-0629e5119564+ActivityOutputType">
+            <complexType name="ActivityOutputClassType">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1"
+                        name="jsonString" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityOutputClass" type="tns:ActivityOutputClassType"/>
+        </schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeInput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeOutput"
+            xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeOutput" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="RestInvokeInputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="HttpHeaders" type="tns:httpTransportHeaders"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityInput" type="tns:RestInvokeInputType"/>
+            <xsd:complexType name="RestInvokeOutputType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="statusCode" type="xsd:int"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="reasonPhrase" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageBody" type="tns:MessageBodyType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RestActivityOutput" type="tns:RestInvokeOutputType"/>
+            <xsd:complexType name="MessageBodyType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="asciiContent" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="httpTransportHeaders">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Charset" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Accept-Encoding" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Type" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Content-Length" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Connection" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Cookie" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="Pragma" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="DynamicHeaders" type="tns:dynamicHeadersType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="HttpHeaders" type="tns:httpTransportHeaders"/>
+            <xsd:complexType name="dynamicHeadersTypeDetails">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Name" type="xsd:string"/>
+                    <xsd:element form="unqualified" maxOccurs="1"
+                        minOccurs="1" name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="dynamicHeadersType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified"
+                        maxOccurs="unbounded" minOccurs="0"
+                        name="Header" type="tns:dynamicHeadersTypeDetails"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
         <wsdl:definitions
             targetNamespace="http://xmlns.example.com/20170228120021PLT"
+            xmlns:custom="http://www.example.org/SfQueueDataMapper55"
             xmlns:extns="http://tns.tibco.com/bw/REST"
             xmlns:extns1="http://www.example.org/SfQueueDataMapper"
             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
@@ -455,8 +874,9 @@
             <wsdl:import namespace="http://tns.tibco.com/bw/REST"/>
             <wsdl:import location="../../Schemas/SfQueueDataMapper.xsd" namespace="http://www.example.org/SfQueueDataMapper"/>
             <wsdl:import namespace="urn:platform_2015_1.webservices.netsuite.com"/>
+            <wsdl:import namespace="http://www.example.org/SfQueueDataMapper55"/>
             <wsdl:message name="postRequest">
-                <wsdl:part element="extns1:SFQueueListMP" name="item"/>
+                <wsdl:part element="custom:SFQueueList" name="item"/>
                 <wsdl:part element="extns:httpHeaders"
                     name="httpHeaders" tibex:source="bw.rest"/>
             </wsdl:message>
@@ -1116,7 +1536,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="267"
+                                    height="255"
                                     width="633"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
@@ -1226,6 +1646,210 @@
                                     <layoutConstraint xsi:type="notation:Bounds"/>
                                     </children>
 
+                                    <children type="4022">
+
+                                    <children type="3022">
+
+                                    <children type="4029">
+
+                                    <children type="3031">
+
+                                    <children type="4033">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll"/>
+
+                                    <layoutConstraint
+                                    height="34"
+                                    width="34"
+                                    xsi:type="notation:Bounds" y="68"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <children type="3032">
+
+                                    <children type="4005">
+
+                                    <children type="3007">
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.0"/>
+
+                                    <layoutConstraint
+                                    x="-19"
+                                    xsi:type="notation:Bounds" y="55"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
+
+                                    <layoutConstraint
+                                    x="117"
+                                    xsi:type="notation:Bounds" y="55"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:DrawerStyle"/>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity"/>
+
+                                    <layoutConstraint
+                                    height="168"
+                                    width="552" xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers"/>
+
+                                    <layoutConstraint
+                                    height="200"
+                                    width="578" xsi:type="notation:Bounds"/>
+                                    </children>
+
                                     <styles xsi:type="notation:SortingStyle"/>
 
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -1242,7 +1866,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2"/>
 
                                     <layoutConstraint
-                                    height="311"
+                                    height="511"
                                     width="673"
                                     x="14"
                                     xsi:type="notation:Bounds" y="9"/>
@@ -1377,7 +2001,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="359"
+                                    height="530"
                                     width="947" xsi:type="notation:Bounds"/>
                                     </children>
 
@@ -1397,7 +2021,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    height="359"
+                                    height="518"
                                     width="950"
                                     x="15"
                                     xsi:type="notation:Bounds" y="20"/>
@@ -1507,6 +2131,316 @@
                                     <layoutConstraint xsi:type="notation:Bounds"/>
                                     </children>
 
+                                    <children type="4022">
+
+                                    <children type="3022">
+
+                                    <children type="4029">
+
+                                    <children type="3031">
+
+                                    <children type="4033">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll"/>
+
+                                    <layoutConstraint
+                                    height="34"
+                                    width="34"
+                                    xsi:type="notation:Bounds" y="68"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <children type="3032">
+
+                                    <children type="4005">
+
+                                    <children type="3007">
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@activities.0"/>
+
+                                    <layoutConstraint
+                                    x="15"
+                                    xsi:type="notation:Bounds" y="30"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@activities.1"/>
+
+                                    <layoutConstraint
+                                    x="182"
+                                    xsi:type="notation:Bounds" y="13"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    x="304"
+                                    xsi:type="notation:Bounds" y="13"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@activities.3"/>
+
+                                    <layoutConstraint
+                                    x="427"
+                                    xsi:type="notation:Bounds" y="13"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:DrawerStyle"/>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles xsi:type="notation:SortingStyle"/>
+
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+
+                                    <styles
+                                    fontName="Segoe UI"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers"/>
+
+                                    <layoutConstraint
+                                    height="200"
+                                    width="895" xsi:type="notation:Bounds"/>
+                                    </children>
+
                                     <styles xsi:type="notation:SortingStyle"/>
 
                                     <styles xsi:type="notation:FilteringStyle"/>
@@ -1523,7 +2457,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3"/>
 
                                     <layoutConstraint
-                                    height="403"
+                                    height="774"
                                     width="990"
                                     x="-1"
                                     xsi:type="notation:Bounds" y="38"/>
@@ -1552,7 +2486,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity"/>
 
                                     <layoutConstraint
-                                    height="584"
+                                    height="822"
                                     width="1126" xsi:type="notation:Bounds"/>
                                     </children>
 
@@ -1572,7 +2506,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="584"
+                                    height="822"
                                     width="1129"
                                     x="15" xsi:type="notation:Bounds"/>
                                     </children>
@@ -1588,7 +2522,7 @@
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity"/>
 
                                     <layoutConstraint
-                                    height="608"
+                                    height="846"
                                     width="1169" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:SortingStyle"/>
@@ -1648,7 +2582,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0/@messages.0"/>
                                     <layoutConstraint
-                                    height="627"
+                                    height="865"
                                     width="1231"
                                     x="2" xsi:type="notation:Bounds"/>
                                     </children>
@@ -1662,7 +2596,7 @@
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity/@activities.0"/>
                                     <layoutConstraint
-                                    height="657"
+                                    height="895"
                                     width="1250" xsi:type="notation:Bounds"/>
                                     </children>
                                     <styles xsi:type="notation:DrawerStyle"/>
@@ -1677,7 +2611,7 @@
                                     gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
                                     <styles xsi:type="bwnotation:ResizingStyle"/>
                                     <element href="//0/@process/@activity/@activity"/>
-                                    <layoutConstraint height="667"
+                                    <layoutConstraint height="905"
                                     width="1260" xsi:type="notation:Bounds"/>
                                 </children>
                                 <styles xsi:type="notation:SortingStyle"/>
@@ -1687,7 +2621,7 @@
                             <styles xsi:type="bwnotation:BackgroundStyle"/>
                             <styles xsi:type="bwnotation:ResizingStyle"/>
                             <element href="//0/@process/@activity"/>
-                            <layoutConstraint height="667" width="1263" xsi:type="notation:Bounds"/>
+                            <layoutConstraint height="905" width="1263" xsi:type="notation:Bounds"/>
                         </children>
                         <styles xsi:type="notation:SortingStyle"/>
                         <styles xsi:type="notation:FilteringStyle"/>
@@ -1697,7 +2631,7 @@
                     <styles xsi:type="bwnotation:BackgroundStyle"/>
                     <styles xsi:type="bwnotation:ResizingStyle"/>
                     <element href="//0/@process/@activity"/>
-                    <layoutConstraint height="691" width="1263" x="1"
+                    <layoutConstraint height="929" width="1263" x="1"
                         xsi:type="notation:Bounds" y="1"/>
                 </children>
                 <styles xsi:type="notation:SortingStyle"/>
@@ -1706,7 +2640,7 @@
             </children>
             <styles fontName="Segoe UI" lineColor="0" xsi:type="notation:ShapeStyle"/>
             <element href="//0/@process"/>
-            <layoutConstraint height="743" width="1605" xsi:type="notation:Bounds"/>
+            <layoutConstraint height="981" width="1605" xsi:type="notation:Bounds"/>
         </children>
         <styles xsi:type="notation:DiagramStyle"/>
         <element href="//0"/>
@@ -1865,6 +2799,50 @@
             <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@links/@children.1"/>
             <bendpoints points="[478, -28, -89, 5]$[543, -32, -24, 1]" xsi:type="notation:RelativeBendpoints"/>
         </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@activity/@activities.1/@activity/@activity/@activities.2/@faultHandlers/@catchAll/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.4/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3/@children.0/@children.0/@children.1/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName="Segoe UI" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.0/@messages.0/@activity/@activity/@activities.3/@faultHandlers/@catchAll/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[25, -2, -142, 15]$[143, -15, -24, 2]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
     </notation:Diagram>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://tns.tibco.com/bw/REST"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema"
@@ -1879,6 +2857,7 @@
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="urn:customers_2015_1.transactions.webservices.netsuite.com"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/NS_ApplyList"/>
     <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/MiniPayment"/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.example.org/Mail"/>
     <bpws:partnerLinks>
         <bpws:partnerLink myRole="use" name="sfminipaymentpublisher"
             partnerLinkType="ns:partnerLinkType" sca-bpel:ignore="false" sca-bpel:service="sfminipaymentpublisher"/>
@@ -6598,6 +7577,31 @@
                 <bpws:literal>HttpClient.SubscriberHttpClientResource</bpws:literal>
             </bpws:from>
         </bpws:variable>
+        <bpws:variable element="ns12:ActivityInput" name="Log-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns11:DefaultFault" name="Throw-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns12:ActivityInput" name="Log1-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns13:updateAllInput"
+            name="SalesforceUpdateAll-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns14:updateAllOutput"
+            name="SalesforceUpdateAll" sca-bpel:internal="true"/>
+        <bpws:variable element="ns15:MailList"
+            name="EMailRenderJSON-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns16:ActivityOutputClass"
+            name="EMailRenderJSON" sca-bpel:internal="true"/>
+        <bpws:variable element="ns17:RestActivityInput"
+            name="EMailInvoke-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns18:RestActivityOutput"
+            name="EMailInvoke" sca-bpel:internal="true"/>
+        <bpws:variable name="MailURI1" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="MailURI" type="xsd:string"/>
+        <bpws:variable name="Property" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/httpclient}HttpClientConfiguration" type="xsd:string">
+            <bpws:from>
+                <bpws:literal>HttpClient.SubscriberHttpClientResource</bpws:literal>
+            </bpws:from>
+        </bpws:variable>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
@@ -6653,20 +7657,221 @@
                                 <bpws:sources>
                                     <bpws:source linkName="IterateTopostOut"/>
                                 </bpws:sources>
+                                <bpws:variables>
+                                    <bpws:variable name="FaultName1"
+                                    sca-bpel:internal="true" type="xsd:string"/>
+                                    <bpws:variable
+                                    element="ns0:FaultDetail"
+                                    name="FaultDetails1" sca-bpel:internal="true"/>
+                                </bpws:variables>
+                                <bpws:faultHandlers>
+                                    <bpws:catchAll
+                                    tibex:faultDetailsVar="FaultDetails1"
+                                    tibex:faultNameVar="FaultName1" tibex:xpdlId="b61ebd8f-217d-4123-ae40-3faa325609d1">
+                                    <bpws:scope name="scope3">
+                                    <bpws:flow name="flow5">
+                                    <bpws:links>
+                                    <bpws:link
+                                    name="__Link" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="__Link1" tibex:linkType="SUCCESS"/>
+                                    <bpws:link
+                                    name="Log1ToSalesforceUpdateAll" tibex:linkType="SUCCESS"/>
+                                    </bpws:links>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;Exception Occoured in SF-NS Minipayment&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Log1-input"
+                                    name="Log1"
+                                    tibex:xpdlId="fce59b87-8ae8-45c7-9826-bec524caef00" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:sources>
+                                    <bpws:source linkName="Log1ToSalesforceUpdateAll"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Log1-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;Exception Occoured in SF-NS Minipayment&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.log"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+
+                                    <value
+                                    role="Info"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:param name=&quot;post&quot;/>&lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&lt;tns:updateAllInput>&lt;update>&lt;updateSObjects>&lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&lt;ns:Id>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($post/item/tns2:SFQueueList/tns2:SFQueue[1]/tns2:QueueID)&quot;>&lt;xsl:value-of select=&quot;$post/item/tns2:SFQueueList/tns2:SFQueue[1]/tns2:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/ns:Id>&lt;ns:Event_Message__c>&lt;xsl:value-of select=&quot;concat($FaultDetails1/Msg,$FaultDetails1/MsgCode,$FaultDetails1/StackTrace,tib:concat-sequence($FaultDetails1/Data/*))&quot;/>&lt;/ns:Event_Message__c>&lt;ns:Processed_Flag__c>&lt;xsl:value-of select=&quot;'E'&quot;/>&lt;/ns:Processed_Flag__c>&lt;/tns:sObjects>&lt;/updateSObjects>&lt;/update>&lt;/tns:updateAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="SalesforceUpdateAll-input"
+                                    name="SalesforceUpdateAll"
+                                    outputVariable="SalesforceUpdateAll"
+                                    tibex:xpdlId="2bd7af8e-7f35-4ef0-aa65-a8b46fcf6cd1" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="Log1ToSalesforceUpdateAll"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="__Link"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_updateAllInput&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;post.item&quot;/>&#xa;    &lt;xsl:param name=&quot;FaultDetails1&quot;/>&#xa;    &lt;xsl:template name=&quot;SalesforceUpdateAll-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:updateAllInput>&#xa;            &lt;update>&#xa;                &lt;updateSObjects>&#xa;                    &lt;tns:sObjects xsi:type=&quot;ns:Integration_Queue__c&quot;>&#xa;                        &lt;ns:Id>&#xa;                            &lt;xsl:choose>&#xa;                                &lt;xsl:when test=&quot;exists($post.item/tns2:SFQueue[1]/tns2:QueueID)&quot;>&#xa;                                    &lt;xsl:value-of select=&quot;$post.item/tns2:SFQueue[1]/tns2:QueueID&quot;/>&#xa;                                &lt;/xsl:when>&#xa;                                &lt;xsl:otherwise>&#xa;                                    &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                                &lt;/xsl:otherwise>&#xa;                            &lt;/xsl:choose>&#xa;                        &lt;/ns:Id>&#xa;                        &lt;ns:Event_Message__c>&#xa;                            &lt;xsl:value-of select=&quot;concat($FaultDetails1/Msg,$FaultDetails1/MsgCode,$FaultDetails1/StackTrace,tib:concat-sequence($FaultDetails1/Data/*))&quot;/>&#xa;                        &lt;/ns:Event_Message__c>&#xa;                        &lt;ns:Processed_Flag__c>&#xa;                            &lt;xsl:value-of select=&quot;'E'&quot;/>&#xa;                        &lt;/ns:Processed_Flag__c>&#xa;                    &lt;/tns:sObjects>&#xa;                &lt;/updateSObjects>&#xa;            &lt;/update>&#xa;        &lt;/tns:updateAllInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.bwsalesforce.SalesforceUpdate"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:bwsalesforce="http://ns.tibco.com/bw/palette/bwsalesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/bwsalesforce#//SalesforceUpdate"/>
+
+                                    <value
+                                    salesforceConnection="salesforceConnProperty"
+                                    wsdlPath="/SalesforceResources/partner_35_0.wsdl" xsi:type="bwsalesforce:SalesforceUpdate"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper55&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;FaultDetails1&quot;/>&lt;xsl:param name=&quot;post&quot;/>&lt;xsl:template name=&quot;EMailRenderJSON-input&quot; match=&quot;/&quot;>&lt;tns:MailList>&lt;tns:Mail>&lt;tns:Subject>&lt;xsl:value-of select=&quot;concat(&amp;quot;SF_NS SFMiniPaymentPublisher :Error Occured While processing SF-NS MiniPayment&amp;quot;,&amp;quot;QueueId : &amp;quot;,$post/item/tns2:SFQueueList/tns2:SFQueue[1]/tns2:QueueID,&amp;quot;OpportunityID : &amp;quot;,$post/item/tns2:SFQueueList/tns2:SFQueue[1]/tns2:RecordID)&quot;/>&lt;/tns:Subject>&lt;tns:Body>&lt;xsl:value-of select=&quot;concat($FaultDetails1/Msg,$FaultDetails1/MsgCode,$FaultDetails1/StackTrace,tib:concat-sequence($FaultDetails1/Data/*))&quot;/>&lt;/tns:Body>&lt;/tns:Mail>&lt;/tns:MailList>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="EMailRenderJSON-input"
+                                    name="EMailRenderJSON"
+                                    outputVariable="EMailRenderJSON"
+                                    tibex:xpdlId="e90f1991-ccaf-46c7-95aa-0629e5119564" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="__Link"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="__Link1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Mail&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper55&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; version=&quot;2.0&quot;>&#xa;    &lt;xsl:param name=&quot;post.item&quot;/>&#xa;    &lt;xsl:param name=&quot;FaultDetails1&quot;/>&#xa;    &lt;xsl:template name=&quot;EMailRenderJSON-input&quot; match=&quot;/&quot;>&#xa;        &lt;tns:MailList>&#xa;            &lt;tns:Mail>&#xa;                &lt;tns:Subject>&#xa;                    &lt;xsl:value-of select=&quot;concat(&amp;quot;SF_NS SFMiniPaymentPublisher :Error Occured While processing SF-NS MiniPayment&amp;quot;,&amp;quot;QueueId : &amp;quot;,$post.item/tns2:SFQueue[1]/tns2:QueueID,&amp;quot;OpportunityID : &amp;quot;,$post.item/tns2:SFQueue[1]/tns2:RecordID)&quot;/>&#xa;                &lt;/tns:Subject>&#xa;                &lt;tns:Body>&#xa;                    &lt;xsl:value-of select=&quot;concat($FaultDetails1/Msg,$FaultDetails1/MsgCode,$FaultDetails1/StackTrace,tib:concat-sequence($FaultDetails1/Data/*))&quot;/>&#xa;                &lt;/tns:Body>&#xa;            &lt;/tns:Mail>&#xa;        &lt;/tns:MailList>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.JsonRender"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//JsonRender"/>
+
+                                    <value
+                                    jsonOutputStyle="None"
+                                    schemaType="Xsd" xsi:type="restjson:JsonRender">
+
+                                    <inputEditorElement href="platform:/resource/SF_NS_Integrations/Schemas/OtherSchemas/MailSchema.xsd#//MailList;XSDElementDeclaration"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;EMailRenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$EMailRenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    governedObjectTypes="BWHttpReference"
+                                    inputVariable="EMailInvoke-input"
+                                    name="EMailInvoke"
+                                    outputVariable="EMailInvoke"
+                                    tibex:xpdlId="51b55aaf-6329-464e-a568-de0bfcaa4d04" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="__Link1"/>
+                                    </bpws:targets>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/namespaces/tnt/plugins/restinvoke+51b55aaf-6329-464e-a568-de0bfcaa4d04+RestInvokeInput&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;EMailRenderJSON&quot;/>&lt;xsl:template name=&quot;InvokeRESTAPI-input&quot; match=&quot;/&quot;>&lt;tns:RestActivityInput>&lt;MessageBody>&lt;asciiContent>&lt;xsl:value-of select=&quot;$EMailRenderJSON/jsonString&quot;/>&lt;/asciiContent>&lt;/MessageBody>&lt;/tns:RestActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.restjson.Rest"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:restjson="http://ns.tibco.com/bw/palette/restjson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+                                    <attributeBindings
+                                    bindingType="moduleProperty"
+                                    eAttributeName="resourcePath" processProperty="MailURI1"/>
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/restjson#//RestInvokeActivity"/>
+
+                                    <value
+                                    httpClientSR="Property"
+                                    httpMethod="POST"
+                                    requestContentType="JSON"
+                                    responseAcceptType="JSON" xsi:type="restjson:RestInvokeActivity"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+                                    </bpws:flow>
+                                    </bpws:scope>
+                                    </bpws:catchAll>
+                                </bpws:faultHandlers>
                                 <bpws:sequence name="sequence" tibex:group="iterate">
                                     <bpws:empty name="GroupInit" tibex:group="groupInit"/>
                                     <bpws:forEach counterName="index"
                                     name="iterate" parallel="no" tibex:group="iterate">
                                     <tibex:DesignExpression name="variableList">
                                     <tibex:expression
-                                    expression="$post/item/tns:SFQueueListMP/tns:SFQueueMP" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    expression="$post/item/tns3:SFQueueList/tns3:SFQueue" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
                                     </tibex:DesignExpression>
                                     <bpws:startCounterValue><![CDATA[1]]></bpws:startCounterValue>
-                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns:SFQueueMP)]]></bpws:finalCounterValue>
+                                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($post.item/tns3:SFQueue)]]></bpws:finalCounterValue>
                                     <bpws:scope name="innerScope">
                                     <bpws:variables>
                                     <bpws:variable
-                                    element="tns:Iterate_Current_Element_SFQueueMP"
+                                    element="tns3:Iterate_Current_Element_SFQueue"
                                     name="currentElement" sca-bpel:internal="true"/>
                                     </bpws:variables>
                                     <bpws:flow name="flow2">
@@ -6688,7 +7893,7 @@
                                     <bpws:source linkName="GroupStartToScope"/>
                                     </bpws:sources>
                                     <bpws:copy>
-                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns:SFQueueMP)[number($index)]]]></bpws:from>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($post.item/tns3:SFQueue)[number($index)]]]></bpws:from>
                                     <bpws:to variable="currentElement"/>
                                     </bpws:copy>
                                     </bpws:assign>
@@ -6707,6 +7912,89 @@
                                     <bpws:sources>
                                     <bpws:source linkName="ScopeToRenderJSON"/>
                                     </bpws:sources>
+                                    <bpws:variables>
+                                    <bpws:variable
+                                    name="FaultName"
+                                    sca-bpel:internal="true" type="xsd:string"/>
+                                    <bpws:variable
+                                    element="ns0:FaultDetail"
+                                    name="FaultDetails" sca-bpel:internal="true"/>
+                                    </bpws:variables>
+                                    <bpws:faultHandlers>
+                                    <bpws:catchAll
+                                    tibex:faultDetailsVar="FaultDetails"
+                                    tibex:faultNameVar="FaultName" tibex:xpdlId="9f0655a7-c858-4bef-a5b5-3449d570d633">
+                                    <bpws:scope name="scope2">
+
+                                    <bpws:flow name="flow4">
+                                    <bpws:links>
+
+                                    <bpws:link
+                                    name="LogToThrow" tibex:linkType="SUCCESS"/>
+                                    </bpws:links>
+                                    <bpws:extensionActivity>
+
+                                    <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;Exception Occoured in SF-NS Minipayment&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Log-input"
+                                    name="Log"
+                                    tibex:xpdlId="d1f26b95-4cc4-44ad-a70e-820f154268c6" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:sources>
+
+                                    <bpws:source linkName="LogToThrow"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.tibco.com/pe/WriteToLogActivitySchema&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Log-input&quot; match=&quot;/&quot;>&lt;tns:ActivityInput>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;Exception Occoured in SF-NS Minipayment&amp;quot;&quot;/>&lt;/message>&lt;/tns:ActivityInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.log"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Log"/>
+
+                                    <value
+                                    role="Info"
+                                    suppressJobInfo="true" xsi:type="generalactivities:Log"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                    </tibex:activityExtension>
+                                    </bpws:extensionActivity>
+
+                                    <bpws:throw
+                                    faultName="ns11:DefaultFault"
+                                    faultVariable="Throw-input"
+                                    name="Throw" tibex:xpdlId="fa8b8b98-9bc9-4ee3-b6de-7540df945855">
+
+                                    <tibex:inputBinding expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tns="http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions" version="2.0"&gt;&lt;xsl:template name="Throw-input" match="/"&gt;&lt;tns:DefaultFault&gt;&lt;message&gt;&lt;xsl:value-of select="&amp;quot;Exception Occoured in SF-NS Minipayment&amp;quot;"/&gt;&lt;/message&gt;&lt;/tns:DefaultFault&gt;&lt;/xsl:template&gt;&lt;/xsl:stylesheet&gt;</tibex:inputBinding>
+                                    <tibex:inputBindings>
+
+                                    <tibex:partBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://schemas.tibco.com/bw/plugins/basic/6.0/Exceptions&quot; version=&quot;2.0&quot;>&lt;xsl:template name=&quot;Throw-input&quot; match=&quot;/&quot;>&lt;tns:DefaultFault>&lt;message>&lt;xsl:value-of select=&quot;&amp;quot;Exception Occoured in SF-NS Minipayment&amp;quot;&quot;/>&lt;/message>&lt;/tns:DefaultFault>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <bpws:targets>
+
+                                    <bpws:target linkName="LogToThrow"/>
+                                    </bpws:targets>
+                                    </bpws:throw>
+                                    </bpws:flow>
+                                    </bpws:scope>
+                                    </bpws:catchAll>
+                                    </bpws:faultHandlers>
                                     <bpws:flow name="flow3">
                                     <bpws:links>
                                     <bpws:link
@@ -6745,7 +8033,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Opportunity__c, Account_Amount__c, Billing_Type__c, Credit_Memo__c, Invoice_Amount__c, Link_To_NetSuite_Invoice__c, NetSuite_Credit_Memo_Id__c, NetSuite_Invoice_ID__c, Payment_Amount__c, Report_ID__c, Status__c, Tax__c, Wrong_House__c FROM Opportunity_Invoice__c where Id='&amp;quot;,$currentElement/tns1:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Opportunity__c, Account_Amount__c, Billing_Type__c, Credit_Memo__c, Invoice_Amount__c, Link_To_NetSuite_Invoice__c, NetSuite_Credit_Memo_Id__c, NetSuite_Invoice_ID__c, Payment_Amount__c, Report_ID__c, Status__c, Tax__c, Wrong_House__c FROM Opportunity_Invoice__c where Id='&amp;quot;,$currentElement/tns2:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="SalesforceQueryAll-input"
                                     name="SalesforceQueryAll"
@@ -6762,7 +8050,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Opportunity__c, Account_Amount__c, Billing_Type__c, Credit_Memo__c, Invoice_Amount__c, Link_To_NetSuite_Invoice__c, NetSuite_Credit_Memo_Id__c, NetSuite_Invoice_ID__c, Payment_Amount__c, Report_ID__c, Status__c, Tax__c, Wrong_House__c FROM Opportunity_Invoice__c where Id='&amp;quot;,$currentElement/tns1:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;urn:partner.soap.sforce.com_queryAllInput&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:template name=&quot;SalesforceQueryAll-input&quot; match=&quot;/&quot;>&lt;tns:queryAllInput>&lt;query>&lt;queryMain>&lt;tns:queryString>&lt;xsl:value-of select=&quot;concat(&amp;quot;SELECT Id, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Opportunity__c, Account_Amount__c, Billing_Type__c, Credit_Memo__c, Invoice_Amount__c, Link_To_NetSuite_Invoice__c, NetSuite_Credit_Memo_Id__c, NetSuite_Invoice_ID__c, Payment_Amount__c, Report_ID__c, Status__c, Tax__c, Wrong_House__c FROM Opportunity_Invoice__c where Id='&amp;quot;,$currentElement/tns2:RecordID,&amp;quot;'&amp;quot;)&quot;/>&lt;/tns:queryString>&lt;/queryMain>&lt;/query>&lt;/tns:queryAllInput>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -6835,7 +8123,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity_Invoice__c -->&#xa;&lt;!-- $SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll1&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll&quot;/>&lt;xsl:template name=&quot;SF_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPaymentData>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:SFID>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:OrderManagerReportId>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c&quot;/>&lt;/tns:OrderManagerReportId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;>&lt;tns:OwnerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;/>&lt;/tns:OwnerId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;>&lt;tns:AccountId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;/>&lt;/tns:AccountId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;>&lt;tns:PaymentTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;/>&lt;/tns:PaymentTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;>&lt;tns:PaymentAuthorizationTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;/>&lt;/tns:PaymentAuthorizationTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;>&lt;tns:Amount>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;/>&lt;/tns:Amount>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;>&lt;tns:BillPayerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;/>&lt;/tns:BillPayerId>&lt;/xsl:if>&lt;tns:QueueId>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns2:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns2:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:QueueId>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;>&lt;tns:BillPayerNetsuiteId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;/>&lt;/tns:BillPayerNetsuiteId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;>&lt;tns:SubsidiaryId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;/>&lt;/tns:SubsidiaryId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;>&lt;tns:SubsidiaryName>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;/>&lt;/tns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;>&lt;tns:CreditCardType>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;/>&lt;/tns:CreditCardType>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;>&lt;tns:Invoice_ID>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;/>&lt;/tns:Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPaymentData>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity_Invoice__c -->&#xa;&lt;!-- $SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns3=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll1&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll&quot;/>&lt;xsl:template name=&quot;SF_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPaymentData>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:SFID>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:OrderManagerReportId>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c&quot;/>&lt;/tns:OrderManagerReportId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;>&lt;tns:OwnerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;/>&lt;/tns:OwnerId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;>&lt;tns:AccountId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;/>&lt;/tns:AccountId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;>&lt;tns:PaymentTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;/>&lt;/tns:PaymentTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;>&lt;tns:PaymentAuthorizationTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;/>&lt;/tns:PaymentAuthorizationTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;>&lt;tns:Amount>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;/>&lt;/tns:Amount>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;>&lt;tns:BillPayerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;/>&lt;/tns:BillPayerId>&lt;/xsl:if>&lt;tns:QueueId>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns3:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns3:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:QueueId>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;>&lt;tns:BillPayerNetsuiteId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;/>&lt;/tns:BillPayerNetsuiteId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;>&lt;tns:SubsidiaryId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;/>&lt;/tns:SubsidiaryId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;>&lt;tns:SubsidiaryName>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;/>&lt;/tns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;>&lt;tns:CreditCardType>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;/>&lt;/tns:CreditCardType>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;>&lt;tns:Invoice_ID>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;/>&lt;/tns:Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPaymentData>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="SF_Data-input"
                                     name="SF_Data"
@@ -6852,7 +8140,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity_Invoice__c -->&#xa;&lt;!-- $SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll1&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll&quot;/>&lt;xsl:template name=&quot;SF_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPaymentData>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:SFID>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:OrderManagerReportId>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c&quot;/>&lt;/tns:OrderManagerReportId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;>&lt;tns:OwnerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;/>&lt;/tns:OwnerId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;>&lt;tns:AccountId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;/>&lt;/tns:AccountId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;>&lt;tns:PaymentTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;/>&lt;/tns:PaymentTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;>&lt;tns:PaymentAuthorizationTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;/>&lt;/tns:PaymentAuthorizationTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;>&lt;tns:Amount>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;/>&lt;/tns:Amount>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;>&lt;tns:BillPayerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;/>&lt;/tns:BillPayerId>&lt;/xsl:if>&lt;tns:QueueId>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns2:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns2:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:QueueId>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;>&lt;tns:BillPayerNetsuiteId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;/>&lt;/tns:BillPayerNetsuiteId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;>&lt;tns:SubsidiaryId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;/>&lt;/tns:SubsidiaryId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;>&lt;tns:SubsidiaryName>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;/>&lt;/tns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;>&lt;tns:CreditCardType>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;/>&lt;/tns:CreditCardType>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;>&lt;tns:Invoice_ID>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;/>&lt;/tns:Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPaymentData>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;!--START COERCIONS-->&#xa;&lt;!-- $SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity_Invoice__c -->&#xa;&lt;!-- $SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records, type, ns:Opportunity -->&#xa;&lt;!--END COERCIONS-->&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:tns1=&quot;urn:partner.soap.sforce.com_queryAllOutput&quot; xmlns:ns=&quot;urn:sobject.partner.soap.sforce.com&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tns2=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns3=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll1&quot;/>&lt;xsl:param name=&quot;SalesforceQueryAll&quot;/>&lt;xsl:template name=&quot;SF_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPaymentData>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:SFID>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Id&quot;/>&lt;/tns:SFID>&lt;/xsl:if>&lt;xsl:if test=&quot;not(($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;true&amp;quot;)) or ($SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c/@xsi:nil=(&amp;quot;1&amp;quot;)))&quot;>&lt;tns:OrderManagerReportId>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Report_ID__c&quot;/>&lt;/tns:OrderManagerReportId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;>&lt;tns:OwnerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:OwnerId&quot;/>&lt;/tns:OwnerId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;>&lt;tns:AccountId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:AccountId&quot;/>&lt;/tns:AccountId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;>&lt;tns:PaymentTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:Payment_Token__c&quot;/>&lt;/tns:PaymentTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;>&lt;tns:PaymentAuthorizationTokenEncrypted>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Authorization_Token__c&quot;/>&lt;/tns:PaymentAuthorizationTokenEncrypted>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;>&lt;tns:Amount>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Amount&quot;/>&lt;/tns:Amount>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;>&lt;tns:BillPayerId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__c&quot;/>&lt;/tns:BillPayerId>&lt;/xsl:if>&lt;tns:QueueId>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns3:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns3:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:QueueId>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;>&lt;tns:BillPayerNetsuiteId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Bill_Payer__r/ns:NetSuite_ID__c&quot;/>&lt;/tns:BillPayerNetsuiteId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;>&lt;tns:SubsidiaryId>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_ID__c&quot;/>&lt;/tns:SubsidiaryId>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;>&lt;tns:SubsidiaryName>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Subsidiary_Name__c&quot;/>&lt;/tns:SubsidiaryName>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;>&lt;tns:CreditCardType>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Type__c&quot;/>&lt;/tns:CreditCardType>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;>&lt;tns:Invoice_ID>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:NetSuite_Invoice_ID__c&quot;/>&lt;/tns:Invoice_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll/queryAllResponse/tns1:result/tns1:records[1]/ns:Payment_Amount__c&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SalesforceQueryAll1/queryAllResponse/tns1:result/tns1:records[1]/ns:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPaymentData>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
@@ -7001,7 +8289,7 @@
                                     <bpws:extensionActivity>
 
                                     <tibex:activityExtension
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/MiniPayment&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tns2=&quot;http://www.example.org/NS_ApplyList&quot; xmlns:tns3=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;NS_Invoke_Data&quot;/>&lt;xsl:param name=&quot;SF_Data&quot;/>&lt;xsl:template name=&quot;Publisher_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPayment>&lt;tns:SFID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:RecordID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:RecordID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SFID>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;>&lt;tns:Bill_Payer_NS_ID>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;/>&lt;/tns:Bill_Payer_NS_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;>&lt;tns:CC_Number>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;/>&lt;/tns:CC_Number>&lt;/xsl:if>&lt;xsl:choose>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c=''&quot;/>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c!=''&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:value-of select=&quot;xsd:double($SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c)&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:when>&lt;/xsl:choose>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;>&lt;tns:Payment_Authorization_Token__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;/>&lt;/tns:Payment_Authorization_Token__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;>&lt;tns:apply>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;/>&lt;/tns:apply>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;>&lt;tns:doc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;/>&lt;/tns:doc>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;>&lt;tns:line>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;/>&lt;/tns:line>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;>&lt;tns:applyDate>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;/>&lt;/tns:applyDate>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;>&lt;tns:type>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;/>&lt;/tns:type>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;>&lt;tns:refNum>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;/>&lt;/tns:refNum>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;>&lt;tns:total>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;/>&lt;/tns:total>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;>&lt;tns:due>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;/>&lt;/tns:due>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;>&lt;tns:currency>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;/>&lt;/tns:currency>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;>&lt;tns:disc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;/>&lt;/tns:disc>&lt;/xsl:if>&lt;tns:SF_Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SF_Queue_ID>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;>&lt;tns:Customer_Internal_ID>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;/>&lt;/tns:Customer_Internal_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPayment>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>"
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/MiniPayment&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tns2=&quot;http://www.example.org/NS_ApplyList&quot; xmlns:tns3=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns4=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;NS_Invoke_Data&quot;/>&lt;xsl:param name=&quot;SF_Data&quot;/>&lt;xsl:template name=&quot;Publisher_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPayment>&lt;tns:SFID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns4:RecordID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns4:RecordID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SFID>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;>&lt;tns:Bill_Payer_NS_ID>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;/>&lt;/tns:Bill_Payer_NS_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;>&lt;tns:CC_Number>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;/>&lt;/tns:CC_Number>&lt;/xsl:if>&lt;xsl:choose>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c=''&quot;/>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c!=''&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:value-of select=&quot;xsd:double($SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c)&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:when>&lt;/xsl:choose>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;>&lt;tns:Payment_Authorization_Token__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;/>&lt;/tns:Payment_Authorization_Token__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;>&lt;tns:apply>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;/>&lt;/tns:apply>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;>&lt;tns:doc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;/>&lt;/tns:doc>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;>&lt;tns:line>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;/>&lt;/tns:line>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;>&lt;tns:applyDate>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;/>&lt;/tns:applyDate>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;>&lt;tns:type>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;/>&lt;/tns:type>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;>&lt;tns:refNum>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;/>&lt;/tns:refNum>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;>&lt;tns:total>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;/>&lt;/tns:total>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;>&lt;tns:due>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;/>&lt;/tns:due>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;>&lt;tns:currency>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;/>&lt;/tns:currency>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;>&lt;tns:disc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;/>&lt;/tns:disc>&lt;/xsl:if>&lt;tns:SF_Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns4:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns4:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SF_Queue_ID>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;>&lt;tns:Customer_Internal_ID>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;/>&lt;/tns:Customer_Internal_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPayment>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>"
                                     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
                                     inputVariable="Publisher_Data-input"
                                     name="Publisher_Data"
@@ -7018,7 +8306,7 @@
                                     <tibex:inputBindings>
 
                                     <tibex:inputBinding
-                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/MiniPayment&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tns2=&quot;http://www.example.org/NS_ApplyList&quot; xmlns:tns3=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;NS_Invoke_Data&quot;/>&lt;xsl:param name=&quot;SF_Data&quot;/>&lt;xsl:template name=&quot;Publisher_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPayment>&lt;tns:SFID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:RecordID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:RecordID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SFID>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;>&lt;tns:Bill_Payer_NS_ID>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;/>&lt;/tns:Bill_Payer_NS_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;>&lt;tns:CC_Number>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;/>&lt;/tns:CC_Number>&lt;/xsl:if>&lt;xsl:choose>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c=''&quot;/>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c!=''&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:value-of select=&quot;xsd:double($SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c)&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:when>&lt;/xsl:choose>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;>&lt;tns:Payment_Authorization_Token__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;/>&lt;/tns:Payment_Authorization_Token__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;>&lt;tns:apply>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;/>&lt;/tns:apply>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;>&lt;tns:doc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;/>&lt;/tns:doc>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;>&lt;tns:line>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;/>&lt;/tns:line>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;>&lt;tns:applyDate>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;/>&lt;/tns:applyDate>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;>&lt;tns:type>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;/>&lt;/tns:type>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;>&lt;tns:refNum>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;/>&lt;/tns:refNum>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;>&lt;tns:total>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;/>&lt;/tns:total>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;>&lt;tns:due>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;/>&lt;/tns:due>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;>&lt;tns:currency>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;/>&lt;/tns:currency>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;>&lt;tns:disc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;/>&lt;/tns:disc>&lt;/xsl:if>&lt;tns:SF_Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns1:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns1:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SF_Queue_ID>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;>&lt;tns:Customer_Internal_ID>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;/>&lt;/tns:Customer_Internal_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPayment>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:tns=&quot;http://www.example.org/MiniPayment&quot; xmlns:tns1=&quot;http://www.example.org/SfQueueDataMapper&quot; xmlns:tns2=&quot;http://www.example.org/NS_ApplyList&quot; xmlns:tns3=&quot;http://www.example.org/Minipayment_Data&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tns4=&quot;http://www.example.org/SfQueueDataMapper55&quot; version=&quot;2.0&quot;>&lt;xsl:param name=&quot;currentElement&quot;/>&lt;xsl:param name=&quot;NS_Invoke_Data&quot;/>&lt;xsl:param name=&quot;SF_Data&quot;/>&lt;xsl:template name=&quot;Publisher_Data-input&quot; match=&quot;/&quot;>&lt;tns:MiniPayment>&lt;tns:MiniPayment>&lt;tns:SFID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns4:RecordID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns4:RecordID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SFID>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;>&lt;tns:Bill_Payer_NS_ID>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:BillPayerId&quot;/>&lt;/tns:Bill_Payer_NS_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;>&lt;tns:Completed_In_Activation_Site__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Completed_In_Activation_Site__c&quot;/>&lt;/tns:Completed_In_Activation_Site__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;>&lt;tns:CC_Number>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentTokenEncrypted&quot;/>&lt;/tns:CC_Number>&lt;/xsl:if>&lt;xsl:choose>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c=''&quot;/>&lt;xsl:when test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c!=''&quot;>&lt;tns:Payment_Amount__c>&lt;xsl:value-of select=&quot;xsd:double($SF_Data/tns3:MiniPaymentData[1]/tns3:Payment_Amount__c)&quot;/>&lt;/tns:Payment_Amount__c>&lt;/xsl:when>&lt;/xsl:choose>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;>&lt;tns:Payment_Authorization_Token__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:PaymentAuthorizationTokenEncrypted&quot;/>&lt;/tns:Payment_Authorization_Token__c>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;>&lt;tns:apply>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:apply&quot;/>&lt;/tns:apply>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;>&lt;tns:doc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:doc&quot;/>&lt;/tns:doc>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;>&lt;tns:line>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:line&quot;/>&lt;/tns:line>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;>&lt;tns:applyDate>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:applyDate&quot;/>&lt;/tns:applyDate>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;>&lt;tns:type>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:type&quot;/>&lt;/tns:type>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;>&lt;tns:refNum>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:refNum&quot;/>&lt;/tns:refNum>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;>&lt;tns:total>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:total&quot;/>&lt;/tns:total>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;>&lt;tns:due>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:due&quot;/>&lt;/tns:due>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;>&lt;tns:currency>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:currency&quot;/>&lt;/tns:currency>&lt;/xsl:if>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;>&lt;tns:disc>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:disc&quot;/>&lt;/tns:disc>&lt;/xsl:if>&lt;tns:SF_Queue_ID>&lt;xsl:choose>&lt;xsl:when test=&quot;exists($currentElement/tns4:QueueID)&quot;>&lt;xsl:value-of select=&quot;$currentElement/tns4:QueueID&quot;/>&lt;/xsl:when>&lt;xsl:otherwise>&lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&lt;/xsl:otherwise>&lt;/xsl:choose>&lt;/tns:SF_Queue_ID>&lt;xsl:if test=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;>&lt;tns:Customer_Internal_ID>&lt;xsl:copy-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$NS_Invoke_Data/tns2:ApplyListData[1]/tns2:Customer_Internal_ID&quot;/>&lt;/tns:Customer_Internal_ID>&lt;/xsl:if>&lt;xsl:if test=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;>&lt;tns:Credit_Card_Receipt_Email__c>&lt;xsl:copy-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c/@xsi:nil&quot;/>&lt;xsl:value-of select=&quot;$SF_Data/tns3:MiniPaymentData[1]/tns3:Credit_Card_Receipt_Email__c&quot;/>&lt;/tns:Credit_Card_Receipt_Email__c>&lt;/xsl:if>&lt;/tns:MiniPayment>&lt;/tns:MiniPayment>&lt;/xsl:template>&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
                                     </tibex:inputBindings>
                                     <tibex:config>
 
